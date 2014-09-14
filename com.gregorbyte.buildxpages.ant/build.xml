@@ -37,7 +37,13 @@
 
 		<refreshdbdesign server="domino02" database="JobFiles\\Z1001.nsf" templateserver="domino02" />
 
-
 	</target>
+	
+	<target name="testbuildnsf" description="Build an NSF" depends="jar">
+	
+		<buildnsf></buildnsf>
+		
+	</target>
+
 
 </project>

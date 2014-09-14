@@ -27,5 +27,9 @@
 		classname="com.gregorbyte.buildxpages.ant.RefreshDbDesign"
 		classpath="${ant.project.name}.jar" onerror="ignore" />
 
+	<taskdef
+		name="buildnsf"
+		classname="com.gregorbyte.buildxpages.ant.BuildNsf"
+		classpath="${ant.project.name}.jar" onerror="ignore" />
 
 </antlib>
