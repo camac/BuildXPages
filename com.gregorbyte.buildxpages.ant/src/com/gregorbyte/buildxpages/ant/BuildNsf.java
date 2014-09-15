@@ -16,9 +16,21 @@ public class BuildNsf extends Task {
 	
 	private String ondiskproject;
 	private String targetfilename;
-	private boolean failonerror;
+	private boolean failonerror = true;
 	private String port;
 	
+	public void setOndiskproject(String ondiskproject) {
+		this.ondiskproject = ondiskproject;
+	}
+
+	public void setTargetfilename(String targetfilename) {
+		this.targetfilename = targetfilename;
+	}
+
+	public void setPort(String port) {
+		this.port = port;
+	}
+
 	private boolean parseStatus(String message) {
 
 		String[] bits = message.split(":");		
@@ -40,15 +52,25 @@ public class BuildNsf extends Task {
 			port = "8098";
 		
 		int portNumber = Integer.parseInt(port);
+				
+		if (ondiskproject == null || "".equals(ondiskproject))
+			throw new BuildException("No OnDiskProject specified");
+		
+		if (targetfilename == null || "".equals(targetfilename))
+			throw new BuildException("No targetfilename specified");
+		
 		
 		boolean nsfBuilt = false;
 		boolean noProblems = false;
+		Socket s = null;
 		
+		try {			
+			s = new Socket(InetAddress.getLocalHost(), portNumber);
+		} catch (IOException e) {
+			throw new BuildException("Could not Connect to Headless Server", e);
+		}
+
 		try {
-			
-			// Connect to Designer
-			Socket s = new Socket(InetAddress.getLocalHost(), portNumber);
-			
 			// Set up Input/Output Stream
 			BufferedReader input = new BufferedReader(new InputStreamReader(
 					s.getInputStream()));
@@ -61,8 +83,9 @@ public class BuildNsf extends Task {
 			
 			// Send instruction to Build NSf
 			out.println("Will you BUILDMEANNSF please?");
-			//out.println("will you tell me your PROBLEMS?");
-			out.println("testhead120.nsf");
+			//out.println(ondiskproject);
+			out.println(targetfilename);
+
 			// Output Confirmation Message
 			
 			String response;
@@ -113,13 +136,13 @@ public class BuildNsf extends Task {
 			
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new BuildException(e);
 		}
 
 		if (!nsfBuilt)
 			throw new BuildException("Build Failed: NSF Not built properly");
 		
-		if (!noProblems)
+		if (!noProblems && failonerror)
 			throw new BuildException("Build Failed: Problems found after build");		
 	
 	}

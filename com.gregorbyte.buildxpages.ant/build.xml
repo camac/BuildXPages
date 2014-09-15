@@ -41,7 +41,7 @@
 	
 	<target name="testbuildnsf" description="Build an NSF" depends="jar">
 	
-		<buildnsf></buildnsf>
+		<buildnsf ondiskproject="some/.project" targetfilename="fromant.nsf"></buildnsf>
 		
 	</target>
 
