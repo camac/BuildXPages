@@ -15,23 +15,26 @@
             </separator>
          </menu>
          <action
-               class="com.gregorbyte.designer.headless.actions.SampleAction"
-               icon="icons/sample.gif"
-               id="com.gregorbyte.designer.headless.actions.SampleAction"
-               label="&amp;Sample Action"
+               class="com.gregorbyte.designer.headless.actions.StartServerAction"
+               icon="icons/running.gif"
+               id="com.gregorbyte.designer.headless.action3"
+               label="Start Headless Server"
                menubarPath="sampleMenu/sampleGroup"
+               style="push"
                toolbarPath="sampleGroup"
-               tooltip="Hello, Eclipse world">
+               tooltip="Start the Headless Server">
+         </action>
+         <action
+               class="com.gregorbyte.designer.headless.actions.StopServerAction"
+               icon="icons/stopped.gif"
+               id="com.gregorbyte.designer.headless.action1"
+               label="Stop Headless Server"
+               menubarPath="sampleMenu/sampleGroup"
+               style="push"
+               toolbarPath="sampleGroup"
+               tooltip="Stop the Headless Server">
          </action>
       </actionSet>
-   </extension>
-   <extension
-         point="org.eclipse.equinox.http.registry.servlets">
-      <servlet
-            alias="/headless"
-            class="com.gregorbyte.designer.headless.servlet.DesignerBuildServlet"
-            load-on-startup="true">
-      </servlet>
    </extension>
 
 </plugin>

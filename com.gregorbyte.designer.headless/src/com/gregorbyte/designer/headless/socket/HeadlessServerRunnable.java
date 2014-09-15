@@ -17,7 +17,7 @@ import org.eclipse.core.runtime.CoreException;
 import com.ibm.designer.domino.tools.userlessbuild.ProjectUtilities;
 import com.ibm.designer.domino.tools.userlessbuild.jobs.ImportAndBuildJob;
 
-public class SocketThread implements Runnable {
+public class HeadlessServerRunnable implements Runnable {
 
 	private static final String MSG_PROBLEMSSTATUS = "PROBLEMS STATUS: ";
 
