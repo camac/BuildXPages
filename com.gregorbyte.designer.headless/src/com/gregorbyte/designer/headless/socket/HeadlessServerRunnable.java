@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.CoreException;
 import com.gregorbyte.designer.headless.HeadlessServerActivator;
 import com.gregorbyte.designer.headless.preferences.PreferenceConstants;
 import com.ibm.designer.domino.tools.userlessbuild.ProjectUtilities;
+import com.ibm.designer.domino.tools.userlessbuild.jobs.CleanUpJob;
 import com.ibm.designer.domino.tools.userlessbuild.jobs.DeleteProjectJob;
 import com.ibm.designer.domino.tools.userlessbuild.jobs.ImportAndBuildJob;
 
@@ -96,6 +97,22 @@ public class HeadlessServerRunnable implements Runnable {
 
 	}
 
+	private void cleanup(PrintWriter out) {
+		
+		CleanUpJob job = new CleanUpJob();
+		
+		job.addJobChangeListener(new DeleteProjectJobChangeAdapter(out));
+		job.schedule();
+
+		try {
+			job.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	private void deleteProject(String projName, PrintWriter out) {
 
 		IProject project = ProjectUtilities.getProject(projName);
@@ -184,8 +201,11 @@ public class HeadlessServerRunnable implements Runnable {
 						// Report on the Markers
 						reportMarkers(nsfName, out);
 
+						// Clean up projects
+						cleanup(out);
+						
 						// Delete the Project
-						deleteProject(nsfName, out);
+						//deleteProject(nsfName, out);
 
 						out.println(MSG_TERM);
 
