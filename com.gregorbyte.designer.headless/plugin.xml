@@ -36,5 +36,19 @@
          </action>
       </actionSet>
    </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="com.gregorbyte.designer.headless.preferences.HeadlessServerPreferencePage"
+            id="com.gregorbyte.designer.headless.preferences.HeadlessServerPreferencePage"
+            name="Headless">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="com.gregorbyte.designer.headless.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
 
 </plugin>
