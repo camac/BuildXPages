@@ -57,9 +57,7 @@ public class HeadlessServerActivator extends AbstractUIPlugin {
 		INSTANCE = this;
 		
 		System.out.println("Starting Headless Bundle");
-		
-		headlessServer = new HeadlessServerRunnable();
-		
+				
 		super.start(context);
 		plugin = this;
 	}
@@ -72,7 +70,7 @@ public class HeadlessServerActivator extends AbstractUIPlugin {
 		
 		System.out.println("Stopping Headless Bundle");
 
-		headlessServer.stopThread();			
+		stopServer();			
 				
 		plugin = null;
 		super.stop(context);

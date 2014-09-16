@@ -1,6 +1,7 @@
 package com.gregorbyte.buildxpages.ant;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -12,7 +13,7 @@ import org.apache.tools.ant.Task;
 
 public class BuildNsf extends Task {
 
-	private static final Object MSG_TERM = "END.";
+	private static final String MSG_TERM = "END.";
 	
 	private String ondiskproject;
 	private String targetfilename;
@@ -45,20 +46,30 @@ public class BuildNsf extends Task {
 		
 	}
 	
-	@Override
-	public void execute() throws BuildException {
-		
-		if (port == null || port.equals(""))
-			port = "8098";
-		
-		int portNumber = Integer.parseInt(port);
-				
+	public void validateProperties() throws BuildException {
+
 		if (ondiskproject == null || "".equals(ondiskproject))
 			throw new BuildException("No OnDiskProject specified");
 		
 		if (targetfilename == null || "".equals(targetfilename))
 			throw new BuildException("No targetfilename specified");
+
+		File file = new File(ondiskproject);
 		
+		if (!file.exists())
+			throw new BuildException("Supplied OnDiskProject does not exists");
+		
+	}
+	
+	@Override
+	public void execute() throws BuildException {
+		
+		if (port == null || port.equals(""))
+			port = "8282";
+		
+		int portNumber = Integer.parseInt(port);
+				
+		validateProperties();
 		
 		boolean nsfBuilt = false;
 		boolean noProblems = false;
@@ -67,7 +78,7 @@ public class BuildNsf extends Task {
 		try {			
 			s = new Socket(InetAddress.getLocalHost(), portNumber);
 		} catch (IOException e) {
-			throw new BuildException("Could not Connect to Headless Server", e);
+			throw new BuildException("Could not Connect to Headless Server using port: " + port, e);
 		}
 
 		try {
@@ -76,14 +87,18 @@ public class BuildNsf extends Task {
 					s.getInputStream()));
 			PrintWriter out = new PrintWriter(s.getOutputStream(), true);
 			
-			// Read welcome message
-			for (int i = 0; i < 3; i++) {
-				System.out.println(input.readLine());
+			// Read welcome message (max ten lines)
+			for (int i = 0; i < 10; i++) {
+				
+				String line = input.readLine();
+				if (line.equalsIgnoreCase(MSG_TERM))
+					break;
+				
+				System.out.println(line);
 			}
 			
 			// Send instruction to Build NSf
-			out.println("Will you BUILDMEANNSF please?");
-			//out.println(ondiskproject);
+			out.println(ondiskproject);
 			out.println(targetfilename);
 
 			// Output Confirmation Message
@@ -108,31 +123,18 @@ public class BuildNsf extends Task {
 				System.out.println(response);			
 				response = input.readLine();
 			}
-
-			// Process Complete
-			
-			// Check Errors
-			
-			// If there are errors
-			//throw new BuildException("Errors found in NSF after build");
-			
-			// otherwise report success
-			
-//			PrintStream output;
-//			try {
-//				output = new PrintStream(s.getOutputStream());
-//				
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
 			
 			try {
 				input.close();
-				s.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			
+			try {
+				s.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			
 
 		} catch (IOException e) {

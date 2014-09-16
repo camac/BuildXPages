@@ -16,6 +16,48 @@ public class BuildJobChangeAdapter extends JobChangeAdapter {
 	}
 	
 	@Override
+	public void scheduled(IJobChangeEvent event) {
+	
+		if (event.getResult().isOK())
+			writer.println("BUILD JOB SCHEDULED");
+		else
+			writer.println("BUILD JOB SCHEDULING NOT SO GOOD");
+		
+		super.scheduled(event);
+	}
+	
+	@Override
+	public void aboutToRun(IJobChangeEvent event) {
+		
+		writer.println("BUILD JOB ABOUT TO RUN");		
+		super.aboutToRun(event);
+		
+	}
+
+	@Override
+	public void awake(IJobChangeEvent event) {
+
+		writer.println("BUILD JOB AWAKE");		
+		super.awake(event);
+		
+	}
+
+	@Override
+	public void running(IJobChangeEvent event) {
+
+		writer.println("BUILD JOB RUNNING");		
+		super.running(event);
+	}
+
+	@Override
+	public void sleeping(IJobChangeEvent event) {
+
+		writer.println("BUILD JOB SLEEPING");		
+		super.sleeping(event);
+		
+	}
+
+	@Override
 	public void done(IJobChangeEvent event) {
 
 		if (event.getResult().isOK())
