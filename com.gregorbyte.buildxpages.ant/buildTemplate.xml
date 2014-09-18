@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Your Project Name" basedir="." 
+	xmlns:bxp="antlib:com.gregorbyte.buildxpages.ant">
+
+	<taskdef 
+		uri="antlib:com.gregorbyte.buildxpages.ant" 
+		resource="com/gregorbyte/buildxpages/ant/antlib.xml"
+		classpath="lib/BuildXPagesAntLib.jar"></taskdef>
+
+
+</project>
