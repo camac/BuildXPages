@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="BuildXPagesAntLib" basedir="." default="jar"
+	xmlns:bxp="antlib:com.gregorbyte.buildxpages.ant">
+
+	<taskdef 
+		uri="antlib:com.gregorbyte.buildxpages.ant" 
+		resource="com/gregorbyte/buildxpages/ant/antlib.xml"
+		classpath="lib/BuildXPagesAntLib.jar"></taskdef>
+
+	<target name="deletensf" description="Deletes an NSF">
+		<deletensf filename="demo\\DidItwork.nsf" />
+	</target>
+
+	<target name="copynsf" description="Copies an NSF">
+		<copynsf srcfilepath="demo\\GitTest.nsf" dstfilepath="demo\\DidItwork.nsf" />
+	</target>
+
+	<target name="scxd" description="Testing scxd">
+		<bxp:scxd server="domino02" database="Gregorbyte\\DoraDeploy.nsf"
+			scxdflag="false" scxdpath="scxd\\NewThing.nsf" />
+	</target>
+
+	<target name="use" description="Use the task">
+		<refreshdbdesign server="domino02" database="JobFiles\\Z1001.nsf"
+			templateserver="domino02" />
+	</target>
+
+	<target name="testbuildnsf" description="Build an NSF">
+		<buildnsf
+			ondiskproject="V:\\DominoGit\\Headless\\com.gregorbyte.headless.nsf\\.project"
+			targetfilename="fromant2.nsf" port="8283">
+		</buildnsf>
+	</target>
+
+
+</project>

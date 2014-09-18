@@ -1,53 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="MyTask" basedir="." default="jar">
+<project name="BuildXPagesAntLib" basedir="." default="jar">
 
 	<typedef file="antlib.xml" onerror="ignore">
 	</typedef>
 
 	<property name="src.dir" value="src" />
 	<property name="bin.dir" value="bin" />
+	<property name="res.dir" value="res" />
+	<property name="lib.dir" value="lib" />
 
 	<target name="clean" description="Delete all generated files">
-		<delete file="${ant.project.name}.jar" />
+		<delete file="${lib.dir}/${ant.project.name}.jar" />
 	</target>
 
 	<target name="jar" description="JARs the Task" depends="clean">
-		<jar destfile="${ant.project.name}.jar" basedir="${bin.dir}" />
+		<jar destfile="${lib.dir}/${ant.project.name}.jar">
+
+			<fileset dir="${bin.dir}"></fileset>
+			<fileset dir="${res.dir}" />
+
+		</jar>
 	</target>
-
-	<target name="deletensf" description="Deletes an NSF" depends="jar">
-	
-		<deletensf filename="demo\\DidItwork.nsf"/>
-	
-	</target>
-	
-	<target name="copynsf" description="Copies an NSF" depends="jar">
-
-		<copynsf srcfilepath="demo\\GitTest.nsf" dstfilepath="demo\\DidItwork.nsf" />
-
-	</target>
-
-	<target name="scxd" description="Testing scxd" depends="jar">
-
-		<scxd server="domino02" database="Gregorbyte\\DoraDeploy.nsf" scxdflag="false" scxdpath="scxd\\NewThing.nsf" />
-
-	</target>
-
-	<target name="use" description="Use the task" depends="jar">
-
-		<refreshdbdesign server="domino02" database="JobFiles\\Z1001.nsf" templateserver="domino02" />
-
-	</target>
-	
-	<target name="testbuildnsf" description="Build an NSF" depends="jar">
-	
-		<buildnsf 
-			ondiskproject="V:\\DominoGit\\Headless\\com.gregorbyte.headless.nsf\\.project" 
-			targetfilename="fromant2.nsf"
-			port="8283">
-		</buildnsf>
-		
-	</target>
-
 
 </project>
