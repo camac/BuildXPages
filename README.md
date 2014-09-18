@@ -63,8 +63,9 @@ Then your Build script needs to declare that it wants to use the libary, see the
 When you run your build script, you will need to include a -lib argument which defines the lib folder as a place to look for libraries.
 
 e.g. if we 
-
+```
 ant -buildfile <yourBuildFile.xml> -lib lib <yourtarget>
+```
 
 ##### Once and for all
 
