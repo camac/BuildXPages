@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="MyTask" basedir="." default="jar">
+<project name="BuildXPagesAntLib" basedir="." default="jar">
 
 	<typedef file="antlib.xml" onerror="ignore">
 	</typedef>

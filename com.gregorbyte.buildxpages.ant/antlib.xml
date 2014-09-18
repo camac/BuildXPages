@@ -1,35 +1,38 @@
 <antlib>
 
 	<taskdef name="helloworld2" classname="com.gregorbyte.buildxpages.ant.HelloWorld"
-		classpath="${ant.project.name}.jar" onerror="ignore" />
+		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 
  	<taskdef name="copynsf" 
  		classname="com.gregorbyte.buildxpages.ant.CopyNsfTask"
- 		classpath="${ant.project.name}.jar" onerror="ignore" />
+ 		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 
 	<taskdef
 		name="deletensf"
 		classname="com.gregorbyte.buildxpages.ant.DeleteNsfTask"
-		classpath="${ant.project.name}.jar" onerror="ignore" />
+		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 
+	<taskdef name="settemplatenames"
+		classname="com.gregorbyte.buildxpages.ant.SetTemplateNamesTask"
+		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 
  	<taskdef name="scxd" 
  		classname="com.gregorbyte.buildxpages.ant.SetSingleCopyXPageTask"
- 		classpath="${ant.project.name}.jar" onerror="ignore" />
+ 		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 
 	<taskdef 
 		name="restarthttp"
 		classname="com.gregorbyte.buildxpages.ant.RestartHttpTask"
-		classpath="${ant.project.name}.jar" onerror="ignore" />
+		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 	
 	<taskdef
 		name="refreshdbdesign"
 		classname="com.gregorbyte.buildxpages.ant.RefreshDbDesign"
-		classpath="${ant.project.name}.jar" onerror="ignore" />
+		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 
 	<taskdef
 		name="buildnsf"
 		classname="com.gregorbyte.buildxpages.ant.BuildNsf"
-		classpath="${ant.project.name}.jar" onerror="ignore" />
+		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 
 </antlib>
