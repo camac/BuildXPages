@@ -24,6 +24,12 @@ public interface NotesNativeLibrary extends StdCallLibrary {
 	// STATUS LNPUBLIC NotesInitExtended(int argc, char far * far *argv);
 	short NotesInitExtended(int argc, Pointer p);
 
+	//STATUS LNPUBLIC NotesInitThread(void);
+	short NotesInitThread();
+	
+	//void LNPUBLIC NotesTermThread(void);
+	void NotesTermThread();
+	
 	// TODO Not sure what to do here
 
 	short NSFDbOpen(String dbName, IntByReference dbHandle);
