@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="BuildXPagesAntLib" basedir="." default="jar"
+<project name="BuildXPagesAntLib" basedir="."
 	xmlns:bxp="antlib:com.gregorbyte.buildxpages.ant">
 
 	<taskdef 
@@ -7,6 +7,8 @@
 		resource="com/gregorbyte/buildxpages/ant/antlib.xml"
 		classpath="lib/BuildXPagesAntLib.jar"></taskdef>
 
+
+	
 	<target name="deletensf" description="Deletes an NSF">
 		<deletensf filename="demo\\DidItwork.nsf" />
 	</target>
@@ -32,5 +34,25 @@
 		</buildnsf>
 	</target>
 
+	<target name="cleanforgeneratesitexml">
+		
+		<delete dir="testgen"></delete>
+		
+	</target>
+	
+	<target name="setupforgeneratesitexml" depends="cleanforgeneratesitexml">
+
+		<mkdir dir="testgen"/>
+		<mkdir dir="testgen/plugins"/>
+		<mkdir dir="testgen/features"/>
+		<touch file="testgen/plugins/someplugin_1.2.3.20141005.jar"></touch>
+		<touch file="testgen/features/somefeature_1.2.3.20141005.jar"></touch>
+	
+	</target>
+	
+	<target name="testgeneratesitexml" description="Generates a Site XML" depends="setupforgeneratesitexml">
+		<bxp:generatesitexml eclipsedir="testgen" />
+	</target>
+	
 
 </project>

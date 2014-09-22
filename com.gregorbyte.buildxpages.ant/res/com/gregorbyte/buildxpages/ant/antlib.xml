@@ -35,4 +35,9 @@
 		classname="com.gregorbyte.buildxpages.ant.BuildNsf"
 		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 
+	<taskdef
+		name="generatesitexml"
+		classname="com.gregorbyte.buildxpages.ant.GenerateSiteXmlTask"
+		classpath="BulidXPagesAntLib.jar" onerror="ignore" />
+
 </antlib>

@@ -39,6 +39,8 @@ Your build script can define a default target to run in the case that you have n
   sends a 'restart task http' command to a domino server console
 - refreshdbdesign
   refreshs the design of a database
+- generatesitexml
+  generates a site.xml based on the supplied directory
 
 ### Using the Library in an Ant Build Script
 
