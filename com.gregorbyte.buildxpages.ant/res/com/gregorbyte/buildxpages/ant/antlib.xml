@@ -1,8 +1,5 @@
 <antlib>
 
-	<taskdef name="helloworld2" classname="com.gregorbyte.buildxpages.ant.HelloWorld"
-		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
-
  	<taskdef name="copynsf" 
  		classname="com.gregorbyte.buildxpages.ant.CopyNsfTask"
  		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
