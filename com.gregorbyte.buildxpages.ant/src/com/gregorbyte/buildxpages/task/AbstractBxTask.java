@@ -1,6 +1,6 @@
 package com.gregorbyte.buildxpages.task;
 
-import com.gregorbyte.buildxpages.NotesLibrary;
+import com.gregorbyte.buildxpages.Notes;
 import com.gregorbyte.buildxpages.NotesNativeLibrary;
 import com.gregorbyte.buildxpages.StringByReference;
 
@@ -22,14 +22,30 @@ public abstract class AbstractBxTask implements BxTask {
 	
 	public static short MAXUSERNAME = 256;
 	
-	@Override
-	abstract public void execute();
+	protected Notes myNotes = Notes.INSTANCE;
+	
+	public final void execute() {
+		
+		try {
+
+			myNotes.initThread();		
+			doTask();
+			
+		} finally {
+			
+			myNotes.termThread();
+			
+		}
+		
+	}
+	
+	protected abstract void doTask();
 
 	public String pathNetConstruct(String server, String fileName) {
 		
 		StringByReference retPathName = new StringByReference(MAXUSERNAME);
 		
-		short error = NotesNativeLibrary.INSTANCE.OSPathNetConstruct(null, server, fileName, retPathName);		
+		short error = NotesNativeLibrary.SYNC_INSTANCE.OSPathNetConstruct(null, server, fileName, retPathName);		
 		checkError(error);
 		
 		return retPathName.getValue();
@@ -37,11 +53,11 @@ public abstract class AbstractBxTask implements BxTask {
 	}
 	
 	public void checkError(short error) {
-		NotesLibrary.checkError(error);
+		myNotes.checkError(error);
 	}
 
-	public static void printApiError(short api_error) {
-		NotesLibrary.printApiError(api_error);
+	public void printApiError(short api_error) {
+		myNotes.printApiError(api_error);
 	}
 	
 }

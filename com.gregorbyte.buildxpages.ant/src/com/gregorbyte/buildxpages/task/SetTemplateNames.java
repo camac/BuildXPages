@@ -1,6 +1,5 @@
 package com.gregorbyte.buildxpages.task;
 
-import com.gregorbyte.buildxpages.NotesLibrary;
 import com.gregorbyte.buildxpages.NotesNativeLibrary;
 import com.gregorbyte.buildxpages.StringByReference;
 import com.sun.jna.Pointer;
@@ -13,8 +12,6 @@ public class SetTemplateNames extends AbstractBxTask {
 	
 	private String server = null;
 	private String dbPath = null;
-	
-	private boolean initNotes = true;
 	
 	private boolean modifyInherit 	= false;
 	private boolean inherit 		= false;
@@ -57,18 +54,12 @@ public class SetTemplateNames extends AbstractBxTask {
 		return this;
 	}
 	
-	public void setInitNotes(boolean initNotes) {
-		this.initNotes = initNotes;
-	}
-	
 	@Override
-	public void execute() {
+	protected void doTask() {
 
 		if (!(modifyInherit || modifyMaster)) return;
 		
-		NotesNativeLibrary notes = NotesNativeLibrary.INSTANCE;
-		if (initNotes)
-			NotesLibrary.init();
+		NotesNativeLibrary notes = NotesNativeLibrary.SYNC_INSTANCE;
 
 		IntByReference dbHandle = new IntByReference();
 		NativeLongByReference note_handle = new NativeLongByReference();
@@ -173,9 +164,6 @@ public class SetTemplateNames extends AbstractBxTask {
 				dbOpen = false;
 			}
 			
-			if (initNotes)
-				NotesLibrary.deinit();
-
 		}
 
 	}

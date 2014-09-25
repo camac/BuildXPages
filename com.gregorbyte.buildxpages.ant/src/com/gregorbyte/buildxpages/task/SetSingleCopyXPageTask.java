@@ -1,6 +1,5 @@
 package com.gregorbyte.buildxpages.task;
 
-import com.gregorbyte.buildxpages.NotesLibrary;
 import com.gregorbyte.buildxpages.NotesNativeLibrary;
 import com.gregorbyte.buildxpages.StringByReference;
 import com.sun.jna.ptr.IntByReference;
@@ -56,14 +55,12 @@ public class SetSingleCopyXPageTask extends AbstractBxTask {
 	}
 
 	@Override
-	public void execute() {
-
-		NotesNativeLibrary notes = NotesNativeLibrary.INSTANCE;
-		NotesLibrary.init();
+	protected void doTask() {
+		
+		NotesNativeLibrary notes = NotesNativeLibrary.SYNC_INSTANCE;
 		
 		IntByReference dbHandle = new IntByReference();
 		NativeLongByReference note_handle = new NativeLongByReference();
-
 		
 		// Note Item field
 		String FIELD_SCXD = "$XpageSharedDesign";
@@ -156,8 +153,6 @@ public class SetSingleCopyXPageTask extends AbstractBxTask {
 				dbOpen = false;
 			}
 			
-			NotesLibrary.deinit();
-
 		}
 
 	}

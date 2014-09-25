@@ -3,7 +3,7 @@ package com.gregorbyte.buildxpages.task;
 import com.gregorbyte.buildxpages.NotesNativeLibrary;
 import com.sun.jna.ptr.IntByReference;
 
-public class RestartHttpTask implements BxTask {
+public class RestartHttpTask extends AbstractBxTask {
 
 	private static final String CMD_TELL_HTTP_RESTART 	= null;
 	//private static final String CMD_SHOW_HTTP_USERS 	= null;
@@ -13,17 +13,15 @@ public class RestartHttpTask implements BxTask {
 	public RestartHttpTask(String server) {
 		this.server = server;
 	}
-	
-	@Override
-	public void execute() {
 
-		NotesNativeLibrary notes = NotesNativeLibrary.INSTANCE;
+	@Override
+	protected void doTask() {
+
+		NotesNativeLibrary notes = NotesNativeLibrary.SYNC_INSTANCE;
 
 		IntByReference retInfo = new IntByReference();
 		notes.NSFRemoteConsole(server, CMD_TELL_HTTP_RESTART, retInfo);
-
-		// TODO OSLOCK STUFF
-
+		
 	}
 
 }

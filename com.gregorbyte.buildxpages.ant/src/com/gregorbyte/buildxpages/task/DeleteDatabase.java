@@ -1,6 +1,5 @@
 package com.gregorbyte.buildxpages.task;
 
-import com.gregorbyte.buildxpages.NotesLibrary;
 import com.gregorbyte.buildxpages.NotesNativeLibrary;
 
 public class DeleteDatabase extends AbstractBxTask {
@@ -16,18 +15,14 @@ public class DeleteDatabase extends AbstractBxTask {
 	}
 	
 	@Override
-	public void execute() {
+	protected void doTask() {
 
-		NotesNativeLibrary notes = NotesNativeLibrary.INSTANCE;
-		
-		NotesLibrary.init();
+		NotesNativeLibrary notes = NotesNativeLibrary.SYNC_INSTANCE;
 		
 		String path = pathNetConstruct(server, filename);
 
 		short error = notes.NSFDbDelete(path);		
 		checkError(error);
-		
-		NotesLibrary.deinit();
 		
 	}
 

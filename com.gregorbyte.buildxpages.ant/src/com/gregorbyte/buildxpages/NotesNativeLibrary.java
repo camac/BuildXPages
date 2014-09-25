@@ -21,6 +21,9 @@ public interface NotesNativeLibrary extends StdCallLibrary {
 	NotesNativeLibrary INSTANCE = (NotesNativeLibrary) Native.loadLibrary(
 			"nnotes", NotesNativeLibrary.class);
 
+	// Ensures only one Library Call happens at a Time
+	NotesNativeLibrary SYNC_INSTANCE = (NotesNativeLibrary) Native.synchronizedLibrary(INSTANCE);
+	
 	// STATUS LNPUBLIC NotesInitExtended(int argc, char far * far *argv);
 	short NotesInitExtended(int argc, Pointer p);
 

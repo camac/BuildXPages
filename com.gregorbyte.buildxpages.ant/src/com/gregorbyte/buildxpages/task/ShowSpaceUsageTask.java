@@ -1,6 +1,5 @@
 package com.gregorbyte.buildxpages.task;
 
-import com.gregorbyte.buildxpages.NotesLibrary;
 import com.gregorbyte.buildxpages.NotesNativeLibrary;
 import com.sun.jna.ptr.IntByReference;
 
@@ -12,7 +11,10 @@ public class ShowSpaceUsageTask extends AbstractBxTask {
 		this.dbpath = dbpath;
 	}
 	
-	public void execute() {
+	
+	
+	@Override
+	protected void doTask() {
 
 		IntByReference dbHandle = new IntByReference();
 		IntByReference retAllocatedBytes = new IntByReference();
@@ -20,10 +22,8 @@ public class ShowSpaceUsageTask extends AbstractBxTask {
 		boolean dbOpen = false;
 		short errorint = 0;
 		
-		NotesNativeLibrary notes = NotesNativeLibrary.INSTANCE;
-		
-		NotesLibrary.init();
-		
+		NotesNativeLibrary notes = NotesNativeLibrary.SYNC_INSTANCE;
+				
 		try {
 			
 			errorint = notes.NSFDbOpen(this.dbpath, dbHandle);
@@ -36,6 +36,7 @@ public class ShowSpaceUsageTask extends AbstractBxTask {
 			
 			errorint = notes.NSFDbClose(dbHandle.getValue());	
 			checkError(errorint);
+			dbOpen = false;
 			
 			float percentused = 100 * (float) retAllocatedBytes.getValue()
 					/ retFreeBytes.getValue() + retAllocatedBytes.getValue();
@@ -48,8 +49,6 @@ public class ShowSpaceUsageTask extends AbstractBxTask {
 				errorint = notes.NSFDbClose(dbHandle.getValue());	
 				checkError(errorint);				
 			}
-
-			NotesLibrary.deinit();
 			
 		} 
 		

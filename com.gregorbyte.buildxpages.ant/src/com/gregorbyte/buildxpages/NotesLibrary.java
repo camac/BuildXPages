@@ -28,11 +28,12 @@ public class NotesLibrary {
 	public static int NOTE_ID_SPECIAL = 0xFFFF0000;
 	public static int NOTE_CLASS_ICON = 0x00000010;
 
+	@Deprecated
 	public static void init() {
 		
 		if (!initialised) {
 
-			NotesNativeLibrary notes = NotesNativeLibrary.INSTANCE;
+			NotesNativeLibrary notes = NotesNativeLibrary.SYNC_INSTANCE;
 			Native.setProtected(true);
 
 			short error = notes.NotesInitExtended(0, null);
@@ -43,10 +44,29 @@ public class NotesLibrary {
 		
 	}
 	
+	@Deprecated
+	public static void initThread() {
+		init();
+		
+		if (initialised) {
+			Notes.INSTANCE.initThread();
+		}
+		
+	}
+	
+	@Deprecated
+	public static void termThread() {
+		
+		// IF this thread is initialised terminate it
+		Notes.INSTANCE.termThread();			
+		
+	}
+	
+	@Deprecated
 	public static void deinit() {
 		
 		if (initialised) {
-			NotesNativeLibrary notes = NotesNativeLibrary.INSTANCE;
+			NotesNativeLibrary notes = NotesNativeLibrary.SYNC_INSTANCE;
 			notes.NotesTerm();	
 			initialised = false;
 		}
@@ -56,7 +76,7 @@ public class NotesLibrary {
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 
-		NotesNativeLibrary notes = NotesNativeLibrary.INSTANCE;
+		NotesNativeLibrary notes = NotesNativeLibrary.SYNC_INSTANCE;
 		short error = 0;
 		boolean notesInitialised = false;
 
@@ -94,6 +114,7 @@ public class NotesLibrary {
 
 	}
 
+	@Deprecated
 	public static void checkError(short error) {
 
 		if (error > 0) {
@@ -102,11 +123,12 @@ public class NotesLibrary {
 		}
 	}
 
+	@Deprecated
 	public static void printApiError(short api_error) {
 
 		System.out.println(api_error);
 
-		NotesNativeLibrary notes = NotesNativeLibrary.INSTANCE;
+		NotesNativeLibrary notes = NotesNativeLibrary.SYNC_INSTANCE;
 
 		IntByReference nullhandle = new IntByReference(0);
 

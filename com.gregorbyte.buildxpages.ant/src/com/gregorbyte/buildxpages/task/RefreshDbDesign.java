@@ -1,7 +1,6 @@
 package com.gregorbyte.buildxpages.task;
 
 import com.gregorbyte.buildxpages.DesignRefreshMessageCallback;
-import com.gregorbyte.buildxpages.NotesLibrary;
 import com.gregorbyte.buildxpages.NotesNativeLibrary;
 import com.gregorbyte.buildxpages.StringByReference;
 import com.sun.jna.Pointer;
@@ -67,11 +66,9 @@ public class RefreshDbDesign extends AbstractBxTask {
 	}
 	
 	@Override
-	public void execute() {
+	protected void doTask() {
 
-		NotesNativeLibrary notes = NotesNativeLibrary.INSTANCE;
-
-		NotesLibrary.init();
+		NotesNativeLibrary notes = NotesNativeLibrary.SYNC_INSTANCE;
 		
 		String pathnet = pathNetConstruct(server, destDb);
 		
@@ -97,8 +94,6 @@ public class RefreshDbDesign extends AbstractBxTask {
 				dbOpen = false;
 			}
 			
-			NotesLibrary.deinit();
-
 		}
 
 	}

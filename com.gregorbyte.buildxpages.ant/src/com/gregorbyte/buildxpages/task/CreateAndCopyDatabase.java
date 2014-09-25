@@ -1,6 +1,5 @@
 package com.gregorbyte.buildxpages.task;
 
-import com.gregorbyte.buildxpages.NotesLibrary;
 import com.gregorbyte.buildxpages.NotesNativeLibrary;
 import com.sun.jna.ptr.IntByReference;
 
@@ -60,11 +59,9 @@ public class CreateAndCopyDatabase extends AbstractBxTask {
 	}
 
 	@Override
-	public void execute() {
+	protected void doTask() {
 
-		NotesNativeLibrary notes = NotesNativeLibrary.INSTANCE;
-
-		NotesLibrary.init();
+		NotesNativeLibrary notes = NotesNativeLibrary.SYNC_INSTANCE;
 		
 		String srcPath = pathNetConstruct(srcServer, srcFilename);
 		String dstPath = pathNetConstruct(dstServer, dstFilename);
@@ -82,7 +79,5 @@ public class CreateAndCopyDatabase extends AbstractBxTask {
 		error = notes.NSFDbClose(retHandle.getValue());
 		checkError(error);
 		
-		NotesLibrary.deinit();
-
 	}
 }
