@@ -28,7 +28,7 @@
       </header>
       <section>
         <h1>
-<a name="buildxpages" class="anchor" href="#buildxpages"><span class="octicon octicon-link"></span></a>BuildXPages</h1>
+<a id="buildxpages" class="anchor" href="#buildxpages" aria-hidden="true"><span class="octicon octicon-link"></span></a>BuildXPages</h1>
 
 <p>This project is a collection of tools which are useful in the case of building XPages applications using a Continous Integration server like Jenkins.</p>
 
@@ -36,8 +36,10 @@
 <li>Augmented 'Headless' designer plugin to allow better feedback </li>
 <li>Ant library of common tasks that are useful when building XPages apps</li>
 <li>Jenkins plugin to use build Stpes</li>
-</ul><h2>
-<a name="using-the-ant-library" class="anchor" href="#using-the-ant-library"><span class="octicon octicon-link"></span></a>Using the Ant Library</h2>
+</ul>
+
+<h2>
+<a id="using-the-ant-library" class="anchor" href="#using-the-ant-library" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using the Ant Library</h2>
 
 <p>Intro to Ant</p>
 
@@ -52,7 +54,7 @@ Within your build script, you define sub-routines which are called targets. Targ
 <p>Your build script can define a default target to run in the case that you have not specified a target to run.</p>
 
 <h3>
-<a name="tasks" class="anchor" href="#tasks"><span class="octicon octicon-link"></span></a>Tasks</h3>
+<a id="tasks" class="anchor" href="#tasks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tasks</h3>
 
 <ul>
 <li>buildnsf
@@ -66,12 +68,16 @@ deletes an NSF from a server</li>
 sets or clears the inheritfrom and ismaster template names of an NSF</li>
 <li>scxd
 sets or clears the single copy xpages design settings of an NSF</li>
-<li>restarthttp
+<li>restarthttp <strong>NOT FINISHED</strong>
 sends a 'restart task http' command to a domino server console</li>
 <li>refreshdbdesign
 refreshs the design of a database</li>
-</ul><h3>
-<a name="using-the-library-in-an-ant-build-script" class="anchor" href="#using-the-library-in-an-ant-build-script"><span class="octicon octicon-link"></span></a>Using the Library in an Ant Build Script</h3>
+<li>generatesitexml
+generates a site.xml based on the supplied directory</li>
+</ul>
+
+<h3>
+<a id="using-the-library-in-an-ant-build-script" class="anchor" href="#using-the-library-in-an-ant-build-script" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using the Library in an Ant Build Script</h3>
 
 <p>The BuildXPages library depends on the Java Native Access Library
 To use the BuildXPages Library in an Ant Build script, you need to:</p>
@@ -80,27 +86,30 @@ To use the BuildXPages Library in an Ant Build script, you need to:</p>
 <li>Make the BuildXPagesAntLib.jar available to ant</li>
 <li>Make the Java Native Access jar available to ant</li>
 <li>Define in your build script that you want to use this library</li>
-</ol><p>You have a couple of options here, you can install the jars 'Once and for all', or configure on a project by project basis.
+</ol>
+
+<p>You have a couple of options here, you can install the jars 'Once and for all', or configure on a project by project basis.
 You probably want to do it project by project, this way you can include these libraries in your Source Code Management repository (Git, Mercurial etc.)</p>
 
 <h5>
-<a name="per-project-basis" class="anchor" href="#per-project-basis"><span class="octicon octicon-link"></span></a>Per Project Basis</h5>
+<a id="per-project-basis" class="anchor" href="#per-project-basis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Per Project Basis</h5>
 
 <p>Easiest way is to create a 'lib' sub folder in your project, and put both BuildXPagesAntLib.jar and jna-4.1.0.jar in this folder</p>
 
 <p>Then your Build script needs to declare that it wants to use the libary, see the file buildTemplate.xml for the example.</p>
 
 <h6>
-<a name="running" class="anchor" href="#running"><span class="octicon octicon-link"></span></a>Running</h6>
+<a id="running" class="anchor" href="#running" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running</h6>
 
 <p>When you run your build script, you will need to include a -lib argument which defines the lib folder as a place to look for libraries.</p>
 
 <p>e.g. if we </p>
 
-<p>ant -buildfile  -lib lib </p>
+<pre><code>ant -buildfile &lt;yourBuildFile.xml&gt; -lib lib &lt;yourtarget&gt;
+</code></pre>
 
 <h5>
-<a name="once-and-for-all" class="anchor" href="#once-and-for-all"><span class="octicon octicon-link"></span></a>Once and for all</h5>
+<a id="once-and-for-all" class="anchor" href="#once-and-for-all" aria-hidden="true"><span class="octicon octicon-link"></span></a>Once and for all</h5>
 
 <p>Install BuildXPagesAntLib.jar and jna-4.1.0.jar into either</p>
 
