@@ -35,7 +35,7 @@ Your build script can define a default target to run in the case that you have n
   sets or clears the inheritfrom and ismaster template names of an NSF
 - scxd
   sets or clears the single copy xpages design settings of an NSF
-- restarthttp
+- restarthttp **NOT FINISHED**
   sends a 'restart task http' command to a domino server console
 - refreshdbdesign
   refreshs the design of a database
