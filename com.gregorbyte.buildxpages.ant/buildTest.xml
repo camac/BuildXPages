@@ -26,12 +26,19 @@
 		<refreshdbdesign server="domino02" database="JobFiles\\Z1001.nsf"
 			templateserver="domino02" />
 	</target>
-
+	
 	<target name="testbuildnsf" description="Build an NSF">
-		<buildnsf
+		<bxp:buildnsf
 			ondiskproject="V:\\DominoGit\\Headless\\com.gregorbyte.headless.nsf\\.project"
 			targetfilename="fromant2.nsf" port="8283">
-		</buildnsf>
+		</bxp:buildnsf>
+	</target>
+
+	<target name="testbuildnsf2" description="Build an NSF">
+		<bxp:buildnsf
+			ondiskproject="V:\\eclipse-kepler\\runtime-DominoDesigner\\DoraHeadless\\.project"
+			targetfilename="fromant2.nsf" port="8283">
+		</bxp:buildnsf>
 	</target>
 
 	<target name="cleanforgeneratesitexml">

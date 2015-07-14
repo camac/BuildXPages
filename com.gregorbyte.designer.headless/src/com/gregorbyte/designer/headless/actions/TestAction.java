@@ -14,7 +14,7 @@ public class TestAction implements IWorkbenchWindowActionDelegate {
 	@Override
 	public void run(IAction action) {
 
-		RefreshImportBuildJob job = new RefreshImportBuildJob("DoraHeadless");
+		RefreshImportBuildJob job = RefreshImportBuildJob.createFromOdpProjectName("DoraHeadless");
 		
 		job.schedule();
 		

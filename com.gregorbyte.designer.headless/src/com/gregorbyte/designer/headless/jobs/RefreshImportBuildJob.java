@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 
+import com.ibm.commons.util.StringUtil;
 import com.ibm.designer.domino.ide.resources.project.IDominoDesignerProject;
 import com.ibm.designer.domino.ide.resources.util.NsfUtil;
 import com.ibm.designer.domino.team.action.SyncAction;
@@ -32,41 +33,78 @@ import com.ibm.designer.domino.tools.userlessbuild.controller.StateMonitor;
 
 public class RefreshImportBuildJob extends Job {
 
-	private final String onDiskProjectName;
+	private String onDiskProjectFile;
+	private String onDiskProjectName;
 
-	public RefreshImportBuildJob(String onDiskProjectName) {
+	public RefreshImportBuildJob() {
 
 		super("Refresh Import and Build Job");
-		this.onDiskProjectName = onDiskProjectName;
-		// TODO Auto-generated constructor stub
+	}
+
+	public static RefreshImportBuildJob createFromOdpProjectName(
+			String odpProjectName) {
+
+		RefreshImportBuildJob job = new RefreshImportBuildJob();
+		job.onDiskProjectName = odpProjectName;
+		return job;
+
+	}
+
+	public static RefreshImportBuildJob createFromOdpProjectFile(
+			String onDiskProjectFile) {
+
+		RefreshImportBuildJob job = new RefreshImportBuildJob();
+		job.onDiskProjectFile = onDiskProjectFile;
+		return job;
+
+	}
+
+	public void findProjectName() {
+
+	}
+
+	private void findOnDiskProjectName() {
+
+		if (StringUtil.isNotEmpty(onDiskProjectName)) {
+			return;
+		}
+
+		if (StringUtil.isEmpty(onDiskProjectFile)) {
+			return;
+		}
+
+		File file = new File(onDiskProjectFile);
+
+		if (!file.exists()) {
+			return;
+		}
+
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		IPath path = new Path(file.getPath());
+
+		IProjectDescription pd;
+		try {
+			pd = workspace.loadProjectDescription(path);
+		} catch (CoreException e) {
+			e.printStackTrace();
+			return;
+		}
+
+		this.onDiskProjectName = pd.getName();
+
 	}
 
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
 
-		System.out.println("Totally Running now" + onDiskProjectName);
+		findOnDiskProjectName();
 
-//		File file = new File(
-//				"V:\\eclipse-kepler\\runtime-DominoDesigner\\DoraHeadless\\.project");
-//
-//		if (!file.exists()) {
-//			// TODO HOw to repotr errro
-//			System.out.println("File not existy");
-//			return Status.OK_STATUS;
-//		}
-
-		//IWorkspace workspace = ResourcesPlugin.getWorkspace();
-
-		//IPath path = new Path(file.getPath());
+		if (StringUtil.isEmpty(onDiskProjectName)) {
+			return Status.OK_STATUS;
+		}
 
 		try {
 
-			//IProjectDescription pd = workspace.loadProjectDescription(path);
-
-			//String pname = pd.getName();
-
-			//IProject proj = workspace.getRoot().getProject(pname);
-			
 			IProject proj = ProjectUtilities.getProject(this.onDiskProjectName);
 
 			if (!proj.exists()) {
@@ -89,6 +127,9 @@ public class RefreshImportBuildJob extends Job {
 
 			proj.refreshLocal(IResource.DEPTH_INFINITE, monitor);
 
+			// Why is it not deleting java?
+			proj.build(IncrementalProjectBuilder.CLEAN_BUILD, monitor);
+			
 			proj.build(IncrementalProjectBuilder.FULL_BUILD, monitor);
 
 			IDominoDesignerProject dproj = SyncUtil
@@ -107,7 +148,7 @@ public class RefreshImportBuildJob extends Job {
 			desProj.build(IncrementalProjectBuilder.FULL_BUILD, monitor);
 
 			System.out.println("About to Finish");
-			
+
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
