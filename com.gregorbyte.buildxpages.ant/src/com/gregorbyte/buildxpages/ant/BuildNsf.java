@@ -14,12 +14,12 @@ import org.apache.tools.ant.Task;
 public class BuildNsf extends Task {
 
 	private static final String MSG_TERM = "END.";
-	
+
 	private String ondiskproject;
 	private String targetfilename;
 	private boolean failonerror = true;
 	private String port;
-	
+
 	public void setOndiskproject(String ondiskproject) {
 		this.ondiskproject = ondiskproject;
 	}
@@ -34,51 +34,53 @@ public class BuildNsf extends Task {
 
 	private boolean parseStatus(String message) {
 
-		String[] bits = message.split(":");		
+		String[] bits = message.split(":");
 		String result = bits[1].trim();
-		
+
 		if (result.equals("SUCCESS"))
 			return true;
 		if (result.equals("FAIL"))
 			return false;
-		
+
 		return false;
-		
+
 	}
-	
+
 	public void validateProperties() throws BuildException {
 
 		if (ondiskproject == null || "".equals(ondiskproject))
 			throw new BuildException("No OnDiskProject specified");
-		
+
 		if (targetfilename == null || "".equals(targetfilename))
 			throw new BuildException("No targetfilename specified");
 
 		File file = new File(ondiskproject);
-		
+
 		if (!file.exists())
 			throw new BuildException("Supplied OnDiskProject does not exists");
-		
+
 	}
-	
+
 	@Override
 	public void execute() throws BuildException {
-		
+
 		if (port == null || port.equals(""))
 			port = "8282";
-		
+
 		int portNumber = Integer.parseInt(port);
-				
+
 		validateProperties();
-		
+
 		boolean nsfBuilt = false;
 		boolean noProblems = false;
 		Socket s = null;
-		
-		try {			
+
+		try {
 			s = new Socket(InetAddress.getLocalHost(), portNumber);
 		} catch (IOException e) {
-			throw new BuildException("Could not Connect to Headless Server using port: " + port, e);
+			throw new BuildException(
+					"Could not Connect to Headless Server using port: " + port,
+					e);
 		}
 
 		try {
@@ -86,56 +88,55 @@ public class BuildNsf extends Task {
 			BufferedReader input = new BufferedReader(new InputStreamReader(
 					s.getInputStream()));
 			PrintWriter out = new PrintWriter(s.getOutputStream(), true);
-			
+
 			// Read welcome message (max ten lines)
 			for (int i = 0; i < 10; i++) {
-				
+
 				String line = input.readLine();
 				if (line.equalsIgnoreCase(MSG_TERM))
 					break;
-				
+
 				System.out.println(line);
 			}
-			
+
 			// Send instruction to Build NSf
 			out.println(ondiskproject);
 			out.println(targetfilename);
 
 			// Output Confirmation Message
-			
+
 			String response;
 			response = input.readLine();
-			
+
 			// Output Progress if possible
-			
-			while (!response.equals(MSG_TERM)) {
-			
+
+			while (response != null && !response.equals(MSG_TERM)) {
+
 				if (response.startsWith("BUILD JOB STATUS:")) {
 					if (parseStatus(response))
 						nsfBuilt = true;
 				}
-				
+
 				if (response.startsWith("PROBLEMS STATUS:")) {
 					if (parseStatus(response))
 						noProblems = true;
 				}
-				
-				System.out.println(response);			
+
+				System.out.println(response);
 				response = input.readLine();
 			}
-			
+
 			try {
 				input.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			try {
 				s.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
 
 		} catch (IOException e) {
 			throw new BuildException(e);
@@ -143,10 +144,10 @@ public class BuildNsf extends Task {
 
 		if (!nsfBuilt)
 			throw new BuildException("Build Failed: NSF Not built properly");
-		
+
 		if (!noProblems && failonerror)
-			throw new BuildException("Build Failed: Problems found after build");		
-	
+			throw new BuildException("Build Failed: Problems found after build");
+
 	}
 
 }
