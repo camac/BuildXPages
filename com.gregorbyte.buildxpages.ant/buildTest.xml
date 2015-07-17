@@ -54,5 +54,22 @@
 		<bxp:generatesitexml eclipsedir="testgen" />
 	</target>
 	
+	<target name="testImportPlugins" description="Tests Importing Plugins to Update Site">
+		<bxp:importplugins server="domino02" database="temp\TestBxpUpdateSite.nsf" 
+		sitexml="V:\Cameron\Downloads\ExtensionLibraryOpenNTF-901v00_11.20141217-1000\updateSiteOpenNTF\site.xml"/>
+	</target>
+	
+	<target name="testimportfork">
+			
+		<java classname="com.gregorbyte.buildxpages.task.ImportToOpenEclipseUpdateSite" fork="true"
+		jvm="C:\Progra~2\IBM\Notes\jvm\bin\java.exe"
+		classpath="bin/;">
+			<arg value="-d"/>
+			<arg value="domino02.gregorbyte"/>
+			<arg value="temp\TestBxpUpdateSite.nsf"/>
+			<arg value="V:\Cameron\Downloads\ExtensionLibraryOpenNTF-901v00_11.20141217-1000\updateSiteOpenNTF\site.xml"/>			
+		</java>
+		
+	</target>
 
 </project>

@@ -35,6 +35,11 @@
 	<taskdef
 		name="generatesitexml"
 		classname="com.gregorbyte.buildxpages.ant.GenerateSiteXmlTask"
-		classpath="BulidXPagesAntLib.jar" onerror="ignore" />
+		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
+		
+	<taskdef
+		name="importplugins"
+		classname="com.gregorbyte.buildxpages.ant.ImportPluginsTask"
+		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 
 </antlib>
