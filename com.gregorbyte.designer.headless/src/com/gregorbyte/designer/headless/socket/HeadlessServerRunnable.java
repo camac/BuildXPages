@@ -12,11 +12,20 @@ import java.net.Socket;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 
 import com.gregorbyte.designer.headless.HeadlessServerActivator;
+import com.gregorbyte.designer.headless.jobs.RefreshImportBuildJob;
 import com.gregorbyte.designer.headless.preferences.PreferenceConstants;
+import com.ibm.commons.util.StringUtil;
+import com.ibm.designer.domino.ide.resources.project.IDominoDesignerProject;
+import com.ibm.designer.domino.team.util.SyncUtil;
 import com.ibm.designer.domino.tools.userlessbuild.ProjectUtilities;
 import com.ibm.designer.domino.tools.userlessbuild.jobs.CleanUpJob;
 import com.ibm.designer.domino.tools.userlessbuild.jobs.DeleteProjectJob;
@@ -38,6 +47,18 @@ public class HeadlessServerRunnable implements Runnable {
 		threadShouldStop = true;
 	}
 
+	private void refreshImportBuild(String onDiskProjectFile, PrintWriter out) throws InterruptedException {
+		
+		RefreshImportBuildJob job = RefreshImportBuildJob.createFromOdpProjectFile(onDiskProjectFile);
+		
+		BuildJobChangeAdapter listener = new BuildJobChangeAdapter(out);
+		
+		job.addJobChangeListener(listener);
+		job.schedule();
+		job.join();
+		
+	}
+	
 	private void importAndBuild(String onDiskPath, String nsfName, PrintWriter out) throws InterruptedException {
 	
 		ImportAndBuildJob myJob = new ImportAndBuildJob(
@@ -52,9 +73,47 @@ public class HeadlessServerRunnable implements Runnable {
 		
 	}
 	
-	private void reportMarkers(String projName, PrintWriter out) {
+	public IProject getAssociatedProject(String onDiskProjectFile) {
 
-		IProject project = ProjectUtilities.getProject(projName);
+		if (StringUtil.isEmpty(onDiskProjectFile)) {
+			return null;
+		}
+
+		File file = new File(onDiskProjectFile);
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		IPath path = new Path(file.getPath());
+
+
+		try {
+
+			IProjectDescription pd = workspace.loadProjectDescription(path);
+			
+			String onDiskProjectName = pd.getName();
+
+			IProject proj = ProjectUtilities.getProject(onDiskProjectName);
+			
+			IDominoDesignerProject dproj = SyncUtil
+					.getAssociatedNsfProject(proj);
+
+			if (dproj == null) {
+				return null;
+			}
+			
+			return dproj.getProject();
+
+		} catch (CoreException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	
+	private void reportMarkers(IProject project, PrintWriter out) {
 
 		if (!project.isOpen()) {
 			out.println(MSG_PROBLEMSSTATUS + MSG_FAIL);
@@ -168,12 +227,13 @@ public class HeadlessServerRunnable implements Runnable {
 						out.println("CONNECTED TO DESIGNER! What can we do for you?");
 						out.println("Expected Protocol");
 						out.println("Line 1: On Disk Project Path (Path to .project file)");
-						out.println("Line 2: Name of NSF to build");
+						out.println("LINE 2: will be ignored for now");
 						out.println(MSG_TERM);
 
 						boolean argsvalid = true;
 						String onDiskPath 	= in.readLine();
-						String nsfName 		= in.readLine();
+						@SuppressWarnings("unused")
+						String boobs = in.readLine();
 
 						File file = new File(onDiskPath);
 							
@@ -183,26 +243,30 @@ public class HeadlessServerRunnable implements Runnable {
 							argsvalid = false;
 						}
 													
-						IProject existing = ProjectUtilities.getProject(nsfName);
-						if (existing != null) {
-							out.println("The Supplied NSF project name already exists in the workspace:");
-							out.println("    NSF: " + nsfName);
-							argsvalid = false;								
-						}
+
+//						IProject existing = ProjectUtilities.getProject(nsfName);
+//						if (existing != null) {
+//							out.println("The Supplied NSF project name already exists in the workspace:");
+//							out.println("    NSF: " + nsfName);
+//							argsvalid = false;								
+//						}
 						
 						if (!argsvalid) {
 							out.println(MSG_TERM);
 							break;
 						}
 
+						refreshImportBuild(onDiskPath, out);
+						
 						// Run the Import and Build
-						importAndBuild(onDiskPath, nsfName, out);
+						//importAndBuild(onDiskPath, nsfName, out);
 
 						// Report on the Markers
-						reportMarkers(nsfName, out);
+						IProject proj = getAssociatedProject(onDiskPath);
+						reportMarkers(proj, out);
 
 						// Clean up projects
-						cleanup(out);
+						//cleanup(out);
 						
 						// Delete the Project
 						//deleteProject(nsfName, out);
