@@ -46,5 +46,10 @@
 		name="loaddesign"
 		classname="com.gregorbyte.buildxpages.ant.LoadDesignTask"
 		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
+		
+	<taskdef			
+		name="importplugins"
+		classname="com.gregorbyte.buildxpages.ant.ImportPluginsTask"
+		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 
 </antlib>

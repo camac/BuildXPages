@@ -77,6 +77,11 @@
 		<bxp:controlhttp server="CameronWS" action="stop" />
 	</target>
 
+	<target name="testImportPlugins" description="Tests Importing Plugins to Update Site">
+		<bxp:importplugins server="domino02" database="temp\TestBxpUpdateSite.nsf" 
+		sitexml="V:\Cameron\Downloads\ExtensionLibraryOpenNTF-901v00_11.20141217-1000\updateSiteOpenNTF\site.xml"/>
+	</target>
+	
 	<target name="teststarthttp">
 		<bxp:controlhttp server="CameronWS" action="start" />
 	</target>
