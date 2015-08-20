@@ -18,8 +18,8 @@
  		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 
 	<taskdef 
-		name="restarthttp"
-		classname="com.gregorbyte.buildxpages.ant.RestartHttpTask"
+		name="controlhttp"
+		classname="com.gregorbyte.buildxpages.ant.ControlHttpTask"
 		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 	
 	<taskdef
@@ -35,6 +35,16 @@
 	<taskdef
 		name="generatesitexml"
 		classname="com.gregorbyte.buildxpages.ant.GenerateSiteXmlTask"
-		classpath="BulidXPagesAntLib.jar" onerror="ignore" />
+		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
+		
+	<taskdef
+		name="maintenancewarning"
+		classname="com.gregorbyte.buildxpages.ant.MaintenanceWarningTask"
+		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
+		
+	<taskdef
+		name="loaddesign"
+		classname="com.gregorbyte.buildxpages.ant.LoadDesignTask"
+		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 
 </antlib>

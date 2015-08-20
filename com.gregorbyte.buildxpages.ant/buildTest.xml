@@ -61,5 +61,28 @@
 		<bxp:generatesitexml eclipsedir="testgen" />
 	</target>
 	
+	<target name="testmaintenancewarn">
+		<bxp:maintenancewarning server="CameronWS" minutes="20" />
+	</target>
+	
+	<target name="testmwcancel">
+		<bxp:maintenancewarning server="CameronWS" cancelwarning="true" />
+	</target>	
+	
+	<target name="testrestarthttp">
+		<bxp:controlhttp server="CameronWS" action="restart" />
+	</target>
 
+	<target name="teststophttp">
+		<bxp:controlhttp server="CameronWS" action="stop" />
+	</target>
+
+	<target name="teststarthttp">
+		<bxp:controlhttp server="CameronWS" action="start" />
+	</target>
+
+	<target name="testloaddesign">
+		<bxp:loaddesign server="CameronWS" directory="Cameron\Jogs\JobHub" />
+	</target>
+	
 </project>
