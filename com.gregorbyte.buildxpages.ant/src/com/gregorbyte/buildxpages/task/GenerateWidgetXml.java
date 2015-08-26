@@ -23,10 +23,13 @@ import org.w3c.dom.Element;
 public class GenerateWidgetXml {
 
 	private String eclipseFolder = null;
+	private File eclipseDirFile = null;
+
 	private List<FeatureDetails> features = new ArrayList<FeatureDetails>();
 
 	private String updateSiteServer = null;
 	private String updateSiteFilepath = null;
+	private String updateSiteUrl = null;
 
 	private String widgetId = null;
 	private String widgetTitle = null;
@@ -96,10 +99,20 @@ public class GenerateWidgetXml {
 		this.eclipseFolder = eclipseFolder;
 	}
 
+	private File getEclipseDirFile() {
+
+		if (this.eclipseDirFile == null) {
+			this.eclipseDirFile = new File(this.eclipseFolder);
+		}
+
+		return this.eclipseDirFile;
+
+	}
+
 	public void execute() throws FileNotFoundException, TransformerException,
 			ParserConfigurationException {
 
-		File eclipseDirFile = new File(this.eclipseFolder);
+		File eclipseDirFile = getEclipseDirFile();
 		if (!eclipseDirFile.exists()) {
 			throw new FileNotFoundException(
 					"Can't find Eclipse Directory, does not exists");
@@ -163,6 +176,53 @@ public class GenerateWidgetXml {
 		System.out.println("File saved!");
 	}
 
+	private void gatherFeatures() throws FileNotFoundException {
+
+		File eclipseDirFile = getEclipseDirFile();
+		if (!eclipseDirFile.exists()) {
+			throw new FileNotFoundException(
+					"Can't find Eclipse Directory, does not exists");
+		}
+		if (!eclipseDirFile.isDirectory()) {
+			throw new IllegalArgumentException(
+					"Supplied argument must be a directory");
+		}
+		String featuresDir = this.eclipseFolder + File.separator + "features";
+
+		File featuresDirFile = new File(featuresDir);
+		if (!featuresDirFile.exists()) {
+			throw new FileNotFoundException("features sub directory not found");
+		}
+		if (!featuresDirFile.isDirectory()) {
+			throw new IllegalArgumentException(
+					"Directory must have sub-directory called features");
+		}
+		String[] featureJars = featuresDirFile.list();
+
+		for (String subfile : featureJars) {
+
+			if (subfile.endsWith(".jar") && subfile.contains("_")) {
+
+				String[] bits = subfile.split("_");
+
+				String id = bits[0];
+				String versionFull = bits[1].substring(0,
+						bits[1].lastIndexOf('.'));
+				String version = versionFull.substring(0,
+						versionFull.lastIndexOf('.'));
+
+				FeatureDetails fd = new FeatureDetails();
+				fd.id = id;
+				fd.version = version;
+				fd.match = MATCH_GREATEROREQUAL;
+
+				features.add(fd);
+
+			}
+		}
+
+	}
+
 	public void generate() throws ParserConfigurationException,
 			FileNotFoundException, TransformerException {
 
@@ -175,65 +235,17 @@ public class GenerateWidgetXml {
 		Transformer transformer = transformerFactory.newTransformer();
 		DOMSource source = new DOMSource(doc);
 
-		StringWriter writer = new StringWriter();
-		StreamResult result = new StreamResult(writer);
+		File eclipseDirFile = getEclipseDirFile();
+		StreamResult result = new StreamResult(new File(eclipseDirFile,
+				"widget.xml"));
 
-		// StreamResult result = new StreamResult(new File(eclipseDirFile,
-		// "site.xml"));
+		transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, "yes");
 
 		transformer.setOutputProperty("indent", "yes");
 		transformer.setOutputProperty(
 				"{http://xml.apache.org/xslt}indent-amount", "2");
 
 		transformer.transform(source, result);
-
-		String output = writer.getBuffer().toString();
-
-		System.out.println(output);
-
-		// File eclipseDirFile = new File(this.eclipseFolder);
-		// if (!eclipseDirFile.exists()) {
-		// throw new FileNotFoundException(
-		// "Can't find Eclipse Directory, does not exists");
-		// }
-		// if (!eclipseDirFile.isDirectory()) {
-		// throw new IllegalArgumentException(
-		// "Supplied argument must be a directory");
-		// }
-		// String featuresDir = this.eclipseFolder + File.separator +
-		// "features";
-		//
-		// File featuresDirFile = new File(featuresDir);
-		// if (!featuresDirFile.exists()) {
-		// throw new FileNotFoundException("features sub directory not found");
-		// }
-		// if (!featuresDirFile.isDirectory()) {
-		// throw new IllegalArgumentException(
-		// "Directory must have sub-directory called features");
-		// }
-		// String[] featureJars = featuresDirFile.list();
-		// for (String subfile : featureJars) {
-		// if (subfile.endsWith(".jar")) {
-		// // this.features.add(subfile);
-		// }
-		// }
-
-		// for (String featureName : this.features) {
-		// if (featureName.endsWith(".jar") && featureName.contains("_")) {
-		// String[] bits = featureName.split("_");
-		//
-		// String id = bits[0];
-		// String version = bits[1].substring(0, bits[1].lastIndexOf('.'));
-		// String url = "features/" + featureName;
-		//
-		// Element feature = doc.createElement("feature");
-		// rootElement.appendChild(feature);
-		//
-		// feature.setAttribute("url", url);
-		// feature.setAttribute("id", id);
-		// feature.setAttribute("version", version);
-		// }
-		// }
 
 	}
 
@@ -249,8 +261,6 @@ public class GenerateWidgetXml {
 		doc.appendChild(rootElement);
 
 		rootElement.setAttribute(ATTR_VERSION, "1.1");
-
-		String updateSiteUrl = "nrpc://something/__something/site.xml";
 
 		// Create PalleteItem element
 		Element piElement = doc.createElement(ELEMENT_PALLETEITEM);
@@ -339,7 +349,11 @@ public class GenerateWidgetXml {
 
 			featElement.setAttribute(ATTR_ID, featureDetails.id);
 			featElement.setAttribute(ATTR_MATCH, featureDetails.match);
-			featElement.setAttribute(ATTR_SHARED, featureDetails.shared);
+			if (featureDetails.shared) {
+				featElement.setAttribute(ATTR_SHARED, "true");
+			} else {
+				featElement.setAttribute(ATTR_SHARED, "false");
+			}
 			featElement.setAttribute(ATTR_VERSION, featureDetails.version);
 
 		}
@@ -352,7 +366,7 @@ public class GenerateWidgetXml {
 
 		private String id;
 		private String match;
-		private String shared;
+		private boolean shared = true;
 		private String version;
 
 	}
