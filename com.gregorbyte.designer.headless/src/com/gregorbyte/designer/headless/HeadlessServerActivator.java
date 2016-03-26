@@ -1,8 +1,10 @@
 package com.gregorbyte.designer.headless;
 
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import com.gregorbyte.designer.headless.preferences.PreferenceConstants;
 import com.gregorbyte.designer.headless.socket.HeadlessServerRunnable;
 
 /**
@@ -59,6 +61,16 @@ public class HeadlessServerActivator extends AbstractUIPlugin {
 		System.out.println("Starting Headless Bundle");
 				
 		super.start(context);
+		
+		IPreferenceStore store = getPreferenceStore();	
+
+		boolean autostart = store.getBoolean(PreferenceConstants.P_AUTOSTART);
+		
+		if (autostart) {
+			System.out.println("Autostart Headless Designer Server");			
+			startServer();
+		}
+		
 		plugin = this;
 	}
 
