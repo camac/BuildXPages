@@ -374,29 +374,20 @@ public class GenerateWidgetXml {
 	public static void main(String[] args) throws FileNotFoundException,
 			TransformerException, ParserConfigurationException {
 
-		String updateSiteFolder = "Doesn't matter";
+		String updateSiteFolder = "C:\\Users\\cgregor\\Desktop\\JobHubNotesPlugins";
 
 		GenerateWidgetXml gen = new GenerateWidgetXml(updateSiteFolder);
 
-		FeatureDetails fd1 = gen.new FeatureDetails();
-		fd1.id = "feature.one";
-		fd1.match = "compatible";
-		fd1.shared = "shared";
-		fd1.version = "1.0.0";
+		gen.featureDescription = "Job Hub Sidebar";
+		gen.featureName = "Job hub Sidebar";
+		gen.featureId = "Jord_JobHubSidebar";
 
-		FeatureDetails fd2 = gen.new FeatureDetails();
-		fd2.id = "feature.two";
-		fd2.match = "compatible";
-		fd2.shared = "shared";
-		fd2.version = "1.0.2";
+		gen.updateSiteUrl = "nrpc://ausdata.jord.com.au/__ca257d240010baad/site.xml";
 
-		gen.features.add(fd1);
-		gen.features.add(fd2);
+		gen.widgetId = "Jord_JobHubSidebar";
+		gen.widgetTitle = "Job Hub Sidebar";
 
-		gen.featureDescription = "Test Widget Feature";
-		gen.featureName = "Test Widget Name";
-		gen.featureId = "Test Widget Id";
-
+		gen.gatherFeatures();
 		gen.generate();
 
 		// gen.debugInstallManifest();

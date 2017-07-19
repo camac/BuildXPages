@@ -37,8 +37,14 @@ public class HeadlessServerPreferencePage
 	 * restore itself.
 	 */
 	public void createFieldEditors() {		
+		
+		addField(new BooleanFieldEditor(PreferenceConstants.P_START, "Auto-Start Headless Server", getFieldEditorParent()));
+		
 		addField(
 			new StringFieldEditor(PreferenceConstants.P_PORT, "Port Number to Listen on:", getFieldEditorParent()));
+		
+		
+		
 	}
 
 	/* (non-Javadoc)

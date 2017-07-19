@@ -5,6 +5,7 @@ package com.gregorbyte.designer.headless.preferences;
  */
 public class PreferenceConstants {
 
+	public static final String P_START = "autoStartServer";
 	public static final String P_PORT = "portPreference";
 	
 }

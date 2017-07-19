@@ -12,13 +12,17 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.osgi.services,
  com.ibm.designer.domino.team,
  com.ibm.designer.domino.ide.resources,
- com.ibm.designer.prj.resources
+ com.ibm.designer.prj.resources,
+ org.eclipse.ui.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-ActivationPolicy: lazy
 Import-Package: com.ibm.commons.util,
  com.ibm.designer.domino.ide.resources.project,
  javax.servlet;version="2.5.0",
  javax.servlet.http;version="2.5.0",
  org.eclipse.core.resources
 Export-Package: com.gregorbyte.designer.headless,
- com.gregorbyte.designer.headless.actions
+ com.gregorbyte.designer.headless.actions,
+ com.gregorbyte.designer.headless.jobs,
+ com.gregorbyte.designer.headless.preferences,
+ com.gregorbyte.designer.headless.socket
+Bundle-ActivationPolicy: lazy

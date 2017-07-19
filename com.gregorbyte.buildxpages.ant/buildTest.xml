@@ -6,6 +6,8 @@
 		uri="antlib:com.gregorbyte.buildxpages.ant" 
 		resource="com/gregorbyte/buildxpages/ant/antlib.xml"
 		classpath="lib/BuildXPagesAntLib.jar"></taskdef>
+	
+	<property name="dominoProgDir" location="C:\Domino"/>
 
 
 	
@@ -41,10 +43,20 @@
 		</bxp:buildnsf>
 	</target>
 
-	<target name="cleanforgeneratesitexml">
-		
-		<delete dir="testgen"></delete>
-		
+	<target name="testclosedesigner" description="Close Designer">
+		<bxp:closedesigner/>
+	</target>
+	
+	<target name="teststartdesigner" description="Start Designer">
+		<exec executable="C:\Notes\designer.exe"></exec>		
+	</target>
+	
+	<target name="testmarkersreport" description="Tests Reporting on ProblemMarkers">
+		<bxp:markersreport ondiskproject="C:\\workspaces\\neon-64\\runtime-HeadlessPlugin\\DeleteMe\\.project"></bxp:markersreport>
+	</target>
+	
+	<target name="cleanforgeneratesitexml">	
+		<delete dir="testgen"></delete>		
 	</target>
 	
 	<target name="setupforgeneratesitexml" depends="cleanforgeneratesitexml">
@@ -89,5 +101,22 @@
 	<target name="testloaddesign">
 		<bxp:loaddesign server="CameronWS" directory="Cameron\Jogs\JobHub" />
 	</target>
+	
+	<target name="testtestmacro">
+		<bxp:testmacro v="hi"/>
+	</target>
+
+	<target name="testcollectjvmjars">
+		<bxp:collectJvmJars/>
+		<echo message="${JavaSE16Jars}"></echo>
+		<bxp:collectJvmJars propertyName="yoyo"/>
+		<echo message="${yoyo}"></echo>		
+
+	</target>
+		
+	<target name="testcopyplugin">
+		<bxp:copyplugintobuilddir plugin=""/>
+	</target>
+
 	
 </project>

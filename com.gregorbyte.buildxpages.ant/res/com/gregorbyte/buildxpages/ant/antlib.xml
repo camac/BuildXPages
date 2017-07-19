@@ -1,55 +1,333 @@
-<antlib>
+<antlib xmlns:current="ant:current">
 
- 	<taskdef name="copynsf" 
- 		classname="com.gregorbyte.buildxpages.ant.CopyNsfTask"
- 		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
+	<taskdef name="copynsf" classname="com.gregorbyte.buildxpages.ant.CopyNsfTask" classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 
-	<taskdef
-		name="deletensf"
-		classname="com.gregorbyte.buildxpages.ant.DeleteNsfTask"
-		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
+	<taskdef name="deletensf" classname="com.gregorbyte.buildxpages.ant.DeleteNsfTask" classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 
-	<taskdef name="settemplatenames"
-		classname="com.gregorbyte.buildxpages.ant.SetTemplateNamesTask"
-		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
+	<taskdef name="settemplatenames" classname="com.gregorbyte.buildxpages.ant.SetTemplateNamesTask" classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 
- 	<taskdef name="scxd" 
- 		classname="com.gregorbyte.buildxpages.ant.SetSingleCopyXPageTask"
- 		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
+	<taskdef name="scxd" classname="com.gregorbyte.buildxpages.ant.SetSingleCopyXPageTask" classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 
-	<taskdef 
-		name="controlhttp"
-		classname="com.gregorbyte.buildxpages.ant.ControlHttpTask"
-		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
-	
-	<taskdef
-		name="refreshdbdesign"
-		classname="com.gregorbyte.buildxpages.ant.RefreshDbDesign"
-		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
+	<taskdef name="controlhttp" classname="com.gregorbyte.buildxpages.ant.ControlHttpTask" classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 
-	<taskdef
-		name="buildnsf"
-		classname="com.gregorbyte.buildxpages.ant.BuildNsf"
-		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
+	<taskdef name="refreshdbdesign" classname="com.gregorbyte.buildxpages.ant.RefreshDbDesign" classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 
-	<taskdef
-		name="generatesitexml"
-		classname="com.gregorbyte.buildxpages.ant.GenerateSiteXmlTask"
-		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
+	<taskdef name="buildnsf" classname="com.gregorbyte.buildxpages.ant.BuildNsf" classpath="BuildXPagesAntLib.jar" onerror="ignore" />
+
+	<taskdef name="closedesigner" classname="com.gregorbyte.buildxpages.ant.CloseDesignerTask" classpath="BuildXPagesAntLib.jar" onerror="ignore" />
+
+	<taskdef name="markersreport" classname="com.gregorbyte.buildxpages.ant.MarkersReportTask" classpath="BuildXPagesAntLib.jar" onerror="ignore" />
+
+	<taskdef name="generatesitexml" classname="com.gregorbyte.buildxpages.ant.GenerateSiteXmlTask" classpath="BuildXPagesAntLib.jar" onerror="ignore" />
+
+	<taskdef name="maintenancewarning" classname="com.gregorbyte.buildxpages.ant.MaintenanceWarningTask" classpath="BuildXPagesAntLib.jar" onerror="ignore" />
+
+	<taskdef name="loaddesign" classname="com.gregorbyte.buildxpages.ant.LoadDesignTask" classpath="BuildXPagesAntLib.jar" onerror="ignore" />
+
+	<taskdef name="importplugins" classname="com.gregorbyte.buildxpages.ant.ImportPluginsTask" classpath="BuildXPagesAntLib.jar" onerror="ignore" />
+
+	<macrodef name="collectJvmJars">
+		<attribute name="programDirectory" default="${dominoProgDir}" />
+		<attribute name="propertyName" default="JavaSE16Jars" />
+		<sequential>
+
+			<fileset id="jvmjarsFileset" dir="@{programDirectory}/jvm">
+				<include name="**/*.jar" />
+			</fileset>
+
+			<pathconvert targetos="unix" property="@{propertyName}" refid="jvmjarsFileset" pathsep=";" />
+
+		</sequential>
+	</macrodef>
+
+	<macrodef name="copyplugintobuilddir">
+		<attribute name="plugin" />
+		<sequential>
+
+			<local name="pluginName"/>
+			<basename property="pluginName" file="@{plugin}"/>
+
+			<copy todir="${pluginsDir}/${pluginName}">
+				<fileset dir="@{plugin}">
+					<exclude name="**/bin/**">
+					</exclude>
+				</fileset>
+			</copy>
+
+		</sequential>
+
+	</macrodef>
+
+	<macrodef name="checkDesignerRunning">
+		<sequential>
+			<exec executable="tasklist" outputproperty="output">
+				<arg value="/FI" />
+				<arg value="&quot;IMAGENAME eq nlnotes.exe&quot;" />
+			</exec>
+			<condition property="designer.running">
+				<contains string="${output}" substring="nlnotes.exe" />
+			</condition>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="startDesigner">
+		<sequential>
+			<exec executable="${notesProgDir}/designer.exe">
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="unpackplugin">
+		<attribute name="dir"/>
+		<attribute name="pluginid" />
+		<sequential>
+			<local name="jar.dir"/>
+			<property name="jar.dir" location="@{dir}"/>
 		
-	<taskdef
-		name="maintenancewarning"
-		classname="com.gregorbyte.buildxpages.ant.MaintenanceWarningTask"
-		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
-		
-	<taskdef
-		name="loaddesign"
-		classname="com.gregorbyte.buildxpages.ant.LoadDesignTask"
-		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
-		
-	<taskdef			
-		name="importplugins"
-		classname="com.gregorbyte.buildxpages.ant.ImportPluginsTask"
-		classpath="BuildXPagesAntLib.jar" onerror="ignore" />
+			<fileset id="jar.file.id" dir="${jar.dir}" includes="@{pluginid}_*.jar" />
+						
+			<local name="jar.file" />
+			<local name="jar.basename" />
+			<local name="unjar.dir" />
+			<property name="jar.file" refid="jar.file.id" />
+
+			<echo message="${jar.file}"/>
+
+			<basename property="jar.basename" file="${jar.file}" suffix=".jar" />
+			<property name="unjar.dir" location="${jar.dir}/${jar.basename}" />
+			<mkdir dir="${unjar.dir}" />
+			<unzip dest="${unjar.dir}" src="${jar.dir}/${jar.file}" />
+
+			<delete file="${jar.dir}/${jar.file}"/>
+
+		</sequential>
+	</macrodef>
+
+	<macrodef name="updateDesignerLink">
+		<attribute name="updateSiteLabel"></attribute>
+		<attribute name="updateSiteDir"></attribute>
+		<sequential>
+			<local name="linkfile"/>
+			
+			<local name="updateSiteDirLocal"/>
+			<property name="updateSiteDirLocal" location="@{updateSiteDir}"/>
+			
+			<property name="linkfile" location="${notesProgDir}\framework\rcp\eclipse\links\@{updateSiteLabel}.link" />
+
+			<touch file="${linkfile}">
+			</touch>
+
+			<local name="updateSiteDirAmended"/>
+			<loadresource property="updateSiteDirAmended">
+				<propertyresource name="updateSiteDirLocal" />
+				<filterchain>
+					<tokenfilter>
+						<filetokenizer />
+						<replacestring from=":\" to="\:/">
+						</replacestring>
+					</tokenfilter>
+				</filterchain>
+			</loadresource>
+
+			<echo message="path=${updateSiteDirAmended}" file="${linkfile}">
+			</echo>
+
+		</sequential>
+			
+	</macrodef>
+
+	<macrodef name="initDesignerSite">
+		<attribute name="updateSiteLabel"></attribute>
+		<sequential>
+
+			<property name="linkfile" location="${notesProgDir}\framework\rcp\eclipse\links\@{updateSiteLabel}.link" />
+
+			<mkdir dir="${notesProgDir}\framework\@{updateSiteLabel}\eclipse\plugins" />
+			<mkdir dir="${notesProgDir}\framework\@{updateSiteLabel}\eclipse\features" />
+
+			<touch file="${linkfile}">
+			</touch>
+
+			<loadresource property="notesProgDirAmended">
+				<propertyresource name="notesProgDir" />
+				<filterchain>
+					<tokenfilter>
+						<filetokenizer />
+						<replacestring from=":\" to="\:/">
+						</replacestring>
+					</tokenfilter>
+				</filterchain>
+			</loadresource>
+
+			<echo message="path=${notesProgDirAmended}/framework/@{updateSiteLabel}" file="${linkfile}">
+			</echo>
+
+		</sequential>
+
+	</macrodef>
+
+	<macrodef name="checkPlatformXml">
+		<sequential>
+			<property name="src.dir" location="${basedir}/buildFiles" />
+			<property name="search.string" value="MANAGED-ONLY" />
+
+			<fileset id="existing" dir="${src.dir}">
+				<patternset id="files">
+					<!-- includes/excludes for your source here -->
+					<include name="*.xml" />
+				</patternset>
+			</fileset>
+
+			<fileset id="matches" dir="${src.dir}">
+				<patternset refid="files" />
+				<contains text="${search.string}" />
+			</fileset>
+
+			<fail message="Found '${search.string}' in one or more files in '${src.dir}'">
+				<condition>
+					<resourcecount when="greater" count="0" refid="matches" />
+				</condition>
+			</fail>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="configureDynamicPlugins">
+		<sequential>
+			<copy file="${basedir}/buildFiles/platform-backup20151216.xml" tofile="${basedir}/buildFiles/platform-test.xml"></copy>
+
+			<replace file="${basedir}/buildFiles/platform-test.xml">
+				<replacetoken><![CDATA[transient="true"]]></replacetoken>
+				<replacevalue><![CDATA[transient="false"]]></replacevalue>
+			</replace>
+
+			<replace file="${basedir}/buildFiles/platform-test.xml" token="MANAGED-ONLY" value="DODODO"></replace>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="buildPlugins">
+
+		<attribute name="pluginPath" />
+
+		<sequential>
+			<current:collectJvmJars />
+
+			<fail unless="eclipseBase">eclipseBase property must be set</fail>
+			<fail unless="pdeBuildVersion">pdeBuildVersion property must be set</fail>
+			<fail unless="equinoxLauncherVersion">equinoxLauncherVersion property must be set</fail>
+
+			<java jar="${equinoxLauncherJar}" fork="true" failonerror="true">
+
+				<arg value="-application" />
+				<arg value="org.eclipse.ant.core.antRunner" />
+
+				<arg value="-buildfile" />
+				<arg value="${pdeBuildXml}" />
+
+				<arg value="-Dbuilder=${buildConfigDir}" />
+				<arg value="-DbuildDirectory=${buildDir}" />
+				<arg value="-DskipMaps=true" />
+				<arg value="-DskipFetch=true" />
+				<arg value="-DrunPackager=false" />
+				<arg value="-DoutputUpdateJars=true" />
+
+				<arg value="-DbuildId=${buildId}" />
+				<arg value="-DbuildLabel=${buildLabel}" />
+
+				<arg value="-DarchivePrefix=eclipse" />
+
+				<arg value="-Dbase=${eclipseBase}" />
+				<arg value="-DbaseLocation=${eclipseBase}" />
+
+				<arg value="-DskipBase=true" />
+				<arg value="-DpluginPath=${pluginPath}" />
+
+				<arg value="-DJavaSE-1.6=${JavaSE16Jars}" />
+				<arg value="-DtopLevelElementType=feature" />
+				<arg value="-DtopLevelElementId=${featureId}" />
+
+				<arg value="-DjavacSource=1.6" /> <!-- These were here for Hapi.Lib -->
+				<arg value="-DjavacTarget=1.6" /> <!-- These were here for Hapi.Lib -->
+
+				<arg value="-DcompilerArg=-g" /><!-- With Line Numbers -->
+
+			</java>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="clearUpdateSite">
+		<attribute name="eclipseDir" />
+		<sequential>
+
+			<local name="pluginsDir" />
+			<property name="pluginsDir" location="@{eclipseDir}/plugins" />
+			<local name="featuresDir" />
+			<property name="featuresDir" location="@{eclipseDir}/features" />
+
+			<delete failonerror="true">
+				<fileset dir="${pluginsDir}" includes="*.jar" />
+			</delete>
+
+			<delete failonerror="true">
+				<fileset dir="${featuresDir}" includes="*.jar" />
+			</delete>
+
+		</sequential>
+	</macrodef>
+
+	<macrodef name="copyPluginsToUpdateSite">
+		<attribute name="eclipseDir" />
+		<sequential>
+
+			<local name="pluginsDir" />
+			<property name="pluginsDir" location="@{eclipseDir}/plugins" />
+			<local name="featuresDir" />
+			<property name="featuresDir" location="@{eclipseDir}/features" />
+
+			<unzip src="${builtPluginsZip}" dest="${pluginsDir}">
+				<patternset>
+					<include name="**/plugins/*.jar" />
+				</patternset>
+				<mapper type="flatten" />
+			</unzip>
+
+			<unzip src="${builtPluginsZip}" dest="${featuresDir}">
+				<patternset>
+					<include name="**/features/*.jar" />
+				</patternset>
+				<mapper type="flatten" />
+			</unzip>
+
+			<current:generatesitexml eclipsedir="@{eclipseDir}" />
+
+		</sequential>
+
+	</macrodef>
+
+	<macrodef name="saveDbProperties">
+		<sequential>
+			<fail unless="dbProps.name">dbProps.name</fail>
+
+			<mkdir dir="${dbProps.dir}" />
+
+			<copy overwrite="true" file="${odp.dir}/AppProperties/database.properties" tofile="${dbProps.dir}/${dbProps.name}.database.properties" />
+			<copy failonerror="false" overwrite="true" file="${odp.dir}/AppProperties/$DBIcon" tofile="${dbProps.dir}/${dbProps.name}.$DBIcon" />
+			<copy failonerror="false" overwrite="true" file="${odp.dir}/Resources/IconNote" tofile="${dbProps.dir}/${dbProps.name}.IconNote" />
+			<copy failonerror="false" overwrite="true" file="${odp.dir}/Resources/Images/$DBIcon" tofile="${dbProps.dir}/${dbProps.name}.Images.$DBIcon" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="restoreDbProperties">
+		<sequential>
+
+			<fail unless="dbProps.name">dbProps.name</fail>
+
+			<copy overwrite="true" file="${dbProps.dir}/${dbProps.name}.database.properties" tofile="${odp.dir}/AppProperties/database.properties" />
+			<copy failonerror="false" overwrite="true" file="${dbProps.dir}/${dbProps.name}.$DBIcon" tofile="${odp.dir}/AppProperties/$DBIcon" />
+			<copy failonerror="false" overwrite="true" file="${dbProps.dir}/${dbProps.name}.IconNote" tofile="${odp.dir}/Resources/IconNote" />
+			<copy failonerror="false" overwrite="true" file="${dbProps.dir}/${dbProps.name}.Images.$DBIcon" tofile="${odp.dir}/Resources/Images/$DBIcon" />
+
+		</sequential>
+	</macrodef>
+
 
 </antlib>

@@ -41,5 +41,9 @@
 		<copy file="${lib.dir}/${ant.project.name}.jar" todir="${ant.library.dir}"></copy>
 
 	</target>
+	
+	<target name="install" depends="installtoant,installtouserhome">
+	
+	</target>
 
 </project>
