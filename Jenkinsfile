@@ -1,3 +1,5 @@
+properties([pipelineTriggers([githubPush()])])
+
 node {
 	stage('AntLib') {
 		echo 'I will build Ant Lib'
@@ -8,6 +10,6 @@ node {
 	}
 
 	stage('Results') {
-		archive '**/*.xml'
+		archive '*.md'
 	}
 }
