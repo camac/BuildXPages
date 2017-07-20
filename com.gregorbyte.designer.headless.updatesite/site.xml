@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
    <feature url="features/com.gregorbyte.designer.headless.feature_1.0.0.201507171622.jar" id="com.gregorbyte.designer.headless.feature" version="1.0.0.201507171622"/>
+   <feature url="features/com.gregorbyte.designer.headless.feature_1.0.0.201707181253.jar" id="com.gregorbyte.designer.headless.feature" version="1.0.0.201707181253"/>
+   <feature url="features/com.gregorbyte.designer.headless.feature_1.0.0.201707181301.jar" id="com.gregorbyte.designer.headless.feature" version="1.0.0.201707181301">
+      <category name="Headless"/>
+   </feature>
+   <category-def name="Headless" label="Headless"/>
 </site>
