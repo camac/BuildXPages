@@ -8,7 +8,7 @@ node {
 		echo 'I will build Ant Lib'
 		def antVersion = 'DefaultCam'
 		withEnv( ["ANT_HOME=${tool antVersion}"] ) {		
-			bat '%ANT_HOME%/bin/ant.bat -buildfile com.gregorbyte.buildxpages.ant/build.xml'
+			bat '%ANT_HOME%/bin/ant.bat -buildfile com.gregorbyte.buildxpages.ant/build.xml -DnotesProgDir=${env.NOTES_PROGDIR} compilejar'
 		}
 	}
 
