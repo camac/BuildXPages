@@ -4,24 +4,31 @@ pipeline{
 
   stages {
     stage('Checkout') {
-      checkout scm
+      steps {
+        checkout scm
+      }
     }
 
   	stage('AntLib') {
-	  	echo "I will build Ant Lib on ${env.BRANCH_NAME}"
-		  def antVersion = 'DefaultCam'
-  		withEnv( ["ANT_HOME=${tool antVersion}"] ) {		
-	  		bat '%ANT_HOME%/bin/ant.bat -buildfile com.gregorbyte.buildxpages.ant/build.xml -DnotesProgDir=${env.NOTES_PROGDIR} compilejar'
-		  }
+      steps {
+  	  	echo "I will build Ant Lib on ${env.BRANCH_NAME}"
+  		  def antVersion = 'DefaultCam'
+    		withEnv( ["ANT_HOME=${tool antVersion}"] ) {		
+  	  		bat '%ANT_HOME%/bin/ant.bat -buildfile com.gregorbyte.buildxpages.ant/build.xml -DnotesProgDir=${env.NOTES_PROGDIR} compilejar'
+  		  }
+      }
   	}
 
 	  stage('HeadlessPlugin') {
-		  echo 'Now I will build plugin'
+      steps {
+  		  echo 'Now I will build plugin'
+      }
   	}
 
 	  stage('Results') {
-		  archive '**/BuildXPagesAntLib.jar'
-
+      steps {
+  		  archive '**/BuildXPagesAntLib.jar'
+      }
   	}
   }
 
