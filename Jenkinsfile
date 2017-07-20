@@ -17,6 +17,6 @@ node {
 	}
 
 	stage('Results') {
-		archive '*.md'
+		archive 'BuildXPagesAntLib.jar'
 	}
 }
