@@ -17,7 +17,7 @@ node {
 	}
 
 	stage('Results') {
-		archive 'BuildXPagesAntLib.jar'
+		archive '**/BuildXPagesAntLib.jar'
 		emailext body: 'BuildXPages was built', subject: 'BuildXPages ', to: 'cgregor@jord.com.au'
 	}
 }
