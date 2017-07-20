@@ -1,6 +1,9 @@
 properties([pipelineTriggers([githubPush()])])
 
 node {
+
+	checkout scm
+
 	stage('AntLib') {
 		echo 'I will build Ant Lib'
 		def antVersion = 'DefaultCam'
