@@ -12,7 +12,7 @@ pipeline{
       steps {
         checkout([
           $class: 'GitSCM',
-          branches: [[name: develop]],
+          branches: [[name: 'develop']],
           extensions: scm.extensions,
           userRemoteConfigs: scm.userRemoteConfigs
         ])
