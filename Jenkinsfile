@@ -3,7 +3,8 @@ properties([pipelineTriggers([githubPush()])])
 node {
 	stage('AntLib') {
 		echo 'I will build Ant Lib'
-		withEnv( ["ANT_HOME=${tool DefaultCam}"] ) {		
+		def antVersion = 'DefaultCam'
+		withEnv( ["ANT_HOME=${tool antVersion}"] ) {		
 			bat '%ANT_HOME%/bin/ant.bat -buildfile com.gregorbyte.buildxpages.ant/build.xml'
 		}
 	}
