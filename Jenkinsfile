@@ -5,7 +5,7 @@ node {
 	checkout scm
 
 	stage('AntLib') {
-		echo 'I will build Ant Lib on ${env.BRANCH_NAME}'
+		echo "I will build Ant Lib on ${env.BRANCH_NAME}"
 		def antVersion = 'DefaultCam'
 		withEnv( ["ANT_HOME=${tool antVersion}"] ) {		
 			bat '%ANT_HOME%/bin/ant.bat -buildfile com.gregorbyte.buildxpages.ant/build.xml -DnotesProgDir=${env.NOTES_PROGDIR} compilejar'
