@@ -3,11 +3,6 @@ pipeline{
   agent any  
 
   stages {
-    stage('Checkout') {
-      steps {
-        checkout scm
-      }
-    }
 
   	stage('AntLib') {
       steps {
@@ -33,11 +28,14 @@ pipeline{
   }
 
   post {
+    success {
+      emailext body: "BuildXPages Success ${currentBuild.currentResult}", subject: "BuildXPages ${currentBuild.currentResult}", to: 'cgregor@jord.com.au'      
+    }
     changed {
-   		emailext body: "BuildXPages ${currentBuild.result}", subject: "BuildXPages ${currentBuild.result}", to: 'cgregor@jord.com.au'      
+   		emailext body: "BuildXPages ${currentBuild.currentResult}", subject: "BuildXPages ${currentBuild.currentResult}", to: 'cgregor@jord.com.au'      
     }
     failure {
-  		emailext body: 'BuildXPages Failed', subject: 'BuildXPages Failed', to: 'cgregor@jord.com.au'      
+  		emailext body: 'BuildXPages Failed', subject: "BuildXPages Failed", to: 'cgregor@jord.com.au'      
     }
   }
 
