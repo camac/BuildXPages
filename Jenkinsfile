@@ -2,24 +2,7 @@ pipeline{
 
   agent any  
 
-  options {
-    skipDefaultCheckout()
-  }
-
   stages {
-
-    stage('Checkout') {
-      steps {
-        checkout([
-          $class: 'GitSCM',
-          branches: [[name: 'develop']],
-          extensions: scm.extensions,
-          userRemoteConfigs: scm.userRemoteConfigs
-        ])
-
-      }
-
-    }
 
   	stage('AntLib') {
       steps {
