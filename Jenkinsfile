@@ -8,6 +8,14 @@ pipeline{
 
   stages {
 
+    stage('Checkout') {
+
+      scm.branches = [[name: develop]]
+
+      checkout scm
+
+    }
+
   	stage('AntLib') {
       steps {
   	  	echo "I will build Ant Lib on ${env.BRANCH_NAME}"
