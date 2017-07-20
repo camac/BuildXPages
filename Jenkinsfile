@@ -12,8 +12,8 @@ pipeline{
   	stage('AntLib') {
       steps {
   	  	echo "I will build Ant Lib on ${env.BRANCH_NAME}"
-  		  def antVersion = 'DefaultCam'
-    		withEnv( ["ANT_HOME=${tool antVersion}"] ) {		
+
+    		withEnv( ["ANT_HOME=${tool 'DefaultCam'}"] ) {		
   	  		bat '%ANT_HOME%/bin/ant.bat -buildfile com.gregorbyte.buildxpages.ant/build.xml -DnotesProgDir=${env.NOTES_PROGDIR} compilejar'
   		  }
       }
