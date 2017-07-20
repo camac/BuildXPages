@@ -9,10 +9,11 @@ pipeline{
   stages {
 
     stage('Checkout') {
+      steps {
+        scm.branches = [[name: develop]]
 
-      scm.branches = [[name: develop]]
-
-      checkout scm
+        checkout scm
+      }
 
     }
 
