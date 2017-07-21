@@ -31,8 +31,9 @@
 	
 	<target name="testbuildnsf" description="Build an NSF">
 		<bxp:buildnsf
-			ondiskproject="V:\\DominoGit\\Headless\\com.gregorbyte.headless.nsf\\.project"
-			targetfilename="fromant2.nsf" port="8283">
+			project="D:\\workspaces\\testworkpace\\WahWah\\.project"
+			projectname="FromAnt"
+			nsf="stageing\\fromant2.nsf">
 		</bxp:buildnsf>
 	</target>
 

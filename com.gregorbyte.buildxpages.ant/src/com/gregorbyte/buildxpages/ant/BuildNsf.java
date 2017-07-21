@@ -16,19 +16,32 @@ public class BuildNsf extends Task {
 	private static final String MSG_TERM = "END.";
 
 	private static final String CMD_REFRESHIMPORTBUILD = "refreshImportBuild";
+	private static final String CMD_IMPORTANDBUILD = "importandbuild";
 
-	private String ondiskproject;
-	// private String targetfilename;
+	private String projectname;
+	private String project;
+
+	private String server;
+	private String nsf;
+
 	private boolean failonerror = true;
 	private String port;
 
-	public void setOndiskproject(String ondiskproject) {
-		this.ondiskproject = ondiskproject;
+	public void setProject(String project) {
+		this.project = project;
 	}
 
-	// public void setTargetfilename(String targetfilename) {
-	// this.targetfilename = targetfilename;
-	// }
+	public void setProjectname(String projectname) {
+		this.projectname = projectname;
+	}
+
+	public void setServer(String server) {
+		this.server = server;
+	}
+
+	public void setNsf(String nsf) {
+		this.nsf = nsf;
+	}
 
 	public void setPort(String port) {
 		this.port = port;
@@ -54,13 +67,10 @@ public class BuildNsf extends Task {
 
 	public void validateProperties() throws BuildException {
 
-		if (ondiskproject == null || "".equals(ondiskproject))
+		if (project == null || "".equals(project))
 			throw new BuildException("No OnDiskProject specified");
 
-		// if (targetfilename == null || "".equals(targetfilename))
-		// throw new BuildException("No targetfilename specified");
-
-		File file = new File(ondiskproject);
+		File file = new File(project);
 
 		if (!file.exists())
 			throw new BuildException("Supplied OnDiskProject does not exists");
@@ -82,7 +92,9 @@ public class BuildNsf extends Task {
 		Socket s = null;
 
 		try {
+			log("Attempt to Create Socket");
 			s = new Socket(InetAddress.getLocalHost(), portNumber);
+			log("Socket Created");
 		} catch (IOException e) {
 			getProject().setProperty("buildnsf.failed", "true");
 			if (failonerror) {
@@ -109,16 +121,19 @@ public class BuildNsf extends Task {
 			}
 
 			// Send instruction to Build NSf
+			log("Issuing Refresh Import Build Command for " + project);
 			out.println(CMD_REFRESHIMPORTBUILD);
-			out.println(ondiskproject);
+			out.println(project);
+			out.println(projectname);
+			out.println(nsf);
+			out.println(server);
+			out.println(MSG_TERM);
 
 			// Output Confirmation Message
-
 			String response;
 			response = input.readLine();
 
 			// Output Progress if possible
-
 			while (response != null && !response.equals(MSG_TERM)) {
 
 				if (response.startsWith("BUILD JOB STATUS:")) {

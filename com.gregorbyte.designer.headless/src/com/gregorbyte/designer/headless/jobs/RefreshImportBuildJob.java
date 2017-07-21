@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
@@ -15,7 +14,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
@@ -33,16 +31,69 @@ import com.ibm.designer.domino.tools.userlessbuild.controller.StateMonitor;
 
 public class RefreshImportBuildJob extends Job {
 
+	private String nsfServer;
+	private String nsfName;
+
 	private String onDiskProjectFile;
 	private String onDiskProjectName;
+
+	private IProject diskProject;
+	private IDominoDesignerProject desProject;
 
 	public RefreshImportBuildJob() {
 
 		super("Refresh Import and Build Job");
 	}
 
-	public static RefreshImportBuildJob createFromOdpProjectName(
-			String odpProjectName) {
+	public String getNsfName() {
+		return nsfName;
+	}
+
+	public void setNsfName(String nsfName) {
+		this.nsfName = nsfName;
+	}
+
+	public String getNsfServer() {
+		return nsfServer;
+	}
+
+	public void setNsfServer(String nsfServer) {
+		this.nsfServer = nsfServer;
+	}
+
+	public String getOnDiskProjectFile() {
+		return onDiskProjectFile;
+	}
+
+	public void setOnDiskProjectFile(String onDiskProjectFile) {
+		this.onDiskProjectFile = onDiskProjectFile;
+	}
+
+	public String getOnDiskProjectName() {
+		return onDiskProjectName;
+	}
+
+	public void setOnDiskProjectName(String onDiskProjectName) {
+		this.onDiskProjectName = onDiskProjectName;
+	}
+
+	public IProject getDiskProject() {
+		return diskProject;
+	}
+
+	public void setDiskProject(IProject diskProject) {
+		this.diskProject = diskProject;
+	}
+
+	public IDominoDesignerProject getDesProject() {
+		return desProject;
+	}
+
+	public void setDesProject(IDominoDesignerProject desProject) {
+		this.desProject = desProject;
+	}
+
+	public static RefreshImportBuildJob createFromOdpProjectName(String odpProjectName) {
 
 		RefreshImportBuildJob job = new RefreshImportBuildJob();
 		job.onDiskProjectName = odpProjectName;
@@ -50,8 +101,7 @@ public class RefreshImportBuildJob extends Job {
 
 	}
 
-	public static RefreshImportBuildJob createFromOdpProjectFile(
-			String onDiskProjectFile) {
+	public static RefreshImportBuildJob createFromOdpProjectFile(String onDiskProjectFile) {
 
 		RefreshImportBuildJob job = new RefreshImportBuildJob();
 		job.onDiskProjectFile = onDiskProjectFile;
@@ -59,63 +109,132 @@ public class RefreshImportBuildJob extends Job {
 
 	}
 
-	public void findProjectName() {
+	public static RefreshImportBuildJob createFromBoth(String odpFilePath, String nsfpath) {
+
+		RefreshImportBuildJob job = new RefreshImportBuildJob();
+		job.onDiskProjectFile = odpFilePath;
+		job.nsfName = nsfpath;
+		return job;
 
 	}
 
-	private void findOnDiskProjectName() {
+	private void findOnDiskProject() {
 
-		if (StringUtil.isNotEmpty(onDiskProjectName)) {
+		File odpProjectFile = new File(this.onDiskProjectFile);
+		if (!odpProjectFile.exists()) {
 			return;
 		}
 
-		if (StringUtil.isEmpty(onDiskProjectFile)) {
-			return;
+		IPath diskProjectPath = new Path(odpProjectFile.getPath());
+		IPath diskFolderPath = diskProjectPath.removeLastSegments(1);
+
+		IWorkspace localIWorkspace = ResourcesPlugin.getWorkspace();
+
+		for (IProject p : localIWorkspace.getRoot().getProjects()) {
+
+			IPath rawpath = p.getLocation();
+			IPath odpfolder = diskFolderPath;
+
+			if (rawpath.equals(odpfolder)) {
+				diskProject = p;
+				break;
+			}
+
 		}
 
-		File file = new File(onDiskProjectFile);
+	}
 
-		if (!file.exists()) {
-			return;
+	private void findDesignerProject() throws CoreException {
+
+		if (StringUtil.isEmpty(nsfName) && diskProject != null) {
+			desProject = SyncUtil.getAssociatedNsfProject(diskProject);
+		} else {
+			desProject = ProjectUtilities.getDesignerProject(nsfName);
+		}
+	}
+
+	private void checkAssociation() throws CoreException {
+
+		if (desProject != null && diskProject != null) {
+
+			IDominoDesignerProject assoc = SyncUtil.getAssociatedNsfProject(diskProject);
+
+			if (assoc != null && !assoc.equals(desProject)) {
+				throw new IllegalStateException("Disk Project is associated with a different NSF: " + assoc.getDatabaseName());
+			}
+
+			IProject assocDisk = SyncUtil.getAssociatedDiskProject(desProject, false);
+
+			if (assocDisk != null && !assocDisk.equals(diskProject)) {
+				throw new IllegalStateException("NSF Project is associated with a different DISK project");
+			}
+
+			if (assoc == null && assocDisk == null) {
+
+				System.out.println("Creating Association");
+				SyncUtil.createAssociation(desProject, diskProject);
+
+			}
+
 		}
 
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		IPath path = new Path(file.getPath());
+	}
 
-		IProjectDescription pd;
-		try {
-			pd = workspace.loadProjectDescription(path);
-		} catch (CoreException e) {
-			e.printStackTrace();
-			return;
+	protected void checkSetup(IProgressMonitor monitor) {
+
+		if (StringUtil.isNotEmpty(nsfName) && StringUtil.isNotEmpty(onDiskProjectFile)) {
+
+			// Check if ODProject exists
+
+			// Check if NSF exists
+
+			// Check if they are synced
+
+		} else if (StringUtil.isNotEmpty(onDiskProjectFile)) {
+
+		} else if (StringUtil.isNotEmpty(nsfName)) {
+
 		}
 
-		this.onDiskProjectName = pd.getName();
+	}
 
+	private Status error(String msg) {
+		return new Status(Status.ERROR, "com.gregorbyte.designer.headless", msg);
 	}
 
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
 
-		findOnDiskProjectName();
+		checkSetup(monitor);
 
-		if (StringUtil.isEmpty(onDiskProjectName)) {
-			return Status.OK_STATUS;
+		findOnDiskProject();
+
+		if (diskProject == null) {
+			ImportOnDiskProjectJob job = new ImportOnDiskProjectJob(onDiskProjectFile, onDiskProjectName);
+			job.run(monitor);
+			diskProject = job.getDiskProject();
+		}
+
+		CreateNSFJob create = new CreateNSFJob(nsfServer, nsfName);
+		create.run(monitor);
+		desProject = create.getNewProject();
+
+		if (diskProject == null || !diskProject.exists()) {
+			return error("Could not find Disk Project");
+		} else if (desProject == null) {
+			return error("Could not find Designer Project");
+		}
+
+		try {
+			checkAssociation();
+		} catch (Exception e) {
+			return error(e.getMessage());
 		}
 
 		try {
 
-			IProject proj = ProjectUtilities.getProject(this.onDiskProjectName);
-
-			if (!proj.exists()) {
-
-				// TODO how to report error
-				System.out.println("Project Not Existy");
-				return Status.OK_STATUS;
-			}
-
-			if (!proj.isOpen()) {
-				proj.open(monitor);
+			if (!diskProject.isOpen()) {
+				diskProject.open(monitor);
 				System.out.println("Opening project");
 			}
 
@@ -125,21 +244,18 @@ public class RefreshImportBuildJob extends Job {
 				NsfUtil.setAutoBuilding(false);
 			}
 
-			proj.refreshLocal(IResource.DEPTH_INFINITE, monitor);
+			diskProject.refreshLocal(IResource.DEPTH_INFINITE, monitor);
 
 			// Why is it not deleting java?
-			proj.build(IncrementalProjectBuilder.CLEAN_BUILD, monitor);
-			
-			proj.build(IncrementalProjectBuilder.FULL_BUILD, monitor);
+			diskProject.build(IncrementalProjectBuilder.CLEAN_BUILD, monitor);
 
-			IDominoDesignerProject dproj = SyncUtil
-					.getAssociatedNsfProject(proj);
+			diskProject.build(IncrementalProjectBuilder.FULL_BUILD, monitor);
 
 			NoUISyncAction syncaction = new NoUISyncAction();
-			syncaction.setSyncProjects(dproj, proj);
+			syncaction.setSyncProjects(desProject, diskProject);
 			syncaction.doExecute();
 
-			IProject desProj = dproj.getProject();
+			IProject desProj = desProject.getProject();
 
 			if (!desProj.isOpen()) {
 				desProj.open(monitor);
@@ -150,7 +266,6 @@ public class RefreshImportBuildJob extends Job {
 			System.out.println("About to Finish");
 
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -168,13 +283,12 @@ public class RefreshImportBuildJob extends Job {
 					List<ISyncOperation> syncOps = RefreshImportBuildJob.NoUISyncAction.this
 							.analyzeSyncOperations(monitor);
 					if (syncOps.size() > 0) {
-						// AssociateOnDiskWithNSFJob.joblogger.fine(StringUtil.format("-- executing {0} syncOps",
+						// AssociateOnDiskWithNSFJob.joblogger.fine(StringUtil.format("--
+						// executing {0} syncOps",
 						// new Object[] { Integer.valueOf(localList.size()) }));
-						RefreshImportBuildJob.NoUISyncAction.this
-								.executeSyncOps(syncOps, monitor, true);
+						RefreshImportBuildJob.NoUISyncAction.this.executeSyncOps(syncOps, monitor, true);
 					}
-					RefreshImportBuildJob.NoUISyncAction.this
-							.performPostImportProcessing(monitor);
+					RefreshImportBuildJob.NoUISyncAction.this.performPostImportProcessing(monitor);
 
 					Iterator<ConflictSyncOperation> it = RefreshImportBuildJob.NoUISyncAction.this.conflictOps
 							.iterator();
@@ -182,31 +296,26 @@ public class RefreshImportBuildJob extends Job {
 						ConflictSyncOperation conflictOp = it.next();
 						conflictOp.setSyncDirection(1);
 					}
-					RefreshImportBuildJob.NoUISyncAction.this
-							.doHandleConflictOps(monitor);
+					RefreshImportBuildJob.NoUISyncAction.this.doHandleConflictOps(monitor);
 
 					// TODO set project name back
-					Object localObject = new StateMonitor.Key("sync",
-							"DoraHeadless");// RefreshImportBuildJob.this.nsfProjectName);
+					Object localObject = new StateMonitor.Key("sync", "DoraHeadless");// RefreshImportBuildJob.this.nsfProjectName);
 
 					int i = 1;
-					if (RefreshImportBuildJob.NoUISyncAction.this.deferOps
-							.size() > 0) {
+					if (RefreshImportBuildJob.NoUISyncAction.this.deferOps.size() > 0) {
 						i = 0;
-						// AssociateOnDiskWithNSFJob.joblogger.fine("NoUISyncAction has postProcessing Jobs");
+						// AssociateOnDiskWithNSFJob.joblogger.fine("NoUISyncAction
+						// has postProcessing Jobs");
 					}
 					if (i != 0) {
-						CommandLineJobManager.instance().arm(
-								(StateMonitor.Key) localObject);
+						CommandLineJobManager.instance().arm((StateMonitor.Key) localObject);
 					}
-					RefreshImportBuildJob.NoUISyncAction.this
-							.scheduleTimestampUpdateJobForImports(RefreshImportBuildJob.NoUISyncAction.this.importSyncs);
+					RefreshImportBuildJob.NoUISyncAction.this.scheduleTimestampUpdateJobForImports(
+							RefreshImportBuildJob.NoUISyncAction.this.importSyncs);
 					if (i == 0) {
-						CommandLineJobManager.instance().arm(
-								(StateMonitor.Key) localObject);
+						CommandLineJobManager.instance().arm((StateMonitor.Key) localObject);
 					}
-					RefreshImportBuildJob.NoUISyncAction.this
-							.postProcessing(monitor);
+					RefreshImportBuildJob.NoUISyncAction.this.postProcessing(monitor);
 				}
 			};
 			try {

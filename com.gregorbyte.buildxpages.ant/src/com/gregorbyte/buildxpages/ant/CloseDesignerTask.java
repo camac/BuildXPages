@@ -79,7 +79,7 @@ public class CloseDesignerTask extends Task {
 
 			// Send instruction to Build NSf
 			out.println(MSG_SHUTDOWN);
-			out.println("Please");
+			out.println(MSG_TERM);		
 
 			// Output Confirmation Message
 

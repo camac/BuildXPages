@@ -13,7 +13,11 @@ Require-Bundle: org.eclipse.ui,
  com.ibm.designer.domino.team,
  com.ibm.designer.domino.ide.resources,
  com.ibm.designer.prj.resources,
- org.eclipse.ui.ide
+ org.eclipse.ui.ide,
+ com.ibm.designer.domino.ui.commons,
+ com.ibm.domino.napi,
+ com.ibm.designer.domino.ipc,
+ org.eclipse.core.resources
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: com.ibm.commons.util,
  com.ibm.designer.domino.ide.resources.project,

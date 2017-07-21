@@ -34,6 +34,19 @@
                toolbarPath="sampleGroup"
                tooltip="Stop the Headless Server">
          </action>
+         <!--
+         <action
+               class="com.gregorbyte.designer.headless.actions.TestAction"
+               icon="icons/sample.gif"
+               id="com.gregorbyte.designer.headless.actiontest"
+               label="Test Action"
+               menubarPath="sampleMenu/sampleGroup"
+               style="push"
+               toolbarPath="sampleGroup"
+               tooltip="Test Action">
+         </action>
+         -->
+
       </actionSet>
    </extension>
    <extension

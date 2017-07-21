@@ -254,6 +254,57 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="buildFeature">
+
+		<attribute name="pluginPath" />
+
+		<sequential>
+			<current:collectJvmJars />
+
+			<fail unless="eclipseBase">eclipseBase property must be set</fail>
+			<fail unless="pdeBuildVersion">pdeBuildVersion property must be set</fail>
+			<fail unless="equinoxLauncherVersion">equinoxLauncherVersion property must be set</fail>
+
+			<java jar="${equinoxLauncherJar}" fork="true" failonerror="true">
+
+				<arg value="-application" />
+				<arg value="org.eclipse.ant.core.antRunner" />
+
+				<arg value="-buildfile" />
+				<arg value="${pdeBuildXml}" />
+
+				<arg value="-Dbuilder=${buildConfigDir}" />
+				<arg value="-DbuildDirectory=${buildDir}" />
+				<arg value="-DskipMaps=true" />
+				<arg value="-DskipFetch=true" />
+				<arg value="-DrunPackager=false" />
+				<arg value="-DoutputUpdateJars=true" />
+
+				<arg value="-DbuildId=${buildId}" />
+				<arg value="-DbuildLabel=${buildLabel}" />
+
+				<arg value="-DarchivePrefix=eclipse" />
+
+				<arg value="-Dbase=${eclipseBase}" />
+				<arg value="-DbaseLocation=C:\Notes\framework" />
+
+				<arg value="-DskipBase=true" />
+				<arg value="-DpluginPath=${pluginPath}" />
+
+				<arg value="-DJavaSE-1.6=${JavaSE16Jars}" />
+				<arg value="-DtopLevelElementType=feature" />
+				<arg value="-DtopLevelElementId=${featureId}" />
+
+				<arg value="-DjavacSource=1.6" /> <!-- These were here for Hapi.Lib -->
+				<arg value="-DjavacTarget=1.6" /> <!-- These were here for Hapi.Lib -->
+
+				<arg value="-DcompilerArg=-g" /><!-- With Line Numbers -->
+
+			</java>
+		</sequential>
+	</macrodef>
+
+
 	<macrodef name="clearUpdateSite">
 		<attribute name="eclipseDir" />
 		<sequential>

@@ -18,7 +18,7 @@ public class BuildJobChangeAdapter extends JobChangeAdapter {
 	@Override
 	public void scheduled(IJobChangeEvent event) {
 	
-		if (event.getResult().isOK())
+		if (event != null && event.getResult() != null && event.getResult().isOK())
 			writer.println("BUILD JOB SCHEDULED");
 		else
 			writer.println("BUILD JOB SCHEDULING NOT SO GOOD");
@@ -62,8 +62,14 @@ public class BuildJobChangeAdapter extends JobChangeAdapter {
 
 		if (event.getResult().isOK())
 			writer.println("BUILD JOB STATUS: SUCCESS");
-		else
+		else {
 			writer.println("BUILD JOB STATUS: FAIL");
+			writer.println(event.getResult().getMessage() + event.getResult().getCode());
+			if (event.getResult().getException() != null) {
+				writer.println(event.getResult().getException().getMessage());
+			}
+			
+		}
 		
 		super.done(event);
 	}

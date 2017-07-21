@@ -12,3 +12,4 @@
 hs_err_pid*
 com.gregorbyte.buildxpages.ant/testgen/
 XPagesCI/
+buildDirectory/

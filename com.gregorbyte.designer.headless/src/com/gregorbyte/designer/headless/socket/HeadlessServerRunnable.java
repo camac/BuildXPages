@@ -9,6 +9,8 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
@@ -44,6 +46,7 @@ public class HeadlessServerRunnable implements Runnable {
 	private static final String CMD_SHUTDOWN = "shutdown";
 	private static final String CMD_REPORTMARKERS = "markersreport";
 	private static final String CMD_REFRESHIMPORTBUILD = "refreshimportbuild";
+	private static final String CMD_IMPORTANDBUILD = "importandbuild";
 
 	private boolean threadShouldStop = false;
 	private ServerSocket socket = null;
@@ -52,9 +55,15 @@ public class HeadlessServerRunnable implements Runnable {
 		threadShouldStop = true;
 	}
 
-	private void refreshImportBuild(String onDiskProjectFile, PrintWriter out) throws InterruptedException {
+	private RefreshImportBuildJob refreshImportBuild(String onDiskProjectFile, String projectName, String nsfName,
+			String server, PrintWriter out) throws InterruptedException {
 
-		RefreshImportBuildJob job = RefreshImportBuildJob.createFromOdpProjectFile(onDiskProjectFile);
+		RefreshImportBuildJob job = new RefreshImportBuildJob();
+
+		job.setOnDiskProjectFile(onDiskProjectFile);
+		job.setOnDiskProjectName(projectName);
+		job.setNsfName(nsfName);
+		job.setNsfServer(server);
 
 		BuildJobChangeAdapter listener = new BuildJobChangeAdapter(out);
 
@@ -62,6 +71,7 @@ public class HeadlessServerRunnable implements Runnable {
 		job.schedule();
 		job.join();
 
+		return job;
 	}
 
 	private void closeDesigner(PrintWriter out) throws InterruptedException {
@@ -173,7 +183,7 @@ public class HeadlessServerRunnable implements Runnable {
 					} else {
 						out.print("Info: ");
 					}
-					
+
 					// Need to check if the marker actually exists
 					if (marker.exists()) {
 						out.print(marker.getResource().getName() + ": ");
@@ -258,63 +268,81 @@ public class HeadlessServerRunnable implements Runnable {
 						PrintWriter out = new PrintWriter(connSocket.getOutputStream(), true);
 
 						out.println("CONNECTED TO DESIGNER! What can we do for you?");
-						out.println("Expected Protocol");
-						out.println("Line 1: Command");
-						out.println("LINE 2: On Disk Project Path (Path to .project file)");
 						out.println(MSG_TERM);
 
 						boolean argsvalid = true;
 						String command = in.readLine();
-						String onDiskPath = in.readLine();
+
+						List<String> args = new ArrayList<String>();
+						String line = in.readLine();
+						while (!StringUtil.equalsIgnoreCase(MSG_TERM, line)) {
+							args.add(line);
+							line = in.readLine();
+						}
 
 						if (StringUtil.equalsIgnoreCase(command, CMD_SHUTDOWN)) {
 							closeDesigner(out);
 						} else if (StringUtil.equalsIgnoreCase(command, CMD_REFRESHIMPORTBUILD)) {
 
-							File file = new File(onDiskPath);
+							if (args.size() < 4) {
+								out.println("Wrong number of arguments");
+							} else {
 
-							if (!file.exists()) {
-								out.println("The supplied on disk Path could not be found: ");
-								out.println("    ODP: " + onDiskPath);
-								argsvalid = false;
+								String onDiskPath = args.get(0);
+								String onDiskProjectName = args.get(1);
+								String nsfPath = args.get(2);
+								String server = args.get(3);
+
+								if (StringUtil.equalsIgnoreCase("null", onDiskPath)) {
+									onDiskPath = null;
+								}
+								if (StringUtil.equalsIgnoreCase("null", onDiskProjectName)) {
+									onDiskProjectName = null;
+								}
+								if (StringUtil.equalsIgnoreCase("null", nsfPath)) {
+									nsfPath = null;
+								}
+								if (StringUtil.equalsIgnoreCase("null", server)) {
+									server = null;
+								}
+
+								File file = new File(onDiskPath);
+
+								if (!file.exists()) {
+									out.println("The supplied on disk Path could not be found: ");
+									out.println("    ODP: " + onDiskPath);
+									argsvalid = false;
+								}
+
+								if (!argsvalid) {
+									out.println(MSG_TERM);
+									break;
+								}
+
+								RefreshImportBuildJob job = refreshImportBuild(onDiskPath, onDiskProjectName, nsfPath,
+										server, out);
+
+								// Report on the Markers
+								IProject proj = job.getDesProject().getProject();
+								reportMarkers(proj, out);
 							}
-
-							// IProject existing =
-							// ProjectUtilities.getProject(nsfName);
-							// if (existing != null) {
-							// out.println("The Supplied NSF project name
-							// already exists in the workspace:");
-							// out.println(" NSF: " + nsfName);
-							// argsvalid = false;
-							// }
-
-							if (!argsvalid) {
-								out.println(MSG_TERM);
-								break;
-							}
-
-							refreshImportBuild(onDiskPath, out);
-
-							// Run the Import and Build
-							// importAndBuild(onDiskPath, nsfName, out);
-
-							// Report on the Markers
-							IProject proj = getAssociatedProject(onDiskPath);
-							reportMarkers(proj, out);
 
 						} else if (StringUtil.equalsIgnoreCase(command, CMD_REPORTMARKERS)) {
 
-							IProject proj = getAssociatedProject(onDiskPath);
-							reportMarkers(proj, out);
+							if (args.size() < 1) {
+								out.println("Wrong number of arguments");
+							} else {
+
+								String onDiskPath = args.get(0);
+
+								IProject proj = getAssociatedProject(onDiskPath);
+								reportMarkers(proj, out);
+
+							}
 
 						} else {
 							out.println("Unknown Command '" + command + "'");
 						}
-						// Clean up projects
-						// cleanup(out);
-
-						// Delete the Project
-						// deleteProject(nsfName, out);
 
 						out.println(MSG_TERM);
 
@@ -329,6 +357,8 @@ public class HeadlessServerRunnable implements Runnable {
 				} catch (InterruptedIOException e) {
 
 				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
