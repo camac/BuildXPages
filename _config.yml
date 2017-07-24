@@ -1,0 +1,8 @@
+title: Buildxpages
+description: Tools for Building XPages Automatically
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-architect
+
+gems:
+  - jekyll-mentions
