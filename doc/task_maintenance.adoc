@@ -1,0 +1,18 @@
+=== maintenancewarning
+
+The maintenance warning task issues a console command to the Domino OSGi console which tells current users that there will be a maintenance outage in a certain amount of time
+
+====
+The Maintenance warning relies on another plugin that has not yet been added to BuildXPages so this task wont be useful until that plugin is added to this project
+====
+
+==== Attributes
+
+[horizontal]
+server:: The server that you are controlling
+minutes:: in how many minutes time is the outage going to occur
+
+
+==== Example
+
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=maintenance]

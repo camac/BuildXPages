@@ -1,0 +1,3 @@
+=== startdesigner TODO
+
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=startdesigner]

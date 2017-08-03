@@ -1,53 +1,8 @@
-Ant Task List
+= Build4Xpages
+:toc: left
 
-* copynsf - Copy NSF
-* deletensf - Delete NSF
-* settemplatenames - Set Template Names 
-* scxd - Set Single Copy Xpages Design
-* refreshdbdesign - Refresh a Database Design
+Build4XPages is a collection of tools which aid in the Building and Deployment of XPages NSFs and XPages plugins.
 
-* saveDbProperties
-* restoreDbProperties
+include::headlessplugin.adoc[]
 
-Server Related Task
-
-* controlhttp - Start Stop Restart HTTP
-* maintenancewarning
-* loaddesign
-
-
-Designer Related Tasks
-
-* startdesigner
-* preparedesigner
-* buildnsf - Build an NSF
-* closedesigner
-* markersreport
-* checkDesignerRunning
-* updateDesignerLink
-* initDesignerSite
-* checkPlatformXml
-* configureDynamicPlugins
-
-
-
-Plugin Related Tasks
-
-* buildPlugins
-* buildFeature
-* importplugins
-* copyplugintobuilddir
-* unpackplugin
-* generatesitexml
-* clearUpdateSite
-* copyPluginsToUpdateSite
-
-* collectJvmJars
-*
-
-
-
-
-== Example of Using StartDesigner
-
-include::com.gregorbyte.buildxpages.ant/buildTest.xml[tag=startdesigner]
+include::tasks.adoc[]

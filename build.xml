@@ -1,4 +1,4 @@
-<project name="Headless Designer" default="build" xmlns:bxp="antlib:com.gregorbyte.buildxpages.ant"  xmlns:asciidoctor="antlib:org.asciidoctor.ant">
+<project name="Headless Designer" default="build" xmlns:bxp="antlib:com.gregorbyte.buildxpages.ant" xmlns:asciidoctor="antlib:org.asciidoctor.ant">
 
 	<description>Build Tasks for Headless Designer</description>
 
@@ -135,18 +135,25 @@
 
 
 	<target name="installasciidoctorant">
-		
-		<property name="asciidoctor-version" value="1.5.4"></property>
+
+		<property name="asciidoctor-version" value="1.5.4">
+		</property>
 		<get src="http://repo1.maven.org/maven2/org/asciidoctor/asciidoctor-ant/${asciidoctor-version}/asciidoctor-ant-${asciidoctor-version}.jar" dest="lib/asciidoctor-ant.jar" usetimestamp="true" />
 
 	</target>
 
 	<target name="docs">
 
-		<taskdef uri="antlib:org.asciidoctor.ant" resource="org/asciidoctor/ant/antlib.xml" classpath="lib/asciidoctor-ant.jar"/>
-        <asciidoctor:convert sourceDirectory="doc" outputDirectory="docs" backend="html5"/>		
-		
+		<taskdef uri="antlib:org.asciidoctor.ant" resource="org/asciidoctor/ant/antlib.xml" classpath="lib/asciidoctor-ant.jar" />
+		<asciidoctor:convert sourceDirectory="doc" outputDirectory="docs" backend="html5" relativebasedir="true" safemode="unsafe">
+
+			<attribute key="stylesdir" value="stylesheets">
+			</attribute>
+			<attribute key="stylesheet" value="readthedocs.css">
+			</attribute>
+		</asciidoctor:convert>
+
 	</target>
 
-	
+
 </project>

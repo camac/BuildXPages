@@ -1,0 +1,15 @@
+== NSF Deployment Related Tasks
+
+include::task_copynsf.adoc[]
+
+include::task_deletensf.adoc[]
+
+include::task_settemplatenames.adoc[]
+
+include::task_scxd.adoc[]
+
+include::task_refreshdbdesign.adoc[]
+
+include::task_savedbprops.adoc[]
+
+include::task_restoredbprops.adoc[]

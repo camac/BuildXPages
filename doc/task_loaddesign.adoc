@@ -1,0 +1,13 @@
+=== loaddesign
+
+Issues a 'load design' console command for a server
+
+==== Attributes
+
+[horizontal]
+server:: The server that you are controlling
+directory:: which directory should have it's designs refreshed
+
+==== Example
+
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=loaddesign]

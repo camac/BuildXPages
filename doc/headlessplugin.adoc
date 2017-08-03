@@ -1,0 +1,7 @@
+== Build4XPages Designer plugin
+
+This project provides a plugin that is installed to Domino Designer. The plugin runs a 'server' which waits for instructions that are issued by teh build tasks. For example an instruction to build an NSF, a request to shutdown the designer
+
+=== Installation
+
+TODO

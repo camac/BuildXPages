@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="BuildXPagesAntLib" basedir="."
-	xmlns:bxp="antlib:com.gregorbyte.buildxpages.ant">
+<project name="BuildXPagesAntLib" basedir="." xmlns:bxp="antlib:com.gregorbyte.buildxpages.ant">
 
-	<taskdef 
-		uri="antlib:com.gregorbyte.buildxpages.ant" 
-		resource="com/gregorbyte/buildxpages/ant/antlib.xml"
-		classpath="lib/BuildXPagesAntLib.jar"></taskdef>
-	
-	<property name="dominoProgDir" location="C:\Domino"/>
+	<taskdef uri="antlib:com.gregorbyte.buildxpages.ant" resource="com/gregorbyte/buildxpages/ant/antlib.xml" classpath="lib/BuildXPagesAntLib.jar">
+	</taskdef>
+
+	<property name="dominoProgDir" location="C:\Domino" />
 
 
-	
+
 	<target name="deletensf" description="Deletes an NSF">
 		<deletensf filename="demo\\DidItwork.nsf" />
 	</target>
@@ -20,106 +17,111 @@
 	</target>
 
 	<target name="scxd" description="Testing scxd">
-		<bxp:scxd server="domino02" database="Gregorbyte\\DoraDeploy.nsf"
-			scxdflag="false" scxdpath="scxd\\NewThing.nsf" />
+		<bxp:scxd server="domino02" database="Gregorbyte\\DoraDeploy.nsf" scxdflag="false" scxdpath="scxd\\NewThing.nsf" />
 	</target>
 
 	<target name="use" description="Use the task">
-		<refreshdbdesign server="domino02" database="JobFiles\\Z1001.nsf"
-			templateserver="domino02" />
+		<refreshdbdesign server="domino02" database="JobFiles\\Z1001.nsf" templateserver="domino02" />
 	</target>
-	
+
 	<target name="testbuildnsf" description="Build an NSF">
-		<bxp:buildnsf
-			project="D:\\workspaces\\testworkpace\\WahWah\\.project"
-			projectname="FromAnt"
-			nsf="stageing\\fromant2.nsf">
+		<bxp:buildnsf project="D:\\workspaces\\testworkpace\\WahWah\\.project" projectname="FromAnt" nsf="stageing\\fromant2.nsf">
 		</bxp:buildnsf>
 	</target>
 
 	<target name="testbuildnsf2" description="Build an NSF">
-		<bxp:buildnsf
-			ondiskproject="V:\\eclipse-kepler\\runtime-DominoDesigner\\DoraHeadless\\.project"
-			targetfilename="fromant2.nsf" port="8283">
+		<bxp:buildnsf ondiskproject="V:\\eclipse-kepler\\runtime-DominoDesigner\\DoraHeadless\\.project" targetfilename="fromant2.nsf" port="8283">
 		</bxp:buildnsf>
 	</target>
 
 	<target name="testclosedesigner" description="Close Designer">
-		<bxp:closedesigner/>
+		<bxp:closedesigner />
 	</target>
-	
+
 	<!-- tag::startdesigner[] -->
 	<target name="teststartdesigner" description="Start Designer">
-		<exec executable="C:\Notes\designer.exe"></exec>		
+		<exec executable="C:\Notes\designer.exe">
+		</exec>
 	</target>
 	<!-- end::startdesigner[] -->
-	
+
 	<target name="testmarkersreport" description="Tests Reporting on ProblemMarkers">
-		<bxp:markersreport ondiskproject="C:\\workspaces\\neon-64\\runtime-HeadlessPlugin\\DeleteMe\\.project"></bxp:markersreport>
+		<bxp:markersreport ondiskproject="C:\\workspaces\\neon-64\\runtime-HeadlessPlugin\\DeleteMe\\.project">
+		</bxp:markersreport>
 	</target>
-	
-	<target name="cleanforgeneratesitexml">	
-		<delete dir="testgen"></delete>		
+
+	<target name="cleanforgeneratesitexml">
+		<delete dir="testgen">
+		</delete>
 	</target>
-	
+
 	<target name="setupforgeneratesitexml" depends="cleanforgeneratesitexml">
 
-		<mkdir dir="testgen"/>
-		<mkdir dir="testgen/plugins"/>
-		<mkdir dir="testgen/features"/>
-		<touch file="testgen/plugins/someplugin_1.2.3.20141005.jar"></touch>
-		<touch file="testgen/features/somefeature_1.2.3.20141005.jar"></touch>
-	
+		<mkdir dir="testgen" />
+		<mkdir dir="testgen/plugins" />
+		<mkdir dir="testgen/features" />
+		<touch file="testgen/plugins/someplugin_1.2.3.20141005.jar">
+		</touch>
+		<touch file="testgen/features/somefeature_1.2.3.20141005.jar">
+		</touch>
+
 	</target>
-	
+
 	<target name="testgeneratesitexml" description="Generates a Site XML" depends="setupforgeneratesitexml">
 		<bxp:generatesitexml eclipsedir="testgen" />
 	</target>
-	
+
+	<!-- tag::maintenance[] -->
 	<target name="testmaintenancewarn">
 		<bxp:maintenancewarning server="CameronWS" minutes="20" />
 	</target>
-	
+
 	<target name="testmwcancel">
 		<bxp:maintenancewarning server="CameronWS" cancelwarning="true" />
-	</target>	
-	
-	<target name="testrestarthttp">
-		<bxp:controlhttp server="CameronWS" action="restart" />
+	</target>
+	<!-- end::maintenance[] -->
+
+	<!-- tag::controlhttp[] -->
+	<target name="teststarthttp">
+		<bxp:controlhttp server="CameronWS" action="start" />
 	</target>
 
 	<target name="teststophttp">
 		<bxp:controlhttp server="CameronWS" action="stop" />
 	</target>
 
-	<target name="testImportPlugins" description="Tests Importing Plugins to Update Site">
-		<bxp:importplugins server="domino02" database="temp\TestBxpUpdateSite.nsf" 
-		sitexml="V:\Cameron\Downloads\ExtensionLibraryOpenNTF-901v00_11.20141217-1000\updateSiteOpenNTF\site.xml"/>
+	<target name="testrestarthttp">
+		<bxp:controlhttp server="CameronWS" action="restart" />
 	</target>
-	
-	<target name="teststarthttp">
-		<bxp:controlhttp server="CameronWS" action="start" />
+	<!-- end::controlhttp[] -->
+
+	<target name="testImportPlugins" description="Tests Importing Plugins to Update Site">
+		<bxp:importplugins server="domino02" database="temp\TestBxpUpdateSite.nsf" sitexml="V:\Cameron\Downloads\ExtensionLibraryOpenNTF-901v00_11.20141217-1000\updateSiteOpenNTF\site.xml" />
 	</target>
 
+	<!-- tag::loaddesign[] -->
 	<target name="testloaddesign">
 		<bxp:loaddesign server="CameronWS" directory="Cameron\Jogs\JobHub" />
 	</target>
-	
+	<!-- end::loaddesign[] -->
+
 	<target name="testtestmacro">
-		<bxp:testmacro v="hi"/>
+		<bxp:testmacro v="hi" />
 	</target>
 
 	<target name="testcollectjvmjars">
-		<bxp:collectJvmJars/>
-		<echo message="${JavaSE16Jars}"></echo>
-		<bxp:collectJvmJars propertyName="yoyo"/>
-		<echo message="${yoyo}"></echo>		
+		<bxp:collectJvmJars />
+		<echo message="${JavaSE16Jars}">
+		</echo>
+		<bxp:collectJvmJars propertyName="yoyo" />
+		<echo message="${yoyo}">
+		</echo>
 
 	</target>
-		
+
 	<target name="testcopyplugin">
-		<bxp:copyplugintobuilddir plugin=""/>
+		<bxp:copyplugintobuilddir plugin="" />
 	</target>
 
-	
+
 </project>
