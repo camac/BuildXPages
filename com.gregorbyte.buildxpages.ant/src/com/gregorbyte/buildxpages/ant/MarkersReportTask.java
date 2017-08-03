@@ -11,44 +11,22 @@ import java.net.Socket;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
-public class BuildNsf extends Task {
+public class MarkersReportTask extends Task {
 
 	private static final String MSG_TERM = "END.";
-
-	private static final String CMD_REFRESHIMPORTBUILD = "refreshImportBuild";
-	private static final String CMD_IMPORTANDBUILD = "importandbuild";
-
-	private String projectname;
-	private String project;
-
-	private String server;
-	private String nsf;
+	private static final String COMMAND_MARKERS = "markersreport";
+	
+	private String ondiskproject;
 
 	private boolean failonerror = true;
 	private String port;
 
-	public void setProject(String project) {
-		this.project = project;
-	}
-
-	public void setProjectname(String projectname) {
-		this.projectname = projectname;
-	}
-
-	public void setServer(String server) {
-		this.server = server;
-	}
-
-	public void setNsf(String nsf) {
-		this.nsf = nsf;
+	public void setOndiskproject(String ondiskproject) {
+		this.ondiskproject = ondiskproject;
 	}
 
 	public void setPort(String port) {
 		this.port = port;
-	}
-
-	public void setFailonerror(boolean failonerror) {
-		this.failonerror = failonerror;
 	}
 
 	private boolean parseStatus(String message) {
@@ -67,10 +45,10 @@ public class BuildNsf extends Task {
 
 	public void validateProperties() throws BuildException {
 
-		if (project == null || "".equals(project))
+		if (ondiskproject == null || "".equals(ondiskproject))
 			throw new BuildException("No OnDiskProject specified");
 
-		File file = new File(project);
+		File file = new File(ondiskproject);
 
 		if (!file.exists())
 			throw new BuildException("Supplied OnDiskProject does not exists");
@@ -92,22 +70,17 @@ public class BuildNsf extends Task {
 		Socket s = null;
 
 		try {
-			log("Attempt to Create Socket");
 			s = new Socket(InetAddress.getLocalHost(), portNumber);
-			log("Socket Created");
 		} catch (IOException e) {
-			getProject().setProperty("buildnsf.failed", "true");
-			if (failonerror) {
-				throw new BuildException("Could not Connect to Headless Server using port: " + port, e);
-			} else {
-				log("Could not connect to Headless server using port: " + port);
-				return;
-			}
+			throw new BuildException(
+					"Could not Connect to Headless Server using port: " + port,
+					e);
 		}
 
 		try {
 			// Set up Input/Output Stream
-			BufferedReader input = new BufferedReader(new InputStreamReader(s.getInputStream()));
+			BufferedReader input = new BufferedReader(new InputStreamReader(
+					s.getInputStream()));
 			PrintWriter out = new PrintWriter(s.getOutputStream(), true);
 
 			// Read welcome message (max ten lines)
@@ -117,23 +90,20 @@ public class BuildNsf extends Task {
 				if (line.equalsIgnoreCase(MSG_TERM))
 					break;
 
-				log(line);
+				System.out.println(line);
 			}
 
 			// Send instruction to Build NSf
-			log("Issuing Refresh Import Build Command for " + project);
-			out.println(CMD_REFRESHIMPORTBUILD);
-			out.println(project);
-			out.println(projectname);
-			out.println(nsf);
-			out.println(server);
-			out.println(MSG_TERM);
+			out.println(COMMAND_MARKERS);
+			out.println(ondiskproject);
 
 			// Output Confirmation Message
+
 			String response;
 			response = input.readLine();
 
 			// Output Progress if possible
+
 			while (response != null && !response.equals(MSG_TERM)) {
 
 				if (response.startsWith("BUILD JOB STATUS:")) {
@@ -146,7 +116,7 @@ public class BuildNsf extends Task {
 						noProblems = true;
 				}
 
-				log(response);
+				System.out.println(response);
 				response = input.readLine();
 			}
 
@@ -163,24 +133,14 @@ public class BuildNsf extends Task {
 			}
 
 		} catch (IOException e) {
-
-			log("Exception when building");
-			if (failonerror) {
-				throw new BuildException(e);
-			}
+			throw new BuildException(e);
 		}
 
-		if (!nsfBuilt || !noProblems) {
-			getProject().setProperty("buildnsf.failed", "true");
-		}
+//		if (!nsfBuilt)
+//			throw new BuildException("Build Failed: NSF Not built properly");
 
-		if (!nsfBuilt && failonerror) {
-			throw new BuildException("Build Failed: NSF Not built properly");
-		}
-
-		if (!noProblems && failonerror) {
+		if (!noProblems && failonerror)
 			throw new BuildException("Build Failed: Problems found after build");
-		}
 
 	}
 

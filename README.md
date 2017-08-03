@@ -69,6 +69,20 @@ e.g. if we
 ant -buildfile <yourBuildFile.xml> -lib lib <yourtarget>
 ```
 
+###### Running Notes tasks on a 64 bit machine
+
+You may have your JAVA_HOME set to a 64-bit Java Runtime Environment
+In this case you may see a error message saying something about 32-bit compatability.
+
+You can set JAVA_HOME to the Notes JRE. For example if your notes program directory was C:\Notes
+
+You can issue this command in the console that you are running ant in. Then this will remain the JAVA_HOME for that console (until it is closed)
+
+```
+SET JAVA_HOME=C:\Notes\jvm
+```
+This
+
 ##### Once and for all
 
 Install BuildXPagesAntLib.jar and jna-4.1.0.jar into either

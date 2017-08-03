@@ -9,6 +9,8 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
@@ -28,6 +30,7 @@ import com.ibm.designer.domino.ide.resources.project.IDominoDesignerProject;
 import com.ibm.designer.domino.team.util.SyncUtil;
 import com.ibm.designer.domino.tools.userlessbuild.ProjectUtilities;
 import com.ibm.designer.domino.tools.userlessbuild.jobs.CleanUpJob;
+import com.ibm.designer.domino.tools.userlessbuild.jobs.CloseDesignerJob;
 import com.ibm.designer.domino.tools.userlessbuild.jobs.DeleteProjectJob;
 import com.ibm.designer.domino.tools.userlessbuild.jobs.ImportAndBuildJob;
 
@@ -40,6 +43,11 @@ public class HeadlessServerRunnable implements Runnable {
 
 	private static final String MSG_TERM = "END.";
 
+	private static final String CMD_SHUTDOWN = "shutdown";
+	private static final String CMD_REPORTMARKERS = "markersreport";
+	private static final String CMD_REFRESHIMPORTBUILD = "refreshimportbuild";
+	private static final String CMD_IMPORTANDBUILD = "importandbuild";
+
 	private boolean threadShouldStop = false;
 	private ServerSocket socket = null;
 
@@ -47,32 +55,47 @@ public class HeadlessServerRunnable implements Runnable {
 		threadShouldStop = true;
 	}
 
-	private void refreshImportBuild(String onDiskProjectFile, PrintWriter out) throws InterruptedException {
-		
-		RefreshImportBuildJob job = RefreshImportBuildJob.createFromOdpProjectFile(onDiskProjectFile);
-		
+	private RefreshImportBuildJob refreshImportBuild(String onDiskProjectFile, String projectName, String nsfName,
+			String server, PrintWriter out) throws InterruptedException {
+
+		RefreshImportBuildJob job = new RefreshImportBuildJob();
+
+		job.setOnDiskProjectFile(onDiskProjectFile);
+		job.setOnDiskProjectName(projectName);
+		job.setNsfName(nsfName);
+		job.setNsfServer(server);
+
 		BuildJobChangeAdapter listener = new BuildJobChangeAdapter(out);
-		
+
 		job.addJobChangeListener(listener);
 		job.schedule();
 		job.join();
-		
-	}
-	
-	private void importAndBuild(String onDiskPath, String nsfName, PrintWriter out) throws InterruptedException {
-	
-		ImportAndBuildJob myJob = new ImportAndBuildJob(
-				onDiskPath, nsfName);
 
-		BuildJobChangeAdapter listener = new BuildJobChangeAdapter(
-				out);
+		return job;
+	}
+
+	private void closeDesigner(PrintWriter out) throws InterruptedException {
+
+		CloseDesignerJob job = new CloseDesignerJob();
+		CloseDesignerJobChangeAdapter listener = new CloseDesignerJobChangeAdapter(out);
+		job.addJobChangeListener(listener);
+		job.schedule();
+
+	}
+
+	@SuppressWarnings("unused")
+	private void importAndBuild(String onDiskPath, String nsfName, PrintWriter out) throws InterruptedException {
+
+		ImportAndBuildJob myJob = new ImportAndBuildJob(onDiskPath, nsfName);
+
+		BuildJobChangeAdapter listener = new BuildJobChangeAdapter(out);
 
 		myJob.addJobChangeListener(listener);
 		myJob.schedule();
 		myJob.join();
-		
+
 	}
-	
+
 	public IProject getAssociatedProject(String onDiskProjectFile) {
 
 		if (StringUtil.isEmpty(onDiskProjectFile)) {
@@ -88,31 +111,29 @@ public class HeadlessServerRunnable implements Runnable {
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IPath path = new Path(file.getPath());
 
-
 		try {
 
 			IProjectDescription pd = workspace.loadProjectDescription(path);
-			
+
 			String onDiskProjectName = pd.getName();
 
 			IProject proj = ProjectUtilities.getProject(onDiskProjectName);
-			
-			IDominoDesignerProject dproj = SyncUtil
-					.getAssociatedNsfProject(proj);
+
+			IDominoDesignerProject dproj = SyncUtil.getAssociatedNsfProject(proj);
 
 			if (dproj == null) {
 				return null;
 			}
-			
+
 			return dproj.getProject();
 
 		} catch (CoreException e) {
 			e.printStackTrace();
 			return null;
 		}
-		
+
 	}
-	
+
 	private void reportMarkers(IProject project, PrintWriter out) {
 
 		if (!project.isOpen()) {
@@ -124,22 +145,47 @@ public class HeadlessServerRunnable implements Runnable {
 		try {
 
 			IMarker[] problems = null;
-			problems = project.findMarkers(IMarker.PROBLEM, true,
-					IResource.DEPTH_INFINITE);
+			problems = project.findMarkers(IMarker.PROBLEM, true, IResource.DEPTH_INFINITE);
 
-			if (problems.length == 0) {
+			boolean haserrors = false;
+
+			for (IMarker marker : problems) {
+
+				int severity = marker.getAttribute(IMarker.SEVERITY, 0);
+
+				if (severity >= 2) {
+					haserrors = true;
+				}
+			}
+
+			// Report status
+			if (haserrors) {
+				out.println(MSG_PROBLEMSSTATUS + MSG_FAIL);
+			} else {
 				out.println(MSG_PROBLEMSSTATUS + MSG_SUCCESS);
-				out.println("No Problems found after Building");
+			}
+
+			// Output the Errors
+			if (problems.length == 0) {
+				out.println("No ProblemMarkers found after Building");
 			} else {
 
-				out.println(MSG_PROBLEMSSTATUS + MSG_FAIL);
-				out.println("The following problems were present after building");
+				out.println("The following ProblemMarkers were present after building");
 
 				for (IMarker marker : problems) {
 
+					int severity = marker.getAttribute(IMarker.SEVERITY, 0);
+
+					if (severity >= 2) {
+						out.print("Error: ");
+					} else if (severity == 1) {
+						out.print("Warning: ");
+					} else {
+						out.print("Info: ");
+					}
+
 					// Need to check if the marker actually exists
 					if (marker.exists()) {
-
 						out.print(marker.getResource().getName() + ": ");
 						String msg = (String) marker.getAttribute("message");
 						out.println(msg);
@@ -156,55 +202,55 @@ public class HeadlessServerRunnable implements Runnable {
 
 	}
 
+	@SuppressWarnings("unused")
 	private void cleanup(PrintWriter out) {
-		
+
 		CleanUpJob job = new CleanUpJob();
-		
+
 		job.addJobChangeListener(new DeleteProjectJobChangeAdapter(out));
 		job.schedule();
 
 		try {
 			job.join();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
+	@SuppressWarnings("unused")
 	private void deleteProject(String projName, PrintWriter out) {
 
 		IProject project = ProjectUtilities.getProject(projName);
 
 		DeleteProjectJob job = new DeleteProjectJob(project);
-				
+
 		job.addJobChangeListener(new DeleteProjectJobChangeAdapter(out));
 		job.schedule();
-		
+
 		try {
 			job.join();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 	}
 
 	@Override
 	public void run() {
 
 		try {
-			
-			String portNumber = HeadlessServerActivator.getDefault().getPreferenceStore().getString(PreferenceConstants.P_PORT);
+
+			String portNumber = HeadlessServerActivator.getDefault().getPreferenceStore()
+					.getString(PreferenceConstants.P_PORT);
 			Integer port = null;
-			try { 
+			try {
 				port = Integer.parseInt(portNumber);
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 				return;
 			}
-						
+
 			socket = new ServerSocket(port, 0, InetAddress.getLocalHost());
 
 			socket.setSoTimeout(500);
@@ -218,63 +264,89 @@ public class HeadlessServerRunnable implements Runnable {
 
 					try {
 
-						BufferedReader in = new BufferedReader(
-								new InputStreamReader(
-										connSocket.getInputStream()));
-						PrintWriter out = new PrintWriter(
-								connSocket.getOutputStream(), true);
+						BufferedReader in = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
+						PrintWriter out = new PrintWriter(connSocket.getOutputStream(), true);
 
 						out.println("CONNECTED TO DESIGNER! What can we do for you?");
-						out.println("Expected Protocol");
-						out.println("Line 1: On Disk Project Path (Path to .project file)");
-						out.println("LINE 2: will be ignored for now");
 						out.println(MSG_TERM);
 
 						boolean argsvalid = true;
-						String onDiskPath 	= in.readLine();
-						@SuppressWarnings("unused")
-						String boobs = in.readLine();
+						String command = in.readLine();
 
-						File file = new File(onDiskPath);
-							
-						if (!file.exists()) {
-							out.println("The supplied on disk Path could not be found: ");
-							out.println("    ODP: " + onDiskPath);
-							argsvalid = false;
-						}
-													
-
-//						IProject existing = ProjectUtilities.getProject(nsfName);
-//						if (existing != null) {
-//							out.println("The Supplied NSF project name already exists in the workspace:");
-//							out.println("    NSF: " + nsfName);
-//							argsvalid = false;								
-//						}
-						
-						if (!argsvalid) {
-							out.println(MSG_TERM);
-							break;
+						List<String> args = new ArrayList<String>();
+						String line = in.readLine();
+						while (!StringUtil.equalsIgnoreCase(MSG_TERM, line)) {
+							args.add(line);
+							line = in.readLine();
 						}
 
-						refreshImportBuild(onDiskPath, out);
-						
-						// Run the Import and Build
-						//importAndBuild(onDiskPath, nsfName, out);
+						if (StringUtil.equalsIgnoreCase(command, CMD_SHUTDOWN)) {
+							closeDesigner(out);
+						} else if (StringUtil.equalsIgnoreCase(command, CMD_REFRESHIMPORTBUILD)) {
 
-						// Report on the Markers
-						IProject proj = getAssociatedProject(onDiskPath);
-						reportMarkers(proj, out);
+							if (args.size() < 4) {
+								out.println("Wrong number of arguments");
+							} else {
 
-						// Clean up projects
-						//cleanup(out);
-						
-						// Delete the Project
-						//deleteProject(nsfName, out);
+								String onDiskPath = args.get(0);
+								String onDiskProjectName = args.get(1);
+								String nsfPath = args.get(2);
+								String server = args.get(3);
+
+								if (StringUtil.equalsIgnoreCase("null", onDiskPath)) {
+									onDiskPath = null;
+								}
+								if (StringUtil.equalsIgnoreCase("null", onDiskProjectName)) {
+									onDiskProjectName = null;
+								}
+								if (StringUtil.equalsIgnoreCase("null", nsfPath)) {
+									nsfPath = null;
+								}
+								if (StringUtil.equalsIgnoreCase("null", server)) {
+									server = null;
+								}
+
+								File file = new File(onDiskPath);
+
+								if (!file.exists()) {
+									out.println("The supplied on disk Path could not be found: ");
+									out.println("    ODP: " + onDiskPath);
+									argsvalid = false;
+								}
+
+								if (!argsvalid) {
+									out.println(MSG_TERM);
+									break;
+								}
+
+								RefreshImportBuildJob job = refreshImportBuild(onDiskPath, onDiskProjectName, nsfPath,
+										server, out);
+
+								// Report on the Markers
+								IProject proj = job.getDesProject().getProject();
+								reportMarkers(proj, out);
+							}
+
+						} else if (StringUtil.equalsIgnoreCase(command, CMD_REPORTMARKERS)) {
+
+							if (args.size() < 1) {
+								out.println("Wrong number of arguments");
+							} else {
+
+								String onDiskPath = args.get(0);
+
+								IProject proj = getAssociatedProject(onDiskPath);
+								reportMarkers(proj, out);
+
+							}
+
+						} else {
+							out.println("Unknown Command '" + command + "'");
+						}
 
 						out.println(MSG_TERM);
 
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} finally {
 						System.out.println("Closing Connection Socket");
@@ -283,8 +355,10 @@ public class HeadlessServerRunnable implements Runnable {
 					}
 
 				} catch (InterruptedIOException e) {
-					
+
 				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}

@@ -8,9 +8,18 @@
 	<property name="bin.dir" value="bin" />
 	<property name="res.dir" value="res" />
 	<property name="lib.dir" value="lib" />
-
+	
 	<target name="clean" description="Delete all generated files">
 		<delete file="${lib.dir}/${ant.project.name}.jar" />
+	</target>
+
+	<target name="compile">
+		<delete dir="${bin.dir}"></delete>
+		<mkdir dir="${bin.dir}"/>
+		<javac srcdir="${src.dir}" destdir="${bin.dir}" debug="on" classpath="${notesProgDir}\jvm\lib\ext\Notes.jar" />
+	</target>
+	
+	<target name="compilejar" depends="compile,jar">		
 	</target>
 
 	<target name="jar" description="JARs the Task" depends="clean">
@@ -24,21 +33,30 @@
 	</target>
 
 	<target name="installtouserhome" description="Install XPagesCI to user ant dir">
-	
-		<delete file="${user.home}/.ant/lib/${ant.project.name}.jar"></delete>
-		
-		<copy file="${lib.dir}/${ant.project.name}.jar" todir="${user.home}/.ant/lib"></copy>
-		<copy file="${lib.dir}/jna-4.1.0.jar" todir="${user.home}/.ant/lib" overwrite="false" ></copy>
-		
-		
+
+		<delete file="${user.home}/.ant/lib/${ant.project.name}.jar">
+		</delete>
+
+		<copy file="${lib.dir}/${ant.project.name}.jar" todir="${user.home}/.ant/lib">
+		</copy>
+		<copy file="${lib.dir}/jna-4.1.0.jar" todir="${user.home}/.ant/lib" overwrite="false">
+		</copy>
+
+
 	</target>
-	
+
 	<target name="installtoant" description="Install BuildXPages to ant">
 
 		<echo message="${user.home}" />
-		
-		<delete file="${ant.library.dir}/${ant.project.name}.jar"></delete>
-		<copy file="${lib.dir}/${ant.project.name}.jar" todir="${ant.library.dir}"></copy>
+
+		<delete file="${ant.library.dir}/${ant.project.name}.jar">
+		</delete>
+		<copy file="${lib.dir}/${ant.project.name}.jar" todir="${ant.library.dir}">
+		</copy>
+
+	</target>
+
+	<target name="install" depends="installtoant,installtouserhome">
 
 	</target>
 

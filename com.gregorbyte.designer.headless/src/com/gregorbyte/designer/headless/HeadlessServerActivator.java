@@ -15,14 +15,14 @@ public class HeadlessServerActivator extends AbstractUIPlugin {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "com.gregorbyte.designer.headless"; //$NON-NLS-1$
 
-	public static HeadlessServerActivator INSTANCE = null; 
-	
+	public static HeadlessServerActivator INSTANCE = null;
+
 	private Thread serverThread;
 	private HeadlessServerRunnable headlessServer;
-	
+
 	// The shared instance
 	private static HeadlessServerActivator plugin;
-	
+
 	/**
 	 * The constructor
 	 */
@@ -37,29 +37,30 @@ public class HeadlessServerActivator extends AbstractUIPlugin {
 			serverThread.start();
 		}
 	}
-	
+
 	public void stopServer() {
 		if (isServerRunning())
 			headlessServer.stopThread();
 	}
-	
+
 	public boolean isServerRunning() {
 
-		if (serverThread == null) return false;
+		if (serverThread == null)
+			return false;
 		return serverThread.isAlive();
-		
+
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+	 * 
+	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.
+	 * BundleContext)
 	 */
 	public void start(BundleContext context) throws Exception {
 
 		INSTANCE = this;
-		
-		System.out.println("Starting Headless Bundle");
-				
+
 		super.start(context);
 		
 		IPreferenceStore store = getPreferenceStore();	
@@ -72,18 +73,33 @@ public class HeadlessServerActivator extends AbstractUIPlugin {
 		}
 		
 		plugin = this;
+
+		try {
+			Boolean autoStart = getDefault().getPreferenceStore().getBoolean(PreferenceConstants.P_START);
+
+			if (autoStart) {
+				System.out.println("Attempting to Auto Start Gregorbyte Headless Server");
+				startServer();
+			}
+
+		} catch (Exception e) {
+			System.err.println("Error attempting to auto start GregorbyteHeadless Server");
+		}
+
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+	 * 
+	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.
+	 * BundleContext)
 	 */
 	public void stop(BundleContext context) throws Exception {
-		
+
 		System.out.println("Stopping Headless Bundle");
 
-		stopServer();			
-				
+		stopServer();
+
 		plugin = null;
 		super.stop(context);
 	}

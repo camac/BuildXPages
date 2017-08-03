@@ -11,13 +11,18 @@ import com.gregorbyte.designer.headless.HeadlessServerActivator;
 public class StopServerAction implements IWorkbenchWindowActionDelegate {
 
 	private IWorkbenchWindow window;
-	
+
+	public StopServerAction() {
+		super();
+
+	}
+
 	@Override
 	public void run(IAction action) {
 
 		String msg = "";
-		
-		if ( HeadlessServerActivator.INSTANCE.isServerRunning() ) { 
+
+		if (HeadlessServerActivator.INSTANCE.isServerRunning()) {
 			HeadlessServerActivator.INSTANCE.stopServer();
 			msg = "Headless Server Stopped";
 		} else {
@@ -25,12 +30,19 @@ public class StopServerAction implements IWorkbenchWindowActionDelegate {
 		}
 
 		MessageDialog.openConfirm(window.getShell(), "Headless Server", msg);
-		
+
 	}
 
 	@Override
 	public void selectionChanged(IAction arg0, ISelection arg1) {
+		if (HeadlessServerActivator.INSTANCE != null) {
 
+			if (HeadlessServerActivator.INSTANCE.isServerRunning()) {
+				arg0.setEnabled(true);
+			} else {
+				arg0.setEnabled(false);
+			}
+		}
 	}
 
 	@Override

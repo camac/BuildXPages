@@ -5,11 +5,11 @@ import java.io.PrintWriter;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 
-public class BuildJobChangeAdapter extends JobChangeAdapter {
+public class CloseDesignerJobChangeAdapter extends JobChangeAdapter {
 
 	private PrintWriter writer;
 	
-	public BuildJobChangeAdapter(PrintWriter writer) {
+	public CloseDesignerJobChangeAdapter(PrintWriter writer) {
 		
 		this.writer = writer;
 		
@@ -18,10 +18,10 @@ public class BuildJobChangeAdapter extends JobChangeAdapter {
 	@Override
 	public void scheduled(IJobChangeEvent event) {
 	
-		if (event != null && event.getResult() != null && event.getResult().isOK())
-			writer.println("BUILD JOB SCHEDULED");
+		if (event.getResult().isOK())
+			writer.println("CLOSE DESIGNER JOB SCHEDULED");
 		else
-			writer.println("BUILD JOB SCHEDULING NOT SO GOOD");
+			writer.println("CLOSE DESIGNER JOB SCHEDULING NOT SO GOOD");
 		
 		super.scheduled(event);
 	}
@@ -29,7 +29,7 @@ public class BuildJobChangeAdapter extends JobChangeAdapter {
 	@Override
 	public void aboutToRun(IJobChangeEvent event) {
 		
-		writer.println("BUILD JOB ABOUT TO RUN");		
+		writer.println("CLOSE DESIGNER JOB ABOUT TO RUN");		
 		super.aboutToRun(event);
 		
 	}
@@ -37,7 +37,7 @@ public class BuildJobChangeAdapter extends JobChangeAdapter {
 	@Override
 	public void awake(IJobChangeEvent event) {
 
-		writer.println("BUILD JOB AWAKE");		
+		writer.println("CLOSE DESIGNER JOB AWAKE");		
 		super.awake(event);
 		
 	}
@@ -45,14 +45,14 @@ public class BuildJobChangeAdapter extends JobChangeAdapter {
 	@Override
 	public void running(IJobChangeEvent event) {
 
-		writer.println("BUILD JOB RUNNING");		
+		writer.println("CLOSE DESIGNER JOB RUNNING");		
 		super.running(event);
 	}
 
 	@Override
 	public void sleeping(IJobChangeEvent event) {
 
-		writer.println("BUILD JOB SLEEPING");		
+		writer.println("CLOSE DESIGNER JOB SLEEPING");		
 		super.sleeping(event);
 		
 	}
@@ -61,15 +61,9 @@ public class BuildJobChangeAdapter extends JobChangeAdapter {
 	public void done(IJobChangeEvent event) {
 
 		if (event.getResult().isOK())
-			writer.println("BUILD JOB STATUS: SUCCESS");
-		else {
-			writer.println("BUILD JOB STATUS: FAIL");
-			writer.println(event.getResult().getMessage() + event.getResult().getCode());
-			if (event.getResult().getException() != null) {
-				writer.println(event.getResult().getException().getMessage());
-			}
-			
-		}
+			writer.println("CLOSE DESIGNER JOB STATUS: SUCCESS");
+		else
+			writer.println("CLOSE DESIGNER JOB STATUS: FAIL");
 		
 		super.done(event);
 	}

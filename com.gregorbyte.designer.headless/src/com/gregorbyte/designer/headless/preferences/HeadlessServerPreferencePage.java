@@ -17,13 +17,11 @@ import com.gregorbyte.designer.headless.HeadlessServerActivator;
  * preferences can be accessed directly via the preference store.
  */
 
-public class HeadlessServerPreferencePage extends FieldEditorPreferencePage
-		implements IWorkbenchPreferencePage {
+public class HeadlessServerPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
 	public HeadlessServerPreferencePage() {
 		super(GRID);
-		setPreferenceStore(HeadlessServerActivator.getDefault()
-				.getPreferenceStore());
+		setPreferenceStore(HeadlessServerActivator.getDefault().getPreferenceStore());
 		setDescription("These are preferences to do with Gregorbyte Headless Designer Server");
 	}
 
@@ -33,11 +31,13 @@ public class HeadlessServerPreferencePage extends FieldEditorPreferencePage
 	 * editor knows how to save and restore itself.
 	 */
 	public void createFieldEditors() {
-		addField(new StringFieldEditor(PreferenceConstants.P_PORT,
-				"Port Number to Listen on:", getFieldEditorParent()));
 
-		addField(new BooleanFieldEditor(PreferenceConstants.P_AUTOSTART,
-				"Start Headless Server Automatically When Designer Starts", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(PreferenceConstants.P_START, "Auto-Start Headless Server",
+				getFieldEditorParent()));
+
+		addField(
+				new StringFieldEditor(PreferenceConstants.P_PORT, "Port Number to Listen on:", getFieldEditorParent()));
+
 	}
 
 	/*

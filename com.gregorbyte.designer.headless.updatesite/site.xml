@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
    <feature url="features/com.gregorbyte.designer.headless.feature_1.0.0.201507171622.jar" id="com.gregorbyte.designer.headless.feature" version="1.0.0.201507171622"/>
+   <feature url="features/com.gregorbyte.designer.headless.feature_1.0.0.201707181253.jar" id="com.gregorbyte.designer.headless.feature" version="1.0.0.201707181253"/>
+   <feature url="features/com.gregorbyte.designer.headless.feature_1.0.0.201707181301.jar" id="com.gregorbyte.designer.headless.feature" version="1.0.0.201707181301">
+      <category name="Headless"/>
+   </feature>
+   <feature url="features/com.gregorbyte.designer.headless.feature_1.0.0.201707201453.jar" id="com.gregorbyte.designer.headless.feature" version="1.0.0.201707201453">
+      <category name="Headless"/>
+   </feature>
+   <feature url="features/com.gregorbyte.designer.headless.feature_1.0.0.201707201502.jar" id="com.gregorbyte.designer.headless.feature" version="1.0.0.201707201502">
+      <category name="Headless"/>
+   </feature>
+   <feature url="features/com.gregorbyte.designer.headless.feature_1.0.0.201707201543.jar" id="com.gregorbyte.designer.headless.feature" version="1.0.0.201707201543">
+      <category name="Headless"/>
+   </feature>
+   <feature url="features/com.gregorbyte.designer.headless.feature_1.0.0.201707211606.jar" id="com.gregorbyte.designer.headless.feature" version="1.0.0.201707211606">
+      <category name="Headless"/>
+   </feature>
+   <feature url="features/com.gregorbyte.designer.headless.feature_1.0.0.201707211657.jar" id="com.gregorbyte.designer.headless.feature" version="1.0.0.201707211657">
+      <category name="Headless"/>
+   </feature>
+   <category-def name="Headless" label="Headless"/>
 </site>
