@@ -48,9 +48,11 @@
 		<bxp:closedesigner/>
 	</target>
 	
+	<!-- tag::startdesigner[] -->
 	<target name="teststartdesigner" description="Start Designer">
 		<exec executable="C:\Notes\designer.exe"></exec>		
 	</target>
+	<!-- end::startdesigner[] -->
 	
 	<target name="testmarkersreport" description="Tests Reporting on ProblemMarkers">
 		<bxp:markersreport ondiskproject="C:\\workspaces\\neon-64\\runtime-HeadlessPlugin\\DeleteMe\\.project"></bxp:markersreport>
