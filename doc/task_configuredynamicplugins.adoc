@@ -1,1 +1,17 @@
-=== configuredynamicplugins TODO
+=== configuredynamicplugins
+
+This task configures IBM Notes' **platform.xml** file so that IBM Notes will load plugins from the filesystem without the need to 'approve' them via the User Interface.
+
+Usually you need to go through the whole provisioning process for plugin updates, but this task will put IBM Notes into a configuration that bypasses this.
+
+==== Properties
+
+[horizontal]
+notesDataDir:: the location of IBM Notes Data directory on this machine
+
+==== Example
+
+[source,xml]
+----
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=configuredynamicplugins]
+----

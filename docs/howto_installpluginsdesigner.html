@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>buildfeature</title>
+<title>Installing Plugins to Domino Designer</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -714,133 +714,104 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 <div id="header">
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="_installing_plugins_to_domino_designer">Installing Plugins to Domino Designer</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This guide explains about installing plugins to Domino Designer</p>
+</div>
 <div class="sect2">
-<h3 id="_buildfeature">buildfeature</h3>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Caution</div>
-</td>
-<td class="content">
+<h3 id="_enabling_plugin_installation">Enabling Plugin Installation</h3>
 <div class="paragraph">
-<p>This Task and Documentation needs a little bit of love before it is truly re-usable. If you are keen to use this then let me know and I will improve it!</p>
-</div>
-</td>
-</tr>
-</table>
+<p>If you have never installed plugins to Designer before, then you may need to enable plugin installation in Domino Designer Preferences.</p>
 </div>
 <div class="paragraph">
-<p>This task will build all the Plugins listed in a feature, using the headless eclipse PDE build system.</p>
+<p>Go to <strong>File &#8594; Preferences &#8594; Domino Designer</strong> and ensure that the <strong>Enable Eclipse plug-in install</strong> checkbox is set</p>
 </div>
-<div class="paragraph">
-<p>Before using this task, you will need to have prepared the build directory with the source code of the plugins that are to be built, and the the feature that is to be built.</p>
-</div>
-<div class="sect3">
-<h4 id="_properties_that_are_used_in_this_task">Properties that are used in this task</h4>
-<div class="paragraph">
-<p>This task is actually a macro, and currently relies on some properties to have already been set in ant</p>
-</div>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-featureId
-</td>
-<td class="hdlist2">
-<p>The feature to be built</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-eclipseBase
-</td>
-<td class="hdlist2">
-<p>Root directory of eclipse</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-pdeBuildVersion
-</td>
-<td class="hdlist2">
-<p>PDE Build version</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-equinoxLauncherVersion
-</td>
-<td class="hdlist2">
-<p>Equinox Launcher Version</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-buildId
-</td>
-<td class="hdlist2">
-<p>Usually the build number</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-buildLabel
-</td>
-<td class="hdlist2">
-<p>Project Name</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-buildConfigDir
-</td>
-<td class="hdlist2">
-<p>Directory of build.properties</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-buildDir
-</td>
-<td class="hdlist2">
-<p>The working directory in which the plugins will be built</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_attributes">Attributes</h4>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">pluginPath</dt>
-<dd>
-<p>This is a semi-colon delimited string of the target platform plugin paths</p>
-</dd>
-</dl>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_example">Example</h4>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Caution</div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>You really need a lot more information than this to use this task but I have just put this all here as a starting point. Please feel free to contact me to make me provide more information.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="literalblock">
+<div class="imageblock">
 <div class="content">
-<pre>&lt;!-- Plugin path is supplied by a build.properties file --&gt;
-&lt;bxp:buildfeature pluginpath="${pluginPath}" /&gt;</pre>
+<img src="images/images/DesignerEnablePluginInstall.JPG" alt="DesignerEnablePluginInstall">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_update_sites_explained">Update Sites Explained</h3>
+<div class="paragraph">
+<p>The plugins that you are installing will exist in a format that is called an <strong>Update Site</strong>.
+Whilst you may find lots of informoation online about the newer <strong>p2 repository</strong> update site format, this information is not relevant to us for Domino Designer.</p>
+</div>
+<div class="paragraph">
+<p>Domino Designer still uses an older format for update sites which basically consist of:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a <strong>site.xml</strong> file which provides a list of the features contained in the update site</p>
+</li>
+<li>
+<p>a <strong>features</strong> directory which contains all the features</p>
+</li>
+<li>
+<p>a <strong>plugins</strong> directory which contains all the plugins</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In truth, you do not really install <strong>plugins</strong>, you install <strong>features</strong>.
+Although all the brains are inside the plugins, features are a way to group some plugins together, so that if you want a certain feature it knows which plugins are needed to be installed. So you ask for a <strong>feature</strong> to be installed, and then it knows which plugins to install based on that.</p>
+</div>
+<div class="paragraph">
+<p>The concept of an update site is that once Domino Designer knows about an update site, it can keep checking that site for future updates.</p>
+</div>
+<div class="paragraph">
+<p>This can be useful if you register your own <strong>NSF Update Sites</strong>, which you can then use as a basis to update Domino Designer from there. Once your NSF is register you can simply check for updates.</p>
+</div>
+<div class="paragraph">
+<p>However a more common scenario is that you download an <strong>update site</strong> in the form of a zip file and install from that file just one time. In this case you usually add these <strong>Archive Update Site</strong>'s each time you need to install one.</p>
+</div>
+<div class="sect3">
+<h4 id="_installing_from_a_new_update_site">Installing from a New Update Site</h4>
+<div class="paragraph">
+<p>To Install from a new update site, choose File &#8594; Application &#8594; Install..</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/images/DesignerFileApplicationsInstall.JPG" alt="DesignerFileApplicationsInstall">
+</div>
+</div>
+<div class="paragraph">
+<p>Add the update site that you want to install from</p>
+</div>
+<div class="paragraph">
+<p>use <strong>Add Zip/Jar Location</strong> if it is a zipped update site
+use <strong>Add Folder location</strong> if it is not zipped</p>
+</div>
+<div class="paragraph">
+<p>Then click finish, the update manager will do some thinking.</p>
+</div>
+<div class="paragraph">
+<p>It will then show you some 'features' that can be installed, choose the one you want to install and click next</p>
+</div>
+<div class="paragraph">
+<p>Then accept the license agreements and then finish the wizard</p>
+</div>
+<div class="paragraph">
+<p>It will do some more thinking, and then tell you</p>
+</div>
+<div class="paragraph">
+<p>'The system is trying to install a plugin do you want to?'
+and you <strong>MUST</strong> change the option to say 'Install this plug-in'
+Then click ok</p>
+</div>
+<div class="paragraph">
+<p>You will then need to restart Domino Designer</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_installing_from_an_existing_update_site">Installing from an existing Update site</h4>
+<div class="paragraph">
+<p>If you already have an update site register you should be able to follow the same procedure above without added a new update site. Just let it check existing update sites.</p>
+</div>
 </div>
 </div>
 </div>
@@ -848,7 +819,7 @@ buildDir
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-05 20:15:00 AEST
+Last updated 2017-08-05 23:29:11 AEST
 </div>
 </div>
 </body>

@@ -718,19 +718,47 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 <h2 id="_designer_related_tasks">Designer Related Tasks</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_startdesigner_todo">startdesigner TODO</h3>
+<h3 id="_startdesigner">startDesigner</h3>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Using this task to start designer will cause designer to shutdown at the end of the ant build process. Due the the process being a sub-process. I need to do this a better way such as the powershell script way but I haven&#8217;t got around to it yet. I actually in real life just leave designer running all the time so I don&#8217;t need to start/close it.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Before building an NSF with the Headless Designer Plugin, you need to make sure designer is running. You can use the <strong>checkDesignerRunning</strong> task to check, and if it is not running you can use this <strong>startDesigner</strong> task.</p>
+</div>
+<div class="sect3">
+<h4 id="_properties">Properties</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+notesProgDir
+</td>
+<td class="hdlist2">
+<p>The Notes program directory on this machine</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example">Example</h4>
 <div class="literalblock">
 <div class="content">
-<pre>&lt;target name="teststartdesigner" description="Start Designer"&gt;
-	&lt;exec executable="C:\Notes\designer.exe"&gt;
-	&lt;/exec&gt;
-&lt;/target&gt;</pre>
+<pre>&lt;bxp:startDesigner /&gt;</pre>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_preparedesigner_todo">preparedesigner TODO</h3>
-
 </div>
 <div class="sect2">
 <h3 id="_buildnsf">buildnsf</h3>
@@ -795,7 +823,7 @@ failonerror
 </div>
 </div>
 <div class="sect3">
-<h4 id="_example">Example</h4>
+<h4 id="_example_2">Example</h4>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;target name="testbuildnsf" description="Build an NSF"&gt;
@@ -815,39 +843,316 @@ failonerror
 </div>
 </div>
 <div class="sect2">
-<h3 id="_closedesigner_todo">closedesigner TODO</h3>
-
+<h3 id="_closedesigner">closedesigner</h3>
+<div class="paragraph">
+<p>This task connects to the Headless Designer Plugin and instructs it to shutdown.</p>
+</div>
+<div class="sect3">
+<h4 id="_attributes_2">Attributes</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+port
+</td>
+<td class="hdlist2">
+<p>The port that the Headless Designer Plugin is running on. Default = 8282</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_3">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:closedesigner /&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_markersreport_todo">markersreport TODO</h3>
-
+<h3 id="_markersreport">markersreport</h3>
+<div class="paragraph">
+<p>This task connects to the Headless Designer Plugin, and requests a report of all the problem markse (e.g. Error, Info, Warning etc.) for a particular NSF.</p>
+</div>
+<div class="paragraph">
+<p>If you like , you can cause the build to fail if there are errors present on the NSF, to prevent further tasks like deployment.</p>
+</div>
+<div class="sect3">
+<h4 id="_attributes_3">Attributes</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+ondiskproject
+</td>
+<td class="hdlist2">
+<p>The On Disk Project file (.project) of the NSF that you want a report for.</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+failonerror
+</td>
+<td class="hdlist2">
+<p>When set to true (Default) the build will fail if errors are present on the NSF</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+port
+</td>
+<td class="hdlist2">
+<p>The port which Headless Designer Plugin is running on (default = 8282)</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_4">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:markersreport ondiskproject="C:\\workspaces\\neon-64\\runtime-HeadlessPlugin\\DeleteMe\\.project"&gt;
+&lt;/bxp:markersreport&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_checkdesignerrunning_todo">checkdesignerrunning TODO</h3>
-
+<h3 id="_checkdesignerrunning">checkdesignerrunning</h3>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Windows only!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This task checks if the nlnotes.exe process is running, if so it sets a property <strong>designer.running</strong>.
+You can then use this property to decide whether to take some other action.</p>
+</div>
+<div class="sect3">
+<h4 id="_example_5">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:checkDesignerRunning /&gt;
+&lt;fail if="designer.running" message="Designer was running" /&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_updatedesignerlink_todo">updatedesignerlink TODO</h3>
-
+<h3 id="_updatedesignerlink">updateDesignerLink</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>I am not sure this is a great way to deploy plugins so  I haven&#8217;t detailed this part yet.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This task is used to set up an update site that will always be loaded when Designer Is started up. This is only used when you are deploying plugins to Domino Designer using the sneaky 'permanent update site' method.</p>
+</div>
+<div class="sect3">
+<h4 id="_properties_2">Properties</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+notesProgDir
+</td>
+<td class="hdlist2">
+<p>The Notes Program Directory on this machine</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_attributes_4">Attributes</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+updateSiteLabel
+</td>
+<td class="hdlist2">
+<p>This is a short code to be used as a name for the update site. It will be used in a filename so it should be something simple e.g. 'extlib'</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+updateSiteDir
+</td>
+<td class="hdlist2">
+<p>This is the Directory that contains the update site. It is expected to have a subdirectory called <strong>eclipse</strong>, and within that subdirectory should be the site.xml, <strong>features</strong> directory and <strong>plugins</strong> directory</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_6">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:updateDesignerLink updateSiteLabel="extlib" updateSiteDir="C:\\Projects\\extlib\updatesite" /&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_initdesignersite_todo">initdesignersite TODO</h3>
-
+<h3 id="_initdesignersite">initdesignersite</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>I am not sure this is a great way to deploy plugins so  I haven&#8217;t detailed this part yet.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This task is used to set up an update site that will always be loaded when Designer Is started up. This is only used when you are deploying plugins to Domino Designer using the sneaky 'permanent update site' method.</p>
+</div>
+<div class="paragraph">
+<p>This task is just like the <strong>updateDesignerLink</strong> task, however it will create the update site folder structure within the framework directory of the Notes Installation.</p>
+</div>
+<div class="paragraph">
+<p>You can then copy plugins to this update site, and they will be loaded by designer (if you have configured platform.xml using the <strong>checkplatformxml</strong> task)</p>
+</div>
+<div class="sect3">
+<h4 id="_properties_3">Properties</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+notesProgDir
+</td>
+<td class="hdlist2">
+<p>The Notes Program Directory on this machine</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_attributes_5">Attributes</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+updateSiteLabel
+</td>
+<td class="hdlist2">
+<p>This is a short code to be used as a name for the update site. It will be used in a filename so it should be something simple e.g. 'extlib'</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_7">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:updateDesignerLink updateSiteLabel="extlib" updateSiteDir="C:\\Projects\\extlib\updatesite" /&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_checkplatformxml_todo">checkplatformxml TODO</h3>
+<h3 id="_checkplatformxml">checkplatformxml</h3>
+<div class="paragraph">
+<p>This checks that the IBM Notes Installation&#8217;s platform.xml file is configured to automatically load plugins from the filesystem. The task will fail if the file is not configured properly.</p>
+</div>
+<div class="sect3">
+<h4 id="_properties_4">Properties</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+notesProgDir
+</td>
+<td class="hdlist2">
+<p>The Notes Program Directory on this machine</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_8">Example</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">		&lt;!-- Make sure notesDataDir property is set --&gt;
+		&lt;property name="notesDataDir" location="H:\Notes\Data"/&gt;
 
+		&lt;bxp:checkPlatformXml/&gt;</code></pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_configuredynamicplugins_todo">configuredynamicplugins TODO</h3>
+<h3 id="_configuredynamicplugins">configuredynamicplugins</h3>
+<div class="paragraph">
+<p>This task configures IBM Notes' <strong>platform.xml</strong> file so that IBM Notes will load plugins from the filesystem without the need to 'approve' them via the User Interface.</p>
+</div>
+<div class="paragraph">
+<p>Usually you need to go through the whole provisioning process for plugin updates, but this task will put IBM Notes into a configuration that bypasses this.</p>
+</div>
+<div class="sect3">
+<h4 id="_properties_5">Properties</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+notesDataDir
+</td>
+<td class="hdlist2">
+<p>the location of IBM Notes Data directory on this machine</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_9">Example</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">		&lt;!-- Make sure notesDataDir property is set --&gt;
+		&lt;property name="notesDataDir" location="H:\Notes\Data"/&gt;
 
+		&lt;bxp:configureDynamicPlugins /&gt;</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-03 22:53:37 AEST
+Last updated 2017-08-05 20:21:02 AEST
 </div>
 </div>
 </body>

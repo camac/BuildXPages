@@ -1,1 +1,16 @@
-=== markersreport TODO
+=== markersreport
+
+This task connects to the Headless Designer Plugin, and requests a report of all the problem markse (e.g. Error, Info, Warning etc.) for a particular NSF.
+
+If you like , you can cause the build to fail if there are errors present on the NSF, to prevent further tasks like deployment.
+
+==== Attributes
+
+[horizontal]
+ondiskproject:: The On Disk Project file (.project) of the NSF that you want a report for.
+failonerror:: When set to true (Default) the build will fail if errors are present on the NSF
+port:: The port which Headless Designer Plugin is running on (default = 8282)
+
+==== Example
+
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=markersreport]

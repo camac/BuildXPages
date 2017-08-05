@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>checkdesignerrunning TODO</title>
+<title>checkdesignerrunning</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -715,13 +715,39 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 </div>
 <div id="content">
 <div class="sect2">
-<h3 id="_checkdesignerrunning_todo">checkdesignerrunning TODO</h3>
-
+<h3 id="_checkdesignerrunning">checkdesignerrunning</h3>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Windows only!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This task checks if the nlnotes.exe process is running, if so it sets a property <strong>designer.running</strong>.
+You can then use this property to decide whether to take some other action.</p>
+</div>
+<div class="sect3">
+<h4 id="_example">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:checkDesignerRunning /&gt;
+&lt;fail if="designer.running" message="Designer was running" /&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-03 23:04:23 AEST
+Last updated 2017-08-05 20:31:26 AEST
 </div>
 </div>
 </body>

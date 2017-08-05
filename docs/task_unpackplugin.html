@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>unpackplugin TODO</title>
+<title>unpackplugin</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -715,13 +715,52 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 </div>
 <div id="content">
 <div class="sect2">
-<h3 id="_unpackplugin_todo">unpackplugin TODO</h3>
-
+<h3 id="_unpackplugin">unpackplugin</h3>
+<div class="paragraph">
+<p>Usually you update Domino Designer with new plugins by going through the normal installation process. But there is another way in which you can build plugins into a particular folder, and Domino Designer always picks up new versions.</p>
+</div>
+<div class="paragraph">
+<p>When deploying plugins this way, some plugins need to be 'unpacked' which means they don&#8217;t exist as a jar file, but the contents are unpacked into a folder.</p>
+</div>
+<div class="paragraph">
+<p>This task will unpack a plugin to a folder. You just need to give the plugin name, and it will find the version information automatically</p>
+</div>
+<div class="sect3">
+<h4 id="_attributes">Attributes</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+dir
+</td>
+<td class="hdlist2">
+<p>The directory that the plugin is in</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+pluginid
+</td>
+<td class="hdlist2">
+<p>the plugin id that you want to unpack</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:unpackplugin dir="eclipse/plugins" pluginid="com.acme.superplugin" /&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-03 23:00:34 AEST
+Last updated 2017-08-05 19:55:32 AEST
 </div>
 </div>
 </body>

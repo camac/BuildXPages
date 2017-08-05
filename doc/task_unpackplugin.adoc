@@ -1,1 +1,17 @@
-=== unpackplugin TODO
+=== unpackplugin
+
+Usually you update Domino Designer with new plugins by going through the normal installation process. But there is another way in which you can build plugins into a particular folder, and Domino Designer always picks up new versions.
+
+When deploying plugins this way, some plugins need to be 'unpacked' which means they don't exist as a jar file, but the contents are unpacked into a folder.
+
+This task will unpack a plugin to a folder. You just need to give the plugin name, and it will find the version information automatically
+
+==== Attributes
+
+[horizontal]
+dir:: The directory that the plugin is in
+pluginid:: the plugin id that you want to unpack
+
+==== Example
+
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=unpackplugin]

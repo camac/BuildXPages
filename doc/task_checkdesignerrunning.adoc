@@ -1,1 +1,12 @@
-=== checkdesignerrunning TODO
+=== checkdesignerrunning
+[CAUTION]
+====
+Windows only!
+====
+
+This task checks if the nlnotes.exe process is running, if so it sets a property **designer.running**.
+You can then use this property to decide whether to take some other action.
+
+==== Example
+
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=checkdesignerrunning]

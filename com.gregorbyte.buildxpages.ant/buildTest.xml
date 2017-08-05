@@ -33,7 +33,7 @@
 
 	<target name="testrefreshdesign" description="Test the RefreshDbDesign task">
 		<!-- tag::refreshdbdesign[] -->
-		<!-- Refresh MyNSF.nsf from the Domino03 server --> 
+		<!-- Refresh MyNSF.nsf from the Domino03 server -->
 		<refreshdbdesign server="Domino02" database="MyFolder\\MyNSF.nsf" templateserver="Domino03" />
 		<!-- end::refreshdbdesign[] -->
 	</target>
@@ -52,19 +52,23 @@
 
 
 	<target name="testclosedesigner" description="Close Designer">
+		<!-- tag::closedesigner[] -->
 		<bxp:closedesigner />
+		<!-- end::closedesigner[] -->
 	</target>
 
-	<!-- tag::startdesigner[] -->
 	<target name="teststartdesigner" description="Start Designer">
-		<exec executable="C:\Notes\designer.exe">
-		</exec>
+		<!-- tag::startdesigner[] -->
+		<bxp:startDesigner />
+		<!-- end::startdesigner[] -->
+
 	</target>
-	<!-- end::startdesigner[] -->
 
 	<target name="testmarkersreport" description="Tests Reporting on ProblemMarkers">
+		<!-- tag::markersreport[] -->
 		<bxp:markersreport ondiskproject="C:\\workspaces\\neon-64\\runtime-HeadlessPlugin\\DeleteMe\\.project">
 		</bxp:markersreport>
+		<!-- end::markersreport[] -->
 	</target>
 
 	<target name="cleanforgeneratesitexml">
@@ -85,7 +89,11 @@
 	</target>
 
 	<target name="testgeneratesitexml" description="Generates a Site XML" depends="setupforgeneratesitexml">
+
+		<!-- tag::generatesitexml[] -->
 		<bxp:generatesitexml eclipsedir="testgen" />
+		<!-- end::generatesitexml[] -->
+
 	</target>
 
 	<!-- tag::maintenance[] -->
@@ -113,7 +121,9 @@
 	<!-- end::controlhttp[] -->
 
 	<target name="testImportPlugins" description="Tests Importing Plugins to Update Site">
-		<bxp:importplugins server="domino02" database="temp\TestBxpUpdateSite.nsf" sitexml="V:\Cameron\Downloads\ExtensionLibraryOpenNTF-901v00_11.20141217-1000\updateSiteOpenNTF\site.xml" />
+		<!-- tag::importplugins[] -->
+		<bxp:importplugins server="Domino02" database="UpdateSite\MyUpdateSite.nsf" sitexml="C:\MyFolder\MyProject\com.my.updatesite\site.xml" />
+		<!-- end::importplugins[] -->
 	</target>
 
 	<!-- tag::loaddesign[] -->
@@ -137,7 +147,9 @@
 	</target>
 
 	<target name="testcopyplugin">
-		<bxp:copyplugintobuilddir plugin="" />
+		<!-- tag::copypluginstobuilddir[] -->
+		<bxp:copyplugintobuilddir plugin="com.acme.myplugin" />
+		<!-- end::copypluginstobuilddir[] -->
 	</target>
 
 	<target name="testsettemplatenames">
@@ -164,13 +176,79 @@
 
 	<target name="testscxd">
 
-		<!-- tag::scxd[] -->		
+		<!-- tag::scxd[] -->
 		<!-- Set an NSF to use 'scxd\Awesome.nsf' as it's single copy xpage design -->
 		<bxp:scxd database="MyFolder\MyNSF.nsf" server="Domino01" scxdpath="scxd\Awesome.nsf" scxdflag="true" />
-		
-		<!-- Set an NSF to not use any SCXD -->			
-		<bxp:scxd database="MyFolder\MyNSF.nsf" server="Domino01" scxdpath="" scxdflag="false" />	
+
+		<!-- Set an NSF to not use any SCXD -->
+		<bxp:scxd database="MyFolder\MyNSF.nsf" server="Domino01" scxdpath="" scxdflag="false" />
 		<!-- end::scxd[] -->
+
+	</target>
+
+	<target name="testunpackplugin">
+		<!-- tag::unpackplugin[] -->
+		<bxp:unpackplugin dir="eclipse/plugins" pluginid="com.acme.superplugin" />
+		<!-- end::unpackplugin[] -->
+	</target>
+
+	<target name="testclearupdatesite">
+
+		<!-- tag::clearupdatesite[] -->
+		<bxp:clearupdatesite eclipsedir="myplugins" />
+		<!-- end::clearupdatesite[] -->
+
+	</target>
+
+	<target name="testcopypluginstoupdatesite">
+		<!-- tag::copypluginstoupdatesite[] -->
+		<bxp:copypluginstoupdatesite eclipsedir="my/target/updatesite/eclipse" />
+		<!-- end::copypluginstoupdatesite[] -->
+	</target>
+
+
+	<target name="testbuildfeature">
+		<!-- tag::buildfeature[] -->
+		<!-- Plugin path is supplied by a build.properties file -->
+		<bxp:buildfeature pluginpath="${pluginPath}" />
+		<!-- end::buildfeature[] -->
+	</target>
+
+	<target name="testcheckdesignerrunning">
+		<!-- tag::checkdesignerrunning[] -->
+
+		<bxp:checkDesignerRunning />
+		<fail if="designer.running" message="Designer was running" />
+
+		<!-- end::checkdesignerrunning[] -->
+	</target>
+
+	<target name="testupdatedesignerlink">
+
+		<!-- tag::updatedesignerlink[] -->
+		<bxp:updateDesignerLink updateSiteLabel="extlib" updateSiteDir="C:\\Projects\\extlib\updatesite" />
+		<!-- end::updatedesignerlink[] -->
+
+	</target>
+
+	<target name="testcheckplatformxml">
+		<!-- tag::checkplatformxml[] -->
+		<!-- Make sure notesDataDir property is set -->
+		<property name="notesDataDir" location="H:\Notes\Data"/>
+
+		<bxp:checkPlatformXml/>
+		<!-- end::checkplatformxml[] -->
+
+	</target>
+	
+	<target name="testconfiguredynamicplugins">
+
+		<!-- tag::configuredynamicplugins[] -->
+		<!-- Make sure notesDataDir property is set -->
+		<property name="notesDataDir" location="H:\Notes\Data"/>
+
+		<bxp:configureDynamicPlugins />
+		<!-- end::configuredynamicplugins[] -->
 
 	</target>
 

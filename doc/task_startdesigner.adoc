@@ -1,3 +1,17 @@
-=== startdesigner TODO
+=== startDesigner 
+
+[CAUTION]
+====
+Using this task to start designer will cause designer to shutdown at the end of the ant build process. Due the the process being a sub-process. I need to do this a better way such as the powershell script way but I haven't got around to it yet. I actually in real life just leave designer running all the time so I don't need to start/close it.
+====
+
+Before building an NSF with the Headless Designer Plugin, you need to make sure designer is running. You can use the **checkDesignerRunning** task to check, and if it is not running you can use this **startDesigner** task.
+
+==== Properties
+
+[horizontal]
+notesProgDir:: The Notes program directory on this machine
+
+==== Example
 
 include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=startdesigner]

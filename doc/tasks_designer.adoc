@@ -2,8 +2,6 @@
 
 include::task_startdesigner.adoc[]
 
-include::task_preparedesigner.adoc[]
-
 include::task_buildnsf.adoc[]
 
 include::task_closedesigner.adoc[]

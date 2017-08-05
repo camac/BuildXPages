@@ -1,1 +1,15 @@
-=== checkplatformxml TODO
+=== checkplatformxml
+
+This checks that the IBM Notes Installation's platform.xml file is configured to automatically load plugins from the filesystem. The task will fail if the file is not configured properly.
+
+==== Properties
+
+[horizontal]
+notesProgDir:: The Notes Program Directory on this machine
+
+==== Example
+
+[source,xml]
+----
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=checkplatformxml]
+----

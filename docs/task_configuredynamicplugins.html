@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>configuredynamicplugins TODO</title>
+<title>configuredynamicplugins</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -715,13 +715,44 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 </div>
 <div id="content">
 <div class="sect2">
-<h3 id="_configuredynamicplugins_todo">configuredynamicplugins TODO</h3>
+<h3 id="_configuredynamicplugins">configuredynamicplugins</h3>
+<div class="paragraph">
+<p>This task configures IBM Notes' <strong>platform.xml</strong> file so that IBM Notes will load plugins from the filesystem without the need to 'approve' them via the User Interface.</p>
+</div>
+<div class="paragraph">
+<p>Usually you need to go through the whole provisioning process for plugin updates, but this task will put IBM Notes into a configuration that bypasses this.</p>
+</div>
+<div class="sect3">
+<h4 id="_properties">Properties</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+notesDataDir
+</td>
+<td class="hdlist2">
+<p>the location of IBM Notes Data directory on this machine</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example">Example</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">		&lt;!-- Make sure notesDataDir property is set --&gt;
+		&lt;property name="notesDataDir" location="H:\Notes\Data"/&gt;
 
+		&lt;bxp:configureDynamicPlugins /&gt;</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-03 23:05:23 AEST
+Last updated 2017-08-05 22:53:25 AEST
 </div>
 </div>
 </body>

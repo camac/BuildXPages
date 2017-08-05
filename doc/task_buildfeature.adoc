@@ -1,1 +1,39 @@
-=== buildfeature TODO
+=== buildfeature
+
+[CAUTION]
+====
+This Task and Documentation needs a little bit of love before it is truly re-usable. If you are keen to use this then let me know and I will improve it!
+====
+
+This task will build all the Plugins listed in a feature, using the headless eclipse PDE build system.
+
+Before using this task, you will need to have prepared the build directory with the source code of the plugins that are to be built, and the the feature that is to be built.
+
+==== Properties that are used in this task
+
+This task is actually a macro, and currently relies on some properties to have already been set in ant
+
+[horizontal]
+featureId:: The feature to be built
+eclipseBase:: Root directory of eclipse
+pdeBuildVersion:: PDE Build version
+equinoxLauncherVersion:: Equinox Launcher Version
+buildId:: Usually the build number
+buildLabel:: Project Name
+buildConfigDir:: Directory of build.properties
+buildDir:: The working directory in which the plugins will be built
+
+
+==== Attributes
+
+pluginPath:: This is a semi-colon delimited string of the target platform plugin paths
+
+
+==== Example
+
+[CAUTION]
+====
+You really need a lot more information than this to use this task but I have just put this all here as a starting point. Please feel free to contact me to make me provide more information.
+====
+
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=buildfeature]

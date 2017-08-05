@@ -1,1 +1,23 @@
-=== updatedesignerlink TODO
+=== updateDesignerLink
+
+[NOTE]
+====
+I am not sure this is a great way to deploy plugins so  I haven't detailed this part yet.
+====
+
+This task is used to set up an update site that will always be loaded when Designer Is started up. This is only used when you are deploying plugins to Domino Designer using the sneaky 'permanent update site' method.
+
+==== Properties
+
+[horizontal]
+notesProgDir:: The Notes Program Directory on this machine
+
+==== Attributes
+
+[horizontal]
+updateSiteLabel:: This is a short code to be used as a name for the update site. It will be used in a filename so it should be something simple e.g. 'extlib'
+updateSiteDir:: This is the Directory that contains the update site. It is expected to have a subdirectory called *eclipse*, and within that subdirectory should be the site.xml, *features* directory and *plugins* directory
+
+==== Example
+
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=updatedesignerlink]

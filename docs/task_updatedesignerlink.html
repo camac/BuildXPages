@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>updatedesignerlink TODO</title>
+<title>updateDesignerLink</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -715,13 +715,75 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 </div>
 <div id="content">
 <div class="sect2">
-<h3 id="_updatedesignerlink_todo">updatedesignerlink TODO</h3>
-
+<h3 id="_updatedesignerlink">updateDesignerLink</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>I am not sure this is a great way to deploy plugins so  I haven&#8217;t detailed this part yet.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This task is used to set up an update site that will always be loaded when Designer Is started up. This is only used when you are deploying plugins to Domino Designer using the sneaky 'permanent update site' method.</p>
+</div>
+<div class="sect3">
+<h4 id="_properties">Properties</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+notesProgDir
+</td>
+<td class="hdlist2">
+<p>The Notes Program Directory on this machine</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_attributes">Attributes</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+updateSiteLabel
+</td>
+<td class="hdlist2">
+<p>This is a short code to be used as a name for the update site. It will be used in a filename so it should be something simple e.g. 'extlib'</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+updateSiteDir
+</td>
+<td class="hdlist2">
+<p>This is the Directory that contains the update site. It is expected to have a subdirectory called <strong>eclipse</strong>, and within that subdirectory should be the site.xml, <strong>features</strong> directory and <strong>plugins</strong> directory</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:updateDesignerLink updateSiteLabel="extlib" updateSiteDir="C:\\Projects\\extlib\updatesite" /&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-03 23:04:37 AEST
+Last updated 2017-08-05 22:27:39 AEST
 </div>
 </div>
 </body>

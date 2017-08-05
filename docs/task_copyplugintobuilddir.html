@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>copyplugintobuilddir TODO</title>
+<title>copyplugintobuilddir</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -715,13 +715,54 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 </div>
 <div id="content">
 <div class="sect2">
-<h3 id="_copyplugintobuilddir_todo">copyplugintobuilddir TODO</h3>
-
+<h3 id="_copyplugintobuilddir">copyplugintobuilddir</h3>
+<div class="paragraph">
+<p>This task is used during preparation for a headless eclipse plugin build.
+It is used to copy the source code of of a plugin, into the <em>build directory</em> which is a special working directory used to build the plugins and features.</p>
+</div>
+<div class="sect3">
+<h4 id="_properties_used">Properties used</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+pluginsDir
+</td>
+<td class="hdlist2">
+<p>The Destination directory, usually the eclipse/plugins folder of the build Directory</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_attributes">Attributes</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+plugin
+</td>
+<td class="hdlist2">
+<p>the folder name of the plugin to copy</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:copyplugintobuilddir plugin="com.acme.myplugin" /&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-03 23:00:17 AEST
+Last updated 2017-08-05 19:47:39 AEST
 </div>
 </div>
 </body>

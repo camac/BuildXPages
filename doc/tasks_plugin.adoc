@@ -2,8 +2,6 @@
 
 The following tasks are all related to the building and deployment of OSGi plugins for XPages and Notes/Designer.
 
-include::task_buildplugins.adoc[]
-
 include::task_buildfeature.adoc[]
 
 include::task_importplugins.adoc[]
@@ -17,5 +15,3 @@ include::task_generatesitexml.adoc[]
 include::task_clearupdatesite.adoc[]
 
 include::task_copypluginstoupdatesite.adoc[]
-
-include::task_includejvmjars.adoc[]

@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>importplugins TODO</title>
+<title>importplugins</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -715,13 +715,63 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 </div>
 <div id="content">
 <div class="sect2">
-<h3 id="_importplugins_todo">importplugins TODO</h3>
-
+<h3 id="_importplugins">importplugins</h3>
+<div class="paragraph">
+<p>Imports plugins/features from an update site on the filesystem into an
+<a href="https://www.openntf.org/main.nsf/project.xsp?r=project/Open%20Eclipse%20Update%20Site" target="_blank">Open Eclipse NSF Update Site</a></p>
+</div>
+<div class="sect3">
+<h4 id="_attributes">Attributes</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+server
+</td>
+<td class="hdlist2">
+<p>The server that the <strong>Open Eclipse NSF Update Site</strong> is located on</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+database
+</td>
+<td class="hdlist2">
+<p>The filepath of the <strong>Open Eclipse NSF Update Site</strong></p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+sitexml
+</td>
+<td class="hdlist2">
+<p>The location of the site.xml of the <strong> Filesystem update site</strong> that you want to import</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+deletefirst
+</td>
+<td class="hdlist2">
+<p>true/false, defaults to false. If set to true, it will clear the updatesite nsf of all existing plugins/features</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:importplugins server="Domino02" database="UpdateSite\MyUpdateSite.nsf" sitexml="C:\MyFolder\MyProject\com.my.updatesite\site.xml" /&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-03 22:59:57 AEST
+Last updated 2017-08-05 16:48:37 AEST
 </div>
 </div>
 </body>

@@ -1,1 +1,16 @@
-=== importplugins TODO
+=== importplugins
+
+Imports plugins/features from an update site on the filesystem into an 
+link:https://www.openntf.org/main.nsf/project.xsp?r=project/Open%20Eclipse%20Update%20Site[Open Eclipse NSF Update Site^]
+
+==== Attributes
+
+[horizontal]
+server:: The server that the **Open Eclipse NSF Update Site** is located on
+database:: The filepath of the **Open Eclipse NSF Update Site**
+sitexml:: The location of the site.xml of the ** Filesystem update site** that you want to import
+deletefirst:: true/false, defaults to false. If set to true, it will clear the updatesite nsf of all existing plugins/features
+
+==== Example
+
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=importplugins]
