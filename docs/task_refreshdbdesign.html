@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>refreshdbdesign TODO</title>
+<title>refreshdbdesign</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -715,13 +715,61 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 </div>
 <div id="content">
 <div class="sect2">
-<h3 id="_refreshdbdesign_todo">refreshdbdesign TODO</h3>
-
+<h3 id="_refreshdbdesign">refreshdbdesign</h3>
+<div class="paragraph">
+<p>Refreshes an NSF&#8217;s design from a server using the Notes C API DesignRefresh method.</p>
+</div>
+<div class="paragraph">
+<p>The console output shows all the design elements that are modified which is great to verify what has changed.</p>
+</div>
+<div class="paragraph">
+<p>This task uses existing template settings of the NSF so if you need to change them you should use the settemplatenames task before using this task.</p>
+</div>
+<div class="sect3">
+<h4 id="_attributes">Attributes</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+server
+</td>
+<td class="hdlist2">
+<p>The server of the NSF that you would like to Refresh the Design of</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+database
+</td>
+<td class="hdlist2">
+<p>The filepath of the NSF that you would like to refresh the Design of</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+templateserver
+</td>
+<td class="hdlist2">
+<p>The server which has the Template that will be refreshed from</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Refresh MyNSF.nsf from the Domino03 server --&gt;
+&lt;refreshdbdesign server="Domino02" database="MyFolder\\MyNSF.nsf" templateserver="Domino03" /&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-03 22:56:43 AEST
+Last updated 2017-08-05 15:22:12 AEST
 </div>
 </div>
 </body>

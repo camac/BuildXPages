@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>deletensf TODO</title>
+<title>deletensf</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -715,13 +715,53 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 </div>
 <div id="content">
 <div class="sect2">
-<h3 id="_deletensf_todo">deletensf TODO</h3>
-
+<h3 id="_deletensf">deletensf</h3>
+<div class="paragraph">
+<p>Deletes an NSF using the Notes C API&#8217;s NSFDbDelete method.</p>
+</div>
+<div class="sect3">
+<h4 id="_attributes">Attributes</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+server
+</td>
+<td class="hdlist2">
+<p>The Server of the NSF that you want to Delete. Optional - defaults to Local</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+filename
+</td>
+<td class="hdlist2">
+<p>The filepath of the NSF that you want to Delete</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Delete a Local NSF --&gt;
+&lt;deletensf filename="demo\\DidItwork.nsf" /&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Delete an NSF on another Server --&gt;
+&lt;deletensf server="Domino02" filename="demo\\DidItwork.nsf" /&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-03 22:56:05 AEST
+Last updated 2017-08-05 14:52:39 AEST
 </div>
 </div>
 </body>

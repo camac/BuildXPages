@@ -9,21 +9,36 @@
 
 
 	<target name="deletensf" description="Deletes an NSF">
+		<!-- tag::deletensf[] -->
+
+		<!-- Delete a Local NSF -->
 		<deletensf filename="demo\\DidItwork.nsf" />
+
+		<!-- Delete an NSF on another Server -->
+		<deletensf server="Domino02" filename="demo\\DidItwork.nsf" />
+
+		<!-- end::deletensf[] -->
 	</target>
 
+
 	<target name="copynsf" description="Copies an NSF">
+		<!-- tag::copynsf[] -->
 		<copynsf srcfilepath="demo\\GitTest.nsf" dstfilepath="demo\\DidItwork.nsf" />
+		<!-- end::copynsf[] -->
 	</target>
 
 	<target name="scxd" description="Testing scxd">
 		<bxp:scxd server="domino02" database="Gregorbyte\\DoraDeploy.nsf" scxdflag="false" scxdpath="scxd\\NewThing.nsf" />
 	</target>
 
-	<target name="use" description="Use the task">
-		<refreshdbdesign server="domino02" database="JobFiles\\Z1001.nsf" templateserver="domino02" />
+	<target name="testrefreshdesign" description="Test the RefreshDbDesign task">
+		<!-- tag::refreshdbdesign[] -->
+		<!-- Refresh MyNSF.nsf from the Domino03 server --> 
+		<refreshdbdesign server="Domino02" database="MyFolder\\MyNSF.nsf" templateserver="Domino03" />
+		<!-- end::refreshdbdesign[] -->
 	</target>
 
+	<!-- tag::buildnsf[] -->
 	<target name="testbuildnsf" description="Build an NSF">
 		<bxp:buildnsf project="D:\\workspaces\\testworkpace\\WahWah\\.project" projectname="FromAnt" nsf="stageing\\fromant2.nsf">
 		</bxp:buildnsf>
@@ -33,6 +48,8 @@
 		<bxp:buildnsf ondiskproject="V:\\eclipse-kepler\\runtime-DominoDesigner\\DoraHeadless\\.project" targetfilename="fromant2.nsf" port="8283">
 		</bxp:buildnsf>
 	</target>
+	<!-- end::buildnsf[] -->
+
 
 	<target name="testclosedesigner" description="Close Designer">
 		<bxp:closedesigner />
@@ -121,6 +138,40 @@
 
 	<target name="testcopyplugin">
 		<bxp:copyplugintobuilddir plugin="" />
+	</target>
+
+	<target name="testsettemplatenames">
+		<!-- tag::settemplatenames[] -->
+
+		<!-- Set an NSF to inherit from 'DemoTemplate' -->
+		<bxp:settemplatenames database="MyFolder\MyNSF.nsf" server="Domino01" inheritfrom="DemoTemplate">
+		</bxp:settemplatenames>
+
+		<!-- Set an NSF to be a Master Template called 'DemoTemplate' -->
+		<bxp:settemplatenames database="MyFolder\MyNSF.nsf" server="Domino01" mastername="DemoTemplate">
+		</bxp:settemplatenames>
+
+		<!-- Clear the Inherit From settings so the NSF will no longer inherit from a template -->
+		<bxp:settemplatenames database="MyFolder\MyNSF.nsf" server="Domino01" clearinheritfrom="true">
+		</bxp:settemplatenames>
+
+		<!-- Clear the Master Template settings so the NSF will no longer be a Master template -->
+		<bxp:settemplatenames database="MyFolder\MyNSF.nsf" server="Domino01" clearmastername="true">
+		</bxp:settemplatenames>
+
+		<!-- end::settemplatenames[] -->
+	</target>
+
+	<target name="testscxd">
+
+		<!-- tag::scxd[] -->		
+		<!-- Set an NSF to use 'scxd\Awesome.nsf' as it's single copy xpage design -->
+		<bxp:scxd database="MyFolder\MyNSF.nsf" server="Domino01" scxdpath="scxd\Awesome.nsf" scxdflag="true" />
+		
+		<!-- Set an NSF to not use any SCXD -->			
+		<bxp:scxd database="MyFolder\MyNSF.nsf" server="Domino01" scxdpath="" scxdflag="false" />	
+		<!-- end::scxd[] -->
+
 	</target>
 
 

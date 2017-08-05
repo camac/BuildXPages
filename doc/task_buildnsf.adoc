@@ -1,1 +1,20 @@
-=== buildnsf TODO
+=== buildnsf 
+
+The buildnsf task is used to build an ODP into an NSF. To do this it connects to the Designer Headless Server, and instructs it to build.
+If the NSF that is specified does not yet exist, it will be created.
+You 
+
+==== Attributes
+
+[horizontal]
+project:: This is the .project file that is in the root directory of the On-Disk Project
+projectname:: When the on disk project is imported it must be given a 'name'. This name needs to be unique, so you can specify it here. Note: Do not put your ODP under the Notes Workspace.
+server:: This is the server of the NSF that you are building
+nsf:: This is the filepath of the nsf that your building with
+port:: This specifies the port that your Designer Headless Server is running on (Default 8282)
+failonerror:: If Errors are found against the nsf after building, fail the task
+
+
+==== Example
+
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=buildnsf]

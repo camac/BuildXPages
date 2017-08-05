@@ -2,8 +2,6 @@
 
 These tasks are designed to interact with the domino server by issuing commands to the console.
 
-=== Tasks
-
 include::task_controlhttp.adoc[]
 
 include::task_maintenance.adoc[]

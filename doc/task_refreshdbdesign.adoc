@@ -1,1 +1,19 @@
-=== refreshdbdesign TODO
+=== refreshdbdesign
+
+Refreshes an NSF's design from a server using the Notes C API DesignRefresh method.
+
+The console output shows all the design elements that are modified which is great to verify what has changed.
+
+This task uses existing template settings of the NSF so if you need to change them you should use the settemplatenames task before using this task.
+
+
+==== Attributes
+
+[horizontal]
+server:: The server of the NSF that you would like to Refresh the Design of
+database:: The filepath of the NSF that you would like to refresh the Design of
+templateserver:: The server which has the Template that will be refreshed from
+
+==== Example
+
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=refreshdbdesign]

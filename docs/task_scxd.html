@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>scxd TODO</title>
+<title>scxd</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -715,13 +715,69 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 </div>
 <div id="content">
 <div class="sect2">
-<h3 id="_scxd_todo">scxd TODO</h3>
-
+<h3 id="_scxd">scxd</h3>
+<div class="paragraph">
+<p>Sets the Single Copy XPage Design settings of an NSF. You can set both the relevant properties of the SCXD path, and the Flag which determines whether to use the SCXD template or not.</p>
+</div>
+<div class="sect3">
+<h4 id="_attributes">Attributes</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+server
+</td>
+<td class="hdlist2">
+<p>The server of the NSF that you would like to set SCXD settings for</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+database
+</td>
+<td class="hdlist2">
+<p>The filepath of the nsf that you would like to set SCXD settings for</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+scxdpath
+</td>
+<td class="hdlist2">
+<p>The path of the XPages database which you would like to use as the SCXD</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+scxdflag
+</td>
+<td class="hdlist2">
+<p>true/false determines whether the 'Use Single Copy XPage Design' checkbox is will be ticked in the Database Properties</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Set an NSF to use 'scxd\Awesome.nsf' as it's single copy xpage design --&gt;
+&lt;bxp:scxd database="MyFolder\MyNSF.nsf" server="Domino01" scxdpath="scxd\Awesome.nsf" scxdflag="true" /&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Set an NSF to not use any SCXD --&gt;
+&lt;bxp:scxd database="MyFolder\MyNSF.nsf" server="Domino01" scxdpath="" scxdflag="false" /&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-03 22:56:31 AEST
+Last updated 2017-08-05 15:16:40 AEST
 </div>
 </div>
 </body>

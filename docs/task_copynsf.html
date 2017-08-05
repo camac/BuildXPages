@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>copynsf TODO</title>
+<title>copynsf</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -715,13 +715,76 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 </div>
 <div id="content">
 <div class="sect2">
-<h3 id="_copynsf_todo">copynsf TODO</h3>
-
+<h3 id="_copynsf">copynsf</h3>
+<div class="paragraph">
+<p>Copies an NSF from one place to another using the Notes C API&#8217;s 'NSFDbCreateAndCopy' function.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Currently this tasks only copies the Note class 'ALLNONDATA' which means design elements only. It could easily be modified to include all documents if you like. Let me know if you want this done.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_attributes">Attributes</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+srcserver
+</td>
+<td class="hdlist2">
+<p>The Server of the Database to be copied. Optional - defaults to Local</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+srcfilepath
+</td>
+<td class="hdlist2">
+<p>The Filepath of the Database to be copied</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+dstserver
+</td>
+<td class="hdlist2">
+<p>The Destination Server for the newly created database. Optional - defaults to Local</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+dstfilepath
+</td>
+<td class="hdlist2">
+<p>The Filepath the Database to be created.</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;copynsf srcfilepath="demo\\GitTest.nsf" dstfilepath="demo\\DidItwork.nsf" /&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-03 22:59:05 AEST
+Last updated 2017-08-05 14:48:51 AEST
 </div>
 </div>
 </body>

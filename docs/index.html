@@ -728,13 +728,11 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 </li>
 <li><a href="#_nsf_deployment_related_tasks">NSF Deployment Related Tasks</a>
 <ul class="sectlevel2">
-<li><a href="#_copynsf_todo">copynsf TODO</a></li>
-<li><a href="#_deletensf_todo">deletensf TODO</a></li>
-<li><a href="#_settemplatenames_todo">settemplatenames TODO</a></li>
-<li><a href="#_scxd_todo">scxd TODO</a></li>
-<li><a href="#_refreshdbdesign_todo">refreshdbdesign TODO</a></li>
-<li><a href="#_save_db_props_todo">save db props TODO</a></li>
-<li><a href="#_restoredbprops_todo">restoredbprops TODO</a></li>
+<li><a href="#_copynsf">copynsf</a></li>
+<li><a href="#_deletensf">deletensf</a></li>
+<li><a href="#_settemplatenames">settemplatenames</a></li>
+<li><a href="#_scxd">scxd</a></li>
+<li><a href="#_refreshdbdesign">refreshdbdesign</a></li>
 </ul>
 </li>
 <li><a href="#_plugin_related_tasks">Plugin Related Tasks</a>
@@ -754,7 +752,7 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 <ul class="sectlevel2">
 <li><a href="#_startdesigner_todo">startdesigner TODO</a></li>
 <li><a href="#_preparedesigner_todo">preparedesigner TODO</a></li>
-<li><a href="#_buildnsf_todo">buildnsf TODO</a></li>
+<li><a href="#_buildnsf">buildnsf</a></li>
 <li><a href="#_closedesigner_todo">closedesigner TODO</a></li>
 <li><a href="#_markersreport_todo">markersreport TODO</a></li>
 <li><a href="#_checkdesignerrunning_todo">checkdesignerrunning TODO</a></li>
@@ -766,7 +764,6 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 </li>
 <li><a href="#_server_related_ant_tasks">Server Related Ant Tasks</a>
 <ul class="sectlevel2">
-<li><a href="#_tasks">Tasks</a></li>
 <li><a href="#_controlhttp">controlhttp</a></li>
 <li><a href="#_maintenancewarning">maintenancewarning</a></li>
 <li><a href="#_loaddesign">loaddesign</a></li>
@@ -833,33 +830,325 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 <div class="sect1">
 <h2 id="_nsf_deployment_related_tasks">NSF Deployment Related Tasks</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_copynsf_todo">copynsf TODO</h3>
-
+<div class="paragraph">
+<p>The following tasks are usually useful after you have built NSF&#8217;s and need to move them around, refresh templates etc. to acheive deployment of an  NSF that has been successfully built.</p>
 </div>
 <div class="sect2">
-<h3 id="_deletensf_todo">deletensf TODO</h3>
-
+<h3 id="_copynsf">copynsf</h3>
+<div class="paragraph">
+<p>Copies an NSF from one place to another using the Notes C API&#8217;s 'NSFDbCreateAndCopy' function.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Currently this tasks only copies the Note class 'ALLNONDATA' which means design elements only. It could easily be modified to include all documents if you like. Let me know if you want this done.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_attributes">Attributes</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+srcserver
+</td>
+<td class="hdlist2">
+<p>The Server of the Database to be copied. Optional - defaults to Local</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+srcfilepath
+</td>
+<td class="hdlist2">
+<p>The Filepath of the Database to be copied</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+dstserver
+</td>
+<td class="hdlist2">
+<p>The Destination Server for the newly created database. Optional - defaults to Local</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+dstfilepath
+</td>
+<td class="hdlist2">
+<p>The Filepath the Database to be created.</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;copynsf srcfilepath="demo\\GitTest.nsf" dstfilepath="demo\\DidItwork.nsf" /&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_settemplatenames_todo">settemplatenames TODO</h3>
-
+<h3 id="_deletensf">deletensf</h3>
+<div class="paragraph">
+<p>Deletes an NSF using the Notes C API&#8217;s NSFDbDelete method.</p>
+</div>
+<div class="sect3">
+<h4 id="_attributes_2">Attributes</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+server
+</td>
+<td class="hdlist2">
+<p>The Server of the NSF that you want to Delete. Optional - defaults to Local</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+filename
+</td>
+<td class="hdlist2">
+<p>The filepath of the NSF that you want to Delete</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_2">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Delete a Local NSF --&gt;
+&lt;deletensf filename="demo\\DidItwork.nsf" /&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Delete an NSF on another Server --&gt;
+&lt;deletensf server="Domino02" filename="demo\\DidItwork.nsf" /&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_scxd_todo">scxd TODO</h3>
-
+<h3 id="_settemplatenames">settemplatenames</h3>
+<div class="paragraph">
+<p>Updates the Template Inheritance settings of an NSF.
+You can set an NSF To be a master template, or you can set an NSF to Inherit from another Template, or Both!
+You can also clear the 'inherit from' or 'master template' settings.</p>
+</div>
+<div class="sect3">
+<h4 id="_attributes_3">Attributes</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+server
+</td>
+<td class="hdlist2">
+<p>The Server of the NSF that you are modifying template settings for</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+database
+</td>
+<td class="hdlist2">
+<p>The filepath of the NSF that you are modifying template settinsg for</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+clearinheritfrom
+</td>
+<td class="hdlist2">
+<p>Defaults to false. When set to 'true' will clear any inheritance settings if they exist</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+inheritfrom
+</td>
+<td class="hdlist2">
+<p>The Name of the Master Template that you would like the NSF To inherit from</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+clearmastername
+</td>
+<td class="hdlist2">
+<p>Defaults to false. When set to 'true' will clear the 'Is Master Template' settings of the nsf if they exist</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+mastername
+</td>
+<td class="hdlist2">
+<p>This is the Template Name that you would like this NSF to be known as.</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_3">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Set an NSF to inherit from 'DemoTemplate' --&gt;
+&lt;bxp:settemplatenames database="MyFolder\MyNSF.nsf" server="Domino01" inheritfrom="DemoTemplate"&gt;
+&lt;/bxp:settemplatenames&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Set an NSF to be a Master Template called 'DemoTemplate' --&gt;
+&lt;bxp:settemplatenames database="MyFolder\MyNSF.nsf" server="Domino01" mastername="DemoTemplate"&gt;
+&lt;/bxp:settemplatenames&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Clear the Inherit From settings so the NSF will no longer inherit from a template --&gt;
+&lt;bxp:settemplatenames database="MyFolder\MyNSF.nsf" server="Domino01" clearinheritfrom="true"&gt;
+&lt;/bxp:settemplatenames&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Clear the Master Template settings so the NSF will no longer be a Master template --&gt;
+&lt;bxp:settemplatenames database="MyFolder\MyNSF.nsf" server="Domino01" clearmastername="true"&gt;
+&lt;/bxp:settemplatenames&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_refreshdbdesign_todo">refreshdbdesign TODO</h3>
-
+<h3 id="_scxd">scxd</h3>
+<div class="paragraph">
+<p>Sets the Single Copy XPage Design settings of an NSF. You can set both the relevant properties of the SCXD path, and the Flag which determines whether to use the SCXD template or not.</p>
+</div>
+<div class="sect3">
+<h4 id="_attributes_4">Attributes</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+server
+</td>
+<td class="hdlist2">
+<p>The server of the NSF that you would like to set SCXD settings for</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+database
+</td>
+<td class="hdlist2">
+<p>The filepath of the nsf that you would like to set SCXD settings for</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+scxdpath
+</td>
+<td class="hdlist2">
+<p>The path of the XPages database which you would like to use as the SCXD</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+scxdflag
+</td>
+<td class="hdlist2">
+<p>true/false determines whether the 'Use Single Copy XPage Design' checkbox is will be ticked in the Database Properties</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_4">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Set an NSF to use 'scxd\Awesome.nsf' as it's single copy xpage design --&gt;
+&lt;bxp:scxd database="MyFolder\MyNSF.nsf" server="Domino01" scxdpath="scxd\Awesome.nsf" scxdflag="true" /&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Set an NSF to not use any SCXD --&gt;
+&lt;bxp:scxd database="MyFolder\MyNSF.nsf" server="Domino01" scxdpath="" scxdflag="false" /&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_save_db_props_todo">save db props TODO</h3>
-
+<h3 id="_refreshdbdesign">refreshdbdesign</h3>
+<div class="paragraph">
+<p>Refreshes an NSF&#8217;s design from a server using the Notes C API DesignRefresh method.</p>
 </div>
-<div class="sect2">
-<h3 id="_restoredbprops_todo">restoredbprops TODO</h3>
-
+<div class="paragraph">
+<p>The console output shows all the design elements that are modified which is great to verify what has changed.</p>
+</div>
+<div class="paragraph">
+<p>This task uses existing template settings of the NSF so if you need to change them you should use the settemplatenames task before using this task.</p>
+</div>
+<div class="sect3">
+<h4 id="_attributes_5">Attributes</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+server
+</td>
+<td class="hdlist2">
+<p>The server of the NSF that you would like to Refresh the Design of</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+database
+</td>
+<td class="hdlist2">
+<p>The filepath of the NSF that you would like to refresh the Design of</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+templateserver
+</td>
+<td class="hdlist2">
+<p>The server which has the Template that will be refreshed from</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_5">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Refresh MyNSF.nsf from the Domino03 server --&gt;
+&lt;refreshdbdesign server="Domino02" database="MyFolder\\MyNSF.nsf" templateserver="Domino03" /&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -926,8 +1215,86 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 
 </div>
 <div class="sect2">
-<h3 id="_buildnsf_todo">buildnsf TODO</h3>
-
+<h3 id="_buildnsf">buildnsf</h3>
+<div class="paragraph">
+<p>The buildnsf task is used to build an ODP into an NSF. To do this it connects to the Designer Headless Server, and instructs it to build.
+If the NSF that is specified does not yet exist, it will be created.
+You</p>
+</div>
+<div class="sect3">
+<h4 id="_attributes_6">Attributes</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+project
+</td>
+<td class="hdlist2">
+<p>This is the .project file that is in the root directory of the On-Disk Project</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+projectname
+</td>
+<td class="hdlist2">
+<p>When the on disk project is imported it must be given a 'name'. This name needs to be unique, so you can specify it here. Note: Do not put your ODP under the Notes Workspace.</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+server
+</td>
+<td class="hdlist2">
+<p>This is the server of the NSF that you are building</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+nsf
+</td>
+<td class="hdlist2">
+<p>This is the filepath of the nsf that your building with</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+port
+</td>
+<td class="hdlist2">
+<p>This specifies the port that your Designer Headless Server is running on (Default 8282)</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+failonerror
+</td>
+<td class="hdlist2">
+<p>If Errors are found against the nsf after building, fail the task</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_6">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;target name="testbuildnsf" description="Build an NSF"&gt;
+	&lt;bxp:buildnsf project="D:\\workspaces\\testworkpace\\WahWah\\.project" projectname="FromAnt" nsf="stageing\\fromant2.nsf"&gt;
+	&lt;/bxp:buildnsf&gt;
+&lt;/target&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;target name="testbuildnsf2" description="Build an NSF"&gt;
+	&lt;bxp:buildnsf ondiskproject="V:\\eclipse-kepler\\runtime-DominoDesigner\\DoraHeadless\\.project" targetfilename="fromant2.nsf" port="8283"&gt;
+	&lt;/bxp:buildnsf&gt;
+&lt;/target&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_closedesigner_todo">closedesigner TODO</h3>
@@ -966,17 +1333,13 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 <p>These tasks are designed to interact with the domino server by issuing commands to the console.</p>
 </div>
 <div class="sect2">
-<h3 id="_tasks">Tasks</h3>
-
-</div>
-<div class="sect2">
 <h3 id="_controlhttp">controlhttp</h3>
 <div class="paragraph">
 <p>The controlhttp task is used to control a Domino Server&#8217;s http tasks.
 It ultimately just issues a console command to the domino console.</p>
 </div>
 <div class="sect3">
-<h4 id="_attributes">Attributes</h4>
+<h4 id="_attributes_7">Attributes</h4>
 <div class="hdlist">
 <table>
 <tr>
@@ -999,7 +1362,7 @@ action
 </div>
 </div>
 <div class="sect3">
-<h4 id="_example">Example</h4>
+<h4 id="_example_7">Example</h4>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;target name="teststarthttp"&gt;
@@ -1036,7 +1399,7 @@ action
 </div>
 </div>
 <div class="sect3">
-<h4 id="_attributes_2">Attributes</h4>
+<h4 id="_attributes_8">Attributes</h4>
 <div class="hdlist">
 <table>
 <tr>
@@ -1059,7 +1422,7 @@ minutes
 </div>
 </div>
 <div class="sect3">
-<h4 id="_example_2">Example</h4>
+<h4 id="_example_8">Example</h4>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;target name="testmaintenancewarn"&gt;
@@ -1082,7 +1445,7 @@ minutes
 <p>Issues a 'load design' console command for a server</p>
 </div>
 <div class="sect3">
-<h4 id="_attributes_3">Attributes</h4>
+<h4 id="_attributes_9">Attributes</h4>
 <div class="hdlist">
 <table>
 <tr>
@@ -1105,7 +1468,7 @@ directory
 </div>
 </div>
 <div class="sect3">
-<h4 id="_example_3">Example</h4>
+<h4 id="_example_9">Example</h4>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;target name="testloaddesign"&gt;

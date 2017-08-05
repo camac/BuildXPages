@@ -733,8 +733,86 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 
 </div>
 <div class="sect2">
-<h3 id="_buildnsf_todo">buildnsf TODO</h3>
-
+<h3 id="_buildnsf">buildnsf</h3>
+<div class="paragraph">
+<p>The buildnsf task is used to build an ODP into an NSF. To do this it connects to the Designer Headless Server, and instructs it to build.
+If the NSF that is specified does not yet exist, it will be created.
+You</p>
+</div>
+<div class="sect3">
+<h4 id="_attributes">Attributes</h4>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+project
+</td>
+<td class="hdlist2">
+<p>This is the .project file that is in the root directory of the On-Disk Project</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+projectname
+</td>
+<td class="hdlist2">
+<p>When the on disk project is imported it must be given a 'name'. This name needs to be unique, so you can specify it here. Note: Do not put your ODP under the Notes Workspace.</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+server
+</td>
+<td class="hdlist2">
+<p>This is the server of the NSF that you are building</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+nsf
+</td>
+<td class="hdlist2">
+<p>This is the filepath of the nsf that your building with</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+port
+</td>
+<td class="hdlist2">
+<p>This specifies the port that your Designer Headless Server is running on (Default 8282)</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+failonerror
+</td>
+<td class="hdlist2">
+<p>If Errors are found against the nsf after building, fail the task</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example">Example</h4>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;target name="testbuildnsf" description="Build an NSF"&gt;
+	&lt;bxp:buildnsf project="D:\\workspaces\\testworkpace\\WahWah\\.project" projectname="FromAnt" nsf="stageing\\fromant2.nsf"&gt;
+	&lt;/bxp:buildnsf&gt;
+&lt;/target&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;target name="testbuildnsf2" description="Build an NSF"&gt;
+	&lt;bxp:buildnsf ondiskproject="V:\\eclipse-kepler\\runtime-DominoDesigner\\DoraHeadless\\.project" targetfilename="fromant2.nsf" port="8283"&gt;
+	&lt;/bxp:buildnsf&gt;
+&lt;/target&gt;</pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_closedesigner_todo">closedesigner TODO</h3>
