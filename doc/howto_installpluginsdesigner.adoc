@@ -8,7 +8,7 @@ If you have never installed plugins to Designer before, then you may need to ena
 
 Go to *File -> Preferences -> Domino Designer* and ensure that the *Enable Eclipse plug-in install* checkbox is set
 
-image::images\DesignerEnablePluginInstall.JPG[]
+image::..\images\DesignerEnablePluginInstall.JPG[]
 
 === Update Sites Explained
 
@@ -34,7 +34,7 @@ However a more common scenario is that you download an *update site* in the form
 
 To Install from a new update site, choose File -> Application -> Install..
 
-image::images\DesignerFileApplicationsInstall.JPG[]
+image::..\images\DesignerFileApplicationsInstall.JPG[]
 
 Add the update site that you want to install from
 
