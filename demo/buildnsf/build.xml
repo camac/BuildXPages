@@ -1,0 +1,43 @@
+<project name="BuildXPages NSF Demonstration" default="build" xmlns:bxp="antlib:com.gregorbyte.buildxpages.ant">
+
+	<description>Demonstration of Building an NSF from On-Disk Project</description>
+
+	<property file="mybuild.properties" />
+	<property file="build.properties" />
+
+	<property environment="env" />
+
+	<property name="dominoProgDir" location="${env.DOMINO_PROG}" />
+	<property name="dominoDataDir" location="${env.DOMINO_DATA}" />
+	<property name="notesProgDir" location="${env.NOTES_PROG}" />
+	<property name="notesDataDir" location="${env.NOTES_DATA}" />
+
+	<target name="clean">
+		<delete dir="${buildDir}">
+		</delete>
+		<delete dir="eclipse" />
+	</target>
+
+	<target name="init" depends="clean">
+		<mkdir dir="${buildDir}">
+		</mkdir>
+		<mkdir dir="${pluginsDir}">
+		</mkdir>
+		<mkdir dir="${featuresDir}">
+		</mkdir>
+	</target>
+
+	<target name="build">
+
+		<!-- We assign the .project file path to a property using the 'location' attribute, 
+		this way the property will be expanded to the absolute path of the .project file-->
+		<property name="odp.project" location="odp/.project" />
+
+		<bxp:buildnsf project="${odp.project}" projectname="BuildXPagesDemoNSF" nsf="temp\\BuildXPagesDemo.nsf" />
+
+	</target>
+
+
+
+
+</project>
