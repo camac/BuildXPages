@@ -1,7 +1,47 @@
 == Sample - Building Features and Plugins
 
-In this sample we build a feature, and prepare an Update Site that can be used
+In this sample we build the plugins for a feature, and prepare an Update Site that can be used to deploy to Domino or Domino Designer
 
-=== Setup
+=== First Time Setup
 
-Copy the build.properties.sample
+Before we build plugins, we need to make sure we are set up properly
+
+* Install Eclipse for RCP and RAP Development
+* Install Ant
+* Install Build4XPages Ant tasks
+
+=== Configure Your Notes and Domino Program Directories
+
+In order to run the build steps, we need to know where Notes and Domino are
+
+* Set them up as Environment Variables
+* Specify them in the build.properties file
+
+=== Configure Eclipse Properties
+
+The build script needs to know 3 things in order to build your plugins
+
+What is the base directory of Eclipse?::
+This may be something like `C:\eclipse`
+
+Where can I find the PDE Build.xml file?::
+This is a file which provides the actual recipe to build plugins. In older versions of eclipse it will be under <eclipse>/plugins/org.eclipse.pde.build_<version>/scripts/build.xml
+In Newer versions of eclipse it will be located under your user home directory's p2 pool of plugins <userhome>/.p2/pool/plugins/org.eclipse.pde.build_<version>/scripts/build.xml
+
+Where can I find the equinox launcher jar?::
+This is an executable jar which launches the plugin build process. In older versions of eclipse it will be under <eclipse>/plugins/org.eclipse.equinox.launcher_<version>.jar
+In Newer versions of eclipse it will be located under your user home directory's p2 pool of plugins <userhome>/.p2/pool/plugins/org.eclipse.equinox.launcher_<version>.jar
+
+These 3 things should be the same for every project you build on the computer, so you can set these up as Environment Varables as well
+
+If you don't want to set them up as environment variables, you can specify them in the accompanying build.properties file
+
+=== Run the Build!
+
+1. Open your console and navigate to the demo/buildfeature folder
+2. Type `ant`
+3. Cross your fingers
+
+After the build is finished you should see a zip file in the demo/buildfeature/BuildXPages directory.
+
+
