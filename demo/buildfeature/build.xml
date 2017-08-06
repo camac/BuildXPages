@@ -1,0 +1,39 @@
+<project name="BuildXPages Build Feature Demonstration" default="build" xmlns:bxp="antlib:com.gregorbyte.buildxpages.ant">
+
+	<description>Demonstration of Building an Feature using Headless eclipse</description>
+
+	<property file="build.properties" />
+
+	<property environment="env" />
+	<property name="notesProgDir" location="${env.NOTES_PROG}" />
+
+	<target name="clean">
+		<delete dir="${buildDir}">
+		</delete>
+		<delete dir="eclipse" />
+	</target>
+
+	<target name="init" depends="clean">
+		<mkdir dir="${buildDir}">
+		</mkdir>
+		<mkdir dir="${pluginsDir}">
+		</mkdir>
+		<mkdir dir="${featuresDir}">
+		</mkdir>
+	</target>
+
+	<target name="build" depends="init">
+
+		<bxp:copyplugintobuilddir plugin="com.gregorbyte.buildxpages.demo" />
+
+		<copy todir="${featuresDir}/com.gregorbyte.buildxpages.demo.feature">
+			<fileset dir="com.gregorbyte.buildxpages.demo" />
+		</copy>
+
+
+	</target>
+
+
+
+
+</project>
