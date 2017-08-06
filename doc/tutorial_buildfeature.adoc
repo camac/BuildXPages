@@ -1,0 +1,7 @@
+== Sample - Building Features and Plugins
+
+In this sample we build a feature, and prepare an Update Site that can be used
+
+=== Setup
+
+Copy the build.properties.sample

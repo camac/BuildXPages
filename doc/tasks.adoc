@@ -8,15 +8,22 @@ BuildXPages provides Ant with some custom tasks that are useful in the Build and
 
 BuildXPages provides tasks related to
 
-* Deploying NSFs to a Server
-* Building and Deploying Plugins
-* Interacting with Domino Designer for Building NSFs
-* Controlling a Domino Server
+<<TasksDeployingNSF,Deploying NSFs to a Server>>
 
+<<TasksPlugin,Building and Deploying Plugins>>
+
+<<TasksDesigner,Interacting with Domino Designer for Building NSFs>>
+
+<<TasksServer,Controlling a Domino Server>>
+
+[[TasksDeployingNSF]]
 include::tasks_nsf.adoc[]
 
+[[TasksPlugin]]
 include::tasks_plugin.adoc[]
 
+[[TasksDesigner]]
 include::tasks_designer.adoc[]
 
+[[TasksServer]]
 include::tasks_server.adoc[]
