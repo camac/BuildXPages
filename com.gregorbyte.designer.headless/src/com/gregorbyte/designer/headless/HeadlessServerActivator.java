@@ -63,15 +63,6 @@ public class HeadlessServerActivator extends AbstractUIPlugin {
 
 		super.start(context);
 		
-		IPreferenceStore store = getPreferenceStore();	
-
-		boolean autostart = store.getBoolean(PreferenceConstants.P_AUTOSTART);
-		
-		if (autostart) {
-			System.out.println("Autostart Headless Designer Server");			
-			startServer();
-		}
-		
 		plugin = this;
 
 		try {

@@ -7,6 +7,5 @@ public class PreferenceConstants {
 
 	public static final String P_START = "autoStartServer";
 	public static final String P_PORT = "portPreference";
-	public static final String P_AUTOSTART = "autoStart";
 	
 }
