@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Plugin Related Tasks</title>
+<title>Sample - Building Features and Plugins</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -715,419 +715,93 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_plugin_related_tasks">Plugin Related Tasks</h2>
+<h2 id="_sample_building_features_and_plugins">Sample - Building Features and Plugins</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The following tasks are all related to the building and deployment of OSGi plugins for XPages and Notes/Designer.</p>
+<p>In this sample we build the plugins for a feature, and prepare an Update Site that can be used to deploy to Domino or Domino Designer</p>
 </div>
 <div class="sect2">
-<h3 id="_buildfeature">buildfeature</h3>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Caution</div>
-</td>
-<td class="content">
+<h3 id="_first_time_setup">First Time Setup</h3>
 <div class="paragraph">
-<p>This Task and Documentation needs a little bit of love before it is truly re-usable. If you are keen to use this then let me know and I will improve it!</p>
+<p>Before we build plugins, we need to make sure we are set up properly</p>
 </div>
-</td>
-</tr>
-</table>
+<div class="ulist">
+<ul>
+<li>
+<p>Install Eclipse for RCP and RAP Development</p>
+</li>
+<li>
+<p>Install Ant</p>
+</li>
+<li>
+<p>Install Build4XPages Ant tasks</p>
+</li>
+</ul>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_configure_your_notes_and_domino_program_directories">Configure Your Notes and Domino Program Directories</h3>
 <div class="paragraph">
-<p>This task will build all the Plugins listed in a feature, using the headless eclipse PDE build system.</p>
+<p>In order to run the build steps, we need to know where Notes and Domino are</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>Set them up as Environment Variables</p>
+</li>
+<li>
+<p>Specify them in the build.properties file</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configure_eclipse_properties">Configure Eclipse Properties</h3>
 <div class="paragraph">
-<p>Before using this task, you will need to have prepared the build directory with the source code of the plugins that are to be built, and the the feature that is to be built.</p>
+<p>The build script needs to know 3 things in order to build your plugins</p>
 </div>
-<div class="sect3">
-<h4 id="_properties_that_are_used_in_this_task">Properties that are used in this task</h4>
-<div class="paragraph">
-<p>This task is actually a macro, and currently relies on some properties to have already been set in ant</p>
-</div>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-featureId
-</td>
-<td class="hdlist2">
-<p>The feature to be built</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-eclipseBase
-</td>
-<td class="hdlist2">
-<p>Root directory of eclipse</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-pdeBuildVersion
-</td>
-<td class="hdlist2">
-<p>PDE Build version</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-equinoxLauncherVersion
-</td>
-<td class="hdlist2">
-<p>Equinox Launcher Version</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-buildId
-</td>
-<td class="hdlist2">
-<p>Usually the build number</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-buildLabel
-</td>
-<td class="hdlist2">
-<p>Project Name</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-buildConfigDir
-</td>
-<td class="hdlist2">
-<p>Directory of build.properties</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-buildDir
-</td>
-<td class="hdlist2">
-<p>The working directory in which the plugins will be built</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_attributes">Attributes</h4>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">pluginPath</dt>
+<dt class="hdlist1">What is the base directory of Eclipse?</dt>
 <dd>
-<p>This is a semi-colon delimited string of the target platform plugin paths</p>
+<p>This may be something like <code>C:\eclipse</code></p>
+</dd>
+<dt class="hdlist1">Where can I find the PDE Build.xml file?</dt>
+<dd>
+<p>This is a file which provides the actual recipe to build plugins. In older versions of eclipse it will be under &lt;eclipse&gt;/plugins/org.eclipse.pde.build_&lt;version&gt;/scripts/build.xml
+In Newer versions of eclipse it will be located under your user home directory&#8217;s p2 pool of plugins &lt;userhome&gt;/.p2/pool/plugins/org.eclipse.pde.build_&lt;version&gt;/scripts/build.xml</p>
+</dd>
+<dt class="hdlist1">Where can I find the equinox launcher jar?</dt>
+<dd>
+<p>This is an executable jar which launches the plugin build process. In older versions of eclipse it will be under &lt;eclipse&gt;/plugins/org.eclipse.equinox.launcher_&lt;version&gt;.jar
+In Newer versions of eclipse it will be located under your user home directory&#8217;s p2 pool of plugins &lt;userhome&gt;/.p2/pool/plugins/org.eclipse.equinox.launcher_&lt;version&gt;.jar</p>
 </dd>
 </dl>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_example">Example</h4>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Caution</div>
-</td>
-<td class="content">
 <div class="paragraph">
-<p>You really need a lot more information than this to use this task but I have just put this all here as a starting point. Please feel free to contact me to make me provide more information.</p>
+<p>These 3 things should be the same for every project you build on the computer, so you can set these up as Environment Varables as well</p>
 </div>
-</td>
-</tr>
-</table>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;!-- Plugin path is supplied by a build.properties file --&gt;
-&lt;bxp:buildfeature pluginpath="${pluginPath}" /&gt;</pre>
-</div>
-</div>
+<div class="paragraph">
+<p>If you don&#8217;t want to set them up as environment variables, you can specify them in the accompanying build.properties file</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_importplugins">importplugins</h3>
-<div class="paragraph">
-<p>Imports plugins/features from an update site on the filesystem into an
-<a href="https://www.openntf.org/main.nsf/project.xsp?r=project/Open%20Eclipse%20Update%20Site" target="_blank">Open Eclipse NSF Update Site</a></p>
-</div>
-<div class="sect3">
-<h4 id="_attributes_2">Attributes</h4>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-server
-</td>
-<td class="hdlist2">
-<p>The server that the <strong>Open Eclipse NSF Update Site</strong> is located on</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-database
-</td>
-<td class="hdlist2">
-<p>The filepath of the <strong>Open Eclipse NSF Update Site</strong></p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-sitexml
-</td>
-<td class="hdlist2">
-<p>The location of the site.xml of the <strong> Filesystem update site</strong> that you want to import</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-deletefirst
-</td>
-<td class="hdlist2">
-<p>true/false, defaults to false. If set to true, it will clear the updatesite nsf of all existing plugins/features</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_example_2">Example</h4>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;bxp:importplugins server="Domino02" database="UpdateSite\MyUpdateSite.nsf" sitexml="C:\MyFolder\MyProject\com.my.updatesite\site.xml" /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_copyplugintobuilddir">copyplugintobuilddir</h3>
-<div class="paragraph">
-<p>This task is used during preparation for a headless eclipse plugin build.
-It is used to copy the source code of of a plugin, into the <em>build directory</em> which is a special working directory used to build the plugins and features.</p>
-</div>
-<div class="sect3">
-<h4 id="_properties_used">Properties used</h4>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-pluginsDir
-</td>
-<td class="hdlist2">
-<p>The Destination directory, usually the eclipse/plugins folder of the build Directory</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_attributes_3">Attributes</h4>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-plugin
-</td>
-<td class="hdlist2">
-<p>the folder name of the plugin to copy</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_example_3">Example</h4>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;bxp:copyplugintobuilddir plugin="com.acme.myplugin" /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_unpackplugin">unpackplugin</h3>
-<div class="paragraph">
-<p>Usually you update Domino Designer with new plugins by going through the normal installation process. But there is another way in which you can build plugins into a particular folder, and Domino Designer always picks up new versions.</p>
+<h3 id="_run_the_build">Run the Build!</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open your console and navigate to the demo/buildfeature folder</p>
+</li>
+<li>
+<p>Type <code>ant</code></p>
+</li>
+<li>
+<p>Cross your fingers</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
-<p>When deploying plugins this way, some plugins need to be 'unpacked' which means they don&#8217;t exist as a jar file, but the contents are unpacked into a folder.</p>
-</div>
-<div class="paragraph">
-<p>This task will unpack a plugin to a folder. You just need to give the plugin name, and it will find the version information automatically</p>
-</div>
-<div class="sect3">
-<h4 id="_attributes_4">Attributes</h4>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-dir
-</td>
-<td class="hdlist2">
-<p>The directory that the plugin is in</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-pluginid
-</td>
-<td class="hdlist2">
-<p>the plugin id that you want to unpack</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_example_4">Example</h4>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;bxp:unpackplugin dir="eclipse/plugins" pluginid="com.acme.superplugin" /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_generatesitexml">generatesitexml</h3>
-<div class="paragraph">
-<p>After building your plugins headlessly with eclipse PDE, you will then have a directory of plugins and features, but
-before importing plugins into an <a href="https://www.openntf.org/main.nsf/project.xsp?r=project/Open%20Eclipse%20Update%20Site" target="_blank">Open Eclipse NSF Update Site</a> you will also need a <strong>site.xml</strong> file.</p>
-</div>
-<div class="paragraph">
-<p>Newer versions of eclipse use a <em>p2 repository</em> format which does not require a site.xml, but with Notes/Domino running on a much older version of eclipse, it still uses an older format which uses the <strong>site.xml</strong> file.</p>
-</div>
-<div class="paragraph">
-<p>The build process does not generate one for us so we do it ourselvels with this task, which scans the features directory and builds the necessary xml.</p>
-</div>
-<div class="sect3">
-<h4 id="_attributes_5">Attributes</h4>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-eclipsedir
-</td>
-<td class="hdlist2">
-<p>The root folder that contains the plugins and features directory. I call it eclipse directory because often you will find it in the structure ../something/<strong>eclipse</strong>/plugins and ../something/<strong>eclipse</strong>/features</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_example_5">Example</h4>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;bxp:generatesitexml eclipsedir="testgen" /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_clearupdatesite">clearupdatesite</h3>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>This task does not refer to clearing an NSF update site, this task is for clearing and update site on the filesystem</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>After building plugins, sometimes you want to put them in an update site on the filesystem. You may want to make sure the update site is empty before you put your plugins there, so this task can clear out an existing update site.</p>
-</div>
-<div class="sect3">
-<h4 id="_attributes_6">Attributes</h4>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-eclipsedir
-</td>
-<td class="hdlist2">
-<p>The root folder that contains the plugins and features directory. I call it eclipse directory because often you will find it in the structure ../something/<strong>eclipse</strong>/plugins and ../something/<strong>eclipse</strong>/features</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_example_6">Example</h4>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;bxp:clearupdatesite eclipsedir="myplugins" /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_copypluginstoupdatesite">copypluginstoupdatesite</h3>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>This task does not refer to copying an NSF update site, this task is for copying to an update site on the filesystem</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>After building plugins, sometimes you want to put them in an update site on the filesystem. This task will copy the plugins to your target update site, and also generate the site xml.</p>
-</div>
-<div class="sect3">
-<h4 id="_properties">Properties</h4>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-builtPluginsZip
-</td>
-<td class="hdlist2">
-<p>the zip file of the built plugins after headless build</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_attributes_7">Attributes</h4>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-eclipsedir
-</td>
-<td class="hdlist2">
-<p>The root folder that contains the plugins and features directory. I call it eclipse directory because often you will find it in the structure ../something/<strong>eclipse</strong>/plugins and ../something/<strong>eclipse</strong>/features</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_example_7">Example</h4>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;bxp:copypluginstoupdatesite eclipsedir="my/target/updatesite/eclipse" /&gt;</pre>
-</div>
-</div>
+<p>After the build is finished you should see a zip file in the demo/buildfeature/BuildXPages directory.</p>
 </div>
 </div>
 </div>
@@ -1135,7 +809,7 @@ eclipsedir
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-06 07:10:58 AEST
+Last updated 2017-08-06 23:17:02 AEST
 </div>
 </div>
 </body>

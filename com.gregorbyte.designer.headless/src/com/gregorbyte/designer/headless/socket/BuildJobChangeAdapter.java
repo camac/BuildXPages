@@ -20,8 +20,6 @@ public class BuildJobChangeAdapter extends JobChangeAdapter {
 	
 		if (event != null && event.getResult() != null && event.getResult().isOK())
 			writer.println("BUILD JOB SCHEDULED");
-		else
-			writer.println("BUILD JOB SCHEDULING NOT SO GOOD");
 		
 		super.scheduled(event);
 	}

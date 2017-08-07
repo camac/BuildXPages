@@ -151,7 +151,17 @@
 			</attribute>
 			<attribute key="stylesheet" value="readthedocs.css">
 			</attribute>
+
+
 		</asciidoctor:convert>
+
+		<delete dir="docs/images" />
+
+		<copy todir="docs/images">
+			<fileset dir="doc/images">
+			</fileset>
+		</copy>
+
 
 	</target>
 
