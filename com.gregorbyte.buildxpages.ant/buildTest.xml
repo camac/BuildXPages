@@ -104,15 +104,15 @@
 
 	<!-- tag::controlhttp[] -->
 	<target name="teststarthttp">
-		<bxp:controlhttp server="CameronWS" action="start" />
+		<bxp:controlhttp server="Domino02" action="start" />
 	</target>
 
 	<target name="teststophttp">
-		<bxp:controlhttp server="CameronWS" action="stop" />
+		<bxp:controlhttp server="Domino02" action="stop" />
 	</target>
 
 	<target name="testrestarthttp">
-		<bxp:controlhttp server="CameronWS" action="restart" />
+		<bxp:controlhttp server="Domino02" action="restart" />
 	</target>
 	<!-- end::controlhttp[] -->
 
