@@ -59,6 +59,8 @@ public class HeadlessServerRunnable implements Runnable {
 			String server, PrintWriter out) throws InterruptedException {
 
 		RefreshImportBuildJob job = new RefreshImportBuildJob();
+		
+		job.setWriter(out);
 
 		job.setOnDiskProjectFile(onDiskProjectFile);
 		job.setOnDiskProjectName(projectName);
@@ -79,7 +81,11 @@ public class HeadlessServerRunnable implements Runnable {
 		CloseDesignerJob job = new CloseDesignerJob();
 		CloseDesignerJobChangeAdapter listener = new CloseDesignerJobChangeAdapter(out);
 		job.addJobChangeListener(listener);
+		
+		out.write("Scheduling Close Designer Job");
+		
 		job.schedule();
+		
 
 	}
 

@@ -4,10 +4,6 @@
 	<taskdef uri="antlib:com.gregorbyte.buildxpages.ant" resource="com/gregorbyte/buildxpages/ant/antlib.xml" classpath="lib/BuildXPagesAntLib.jar">
 	</taskdef>
 
-	<property name="dominoProgDir" location="C:\Domino" />
-
-
-
 	<target name="deletensf" description="Deletes an NSF">
 		<!-- tag::deletensf[] -->
 
