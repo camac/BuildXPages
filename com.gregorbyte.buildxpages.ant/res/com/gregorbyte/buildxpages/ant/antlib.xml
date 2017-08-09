@@ -262,7 +262,6 @@
 			<current:collectJvmJars />
 
 			<fail unless="eclipseBase">eclipseBase property must be set</fail>
-			<fail unless="pdeBuildVersion">pdeBuildVersion property must be set</fail>
 			<fail unless="equinoxLauncherVersion">equinoxLauncherVersion property must be set</fail>
 
 			<java jar="${equinoxLauncherJar}" fork="true" failonerror="true">
