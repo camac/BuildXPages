@@ -70,9 +70,19 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="initDefaultProperties">
+		<sequential>
+		
+			<property environment="env"/>		
+			<property name="notesProgDir" location="${env.NOTES_PROGDIR}"/>
+			
+		</sequential>
+	</macrodef>
+
 	<macrodef name="startDesigner">
 		<sequential>
-			<exec executable="${notesProgDir}/designer.exe">
+			<current:initDefaultProperties/>
+			<exec executable="${notesProgDir}/designer.exe" spawn="true">
 			</exec>
 		</sequential>
 	</macrodef>
@@ -270,7 +280,6 @@
 			<current:collectJvmJars />
 
 			<fail unless="eclipseBase">eclipseBase property must be set</fail>
-			<fail unless="pdeBuildVersion">pdeBuildVersion property must be set</fail>
 			<fail unless="equinoxLauncherVersion">equinoxLauncherVersion property must be set</fail>
 
 			<java jar="${equinoxLauncherJar}" fork="true" failonerror="true">

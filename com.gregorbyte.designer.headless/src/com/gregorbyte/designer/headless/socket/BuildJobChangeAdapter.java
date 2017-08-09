@@ -27,7 +27,7 @@ public class BuildJobChangeAdapter extends JobChangeAdapter {
 	@Override
 	public void aboutToRun(IJobChangeEvent event) {
 		
-		writer.println("BUILD JOB ABOUT TO RUN");		
+		//writer.println("...BUILD JOB ABOUT TO RUN");		
 		super.aboutToRun(event);
 		
 	}

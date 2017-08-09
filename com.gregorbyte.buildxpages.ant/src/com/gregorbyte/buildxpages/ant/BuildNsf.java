@@ -92,15 +92,16 @@ public class BuildNsf extends Task {
 		Socket s = null;
 
 		try {
-			log("Attempt to Create Socket");
+			String msg = String.format("Attempt to Create Socket with Designer on Port '%s'...", portNumber);
+			log(msg);
 			s = new Socket(InetAddress.getLocalHost(), portNumber);
-			log("Socket Created");
+			log("...Socket Created");
 		} catch (IOException e) {
 			getProject().setProperty("buildnsf.failed", "true");
 			if (failonerror) {
-				throw new BuildException("Could not Connect to Headless Server using port: " + port, e);
+				throw new BuildException("... Could not Connect to Headless Server using port: " + port, e);
 			} else {
-				log("Could not connect to Headless server using port: " + port);
+				log("...Could not connect to Headless server using port: " + port);
 				return;
 			}
 		}
@@ -121,7 +122,8 @@ public class BuildNsf extends Task {
 			}
 
 			// Send instruction to Build NSf
-			log("Issuing Refresh Import Build Command for " + project);
+			log("Sending Refresh Import Build Command for " + project);
+			
 			out.println(CMD_REFRESHIMPORTBUILD);
 			out.println(project);
 			out.println(projectname);

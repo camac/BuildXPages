@@ -1,6 +1,7 @@
 package com.gregorbyte.designer.headless.jobs;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
 
@@ -40,11 +41,24 @@ public class RefreshImportBuildJob extends Job {
 	private IProject diskProject;
 	private IDominoDesignerProject desProject;
 
+	private PrintWriter writer = null;
+	
 	public RefreshImportBuildJob() {
 
 		super("Refresh Import and Build Job");
 	}
 
+	public void setWriter(PrintWriter writer) {
+		this.writer = writer;
+	}
+	
+	protected void logMessage(String message) {
+		if (writer != null) {
+			writer.print("... ");
+			writer.println(message);
+		}
+	}
+	
 	public String getNsfName() {
 		return nsfName;
 	}
@@ -144,6 +158,7 @@ public class RefreshImportBuildJob extends Job {
 
 	}
 
+	@SuppressWarnings("unused")
 	private void findDesignerProject() throws CoreException {
 
 		if (StringUtil.isEmpty(nsfName) && diskProject != null) {
@@ -210,9 +225,14 @@ public class RefreshImportBuildJob extends Job {
 		findOnDiskProject();
 
 		if (diskProject == null) {
+			
+			String msg = String.format("No Existing Project for '%s', creating now... ", onDiskProjectFile);			
+			logMessage(msg);
+			
 			ImportOnDiskProjectJob job = new ImportOnDiskProjectJob(onDiskProjectFile, onDiskProjectName);
 			job.run(monitor);
 			diskProject = job.getDiskProject();
+			
 		}
 
 		CreateNSFJob create = new CreateNSFJob(nsfServer, nsfName);
@@ -235,7 +255,7 @@ public class RefreshImportBuildJob extends Job {
 
 			if (!diskProject.isOpen()) {
 				diskProject.open(monitor);
-				System.out.println("Opening project");
+				logMessage("Opening On Disk Project");
 			}
 
 			boolean autoBuild = NsfUtil.isAutoBuilding();
@@ -244,15 +264,20 @@ public class RefreshImportBuildJob extends Job {
 				NsfUtil.setAutoBuilding(false);
 			}
 
+			logMessage("Refreshing On-Disk Project");
 			diskProject.refreshLocal(IResource.DEPTH_INFINITE, monitor);
 
 			// Why is it not deleting java?
+			logMessage("Running 'CLEAN_BUILD' on ODP");
 			diskProject.build(IncrementalProjectBuilder.CLEAN_BUILD, monitor);
 
+			logMessage("Running 'FULL_BUILD' on ODP");
 			diskProject.build(IncrementalProjectBuilder.FULL_BUILD, monitor);
 
 			NoUISyncAction syncaction = new NoUISyncAction();
 			syncaction.setSyncProjects(desProject, diskProject);
+
+			logMessage("Executing NOUI_SYNCACTION");
 			syncaction.doExecute();
 
 			IProject desProj = desProject.getProject();
@@ -261,9 +286,13 @@ public class RefreshImportBuildJob extends Job {
 				desProj.open(monitor);
 			}
 
+			logMessage("Running 'CLEAN_BUILD' on NSF");
+			desProj.build(IncrementalProjectBuilder.CLEAN_BUILD, monitor);
+
+			logMessage("Running 'FULL_BUILD' on NSF");
 			desProj.build(IncrementalProjectBuilder.FULL_BUILD, monitor);
 
-			System.out.println("About to Finish");
+			logMessage("Finished Build");
 
 		} catch (CoreException e) {
 			e.printStackTrace();
