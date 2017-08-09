@@ -752,6 +752,20 @@ The Benefit of installing libraries here is that they will be available for both
 </dd>
 </dl>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you are trying to create the <strong>.ant</strong> directory in your user folder using Windows Explorer, it may not let you. So you need to use the command line, navigate to your user directory, and then issue the command <code>mkdir .ant</code></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_installing_for_a_single_project">Installing for a Single project</h4>
@@ -764,6 +778,14 @@ Put the BuildXPages.jar in that location</p>
 </div>
 <div class="paragraph">
 <p>when running ant, you will need to specify the library location with -lib command</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;taskdef
+	uri="antlib:com.gregorbyte.buildxpages.ant"
+	resource="com/gregorbyte/buildxpages/ant/antlib.xml"
+	classpath="lib/BuildXPagesAntLib.jar"&gt;&lt;/taskdef&gt;</code></pre>
+</div>
 </div>
 <div class="sect4">
 <h5 id="_running_ant_within_eclipse">Running ANT within Eclipse</h5>
@@ -786,13 +808,51 @@ Put the BuildXPages.jar in that location</p>
 <p>To use</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_environment_variables">Environment Variables</h4>
+<div class="paragraph">
+<p>NOTES_PROGDIR
+NOTES_DATADIR
+DOMINO_PROGDIR
+DOMINO_DATADIR
+ECLIPSE_BASE</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>On windows, if your Notes/Domino is within a directory with spaces e.g. 'Program Files (x86)' it may be a good idea to use the 8.3 format of that directory e.g. 'Progra~2'</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Once a console prompt has opened up, it has loaded it&#8217;s environment variables and will not receive any new or modified variables. So if you have added or changed environment variables, you will need to start a new console prompt to see the effect.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-06 15:20:00 AEST
+Last updated 2017-08-09 22:50:45 AEST
 </div>
 </div>
 </body>

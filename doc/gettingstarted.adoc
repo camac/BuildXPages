@@ -1,6 +1,7 @@
 == Getting Started
 
-Before 
+In order to use the BuildXPages there is a little bit of setup to be done.
+This section will hopefully guide you through the process. Please let me know via an Issue on the Github Project page if anything was left out.
 
 === First Time Setup Tasks
 
@@ -12,15 +13,3 @@ Before
 * Setup Environment Variables
 * Install the Headless Designer Plugin to Notes/Designer
 * Remove the Password from the Notes ID
-
-=== Building your first NSF
-
-include::tutorial_buildannsf.adoc[]
-
-=== Deploying an NSF
-
-include::tutorial_deploynsf.adoc[]
-
-=== Building your first Plugin
-
-include::tutorial_buildfeature.adoc[]

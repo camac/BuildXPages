@@ -718,12 +718,16 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 <h2 id="_getting_started">Getting Started</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Before</p>
+<p>In order to use the BuildXPages there is a little bit of setup to be done.
+This section will hopefully guide you through the process. Please let me know via an Issue on the Github Project page if anything was left out.</p>
 </div>
 <div class="sect2">
 <h3 id="_first_time_setup_tasks">First Time Setup Tasks</h3>
 <div class="ulist">
 <ul>
+<li>
+<p>Install IBM Notes/Designer (This is assumed!)</p>
+</li>
 <li>
 <p>Install a JDK</p>
 </li>
@@ -731,19 +735,16 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 <p>Install Ant</p>
 </li>
 <li>
-<p>Install Eclipse</p>
-</li>
-<li>
-<p>Install IBM Notes/Designer (This is assumed!)</p>
-</li>
-<li>
-<p>Install the Headless Designer Plugin to Notes/Designer</p>
-</li>
-<li>
 <p>Install the BuildXPages ANT Task Library</p>
 </li>
 <li>
+<p>Install Eclipse</p>
+</li>
+<li>
 <p>Setup Environment Variables</p>
+</li>
+<li>
+<p>Install the Headless Designer Plugin to Notes/Designer</p>
 </li>
 <li>
 <p>Remove the Password from the Notes ID</p>
@@ -751,347 +752,12 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 </ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_building_your_first_nsf">Building your first NSF</h3>
-
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_tutorial_build_an_nsf">Tutorial - Build an NSF</h2>
-<div class="sectionbody">
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Important</div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Before doing this tutorial make sure you have performed necessary setup detailed in the <strong>gettingstarted</strong> page</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>In this tutorial we will build a Simple XPages Application from an on On-Disk Project, using Domino Designer Headless Plugin + BuildXPages Ant Tasks.</p>
-</div>
-<div class="paragraph">
-<p>After the successful build, the nsf will be available in your local workspace.</p>
-</div>
-<div class="paragraph">
-<p>The files for this Demonstration are in the <strong>demo/buildnsf</strong> folder of the Build4XPages distribution files. The sample On-Disk Project is located within the tutorial folder as <strong>sampleodp</strong>.
-The Application has a Custom Control and an XPage which uses that custom control.</p>
-</div>
-<div class="sect2">
-<h3 id="_build_xml">build.xml</h3>
-<div class="paragraph">
-<p>Our 'recipe' for the build is contained in the <strong>build.xml</strong> file located in the <strong>demo/buildnsf</strong> directory. <strong>build.xml</strong> is the default name for an Ant build file, you can call it another filename but if so you would need to specify extra command line argument <code>-b myfile.xml</code></p>
-</div>
-<div class="paragraph">
-<p>Within the build.xml file are things called <em>targets</em>. A target is a bit like a code block.
-Targets can be configured to depend on another target, so that means executing a <em>target</em> will cause the other targets that it depends on to be executed first.</p>
-</div>
-<div class="paragraph">
-<p>Within this build.xml file are 2 <em>targets</em> that are used to setup the demo <strong>clean</strong> and <strong>init</strong></p>
-</div>
-<div class="paragraph">
-<p><strong>clean</strong> is used to clean up any previous attempt at this tutorial, and <strong>init</strong> is used to initialise a new attempt.</p>
-</div>
-<div class="paragraph">
-<p>You can see that <strong>init</strong> has been set to depend on <strong>clean</strong> so that before the <strong>init</strong> target is executed, the <strong>clean</strong> target will be executed.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;target name="clean"&gt;
-		&lt;delete dir="odp"/&gt;
-		&lt;delete dir="odperror"/&gt;
-	&lt;/target&gt;
-
-	&lt;target name="init" depends="clean"&gt;
-
-		&lt;copy todir="odp"&gt;
-			&lt;fileset dir="sampleodp"&gt;&lt;/fileset&gt;
-		&lt;/copy&gt;
-
-		&lt;copy todir="odperror"&gt;
-			&lt;fileset dir="sampleodp"&gt;&lt;/fileset&gt;
-		&lt;/copy&gt;
-
-		&lt;!-- Delete the Custom Control from the odp that we are using for the error demo --&gt;
-		&lt;delete&gt;
-			&lt;fileset dir="odperror/CustomControls"&gt;&lt;/fileset&gt;
-		&lt;/delete&gt;
-
-	&lt;/target&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_run_a_successful_build">Run a Successful Build</h3>
-<div class="paragraph">
-<p>Within this <strong>build.xml</strong> file is a target called <strong>build</strong>. This will build the NSF that should not have any problems.
-This target is listed as the default target in the root element of the build.xml file (not shown here).</p>
-</div>
-<div class="paragraph">
-<p>This target makes use of the <strong>bxp:buildnsf</strong> task which will connect to the Headless Designer Plugin, and instruct it to build the nsf as specified by the task attributes.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;target name="build" depends="init"&gt;
-
-		&lt;bxp:checkDesignerRunning/&gt;
-
-		&lt;!-- We assign the .project file path to a property using the 'location' attribute,
-		this way the property will be expanded to the absolute path of the .project file--&gt;
-		&lt;property name="odp.project" location="odp/.project" /&gt;
-
-		&lt;bxp:buildnsf project="${odp.project}" projectname="BuildXPagesDemoNSF" nsf="temp\BuildXPagesDemo.nsf" /&gt;
-
-	&lt;/target&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can see that this target depends on <strong>init</strong>. <strong>init</strong> depends on clean, so when we execute this <strong>build</strong> target what will really happen is the following order of execution:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>clean -&gt; init -&gt; build</pre>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_to_run_the_build">To run the Build</h4>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Open your command line</p>
-</li>
-<li>
-<p>Change directory to the the <strong>demo/buildnsf</strong> folder</p>
-</li>
-<li>
-<p>issue the command <code>ant</code></p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>Ant knows to look for <strong>build.xml</strong> and the default target (which is our <strong>build</strong> target).
-The build process will then begin, and your nsf will (hopefully) be built into your local workspace.</p>
-</div>
-<div class="paragraph">
-<p>You should see some output on the console like so:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\buildnsf\build.xml
-
-clean:
-   [delete] Deleting directory V:\Projects\BuildXPages\demo\buildnsf\odp
-   [delete] Deleting directory V:\Projects\BuildXPages\demo\buildnsf\odperror
-
-init:
-     [copy] Copying 20 files to V:\Projects\BuildXPages\demo\buildnsf\odp
-     [copy] Copying 20 files to V:\Projects\BuildXPages\demo\buildnsf\odperror
-
-build:
-[bxp:buildnsf] Attempt to Create Socket
-[bxp:buildnsf] Socket Created
-[bxp:buildnsf] CONNECTED TO DESIGNER! What can we do for you?
-[bxp:buildnsf] Issuing Refresh Import Build Command for V:\Projects\BuildXPages\demo\buildnsf\odp\.project
-[bxp:buildnsf] BUILD JOB ABOUT TO RUN
-[bxp:buildnsf] BUILD JOB RUNNING
-[bxp:buildnsf] BUILD JOB STATUS: SUCCESS
-[bxp:buildnsf] PROBLEMS STATUS: SUCCESS
-[bxp:buildnsf] No ProblemMarkers found after Building
-
-BUILD SUCCESSFUL
-Total time: 2 seconds</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Also, in your domino Designer workspace you should see a new NSF with filepath temp\BuildXPagesDemo.nsf</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_run_a_build_with_errors">Run a Build with Errors</h4>
-<div class="paragraph">
-<p>Let&#8217;s see an example of running an NSF Build that results in some errors. To do this we will use the same sample On-Disk Project, but before we run the build we will sneakily delete the custom controls.
-This should cause an error when Designer tries to build the XPages that use those missing custom controls.</p>
-</div>
-<div class="paragraph">
-<p>The <em>target</em> that I have written to do this is called <strong>buildfail</strong>.</p>
-</div>
-<div class="paragraph">
-<p>Note it is pretty much the same as <strong>build</strong> but is pointing to a different location for the on-disk project, and specifies different NSF and projectname.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;target name="buildfail" depends="init"&gt;
-
-		&lt;bxp:checkDesignerRunning/&gt;
-
-		&lt;!-- We assign the .project file path to a property using the 'location' attribute,
-		this way the property will be expanded to the absolute path of the .project file--&gt;
-		&lt;property name="odp.project" location="odperror/.project" /&gt;
-
-		&lt;bxp:buildnsf project="${odp.project}" projectname="BuildXPagesDemoNSFError" nsf="temp\BuildXPagesDemoError.nsf" /&gt;
-
-
-	&lt;/target&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Since it is not the default target, we will tell ant that that is the target we want to build by including the target name in the command line arguments.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>issue the command `ant buildfail'</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>You should then see an output like so:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\buildnsf\build.xml
-
-clean:
-   [delete] Deleting directory V:\Projects\BuildXPages\demo\buildnsf\odp
-   [delete] Deleting directory V:\Projects\BuildXPages\demo\buildnsf\odperror
-
-init:
-     [copy] Copying 20 files to V:\Projects\BuildXPages\demo\buildnsf\odp
-     [copy] Copying 20 files to V:\Projects\BuildXPages\demo\buildnsf\odperror
-
-buildfail:
-[bxp:buildnsf] Attempt to Create Socket
-[bxp:buildnsf] Socket Created
-[bxp:buildnsf] CONNECTED TO DESIGNER! What can we do for you?
-[bxp:buildnsf] Issuing Refresh Import Build Command for V:\Projects\BuildXPages\demo\buildnsf\odperror\.project
-[bxp:buildnsf] BUILD JOB ABOUT TO RUN
-[bxp:buildnsf] BUILD JOB RUNNING
-[bxp:buildnsf] BUILD JOB STATUS: SUCCESS
-[bxp:buildnsf] PROBLEMS STATUS: FAIL
-[bxp:buildnsf] The following ProblemMarkers were present after building
-[bxp:buildnsf] Error: Home.xsp: The unknown tag xc:ccCustomControl cannot be used as a control.</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Notice that the 'PROBLEMS STATUS' is fail and the last line is telling us the exact problem.
-If you were to look in Designer you would see the problem there too.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/NSFDemoError.JPG" alt="NSFDemoError">
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_building_your_first_plugin">Building your first Plugin</h3>
-
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_sample_building_features_and_plugins">Sample - Building Features and Plugins</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In this sample we build the plugins for a feature, and prepare an Update Site that can be used to deploy to Domino or Domino Designer</p>
-</div>
-<div class="sect2">
-<h3 id="_first_time_setup">First Time Setup</h3>
-<div class="paragraph">
-<p>Before we build plugins, we need to make sure we are set up properly</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Install Eclipse for RCP and RAP Development</p>
-</li>
-<li>
-<p>Install Ant</p>
-</li>
-<li>
-<p>Install Build4XPages Ant tasks</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_configure_your_notes_and_domino_program_directories">Configure Your Notes and Domino Program Directories</h3>
-<div class="paragraph">
-<p>In order to run the build steps, we need to know where Notes and Domino are</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Set them up as Environment Variables</p>
-</li>
-<li>
-<p>Specify them in the build.properties file</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_configure_eclipse_properties">Configure Eclipse Properties</h3>
-<div class="paragraph">
-<p>The build script needs to know 3 things in order to build your plugins</p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">What is the base directory of Eclipse?</dt>
-<dd>
-<p>This may be something like <code>C:\eclipse</code></p>
-</dd>
-<dt class="hdlist1">Where can I find the PDE Build.xml file?</dt>
-<dd>
-<p>This is a file which provides the actual recipe to build plugins. In older versions of eclipse it will be under &lt;eclipse&gt;/plugins/org.eclipse.pde.build_&lt;version&gt;/scripts/build.xml
-In Newer versions of eclipse it will be located under your user home directory&#8217;s p2 pool of plugins &lt;userhome&gt;/.p2/pool/plugins/org.eclipse.pde.build_&lt;version&gt;/scripts/build.xml</p>
-</dd>
-<dt class="hdlist1">Where can I find the equinox launcher jar?</dt>
-<dd>
-<p>This is an executable jar which launches the plugin build process. In older versions of eclipse it will be under &lt;eclipse&gt;/plugins/org.eclipse.equinox.launcher_&lt;version&gt;.jar
-In Newer versions of eclipse it will be located under your user home directory&#8217;s p2 pool of plugins &lt;userhome&gt;/.p2/pool/plugins/org.eclipse.equinox.launcher_&lt;version&gt;.jar</p>
-</dd>
-</dl>
-</div>
-<div class="paragraph">
-<p>These 3 things should be the same for every project you build on the computer, so you can set these up as Environment Varables as well</p>
-</div>
-<div class="paragraph">
-<p>If you don&#8217;t want to set them up as environment variables, you can specify them in the accompanying build.properties file</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_run_the_build">Run the Build!</h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Open your console and navigate to the demo/buildfeature folder</p>
-</li>
-<li>
-<p>Type <code>ant</code></p>
-</li>
-<li>
-<p>Cross your fingers</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>After the build is finished you should see a zip file in the demo/buildfeature/BuildXPages directory.</p>
-</div>
-</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-07 22:31:37 AEST
+Last updated 2017-08-09 23:06:31 AEST
 </div>
 </div>
 </body>

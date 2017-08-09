@@ -1,4 +1,4 @@
-== Sample - Building Features and Plugins
+== Building Features and Plugins
 
 In this sample we build the plugins for a feature, and prepare an Update Site that can be used to deploy to Domino or Domino Designer
 

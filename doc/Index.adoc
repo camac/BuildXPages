@@ -5,6 +5,8 @@ https://github.com/camac/BuildXPages[BuildXPages GitHub Project]
 
 Build4XPages is a collection of tools which aid in the Building and Deployment of XPages NSFs and XPages plugins.
 
-include::headlessplugin.adoc[]
+include::gettingstarted.adoc[]
+
+include::tutorials.adoc[]
 
 include::tasks.adoc[]
