@@ -1,0 +1,22 @@
+== Getting Started
+
+Before 
+
+=== First Time Setup Tasks
+
+* Install a JDK
+* Install Ant
+* Install Eclipse
+* Install IBM Notes/Designer (This is assumed!)
+* Install the Headless Designer Plugin to Notes/Designer
+* Install the BuildXPages ANT Task Library
+* Setup Environment Variables
+* Remove the Password from the Notes ID
+
+=== Building your first NSF
+
+include::tutorial_buildannsf.adoc[]
+
+=== Building your first Plugin
+
+include::tutorial_buildfeature.adoc[]

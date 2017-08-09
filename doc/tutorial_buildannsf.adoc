@@ -1,0 +1,141 @@
+== Tutorial - Build an NSF
+:imagesdir: ./images
+
+[IMPORTANT]
+====
+Before doing this tutorial make sure you have performed necessary setup detailed in the *gettingstarted* page
+====
+
+In this tutorial we will build a Simple XPages Application from an on On-Disk Project, using Domino Designer Headless Plugin + BuildXPages Ant Tasks.
+
+After the successful build, the nsf will be available in your local workspace.
+
+The files for this Demonstration are in the *demo/buildnsf* folder of the Build4XPages distribution files. The sample On-Disk Project is located within the tutorial folder as *sampleodp*. 
+The Application has a Custom Control and an XPage which uses that custom control.
+
+=== build.xml
+
+Our 'recipe' for the build is contained in the *build.xml* file located in the *demo/buildnsf* directory. *build.xml* is the default name for an Ant build file, you can call it another filename but if so you would need to specify extra command line argument `-b myfile.xml`
+
+Within the build.xml file are things called _targets_. A target is a bit like a code block.
+Targets can be configured to depend on another target, so that means executing a _target_ will cause the other targets that it depends on to be executed first.
+
+Within this build.xml file are 2 _targets_ that are used to setup the demo *clean* and *init*
+
+*clean* is used to clean up any previous attempt at this tutorial, and *init* is used to initialise a new attempt.
+
+You can see that *init* has been set to depend on *clean* so that before the *init* target is executed, the *clean* target will be executed.
+
+[source,xml]
+----
+include::../demo/buildnsf/build.xml[tag=clean]
+----
+
+=== Run a Successful Build
+
+Within this *build.xml* file is a target called *build*. This will build the NSF that should not have any problems.
+This target is listed as the default target in the root element of the build.xml file (not shown here).
+
+This target makes use of the *bxp:buildnsf* task which will connect to the Headless Designer Plugin, and instruct it to build the nsf as specified by the task attributes.
+
+[source,xml]
+----
+include::../demo/buildnsf/build.xml[tag=build]
+----
+
+You can see that this target depends on *init*. *init* depends on clean, so when we execute this *build* target what will really happen is the following order of execution:
+
+    clean -> init -> build
+
+==== To run the Build
+
+1. Open your command line
+2. Change directory to the the *demo/buildnsf* folder
+3. issue the command `ant`
+
+Ant knows to look for *build.xml* and the default target (which is our *build* target). 
+The build process will then begin, and your nsf will (hopefully) be built into your local workspace.
+
+You should see some output on the console like so:
+[source,txt]
+----
+Buildfile: V:\Projects\BuildXPages\demo\buildnsf\build.xml
+
+clean:
+   [delete] Deleting directory V:\Projects\BuildXPages\demo\buildnsf\odp
+   [delete] Deleting directory V:\Projects\BuildXPages\demo\buildnsf\odperror
+
+init:
+     [copy] Copying 20 files to V:\Projects\BuildXPages\demo\buildnsf\odp
+     [copy] Copying 20 files to V:\Projects\BuildXPages\demo\buildnsf\odperror
+
+build:
+[bxp:buildnsf] Attempt to Create Socket
+[bxp:buildnsf] Socket Created
+[bxp:buildnsf] CONNECTED TO DESIGNER! What can we do for you?
+[bxp:buildnsf] Issuing Refresh Import Build Command for V:\Projects\BuildXPages\demo\buildnsf\odp\.project
+[bxp:buildnsf] BUILD JOB ABOUT TO RUN
+[bxp:buildnsf] BUILD JOB RUNNING
+[bxp:buildnsf] BUILD JOB STATUS: SUCCESS
+[bxp:buildnsf] PROBLEMS STATUS: SUCCESS
+[bxp:buildnsf] No ProblemMarkers found after Building
+
+BUILD SUCCESSFUL
+Total time: 2 seconds
+----
+
+Also, in your domino Designer workspace you should see a new NSF with filepath temp\BuildXPagesDemo.nsf
+
+==== Run a Build with Errors
+
+Let's see an example of running an NSF Build that results in some errors. To do this we will use the same sample On-Disk Project, but before we run the build we will sneakily delete the custom controls.
+This should cause an error when Designer tries to build the XPages that use those missing custom controls.
+
+The _target_ that I have written to do this is called *buildfail*. 
+
+Note it is pretty much the same as *build* but is pointing to a different location for the on-disk project, and specifies different NSF and projectname.
+
+[source,xml]
+----
+include::../demo/buildnsf/build.xml[tag=buildfail]
+----
+
+Since it is not the default target, we will tell ant that that is the target we want to build by including the target name in the command line arguments.
+
+1. issue the command `ant buildfail'
+
+You should then see an output like so:
+
+[source,txt]
+----
+Buildfile: V:\Projects\BuildXPages\demo\buildnsf\build.xml
+
+clean:
+   [delete] Deleting directory V:\Projects\BuildXPages\demo\buildnsf\odp
+   [delete] Deleting directory V:\Projects\BuildXPages\demo\buildnsf\odperror
+
+init:
+     [copy] Copying 20 files to V:\Projects\BuildXPages\demo\buildnsf\odp
+     [copy] Copying 20 files to V:\Projects\BuildXPages\demo\buildnsf\odperror
+
+buildfail:
+[bxp:buildnsf] Attempt to Create Socket
+[bxp:buildnsf] Socket Created
+[bxp:buildnsf] CONNECTED TO DESIGNER! What can we do for you?
+[bxp:buildnsf] Issuing Refresh Import Build Command for V:\Projects\BuildXPages\demo\buildnsf\odperror\.project
+[bxp:buildnsf] BUILD JOB ABOUT TO RUN
+[bxp:buildnsf] BUILD JOB RUNNING
+[bxp:buildnsf] BUILD JOB STATUS: SUCCESS
+[bxp:buildnsf] PROBLEMS STATUS: FAIL
+[bxp:buildnsf] The following ProblemMarkers were present after building
+[bxp:buildnsf] Error: Home.xsp: The unknown tag xc:ccCustomControl cannot be used as a control.
+----
+
+Notice that the 'PROBLEMS STATUS' is fail and the last line is telling us the exact problem.
+If you were to look in Designer you would see the problem there too.
+
+image::NSFDemoError.JPG[]
+
+
+
+

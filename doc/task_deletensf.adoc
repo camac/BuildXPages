@@ -1,0 +1,13 @@
+=== deletensf
+
+Deletes an NSF using the Notes C API's NSFDbDelete method.
+
+==== Attributes
+
+[horizontal]
+server:: The Server of the NSF that you want to Delete. Optional - defaults to Local
+filename:: The filepath of the NSF that you want to Delete
+
+==== Example
+
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=deletensf]

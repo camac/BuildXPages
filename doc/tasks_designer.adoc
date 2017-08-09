@@ -1,0 +1,19 @@
+== Designer Related Tasks
+
+include::task_startdesigner.adoc[]
+
+include::task_buildnsf.adoc[]
+
+include::task_closedesigner.adoc[]
+
+include::task_markersreport.adoc[]
+
+include::task_checkdesignerrunning.adoc[]
+
+include::task_updatedesignerlink.adoc[]
+
+include::task_initdesignersite.adoc[]
+
+include::task_checkplatformxml.adoc[]
+
+include::task_configuredynamicplugins.adoc[]

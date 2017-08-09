@@ -1,0 +1,9 @@
+== Server Related Ant Tasks
+
+These tasks are designed to interact with the domino server by issuing commands to the console.
+
+include::task_controlhttp.adoc[]
+
+include::task_maintenance.adoc[]
+
+include::task_loaddesign.adoc[]

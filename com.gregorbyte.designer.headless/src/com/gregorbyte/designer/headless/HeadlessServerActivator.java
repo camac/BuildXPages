@@ -1,5 +1,6 @@
 package com.gregorbyte.designer.headless;
 
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -61,6 +62,7 @@ public class HeadlessServerActivator extends AbstractUIPlugin {
 		INSTANCE = this;
 
 		super.start(context);
+		
 		plugin = this;
 
 		try {

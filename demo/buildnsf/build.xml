@@ -1,0 +1,66 @@
+<project name="BuildXPages NSF Demonstration" default="build" xmlns:bxp="antlib:com.gregorbyte.buildxpages.ant">
+
+	<description>Demonstration of Building an NSF from On-Disk Project</description>
+
+	<property file="build.properties" />
+
+	<property environment="env" />
+	<property name="notesProgDir" location="${env.NOTES_PROG}" />
+
+	<!-- tag::clean[] -->
+	<target name="clean">
+		<delete dir="odp"/>
+		<delete dir="odperror"/>
+	</target>
+
+	<target name="init" depends="clean">
+		
+		<copy todir="odp">
+			<fileset dir="sampleodp"></fileset>
+		</copy>
+
+		<copy todir="odperror">
+			<fileset dir="sampleodp"></fileset>
+		</copy>
+
+		<!-- Delete the Custom Control from the odp that we are using for the error demo -->
+		<delete>
+			<fileset dir="odperror/CustomControls"></fileset>
+		</delete>
+		
+	</target>
+	<!-- end::clean[] -->
+
+	<!-- tag::build[] -->
+	<target name="build" depends="init">
+
+		<bxp:checkDesignerRunning/>
+		
+		<!-- We assign the .project file path to a property using the 'location' attribute, 
+		this way the property will be expanded to the absolute path of the .project file-->
+		<property name="odp.project" location="odp/.project" />
+		
+		<bxp:buildnsf project="${odp.project}" projectname="BuildXPagesDemoNSF" nsf="temp\BuildXPagesDemo.nsf" />
+
+	</target>
+	<!-- end::build[] -->
+	
+	<!-- tag::buildfail[] -->
+	<target name="buildfail" depends="init">
+
+		<bxp:checkDesignerRunning/>
+		
+		<!-- We assign the .project file path to a property using the 'location' attribute, 
+		this way the property will be expanded to the absolute path of the .project file-->
+		<property name="odp.project" location="odperror/.project" />
+		
+		<bxp:buildnsf project="${odp.project}" projectname="BuildXPagesDemoNSFError" nsf="temp\BuildXPagesDemoError.nsf" />
+
+		
+	</target>
+	<!-- end::buildfail[] -->
+
+
+
+
+</project>

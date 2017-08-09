@@ -1,0 +1,20 @@
+=== copynsf
+
+Copies an NSF from one place to another using the Notes C API's 'NSFDbCreateAndCopy' function.
+
+[NOTE]
+====
+Currently this tasks only copies the Note class 'ALLNONDATA' which means design elements only. It could easily be modified to include all documents if you like. Let me know if you want this done.
+====
+
+==== Attributes
+
+[horizontal]
+srcserver:: The Server of the Database to be copied. Optional - defaults to Local
+srcfilepath:: The Filepath of the Database to be copied
+dstserver:: The Destination Server for the newly created database. Optional - defaults to Local
+dstfilepath:: The Filepath the Database to be created.
+
+==== Example
+
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=copynsf]

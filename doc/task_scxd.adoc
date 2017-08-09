@@ -1,0 +1,15 @@
+=== scxd 
+
+Sets the Single Copy XPage Design settings of an NSF. You can set both the relevant properties of the SCXD path, and the Flag which determines whether to use the SCXD template or not.
+
+==== Attributes
+
+[horizontal]
+server:: The server of the NSF that you would like to set SCXD settings for
+database:: The filepath of the nsf that you would like to set SCXD settings for
+scxdpath:: The path of the XPages database which you would like to use as the SCXD
+scxdflag:: true/false determines whether the 'Use Single Copy XPage Design' checkbox is will be ticked in the Database Properties
+
+==== Example
+
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=scxd]

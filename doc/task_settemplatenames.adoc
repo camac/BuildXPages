@@ -1,0 +1,19 @@
+=== settemplatenames
+
+Updates the Template Inheritance settings of an NSF.
+You can set an NSF To be a master template, or you can set an NSF to Inherit from another Template, or Both!
+You can also clear the 'inherit from' or 'master template' settings.
+
+==== Attributes
+
+[horizontal]
+server:: The Server of the NSF that you are modifying template settings for
+database:: The filepath of the NSF that you are modifying template settinsg for
+clearinheritfrom:: Defaults to false. When set to 'true' will clear any inheritance settings if they exist
+inheritfrom:: The Name of the Master Template that you would like the NSF To inherit from
+clearmastername:: Defaults to false. When set to 'true' will clear the 'Is Master Template' settings of the nsf if they exist
+mastername:: This is the Template Name that you would like this NSF to be known as.
+
+==== Example
+
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=settemplatenames]

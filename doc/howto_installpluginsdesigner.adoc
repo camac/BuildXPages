@@ -1,0 +1,60 @@
+== Installing Plugins to Domino Designer
+
+This guide explains about installing plugins to Domino Designer
+
+=== Enabling Plugin Installation
+
+If you have never installed plugins to Designer before, then you may need to enable plugin installation in Domino Designer Preferences. 
+
+Go to *File -> Preferences -> Domino Designer* and ensure that the *Enable Eclipse plug-in install* checkbox is set
+
+image::..\images\DesignerEnablePluginInstall.JPG[]
+
+=== Update Sites Explained
+
+The plugins that you are installing will exist in a format that is called an *Update Site*.
+Whilst you may find lots of informoation online about the newer *p2 repository* update site format, this information is not relevant to us for Domino Designer. 
+
+Domino Designer still uses an older format for update sites which basically consist of:
+
+* a *site.xml* file which provides a list of the features contained in the update site
+* a *features* directory which contains all the features
+* a *plugins* directory which contains all the plugins
+
+In truth, you do not really install *plugins*, you install *features*.
+Although all the brains are inside the plugins, features are a way to group some plugins together, so that if you want a certain feature it knows which plugins are needed to be installed. So you ask for a *feature* to be installed, and then it knows which plugins to install based on that.
+
+The concept of an update site is that once Domino Designer knows about an update site, it can keep checking that site for future updates.
+
+This can be useful if you register your own *NSF Update Sites*, which you can then use as a basis to update Domino Designer from there. Once your NSF is register you can simply check for updates.
+
+However a more common scenario is that you download an *update site* in the form of a zip file and install from that file just one time. In this case you usually add these *Archive Update Site*'s each time you need to install one.
+
+==== Installing from a New Update Site
+
+To Install from a new update site, choose File -> Application -> Install..
+
+image::..\images\DesignerFileApplicationsInstall.JPG[]
+
+Add the update site that you want to install from
+
+use *Add Zip/Jar Location* if it is a zipped update site
+use *Add Folder location* if it is not zipped
+
+Then click finish, the update manager will do some thinking.
+
+It will then show you some 'features' that can be installed, choose the one you want to install and click next
+
+Then accept the license agreements and then finish the wizard
+
+It will do some more thinking, and then tell you
+
+'The system is trying to install a plugin do you want to?'
+and you *MUST* change the option to say 'Install this plug-in'
+Then click ok
+
+You will then need to restart Domino Designer
+
+==== Installing from an existing Update site
+
+If you already have an update site register you should be able to follow the same procedure above without added a new update site. Just let it check existing update sites.

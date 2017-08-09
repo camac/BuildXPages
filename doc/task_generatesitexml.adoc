@@ -1,0 +1,17 @@
+=== generatesitexml
+
+After building your plugins headlessly with eclipse PDE, you will then have a directory of plugins and features, but 
+before importing plugins into an link:https://www.openntf.org/main.nsf/project.xsp?r=project/Open%20Eclipse%20Update%20Site[Open Eclipse NSF Update Site^] you will also need a **site.xml** file.
+
+Newer versions of eclipse use a _p2 repository_ format which does not require a site.xml, but with Notes/Domino running on a much older version of eclipse, it still uses an older format which uses the **site.xml** file.
+
+The build process does not generate one for us so we do it ourselvels with this task, which scans the features directory and builds the necessary xml.
+
+==== Attributes
+
+[horizontal]
+eclipsedir:: The root folder that contains the plugins and features directory. I call it eclipse directory because often you will find it in the structure ../something/**eclipse**/plugins and ../something/**eclipse**/features
+
+==== Example
+
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=generatesitexml]

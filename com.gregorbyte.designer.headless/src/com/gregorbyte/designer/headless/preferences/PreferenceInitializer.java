@@ -18,7 +18,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	public void initializeDefaultPreferences() {
 		IPreferenceStore store = HeadlessServerActivator.getDefault().getPreferenceStore();	
 		store.setDefault(PreferenceConstants.P_PORT, "8282");
-		store.setDefault(PreferenceConstants.P_START, true);
+		store.setDefault(PreferenceConstants.P_START, false);
 	}
 
 }

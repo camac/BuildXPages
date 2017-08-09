@@ -1,4 +1,4 @@
-<project name="Headless Designer" default="build" xmlns:bxp="antlib:com.gregorbyte.buildxpages.ant">
+<project name="Headless Designer" default="build" xmlns:bxp="antlib:com.gregorbyte.buildxpages.ant" xmlns:asciidoctor="antlib:org.asciidoctor.ant">
 
 	<description>Build Tasks for Headless Designer</description>
 
@@ -12,21 +12,26 @@
 	<property name="pluginsDir" location="${buildDir}/plugins" />
 	<property name="featuresDir" location="${buildDir}/features" />
 
-	<property environment="env"/>
+	<property environment="env" />
 
 	<property name="dominoProgDir" location="${env.DOMINO_PROG}" />
 	<property name="dominoDataDir" location="${env.DOMINO_DATA}" />
 	<property name="notesProgDir" location="${env.NOTES_PROG}" />
 	<property name="notesDataDir" location="${env.NOTES_DATA}" />
-	
-	<property name="branchName" value="${env.BRANCH_NAME}"></property>
 
-	<property name="equinoxLauncherVersion" value="${env.EQUINOXLAUNCHER_VERSION}"></property>
-	<property name="eclipseBase" value="${env.ECLIPSE_BASEDIR}"></property>
-	<property name="pdeBuildVersion" value="${env.PDEBUILD_VERSION}"></property>
+	<property name="branchName" value="${env.BRANCH_NAME}">
+	</property>
 
-	<property name="updateSiteRoot" value="D:\UpdateSites"></property>
-	
+	<property name="equinoxLauncherVersion" value="${env.EQUINOXLAUNCHER_VERSION}">
+	</property>
+	<property name="eclipseBase" value="${env.ECLIPSE_BASEDIR}">
+	</property>
+	<property name="pdeBuildVersion" value="${env.PDEBUILD_VERSION}">
+	</property>
+
+	<property name="updateSiteRoot" value="D:\UpdateSites">
+	</property>
+
 	<property name="dominoPluginsDir" location="${dominoDataDir}/domino/workspace/applications/eclipse/plugins" />
 	<property name="dominoFeaturesDir" location="${dominoDataDir}/domino/workspace/applications/eclipse/features" />
 
@@ -77,7 +82,7 @@
 		</copy>
 
 	</target>
-	
+
 	<target name="buildPlugins">
 
 		<pathconvert targetos="unix" property="dominoProgDir.unix">
@@ -87,8 +92,9 @@
 		<property name="pluginPath" value="${dominoProgDir.unix}/osgi/rcp/eclipse;${dominoProgDir.unix}/osgi/shared/eclipse;">
 		</property>
 
-		<echoproperties></echoproperties>
-		
+		<echoproperties>
+		</echoproperties>
+
 		<bxp:buildPlugins pluginpath="${pluginPath}" />
 
 	</target>
@@ -126,5 +132,38 @@
 
 	<target name="build" depends="copyPlugins,buildPlugins,unzipBuiltPlugins,copyPluginsToUpdateSite">
 	</target>
+
+
+	<target name="installasciidoctorant">
+
+		<property name="asciidoctor-version" value="1.5.4">
+		</property>
+		<get src="http://repo1.maven.org/maven2/org/asciidoctor/asciidoctor-ant/${asciidoctor-version}/asciidoctor-ant-${asciidoctor-version}.jar" dest="lib/asciidoctor-ant.jar" usetimestamp="true" />
+
+	</target>
+
+	<target name="docs">
+
+		<taskdef uri="antlib:org.asciidoctor.ant" resource="org/asciidoctor/ant/antlib.xml" classpath="lib/asciidoctor-ant.jar" />
+		<asciidoctor:convert sourceDirectory="doc" outputDirectory="docs" backend="html5" relativebasedir="true" safemode="unsafe">
+
+			<attribute key="stylesdir" value="stylesheets">
+			</attribute>
+			<attribute key="stylesheet" value="readthedocs.css">
+			</attribute>
+
+
+		</asciidoctor:convert>
+
+		<delete dir="docs/images" />
+
+		<copy todir="docs/images">
+			<fileset dir="doc/images">
+			</fileset>
+		</copy>
+
+
+	</target>
+
 
 </project>

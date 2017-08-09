@@ -168,13 +168,14 @@
 
 	<macrodef name="checkPlatformXml">
 		<sequential>
-			<property name="src.dir" location="${basedir}/buildFiles" />
+			<local name="src.dir"/>
+			<property name="src.dir" location="${notesDataDir}/workspace/.config/org.eclipse.update/" />
 			<property name="search.string" value="MANAGED-ONLY" />
 
 			<fileset id="existing" dir="${src.dir}">
 				<patternset id="files">
 					<!-- includes/excludes for your source here -->
-					<include name="*.xml" />
+					<include name="platform.xml" />
 				</patternset>
 			</fileset>
 
@@ -183,7 +184,7 @@
 				<contains text="${search.string}" />
 			</fileset>
 
-			<fail message="Found '${search.string}' in one or more files in '${src.dir}'">
+			<fail message="Found '${search.string}' in platform.xml">
 				<condition>
 					<resourcecount when="greater" count="0" refid="matches" />
 				</condition>
@@ -193,14 +194,21 @@
 
 	<macrodef name="configureDynamicPlugins">
 		<sequential>
-			<copy file="${basedir}/buildFiles/platform-backup20151216.xml" tofile="${basedir}/buildFiles/platform-test.xml"></copy>
+		
+			<local name="platformxml"/>
+			<property name="platformxml" location="${notesDataDir}/workspace/.config/org.eclipse.update/platform.xml" />
+		
+			<tstamp/>
+		
+			<copy file="${platformxml}" tofile="${notesDataDir}/workspace/.config/org.eclipse.update/platform${DSTAMP}${TSTAMP}.xml"></copy>
 
-			<replace file="${basedir}/buildFiles/platform-test.xml">
+			<replace file="${platformxml}">
 				<replacetoken><![CDATA[transient="true"]]></replacetoken>
 				<replacevalue><![CDATA[transient="false"]]></replacevalue>
 			</replace>
 
-			<replace file="${basedir}/buildFiles/platform-test.xml" token="MANAGED-ONLY" value="DODODO"></replace>
+			<replace file="${platformxml}" token="MANAGED-ONLY" value="USER-EXCLUDE"></replace>
+			
 		</sequential>
 	</macrodef>
 
@@ -304,14 +312,14 @@
 	</macrodef>
 
 
-	<macrodef name="clearUpdateSite">
-		<attribute name="eclipseDir" />
+	<macrodef name="clearupdatesite">
+		<attribute name="eclipsedir" />
 		<sequential>
 
 			<local name="pluginsDir" />
-			<property name="pluginsDir" location="@{eclipseDir}/plugins" />
+			<property name="pluginsDir" location="@{eclipsedir}/plugins" />
 			<local name="featuresDir" />
-			<property name="featuresDir" location="@{eclipseDir}/features" />
+			<property name="featuresDir" location="@{eclipsedir}/features" />
 
 			<delete failonerror="true">
 				<fileset dir="${pluginsDir}" includes="*.jar" />
@@ -324,14 +332,14 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="copyPluginsToUpdateSite">
-		<attribute name="eclipseDir" />
+	<macrodef name="copypluginstoupdatesite">
+		<attribute name="eclipsedir" />
 		<sequential>
 
 			<local name="pluginsDir" />
-			<property name="pluginsDir" location="@{eclipseDir}/plugins" />
+			<property name="pluginsDir" location="@{eclipsedir}/plugins" />
 			<local name="featuresDir" />
-			<property name="featuresDir" location="@{eclipseDir}/features" />
+			<property name="featuresDir" location="@{eclipsedir}/features" />
 
 			<unzip src="${builtPluginsZip}" dest="${pluginsDir}">
 				<patternset>
@@ -347,7 +355,7 @@
 				<mapper type="flatten" />
 			</unzip>
 
-			<current:generatesitexml eclipsedir="@{eclipseDir}" />
+			<current:generatesitexml eclipsedir="@{eclipsedir}" />
 
 		</sequential>
 

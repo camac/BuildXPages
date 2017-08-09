@@ -1,0 +1,22 @@
+=== copypluginstoupdatesite
+
+[NOTE]
+====
+This task does not refer to copying an NSF update site, this task is for copying to an update site on the filesystem
+====
+
+After building plugins, sometimes you want to put them in an update site on the filesystem. This task will copy the plugins to your target update site, and also generate the site xml.
+
+==== Properties
+
+[horizontal]
+builtPluginsZip:: the zip file of the built plugins after headless build
+
+==== Attributes
+
+[horizontal]
+eclipsedir:: The root folder that contains the plugins and features directory. I call it eclipse directory because often you will find it in the structure ../something/**eclipse**/plugins and ../something/**eclipse**/features
+
+==== Example
+
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=copypluginstoupdatesite]

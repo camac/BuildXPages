@@ -1,0 +1,8 @@
+== Build4XPages Designer plugin
+
+This project provides a plugin that is installed to Domino Designer. The plugin runs a 'server' which waits for instructions that are issued by teh build tasks. For example an instruction to build an NSF, a request to shutdown the designer
+
+=== Installation
+
+Obtain the latest version of the BuildXPages project from the https://github.com/camac/BuildXPages/releases[projects releases page^]
+and install the *com.gregorbyte.designer.headless.updatesite*  update site to Domino Designer using the instructions in link:howto_installpluginsdesigner.html[How to Install Plugins to Domino Designer]

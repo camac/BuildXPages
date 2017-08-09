@@ -13,3 +13,5 @@ hs_err_pid*
 com.gregorbyte.buildxpages.ant/testgen/
 XPagesCI/
 buildDirectory/
+demo/buildnsf/odp/
+demo/buildnsf/odperror/

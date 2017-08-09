@@ -1,0 +1,15 @@
+=== controlhttp
+
+The controlhttp task is used to control a Domino Server's http tasks.
+It ultimately just issues a console command to the domino console.
+
+==== Attributes
+
+[horizontal]
+server:: The server that you are controlling
+action:: start|stop|restart
+
+
+==== Example
+
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=controlhttp]

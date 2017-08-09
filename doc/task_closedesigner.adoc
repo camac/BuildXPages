@@ -1,0 +1,12 @@
+=== closedesigner
+
+This task connects to the Headless Designer Plugin and instructs it to shutdown.
+
+==== Attributes
+
+[horizontal]
+port:: The port that the Headless Designer Plugin is running on. Default = 8282
+
+==== Example
+
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=closedesigner]

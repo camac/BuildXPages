@@ -1,0 +1,29 @@
+== BuildXPages Ant Tasks
+
+=== What is Ant?
+
+Apache Ant is a tool which you can use to automate repetitive steps. Ant has access to many commonly used steps such as manipluation of files in the filesystem (copy, move, delete, unzip etc.) and more complex tasks such as compiling java, running programs.
+
+BuildXPages provides Ant with some custom tasks that are useful in the Build and Deployment process of XPages applications and XPages Plugins.
+
+BuildXPages provides tasks related to
+
+<<TasksDeployingNSF,Deploying NSFs to a Server>>
+
+<<TasksPlugin,Building and Deploying Plugins>>
+
+<<TasksDesigner,Interacting with Domino Designer for Building NSFs>>
+
+<<TasksServer,Controlling a Domino Server>>
+
+[[TasksDeployingNSF]]
+include::tasks_nsf.adoc[]
+
+[[TasksPlugin]]
+include::tasks_plugin.adoc[]
+
+[[TasksDesigner]]
+include::tasks_designer.adoc[]
+
+[[TasksServer]]
+include::tasks_server.adoc[]
