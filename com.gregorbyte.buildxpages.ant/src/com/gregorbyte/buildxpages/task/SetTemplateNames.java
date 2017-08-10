@@ -9,56 +9,57 @@ import com.sun.jna.ptr.NativeLongByReference;
 public class SetTemplateNames extends AbstractBxTask {
 
 	public static final String FIELD_TITLE = "$Title";
-	
+
 	private String server = null;
 	private String dbPath = null;
-	
-	private boolean modifyInherit 	= false;
-	private boolean inherit 		= false;
-	private String inheritFrom 		= null;
-	
-	private boolean modifyMaster 	= false;
-	private boolean isMaster 		= false;
-	private String masterName 		= null;
-	
+
+	private boolean modifyInherit = false;
+	private boolean inherit = false;
+	private String inheritFrom = null;
+
+	private boolean modifyMaster = false;
+	private boolean isMaster = false;
+	private String masterName = null;
+
 	public SetTemplateNames(String server, String dbPath) {
 		this.server = server;
 		this.dbPath = dbPath;
 	}
-	
+
 	public SetTemplateNames clearMaster() {
-		this.modifyMaster 	= true;
-		this.isMaster 		= false;
-		this.masterName		= null;
+		this.modifyMaster = true;
+		this.isMaster = false;
+		this.masterName = null;
 		return this;
 	}
-	
+
 	public SetTemplateNames setAsMaster(String masterName) {
-		this.modifyMaster 	= true;
-		this.isMaster 		= true;
-		this.masterName 	= masterName;
+		this.modifyMaster = true;
+		this.isMaster = true;
+		this.masterName = masterName;
 		return this;
 	}
-	
+
 	public SetTemplateNames clearInherit() {
-		this.modifyInherit 	= true;
-		this.inherit 		= false;
-		this.inheritFrom 	= null;
+		this.modifyInherit = true;
+		this.inherit = false;
+		this.inheritFrom = null;
 		return this;
 	}
-	
+
 	public SetTemplateNames setInheritFrom(String inheritFrom) {
-		this.modifyInherit 	= true;
-		this.inherit		= true;
-		this.inheritFrom 	= inheritFrom;
+		this.modifyInherit = true;
+		this.inherit = true;
+		this.inheritFrom = inheritFrom;
 		return this;
 	}
-	
+
 	@Override
 	protected void doTask() {
 
-		if (!(modifyInherit || modifyMaster)) return;
-		
+		if (!(modifyInherit || modifyMaster))
+			return;
+
 		NotesNativeLibrary notes = NotesNativeLibrary.SYNC_INSTANCE;
 
 		IntByReference dbHandle = new IntByReference();
@@ -84,7 +85,7 @@ public class SetTemplateNames extends AbstractBxTask {
 
 		try {
 
-			String path = this.pathNetConstruct(this.server, this.dbPath);			
+			String path = this.pathNetConstruct(this.server, this.dbPath);
 
 			errorint = notes.NSFDbOpen(path, dbHandle);
 			checkError(errorint);
@@ -93,38 +94,35 @@ public class SetTemplateNames extends AbstractBxTask {
 			errorint = notes.NSFDbInfoGet(dbHandle.getValue(), db_info);
 			checkError(errorint);
 
-			notes.NSFDbInfoParse(db_info.getValue(), (short) 0, parsed,
-					(short) 128);
+			notes.NSFDbInfoParse(db_info.getValue(), (short) 0, parsed, (short) 128);
 			checkError(errorint);
 
-			if (modifyMaster && isMaster)
-				notes.NSFDbInfoModify(db_info, INFOPARSE_CLASS, masterName);
+			if (modifyMaster) {
+				if (isMaster) {
+					notes.NSFDbInfoModify(db_info, INFOPARSE_CLASS, masterName);
+				} else {
+					notes.NSFDbInfoModify(db_info, INFOPARSE_CLASS, null);
+				}
+			}
 
-			// TODO clear master
-			if (modifyMaster && !isMaster)
-				System.out.println("TODO whatever it takes to clear master");
-				
+			if (modifyInherit) {
+				if (inherit) {
+					notes.NSFDbInfoModify(db_info, INFOPARSE_DESIGN_CLASS, inheritFrom);
+				} else {
+					notes.NSFDbInfoModify(db_info, INFOPARSE_DESIGN_CLASS, null);
+				}
+			}
 
-			if (modifyInherit && inherit)
-				notes.NSFDbInfoModify(db_info, INFOPARSE_DESIGN_CLASS, inheritFrom);
-			
-			// TODO clear inherit
-			if (modifyInherit && !inherit)
-				System.out.println("TODO whatever it takes to clear inherit");
-
-			errorint = notes.NSFDbInfoSet(dbHandle.getValue(),
-					db_info.getValue());
+			errorint = notes.NSFDbInfoSet(dbHandle.getValue(), db_info.getValue());
 			checkError(errorint);
 
 			// Update the Note
-			errorint = notes.NSFNoteOpen(dbHandle.getValue(), note_id,
-					open_flags, note_handle);
+			errorint = notes.NSFNoteOpen(dbHandle.getValue(), note_id, open_flags, note_handle);
 			checkError(errorint);
 			noteOpen = true;
 
-			errorint = notes.NSFItemInfo(note_handle.getValue(), titleField,
-					item_name_length, Pointer.NULL, Pointer.NULL, Pointer.NULL,
-					Pointer.NULL);
+			errorint = notes.NSFItemInfo(note_handle.getValue(), titleField, item_name_length, Pointer.NULL,
+					Pointer.NULL, Pointer.NULL, Pointer.NULL);
 			checkError(errorint);
 
 			// see
@@ -134,8 +132,7 @@ public class SetTemplateNames extends AbstractBxTask {
 
 			/* Update the FIELD_TITLE ("$TITLE") field if present */
 			short infoLength = (short) db_info.getValue().length();
-			errorint = notes.NSFItemSetText(note_handle.getValue(),
-					FIELD_TITLE, db_info.getValue(), infoLength);
+			errorint = notes.NSFItemSetText(note_handle.getValue(), FIELD_TITLE, db_info.getValue(), infoLength);
 			checkError(errorint);
 
 			errorint = notes.NSFNoteUpdate(note_handle.getValue(), (short) 0);
@@ -163,7 +160,7 @@ public class SetTemplateNames extends AbstractBxTask {
 				checkError(errorint);
 				dbOpen = false;
 			}
-			
+
 		}
 
 	}

@@ -39,9 +39,23 @@ public class RefreshDbDesign extends Task {
 	@Override
 	public void execute() throws BuildException {
 		
-		log(this.server);
-		log(this.database);
-		log(this.templateserver);
+		String dbpath = null;
+		String servername = null;
+		
+		if (this.server  == null) {
+			dbpath = "local!!" + this.database;
+		} else {
+			dbpath = this.server + "!!" + this.database;
+		}
+		
+		if (this.templateserver == null) {
+			servername = "local";
+		} else {
+			servername = this.templateserver;
+		}
+		
+		log("Refreshing Design of Db : " + dbpath);
+		log("Refreshing From Server  : " + servername);		
 				
 		com.gregorbyte.buildxpages.task.RefreshDbDesign task = new com.gregorbyte.buildxpages.task.RefreshDbDesign(
 				this.database);
