@@ -145,7 +145,21 @@
 	<target name="docs">
 
 		<taskdef uri="antlib:org.asciidoctor.ant" resource="org/asciidoctor/ant/antlib.xml" classpath="lib/asciidoctor-ant.jar" />
-		<asciidoctor:convert sourceDirectory="doc" outputDirectory="docs" backend="html5" relativebasedir="true" safemode="unsafe">
+		<asciidoctor:convert sourceDirectory="doc" outputDirectory="docs" backend="html5" 
+			relativebasedir="true" safemode="unsafe" sourceHighlighter="highlightjs">
+
+			<attribute key="stylesdir" value="stylesheets">
+			</attribute>
+			<attribute key="stylesheet" value="readthedocs.css">
+			</attribute>
+
+			<!-- <resource dir="src/asciidoc/images"/> -->
+
+		</asciidoctor:convert>
+
+		<asciidoctor:convert sourceDirectory="doc" sourceDocumentName="index.adoc" 
+			outputDirectory="docs" backend="pdf" 
+			relativebasedir="true" safemode="unsafe" sourceHighlighter="coderay">
 
 			<attribute key="stylesdir" value="stylesheets">
 			</attribute>
@@ -155,6 +169,7 @@
 
 		</asciidoctor:convert>
 
+		
 		<delete dir="docs/images" />
 
 		<copy todir="docs/images">
