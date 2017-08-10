@@ -9,3 +9,9 @@ I recommend installing a 32-bit JDK, because IBM Notes is 32-bit
 Set JAVA_HOME
 
 If you see 'Unable to locate tools.jar'ant
+
+
+DORY has NOTES_PROGDIR on the path
+but listed as E:\Program Files etc
+
+did we try using Notes?

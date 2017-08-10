@@ -1,3 +1,23 @@
 == Deploying an NSF
 
-TODO
+Building an NSF is one thing, but it is no good if you don't get it into the live system! Let's have a look at how we can acheive that.
+
+There is more than one way to deploy an NSF, not everyone is going to do it the same way. This tutorial will hopefully demonstrate some of the tasks you could use to acheive your desired deployment.
+
+=== Scenario 1 - Super Simple
+
+After building an NSF, you simply want to make it available to someone who will perform manual deployment.
+
+Automated deployment is not for everyone and maybe manual deployement
+
+=== Scenario 2 - Refresh an Existing Template
+
+This is my preferred option.
+
+* I have 'local' nsfs located on the headless build machine
+* I have a Production Template
+* I have one or more Production Applications
+
+I set the 'master template' name of the built nsf, and the inherit of the template
+I refresh the production template
+I either allow the design task to run overnight, or if doing an immediate deployment, I issue the load design task console command

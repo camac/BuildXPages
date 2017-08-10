@@ -721,6 +721,7 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 <p>These Tutorials are designed to demonstrate the different tasks that are available.
 It is intended that these tutorials can be used to verify that everything is working correctly, and you can then take the build files for these tutorials and customise them for your own projects.</p>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 <div class="sect1">
@@ -770,7 +771,7 @@ Targets can be configured to depend on another target, so that means executing a
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;target name="clean"&gt;
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="clean"&gt;
 		&lt;delete dir="odp"/&gt;
 		&lt;delete dir="odperror"/&gt;
 	&lt;/target&gt;
@@ -805,15 +806,15 @@ This target is listed as the default target in the root element of the build.xml
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;target name="build" depends="init"&gt;
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="build" depends="init"&gt;
 
 		&lt;bxp:checkDesignerRunning/&gt;
 
 		&lt;!-- We assign the .project file path to a property using the 'location' attribute,
 		this way the property will be expanded to the absolute path of the .project file--&gt;
-		&lt;property name="odp.project" location="odp/.project" /&gt;
+		&lt;property name="odp.projectfile" location="odp/.project" /&gt;
 
-		&lt;bxp:buildnsf project="${odp.project}" projectname="BuildXPagesDemoNSF" nsf="temp\BuildXPagesDemo.nsf" /&gt;
+		&lt;bxp:buildnsf project="${odp.projectfile}" projectname="${odp.projectname}" nsf="${nsf.filepath}" /&gt;
 
 	&lt;/target&gt;</code></pre>
 </div>
@@ -850,7 +851,7 @@ The build process will then begin, and your nsf will (hopefully) be built into y
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\buildnsf\build.xml
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\buildnsf\build.xml
 
 clean:
    [delete] Deleting directory V:\Projects\BuildXPages\demo\buildnsf\odp
@@ -893,7 +894,7 @@ This should cause an error when Designer tries to build the XPages that use thos
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">	&lt;target name="buildfail" depends="init"&gt;
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="buildfail" depends="init"&gt;
 
 		&lt;bxp:checkDesignerRunning/&gt;
 
@@ -922,7 +923,7 @@ This should cause an error when Designer tries to build the XPages that use thos
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\buildnsf\build.xml
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\buildnsf\build.xml
 
 clean:
    [delete] Deleting directory V:\Projects\BuildXPages\demo\buildnsf\odp
@@ -954,26 +955,59 @@ If you were to look in Designer you would see the problem there too.</p>
 <img src="images/NSFDemoError.JPG" alt="NSFDemoError">
 </div>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_deploying_an_nsf">Deploying an NSF</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_deploying_an_nsf">Deploying an NSF</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>Building an NSF is one thing, but it is no good if you don&#8217;t get it into the live system! Let&#8217;s have a look at how we can acheive that.</p>
+</div>
+<div class="paragraph">
+<p>There is more than one way to deploy an NSF, not everyone is going to do it the same way. This tutorial will hopefully demonstrate some of the tasks you could use to acheive your desired deployment.</p>
+</div>
+<div class="sect3">
+<h4 id="_scenario_1_super_simple">Scenario 1 - Super Simple</h4>
+<div class="paragraph">
+<p>After building an NSF, you simply want to make it available to someone who will perform manual deployment.</p>
+</div>
+<div class="paragraph">
+<p>Automated deployment is not for everyone and maybe manual deployement</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_scenario_2_refresh_an_existing_template">Scenario 2 - Refresh an Existing Template</h4>
+<div class="paragraph">
+<p>This is my preferred option.</p>
 </div>
-<div class="sect1">
-<h2 id="_building_features_and_plugins">Building Features and Plugins</h2>
-<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>I have 'local' nsfs located on the headless build machine</p>
+</li>
+<li>
+<p>I have a Production Template</p>
+</li>
+<li>
+<p>I have one or more Production Applications</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>I set the 'master template' name of the built nsf, and the inherit of the template
+I refresh the production template
+I either allow the design task to run overnight, or if doing an immediate deployment, I issue the load design task console command</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_building_features_and_plugins">Building Features and Plugins</h3>
 <div class="paragraph">
 <p>In this sample we build the plugins for a feature, and prepare an Update Site that can be used to deploy to Domino or Domino Designer</p>
 </div>
-<div class="sect2">
-<h3 id="_first_time_setup">First Time Setup</h3>
+<div class="sect3">
+<h4 id="_first_time_setup">First Time Setup</h4>
 <div class="paragraph">
 <p>Before we build plugins, we need to make sure we are set up properly</p>
 </div>
@@ -991,8 +1025,8 @@ If you were to look in Designer you would see the problem there too.</p>
 </ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_configure_your_notes_and_domino_program_directories">Configure Your Notes and Domino Program Directories</h3>
+<div class="sect3">
+<h4 id="_configure_your_notes_and_domino_program_directories">Configure Your Notes and Domino Program Directories</h4>
 <div class="paragraph">
 <p>In order to run the build steps, we need to know where Notes and Domino are</p>
 </div>
@@ -1007,8 +1041,8 @@ If you were to look in Designer you would see the problem there too.</p>
 </ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_configure_eclipse_properties">Configure Eclipse Properties</h3>
+<div class="sect3">
+<h4 id="_configure_eclipse_properties">Configure Eclipse Properties</h4>
 <div class="paragraph">
 <p>The build script needs to know 3 things in order to build your plugins</p>
 </div>
@@ -1037,8 +1071,8 @@ In Newer versions of eclipse it will be located under your user home directory&#
 <p>If you don&#8217;t want to set them up as environment variables, you can specify them in the accompanying build.properties file</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_run_the_build">Run the Build!</h3>
+<div class="sect3">
+<h4 id="_run_the_build">Run the Build!</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1055,22 +1089,25 @@ In Newer versions of eclipse it will be located under your user home directory&#
 <div class="paragraph">
 <p>After the build is finished you should see a zip file in the demo/buildfeature/BuildXPages directory.</p>
 </div>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_deploying_plugins">Deploying Plugins</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_deploying_plugins">Deploying Plugins</h3>
 <div class="paragraph">
 <p>TODO</p>
 </div>
 </div>
 </div>
 </div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-09 23:03:20 AEST
+Last updated 2017-08-10 21:09:00 AEST
 </div>
 </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
 </body>
 </html>
