@@ -1,0 +1,80 @@
+<project name="BuildXPages Deploying NSF" xmlns:bxp="antlib:com.gregorbyte.buildxpages.ant">
+
+	<description>Demonstration of Tasks Involved when Deploying an NSF</description>
+
+	<property file="build.properties" />
+
+	<property environment="env" />
+	<property name="notesProgDir" location="${env.NOTES_PROG}" />
+	
+	<!-- tag::settemplatenames[] -->
+	<target name="setmaster">
+		
+		<fail message="Please Specify NSF Filepath" unless="nsf.filepath"/>
+		<fail message="Please Specify the Master Template Name" unless="nsf.mastername"/>
+		
+		<bxp:settemplatenames database="${nsf.filepath}" mastername="${nsf.mastername}" />
+		
+	</target>
+
+	<target name="clearmaster">
+		
+		<fail message="Please Specify NSF Filepath" unless="nsf.filepath"/>
+		<bxp:settemplatenames database="${nsf.filepath}" clearmastername="true" />
+		
+	</target>	
+	
+	<target name="setinheritfrom">
+		
+		<fail message="Please Specify NSF Filepath" unless="nsf.filepath"/>
+		<fail message="Please Specify the Inherit Template Name" unless="nsf.inheritfrom"/>
+		
+		<bxp:settemplatenames database="${nsf.filepath}" inheritfrom="${nsf.inheritfrom}" />
+		
+	</target>
+
+	<target name="clearinheritfrom">
+		
+		<fail message="Please Specify NSF Filepath" unless="nsf.filepath"/>
+		<bxp:settemplatenames database="${nsf.filepath}" clearinheritfrom="true" />
+		
+	</target>	
+
+	<!-- end::settemplatenames[] -->
+
+	<target name="copydatabase">
+
+		<fail message="Please Specify Source NSF Filepath" unless="nsf.filepath"/>
+		<fail message="Please Specify Destination NSF Filepath" unless="nsf.production.filepath"/>
+		
+		<bxp:copynsf srcfilepath="${nsf.filepath}" dstfilepath="${nsf.production.filepath}" />
+		
+	</target>
+	
+	<target name="linktemplates">
+	
+		<fail message="Please Specify NSF Filepath" unless="nsf.filepath"/>
+		<fail message="Please Specify Production NSF Filepath" unless="nsf.production.filepath"/>
+		<fail message="Please Specify the Master Template Name" unless="nsf.mastername"/>
+		
+		<bxp:settemplatenames database="${nsf.filepath}" mastername="${nsf.mastername}" />
+		<bxp:settemplatenames database="${nsf.production.filepath}" inheritfrom="${nsf.mastername}" />
+
+	
+	</target>
+	
+	<target name="refreshtemplate">
+	
+		<bxp:refreshdbdesign database="${nsf.production.filepath}"/>
+	
+	</target>
+
+	<target name="clean">
+	
+		<bxp:deletensf filename="${nsf.production.filepath}"/>
+		
+	</target>
+	
+
+
+</project>
