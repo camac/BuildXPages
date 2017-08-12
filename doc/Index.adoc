@@ -52,10 +52,10 @@ include::tasks.adoc[]
 If you have found a bug, can't understand something, want some advice then.
 Submit an Issue using the https://github.com/camac/BuildXPages/issues[Project's Github Issues page] and I will get back to you!
 
-== Feedback :) 
+== Feedback Welcome!
 
-Over the past couple of years lots of trial, error and research has gone into getting this project to where it is (for my own benefit!) 
+Over the past couple of years, lots of trial, error and research has gone into getting this project to where it is (for my own benefit!) 
 
-I recently decided to spend some further time to clean it all up and write documentation so it is easily available to the rest of the community. It has taken about a month to get all this done, so if this actually helps anyone else I would love to hear it! 
+I recently decided to spend some further time to clean it all up and write documentation so it is easily available to the rest of the community. It has taken about a month to get all this done, so if this actually helps anyone else I would love to hear about it so I know it was worth the effort! 
 
 If this project helps you, if you have suggestions anything just send me a tweet at @gregorbyte or put through an issue in the https://github.com/camac/BuildXPages/issues[Project's Github Issues page]
