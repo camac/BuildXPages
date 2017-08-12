@@ -708,6 +708,11 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 
 #footer-text { color: #eee; font-size: 0.8em; text-align: center; }
 
+/* Added by Cameron */
+div.ulist { padding-left: 1.25em; }
+
+div.olist { padding-left: 1.25em; }
+
 </style>
 </head>
 <body class="article">
@@ -722,11 +727,8 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 It is intended that these tutorials can be used to verify that everything is working correctly, and you can then take the build files for these tutorials and customise them for your own projects.</p>
 </div>
 <div style="page-break-after: always;"></div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_building_an_nsf">Building an NSF</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_building_an_nsf">Building an NSF</h3>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -751,8 +753,8 @@ It is intended that these tutorials can be used to verify that everything is wor
 <p>The files for this Demonstration are in the <strong>demo/buildnsf</strong> folder of the Build4XPages distribution files. The sample On-Disk Project is located within the tutorial folder as <strong>sampleodp</strong>.
 The Application has a Custom Control and an XPage which uses that custom control.</p>
 </div>
-<div class="sect2">
-<h3 id="_build_xml">build.xml</h3>
+<div class="sect3">
+<h4 id="_build_xml">build.xml</h4>
 <div class="paragraph">
 <p>Our 'recipe' for the build is contained in the <strong>build.xml</strong> file located in the <strong>demo/buildnsf</strong> directory. <strong>build.xml</strong> is the default name for an Ant build file, you can call it another filename but if so you would need to specify extra command line argument <code>-b myfile.xml</code></p>
 </div>
@@ -795,8 +797,8 @@ Targets can be configured to depend on another target, so that means executing a
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_run_a_successful_build">Run a Successful Build</h3>
+<div class="sect3">
+<h4 id="_run_a_successful_build">Run a Successful Build</h4>
 <div class="paragraph">
 <p>Within this <strong>build.xml</strong> file is a target called <strong>build</strong>. This will build the NSF that should not have any problems.
 This target is listed as the default target in the root element of the build.xml file (not shown here).</p>
@@ -827,8 +829,8 @@ This target is listed as the default target in the root element of the build.xml
 <pre>clean -&gt; init -&gt; build</pre>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_to_run_the_build">To run the Build</h4>
+<div class="sect4">
+<h5 id="_to_run_the_build">To run the Build</h5>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -880,8 +882,8 @@ Total time: 2 seconds</code></pre>
 <p>Also, in your domino Designer workspace you should see a new NSF with filepath temp\BuildXPagesDemo.nsf</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_run_a_build_with_errors">Run a Build with Errors</h4>
+<div class="sect4">
+<h5 id="_run_a_build_with_errors">Run a Build with Errors</h5>
 <div class="paragraph">
 <p>Let&#8217;s see an example of running an NSF Build that results in some errors. To do this we will use the same sample On-Disk Project, but before we run the build we will sneakily delete the custom controls.
 This should cause an error when Designer tries to build the XPages that use those missing custom controls.</p>
@@ -956,6 +958,7 @@ If you were to look in Designer you would see the problem there too.</p>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1103,7 +1106,7 @@ In Newer versions of eclipse it will be located under your user home directory&#
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-10 21:09:00 AEST
+Last updated 2017-08-12 21:31:43 AEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">

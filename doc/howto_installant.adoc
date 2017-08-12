@@ -1,17 +1,13 @@
-== Install a JDK
+==== Install Ant
 
-Ant is a Java Program, and 
+Installing Ant is a matter of downloading and extracting ant
 
-Google Java JDK
+If < FP8 use Ant 1.9
 
-I recommend installing a 32-bit JDK, because IBM Notes is 32-bit
-
-Set JAVA_HOME
+Set JAVA_HOME to Notes JRE
 
 If you see 'Unable to locate tools.jar'ant
 
-
 DORY has NOTES_PROGDIR on the path
 but listed as E:\Program Files etc
-
 did we try using Notes?

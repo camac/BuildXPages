@@ -708,6 +708,11 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 
 #footer-text { color: #eee; font-size: 0.8em; text-align: center; }
 
+/* Added by Cameron */
+div.ulist { padding-left: 1.25em; }
+
+div.olist { padding-left: 1.25em; }
+
 </style>
 </head>
 <body class="article">
@@ -721,35 +726,219 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 <p>In order to use the BuildXPages there is a little bit of setup to be done.
 This section will hopefully guide you through the process. Please let me know via an Issue on the Github Project page if anything was left out.</p>
 </div>
-<div class="sect2">
-<h3 id="_first_time_setup_tasks">First Time Setup Tasks</h3>
+<div class="sect3">
+<h4 id="_install_ibm_notes_designer">Install IBM Notes/Designer</h4>
+<div class="paragraph">
+<p>I won&#8217;t tell you how to do that because you should know by now :)</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_install_a_jdk_java_development_kit">Install a JDK (Java Development Kit)</h4>
+<div class="paragraph">
+<p>I recommend installing a 32-bit JDK, because IBM Notes is 32-bit</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You may actually be able to use the JDK in IBM Notes!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_install_ant">Install Ant</h4>
+<div class="paragraph">
+<p>Installing Ant is a matter of downloading and extracting ant</p>
+</div>
+<div class="paragraph">
+<p>If &lt; FP8 use Ant 1.9</p>
+</div>
+<div class="paragraph">
+<p>Set JAVA_HOME to Notes JRE</p>
+</div>
+<div class="paragraph">
+<p>If you see 'Unable to locate tools.jar&#8217;ant</p>
+</div>
+<div class="paragraph">
+<p>DORY has NOTES_PROGDIR on the path
+but listed as E:\Program Files etc
+did we try using Notes?</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_install_the_buildxpages_ant_library">Install the BuildXPages Ant Library</h4>
+<div class="paragraph">
+<p>In order for Ant to be able to use the BuildXPages Library, the <strong>BuildXPages.jar</strong> and <strong>jna-4.1.0.jar</strong> libraries must be made available to it.</p>
+</div>
+<div class="paragraph">
+<p>You can make the library available to every ant project, or if you prefer you can make the library available just each individual project that needs it.</p>
+</div>
+<div class="sect4">
+<h5 id="_installing_system_wide">Installing System-wide</h5>
+<div class="paragraph">
+<p>When ANT runs, there are 2 locations in which it will check for additional libraries. You should put BuildXPages.jar and JNA</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">${user.home}/.ant/lib</dt>
+<dd>
+<p>Libraries installed here will be available for the user who&#8217;s home directory it is.
+For example my user directory on windows is <strong>C:\Users\Cameron\.ant\lib</strong>
+The Benefit of installing libraries here is that they will be available for both Ant in eclipse, and ant on the command line.</p>
+</dd>
+<dt class="hdlist1">ANT_HOME/lib</dt>
+<dd>
+<p>Libraries installed here will be available for all users. For example on windows, if you have installed ant to <strong>C:\ant</strong>, then any libraries present in the <strong>C:\ant\lib</strong> directory will be available to be used.</p>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you are trying to create the <strong>.ant</strong> directory in your user folder using Windows Explorer, it may not let you. So you need to use the command line, navigate to your user directory, and then issue the command <code>mkdir .ant</code></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_installing_for_a_single_project">Installing for a Single project</h5>
+<div class="paragraph">
+<p>If you don&#8217;t want to install to the global library locations, you can just make it available for your single project.</p>
+</div>
+<div class="paragraph">
+<p>Create a directory in your project called lib
+Put the BuildXPages.jar in that location</p>
+</div>
+<div class="paragraph">
+<p>when running ant, you will need to specify the library location with -lib command</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">&lt;taskdef
+	uri="antlib:com.gregorbyte.buildxpages.ant"
+	resource="com/gregorbyte/buildxpages/ant/antlib.xml"
+	classpath="lib/BuildXPagesAntLib.jar"&gt;&lt;/taskdef&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_install_eclipse_plugin_building_only">Install Eclipse (Plugin Building only)</h4>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You only need to install Eclipse if you are <strong>Building plugins</strong>. It is not required for Building/Deploying NSFs or Deploying Plugins</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Go to eclipse.org and download 'Eclipse for RCP and RAP Developers'
+Follow the instructions!</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_environment_variables">Environment Variables</h4>
+<div class="paragraph">
+<p>NOTES_PROGDIR
+NOTES_DATADIR
+DOMINO_PROGDIR
+DOMINO_DATADIR
+ECLIPSE_BASE</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>On windows, if your Notes/Domino is within a directory with spaces e.g. 'Program Files (x86)' it may be a good idea to use the 8.3 format of that directory e.g. 'Progra~2'</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Once a console prompt has opened up, it has loaded it&#8217;s environment variables and will not receive any new or modified variables. So if you have added or changed environment variables, you will need to start a new console prompt to see the effect.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_install_the_headless_designer_plugin_to_notes_designer">Install the Headless Designer Plugin to Notes/Designer</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_removing_a_password_from_notes_id">Removing a Password from Notes ID</h4>
+<div class="paragraph">
+<p>In order for the Notes C API tasks to run smoothly, the ID file on the computer needs to have no password.</p>
+</div>
+<div class="paragraph">
+<p>It goes without saying that this is a security risk but you can decide for yourself if you feel you can secure the computer so that nobody can access it.</p>
+</div>
+<div class="paragraph">
+<p>Alternatively, you can ensure that IBM Notes is running, in which case the automated tasks will <em>hopefully</em> not be prompted for a password.</p>
+</div>
+<div class="sect4">
+<h5 id="_to_remove_the_password">To Remove the Password</h5>
+<div class="paragraph">
+<p>The ID file that you have been issued by an administrated must be created with settings that allow the password to be removed.</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Install IBM Notes/Designer (This is assumed!)</p>
+<p>Open IBM Notes, and make sure you are logged in with the user.id</p>
 </li>
 <li>
-<p>Install a JDK</p>
+<p>File &#8594; Security &#8594; User Security</p>
 </li>
 <li>
-<p>Install Ant</p>
+<p>Click Change Password</p>
 </li>
 <li>
-<p>Install the BuildXPages ANT Task Library</p>
-</li>
-<li>
-<p>Install Eclipse</p>
-</li>
-<li>
-<p>Setup Environment Variables</p>
-</li>
-<li>
-<p>Install the Headless Designer Plugin to Notes/Designer</p>
-</li>
-<li>
-<p>Remove the Password from the Notes ID</p>
+<p>If you don&#8217;t see a 'No Password' button then you cannot remove the password because of policy or something</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>If you can&#8217;t remove the password, then make sure you will always keep IBM Notes running and logged in, and that you tick the <strong>Don&#8217;t Prompt for a password from other Notes-based programs (reduces security)</strong></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/images/NotesDontPromptPasswordOthers.JPG" alt="NotesDontPromptPasswordOthers">
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -757,7 +946,7 @@ This section will hopefully guide you through the process. Please let me know vi
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-09 23:06:31 AEST
+Last updated 2017-08-12 23:13:16 AEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">

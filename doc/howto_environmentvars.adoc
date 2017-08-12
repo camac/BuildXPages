@@ -1,0 +1,17 @@
+==== Environment Variables
+
+NOTES_PROGDIR
+NOTES_DATADIR
+DOMINO_PROGDIR
+DOMINO_DATADIR
+ECLIPSE_BASE
+
+[IMPORTANT]
+====
+On windows, if your Notes/Domino is within a directory with spaces e.g. 'Program Files (x86)' it may be a good idea to use the 8.3 format of that directory e.g. 'Progra~2'
+====
+
+[TIP]
+====
+Once a console prompt has opened up, it has loaded it's environment variables and will not receive any new or modified variables. So if you have added or changed environment variables, you will need to start a new console prompt to see the effect.
+====

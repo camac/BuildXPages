@@ -6,3 +6,33 @@ This project provides a plugin that is installed to Domino Designer. The plugin 
 
 Obtain the latest version of the BuildXPages project from the https://github.com/camac/BuildXPages/releases[projects releases page^]
 and install the *com.gregorbyte.designer.headless.updatesite*  update site to Domino Designer using the instructions in link:howto_installpluginsdesigner.html[How to Install Plugins to Domino Designer]
+
+=== Starting and Stopping the Headless Server
+
+By Default, the headless server does auto-started when you start Domino Designer (you can change this, see <<Preferences>>), so you must know how to start and stop it!
+
+You can find the Headless toolbar, and you will see one button grayed out, and one coloured button.
+The green button is the 'start' button, so if you can see it, that means the server is not running.
+
+image::..\images\DesignerHeadlessToolbarStartButton.JPG[]
+
+If you click the green button it will start the server, and you will see the message
+
+image::..\images\DesignerHeadlessServerStarted.JPG[]
+
+You should then be able to see the red button
+
+image::..\images\DesignerHeadlessToolbarStopButton.JPG[]
+
+and if you click the red button you will stop the headless server and see the message
+
+image::..\images\DesignerHeadlessServerStopped.JPG[]
+
+[[Preferences]]
+=== Preferences
+
+To access the preferences for Headless Server, goto File -> Preferences -> Headless
+
+You can set the Headless Server to auto-start when Domino Designer starts, and also change the Port Number that it will be listening on.
+
+image::..\images\DesignerHeadlessPreferences.JPG[]

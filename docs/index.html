@@ -5,7 +5,8 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Build4Xpages</title>
+<meta name="author" content="Cameron Gregor">
+<title>BuildXPages</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -708,22 +709,66 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 
 #footer-text { color: #eee; font-size: 0.8em; text-align: center; }
 
+/* Added by Cameron */
+div.ulist { padding-left: 1.25em; }
+
+div.olist { padding-left: 1.25em; }
+
 </style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Build4Xpages</h1>
+<h1>BuildXPages</h1>
+<div class="details">
+<span id="author" class="author">Cameron Gregor</span><br>
+<span id="email" class="email">camerongregor.com</span><br>
+</div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_introduction">Introduction</a>
 <ul class="sectlevel2">
-<li><a href="#_getting_started">Getting Started</a></li>
-<li><a href="#_tutorials">Tutorials</a></li>
+<li><a href="#_what_can_i_use_it_for">What Can I use it for?</a></li>
+<li><a href="#_what_does_the_project_provide">What does the project provide?</a></li>
+</ul>
+</li>
+<li><a href="#_getting_started">Getting Started</a>
+<ul class="sectlevel3">
+<li><a href="#_install_ibm_notes_designer">Install IBM Notes/Designer</a></li>
+<li><a href="#_install_a_jdk_java_development_kit">Install a JDK (Java Development Kit)</a></li>
+<li><a href="#_install_ant">Install Ant</a></li>
+<li><a href="#_install_the_buildxpages_ant_library">Install the BuildXPages Ant Library</a></li>
+<li><a href="#_install_eclipse_plugin_building_only">Install Eclipse (Plugin Building only)</a></li>
+<li><a href="#_environment_variables">Environment Variables</a></li>
+<li><a href="#_install_the_headless_designer_plugin_to_notes_designer">Install the Headless Designer Plugin to Notes/Designer</a></li>
+<li><a href="#_removing_a_password_from_notes_id">Removing a Password from Notes ID</a></li>
+</ul>
+</li>
+<li><a href="#_build4xpages_designer_plugin">Build4XPages Designer plugin</a>
+<ul class="sectlevel2">
+<li><a href="#_installation">Installation</a></li>
+<li><a href="#_starting_and_stopping_the_headless_server">Starting and Stopping the Headless Server</a></li>
+<li><a href="#Preferences">Preferences</a></li>
+</ul>
+</li>
+<li><a href="#_tutorials">Tutorials</a>
+<ul class="sectlevel2">
 <li><a href="#_building_an_nsf">Building an NSF</a></li>
-<li><a href="#_buildxpages_ant_tasks">BuildXPages Ant Tasks</a></li>
+<li><a href="#_deploying_an_nsf">Deploying an NSF</a></li>
+<li><a href="#_building_features_and_plugins">Building Features and Plugins</a></li>
+<li><a href="#_deploying_plugins">Deploying Plugins</a></li>
+</ul>
+</li>
+<li><a href="#_buildxpages_ant_task_reference">BuildXPages Ant Task Reference</a>
+<ul class="sectlevel2">
 <li><a href="#TasksDeployingNSF">NSF Deployment Related Tasks</a></li>
 <li><a href="#TasksPlugin">Plugin Related Tasks</a></li>
 <li><a href="#TasksDesigner">Designer Related Tasks</a></li>
 <li><a href="#TasksServer">Server Related Ant Tasks</a></li>
+</ul>
+</li>
+<li><a href="#_having_trouble">Having Trouble?</a></li>
+<li><a href="#_feedback">Feedback :)</a></li>
 </ul>
 </div>
 </div>
@@ -733,57 +778,374 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 <div class="paragraph">
 <p><a href="https://github.com/camac/BuildXPages">BuildXPages GitHub Project</a></p>
 </div>
-<div class="paragraph">
-<p>Build4XPages is a collection of tools which aid in the Building and Deployment of XPages NSFs and XPages plugins.</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_introduction">Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>BuildXPages is a collection of tools which can aid in the Building and Deployment of XPages NSFs and XPages plugins.</p>
+</div>
+<div class="paragraph">
+<p>If you would like to automate some or all of your XPages Deployment then there might be something in here for you!</p>
+</div>
+<div class="sect2">
+<h3 id="_what_can_i_use_it_for">What Can I use it for?</h3>
+<div class="paragraph">
+<p>Some ideas of some tasks which this project can help you achieve</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Refreshing Database Designs</p>
+</li>
+<li>
+<p>Copying / Deleting Databases</p>
+</li>
+<li>
+<p>Configuring Database Template Inheritance</p>
+</li>
+<li>
+<p>Building NSFs from source code in an On-Disk Project</p>
+</li>
+<li>
+<p>Building Plugins and Features</p>
+</li>
+<li>
+<p>Deploying Plugins and Features to Servers</p>
+</li>
+<li>
+<p>Deploying Plugins and Features to Notes/Designer</p>
+</li>
+<li>
+<p>Starting / Stopping / Restarting Http Servers</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_getting_started">Getting Started</h3>
+<h3 id="_what_does_the_project_provide">What does the project provide?</h3>
+<div class="paragraph">
+<p>The Project contains a library of tasks that can be organised and executed by <a href="https://ant.apache.org/">Apache ANT</a>. Apache ANT is a build tool which helps you write instructions on how to automate tasks.</p>
+</div>
+<div class="paragraph">
+<p>If you haven&#8217;t used Ant before, don&#8217;t be scared! It is pretty simple once you get the hang of it.
+Yes there are other options, but Ant is well documented which makes it easier to understand.
+I have also provided some tutorials which should give you a feel for how it all works.</p>
+</div>
+<div class="paragraph">
+<p>Ant has access to many commonly used steps such as manipluation of files in the filesystem (copy, move, delete, unzip etc.) and more complex tasks such as compiling java, running programs.</p>
+</div>
+<div class="paragraph">
+<p>This project also includes a Plugin for Domino Designer which is used by the ANT task for building an NSF. The Plugin is basically an extension of the existing 'Headless Designer' system that was provided by IBM. The IBM Headless Designer system was a great start but could have used a little bit more love. There were a few annoyances, it was hard to tell when the build was finished, it was hard to tell that the build even started properly. There were some minor annoyances regarding project names and locations.
+The mechanism also involved writing a text 'command file', which was fed in when starting designer. This means each build would always have to starting designer, build and then shut it down. If designer did not shut down, then you couldn&#8217;t start it up again and weird things like that.</p>
+</div>
+<div class="paragraph">
+<p>So I decided to extend it and turn the functionality into a 'headless server'. This allow designer to remain open the whole time and listen for instructions from my ant tasks. If I need designer to restart and can tell it to shut down, and then start designer again and the 'headless server' starts again to wait for more instructions.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_getting_started">Getting Started</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>In order to use the BuildXPages there is a little bit of setup to be done.
 This section will hopefully guide you through the process. Please let me know via an Issue on the Github Project page if anything was left out.</p>
 </div>
 <div class="sect3">
-<h4 id="_first_time_setup_tasks">First Time Setup Tasks</h4>
+<h4 id="_install_ibm_notes_designer">Install IBM Notes/Designer</h4>
+<div class="paragraph">
+<p>I won&#8217;t tell you how to do that because you should know by now :)</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_install_a_jdk_java_development_kit">Install a JDK (Java Development Kit)</h4>
+<div class="paragraph">
+<p>I recommend installing a 32-bit JDK, because IBM Notes is 32-bit</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You may actually be able to use the JDK in IBM Notes!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_install_ant">Install Ant</h4>
+<div class="paragraph">
+<p>Installing Ant is a matter of downloading and extracting ant</p>
+</div>
+<div class="paragraph">
+<p>If &lt; FP8 use Ant 1.9</p>
+</div>
+<div class="paragraph">
+<p>Set JAVA_HOME to Notes JRE</p>
+</div>
+<div class="paragraph">
+<p>If you see 'Unable to locate tools.jar&#8217;ant</p>
+</div>
+<div class="paragraph">
+<p>DORY has NOTES_PROGDIR on the path
+but listed as E:\Program Files etc
+did we try using Notes?</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_install_the_buildxpages_ant_library">Install the BuildXPages Ant Library</h4>
+<div class="paragraph">
+<p>In order for Ant to be able to use the BuildXPages Library, the <strong>BuildXPages.jar</strong> and <strong>jna-4.1.0.jar</strong> libraries must be made available to it.</p>
+</div>
+<div class="paragraph">
+<p>You can make the library available to every ant project, or if you prefer you can make the library available just each individual project that needs it.</p>
+</div>
+<div class="sect4">
+<h5 id="_installing_system_wide">Installing System-wide</h5>
+<div class="paragraph">
+<p>When ANT runs, there are 2 locations in which it will check for additional libraries. You should put BuildXPages.jar and JNA</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">${user.home}/.ant/lib</dt>
+<dd>
+<p>Libraries installed here will be available for the user who&#8217;s home directory it is.
+For example my user directory on windows is <strong>C:\Users\Cameron\.ant\lib</strong>
+The Benefit of installing libraries here is that they will be available for both Ant in eclipse, and ant on the command line.</p>
+</dd>
+<dt class="hdlist1">ANT_HOME/lib</dt>
+<dd>
+<p>Libraries installed here will be available for all users. For example on windows, if you have installed ant to <strong>C:\ant</strong>, then any libraries present in the <strong>C:\ant\lib</strong> directory will be available to be used.</p>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you are trying to create the <strong>.ant</strong> directory in your user folder using Windows Explorer, it may not let you. So you need to use the command line, navigate to your user directory, and then issue the command <code>mkdir .ant</code></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_installing_for_a_single_project">Installing for a Single project</h5>
+<div class="paragraph">
+<p>If you don&#8217;t want to install to the global library locations, you can just make it available for your single project.</p>
+</div>
+<div class="paragraph">
+<p>Create a directory in your project called lib
+Put the BuildXPages.jar in that location</p>
+</div>
+<div class="paragraph">
+<p>when running ant, you will need to specify the library location with -lib command</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">&lt;taskdef
+	uri="antlib:com.gregorbyte.buildxpages.ant"
+	resource="com/gregorbyte/buildxpages/ant/antlib.xml"
+	classpath="lib/BuildXPagesAntLib.jar"&gt;&lt;/taskdef&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_install_eclipse_plugin_building_only">Install Eclipse (Plugin Building only)</h4>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You only need to install Eclipse if you are <strong>Building plugins</strong>. It is not required for Building/Deploying NSFs or Deploying Plugins</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Go to eclipse.org and download 'Eclipse for RCP and RAP Developers'
+Follow the instructions!</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_environment_variables">Environment Variables</h4>
+<div class="paragraph">
+<p>NOTES_PROGDIR
+NOTES_DATADIR
+DOMINO_PROGDIR
+DOMINO_DATADIR
+ECLIPSE_BASE</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>On windows, if your Notes/Domino is within a directory with spaces e.g. 'Program Files (x86)' it may be a good idea to use the 8.3 format of that directory e.g. 'Progra~2'</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Once a console prompt has opened up, it has loaded it&#8217;s environment variables and will not receive any new or modified variables. So if you have added or changed environment variables, you will need to start a new console prompt to see the effect.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_install_the_headless_designer_plugin_to_notes_designer">Install the Headless Designer Plugin to Notes/Designer</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_removing_a_password_from_notes_id">Removing a Password from Notes ID</h4>
+<div class="paragraph">
+<p>In order for the Notes C API tasks to run smoothly, the ID file on the computer needs to have no password.</p>
+</div>
+<div class="paragraph">
+<p>It goes without saying that this is a security risk but you can decide for yourself if you feel you can secure the computer so that nobody can access it.</p>
+</div>
+<div class="paragraph">
+<p>Alternatively, you can ensure that IBM Notes is running, in which case the automated tasks will <em>hopefully</em> not be prompted for a password.</p>
+</div>
+<div class="sect4">
+<h5 id="_to_remove_the_password">To Remove the Password</h5>
+<div class="paragraph">
+<p>The ID file that you have been issued by an administrated must be created with settings that allow the password to be removed.</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Install IBM Notes/Designer (This is assumed!)</p>
+<p>Open IBM Notes, and make sure you are logged in with the user.id</p>
 </li>
 <li>
-<p>Install a JDK</p>
+<p>File &#8594; Security &#8594; User Security</p>
 </li>
 <li>
-<p>Install Ant</p>
+<p>Click Change Password</p>
 </li>
 <li>
-<p>Install the BuildXPages ANT Task Library</p>
-</li>
-<li>
-<p>Install Eclipse</p>
-</li>
-<li>
-<p>Setup Environment Variables</p>
-</li>
-<li>
-<p>Install the Headless Designer Plugin to Notes/Designer</p>
-</li>
-<li>
-<p>Remove the Password from the Notes ID</p>
+<p>If you don&#8217;t see a 'No Password' button then you cannot remove the password because of policy or something</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>If you can&#8217;t remove the password, then make sure you will always keep IBM Notes running and logged in, and that you tick the <strong>Don&#8217;t Prompt for a password from other Notes-based programs (reduces security)</strong></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/images/NotesDontPromptPasswordOthers.JPG" alt="NotesDontPromptPasswordOthers">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_build4xpages_designer_plugin">Build4XPages Designer plugin</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This project provides a plugin that is installed to Domino Designer. The plugin runs a 'server' which waits for instructions that are issued by teh build tasks. For example an instruction to build an NSF, a request to shutdown the designer</p>
+</div>
+<div class="sect2">
+<h3 id="_installation">Installation</h3>
+<div class="paragraph">
+<p>Obtain the latest version of the BuildXPages project from the <a href="https://github.com/camac/BuildXPages/releases" target="_blank">projects releases page</a>
+and install the <strong>com.gregorbyte.designer.headless.updatesite</strong>  update site to Domino Designer using the instructions in <a href="howto_installpluginsdesigner.html">How to Install Plugins to Domino Designer</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_starting_and_stopping_the_headless_server">Starting and Stopping the Headless Server</h3>
+<div class="paragraph">
+<p>By Default, the headless server does auto-started when you start Domino Designer (you can change this, see <a href="#Preferences">Preferences</a>), so you must know how to start and stop it!</p>
+</div>
+<div class="paragraph">
+<p>You can find the Headless toolbar, and you will see one button grayed out, and one coloured button.
+The green button is the 'start' button, so if you can see it, that means the server is not running.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/DesignerHeadlessToolbarStartButton.JPG" alt="DesignerHeadlessToolbarStartButton">
+</div>
+</div>
+<div class="paragraph">
+<p>If you click the green button it will start the server, and you will see the message</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/DesignerHeadlessServerStarted.JPG" alt="DesignerHeadlessServerStarted">
+</div>
+</div>
+<div class="paragraph">
+<p>You should then be able to see the red button</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/DesignerHeadlessToolbarStopButton.JPG" alt="DesignerHeadlessToolbarStopButton">
+</div>
+</div>
+<div class="paragraph">
+<p>and if you click the red button you will stop the headless server and see the message</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/DesignerHeadlessServerStopped.JPG" alt="DesignerHeadlessServerStopped">
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_tutorials">Tutorials</h3>
+<h3 id="Preferences">Preferences</h3>
+<div class="paragraph">
+<p>To access the preferences for Headless Server, goto File &#8594; Preferences &#8594; Headless</p>
+</div>
+<div class="paragraph">
+<p>You can set the Headless Server to auto-start when Domino Designer starts, and also change the Port Number that it will be listening on.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/DesignerHeadlessPreferences.JPG" alt="DesignerHeadlessPreferences">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tutorials">Tutorials</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>These Tutorials are designed to demonstrate the different tasks that are available.
 It is intended that these tutorials can be used to verify that everything is working correctly, and you can then take the build files for these tutorials and customise them for your own projects.</p>
 </div>
 <div style="page-break-after: always;"></div>
-</div>
 <div class="sect2">
 <h3 id="_building_an_nsf">Building an NSF</h3>
 <div class="admonitionblock important">
@@ -1017,16 +1379,17 @@ If you were to look in Designer you would see the problem there too.</p>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_deploying_an_nsf">Deploying an NSF</h4>
+</div>
+<div class="sect2">
+<h3 id="_deploying_an_nsf">Deploying an NSF</h3>
 <div class="paragraph">
 <p>Building an NSF is one thing, but it is no good if you don&#8217;t get it into the live system! Let&#8217;s have a look at how we can acheive that.</p>
 </div>
 <div class="paragraph">
 <p>There is more than one way to deploy an NSF, not everyone is going to do it the same way. This tutorial will hopefully demonstrate some of the tasks you could use to acheive your desired deployment.</p>
 </div>
-<div class="sect4">
-<h5 id="_scenario_1_super_simple">Scenario 1 - Super Simple</h5>
+<div class="sect3">
+<h4 id="_scenario_1_super_simple">Scenario 1 - Super Simple</h4>
 <div class="paragraph">
 <p>After building an NSF, you simply want to make it available to someone who will perform manual deployment.</p>
 </div>
@@ -1034,8 +1397,8 @@ If you were to look in Designer you would see the problem there too.</p>
 <p>Automated deployment is not for everyone and maybe manual deployement</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_scenario_2_refresh_an_existing_template">Scenario 2 - Refresh an Existing Template</h5>
+<div class="sect3">
+<h4 id="_scenario_2_refresh_an_existing_template">Scenario 2 - Refresh an Existing Template</h4>
 <div class="paragraph">
 <p>This is my preferred option.</p>
 </div>
@@ -1060,13 +1423,13 @@ I either allow the design task to run overnight, or if doing an immediate deploy
 <div style="page-break-after: always;"></div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_building_features_and_plugins">Building Features and Plugins</h4>
+<div class="sect2">
+<h3 id="_building_features_and_plugins">Building Features and Plugins</h3>
 <div class="paragraph">
 <p>In this sample we build the plugins for a feature, and prepare an Update Site that can be used to deploy to Domino or Domino Designer</p>
 </div>
-<div class="sect4">
-<h5 id="_first_time_setup">First Time Setup</h5>
+<div class="sect3">
+<h4 id="_first_time_setup">First Time Setup</h4>
 <div class="paragraph">
 <p>Before we build plugins, we need to make sure we are set up properly</p>
 </div>
@@ -1084,8 +1447,8 @@ I either allow the design task to run overnight, or if doing an immediate deploy
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_configure_your_notes_and_domino_program_directories">Configure Your Notes and Domino Program Directories</h5>
+<div class="sect3">
+<h4 id="_configure_your_notes_and_domino_program_directories">Configure Your Notes and Domino Program Directories</h4>
 <div class="paragraph">
 <p>In order to run the build steps, we need to know where Notes and Domino are</p>
 </div>
@@ -1100,8 +1463,8 @@ I either allow the design task to run overnight, or if doing an immediate deploy
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_configure_eclipse_properties">Configure Eclipse Properties</h5>
+<div class="sect3">
+<h4 id="_configure_eclipse_properties">Configure Eclipse Properties</h4>
 <div class="paragraph">
 <p>The build script needs to know 3 things in order to build your plugins</p>
 </div>
@@ -1130,8 +1493,8 @@ In Newer versions of eclipse it will be located under your user home directory&#
 <p>If you don&#8217;t want to set them up as environment variables, you can specify them in the accompanying build.properties file</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_run_the_build">Run the Build!</h5>
+<div class="sect3">
+<h4 id="_run_the_build">Run the Build!</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1151,25 +1514,19 @@ In Newer versions of eclipse it will be located under your user home directory&#
 <div style="page-break-after: always;"></div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_deploying_plugins">Deploying Plugins</h4>
+<div class="sect2">
+<h3 id="_deploying_plugins">Deploying Plugins</h3>
 <div class="paragraph">
 <p>TODO</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_buildxpages_ant_tasks">BuildXPages Ant Tasks</h3>
-<div class="sect3">
-<h4 id="_what_is_ant">What is Ant?</h4>
-<div class="paragraph">
-<p>Apache Ant is a tool which you can use to automate repetitive steps. Ant has access to many commonly used steps such as manipluation of files in the filesystem (copy, move, delete, unzip etc.) and more complex tasks such as compiling java, running programs.</p>
 </div>
+<div class="sect1">
+<h2 id="_buildxpages_ant_task_reference">BuildXPages Ant Task Reference</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>BuildXPages provides Ant with some custom tasks that are useful in the Build and Deployment process of XPages applications and XPages Plugins.</p>
-</div>
-<div class="paragraph">
-<p>BuildXPages provides tasks related to</p>
+<p>The following is a list of the Ant tasks provided by the project and some documentation and examples of how to use them.</p>
 </div>
 <div class="paragraph">
 <p><a href="#TasksDeployingNSF">Deploying NSFs to a Server</a></p>
@@ -1182,8 +1539,6 @@ In Newer versions of eclipse it will be located under your user home directory&#
 </div>
 <div class="paragraph">
 <p><a href="#TasksServer">Controlling a Domino Server</a></p>
-</div>
-</div>
 </div>
 <div class="sect2">
 <h3 id="TasksDeployingNSF">NSF Deployment Related Tasks</h3>
@@ -2510,9 +2865,34 @@ directory
 </div>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_having_trouble">Having Trouble?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you have found a bug, can&#8217;t understand something, want some advice then.
+Submit an Issue using the <a href="https://github.com/camac/BuildXPages/issues">Project&#8217;s Github Issues page</a> and I will get back to you!</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_feedback">Feedback :)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Over the past couple of years lots of trial, error and research has gone into getting this project to where it is (for my own benefit!)</p>
+</div>
+<div class="paragraph">
+<p>I recently decided to spend some further time to clean it all up and write documentation so it is easily available to the rest of the community. It has taken about a month to get all this done, so if this actually helps anyone else I would love to hear it!</p>
+</div>
+<div class="paragraph">
+<p>If this project helps you, if you have suggestions anything just send me a tweet at @gregorbyte or put through an issue in the <a href="https://github.com/camac/BuildXPages/issues">Project&#8217;s Github Issues page</a></p>
+</div>
+</div>
+</div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-09 23:16:33 AEST
+Last updated 2017-08-12 23:26:15 AEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">

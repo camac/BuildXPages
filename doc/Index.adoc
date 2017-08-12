@@ -1,12 +1,61 @@
-= Build4Xpages
+= BuildXPages
+Cameron Gregor <camerongregor.com>
 :toc: left
+:projname: BuildXPages
 
 https://github.com/camac/BuildXPages[BuildXPages GitHub Project]
 
-Build4XPages is a collection of tools which aid in the Building and Deployment of XPages NSFs and XPages plugins.
+== Introduction
 
-include::gettingstarted.adoc[leveloffset=+1]
+{projname} is a collection of tools which can aid in the Building and Deployment of XPages NSFs and XPages plugins.
 
-include::tutorials.adoc[leveloffset=+1]
+If you would like to automate some or all of your XPages Deployment then there might be something in here for you!
 
-include::tasks.adoc[leveloffset=+1]
+=== What Can I use it for?
+
+Some ideas of some tasks which this project can help you achieve
+
+* Refreshing Database Designs
+* Copying / Deleting Databases
+* Configuring Database Template Inheritance
+* Building NSFs from source code in an On-Disk Project
+* Building Plugins and Features
+* Deploying Plugins and Features to Servers
+* Deploying Plugins and Features to Notes/Designer
+* Starting / Stopping / Restarting Http Servers
+
+=== What does the project provide?
+
+The Project contains a library of tasks that can be organised and executed by https://ant.apache.org/[Apache ANT]. Apache ANT is a build tool which helps you write instructions on how to automate tasks.
+
+If you haven't used Ant before, don't be scared! It is pretty simple once you get the hang of it. 
+Yes there are other options, but Ant is well documented which makes it easier to understand.
+I have also provided some tutorials which should give you a feel for how it all works.
+
+Ant has access to many commonly used steps such as manipluation of files in the filesystem (copy, move, delete, unzip etc.) and more complex tasks such as compiling java, running programs.
+
+This project also includes a Plugin for Domino Designer which is used by the ANT task for building an NSF. The Plugin is basically an extension of the existing 'Headless Designer' system that was provided by IBM. The IBM Headless Designer system was a great start but could have used a little bit more love. There were a few annoyances, it was hard to tell when the build was finished, it was hard to tell that the build even started properly. There were some minor annoyances regarding project names and locations. 
+The mechanism also involved writing a text 'command file', which was fed in when starting designer. This means each build would always have to starting designer, build and then shut it down. If designer did not shut down, then you couldn't start it up again and weird things like that.
+
+So I decided to extend it and turn the functionality into a 'headless server'. This allow designer to remain open the whole time and listen for instructions from my ant tasks. If I need designer to restart and can tell it to shut down, and then start designer again and the 'headless server' starts again to wait for more instructions.
+
+include::gettingstarted.adoc[]
+
+include::headlessplugin.adoc[]
+
+include::tutorials.adoc[]
+
+include::tasks.adoc[]
+
+== Having Trouble?
+
+If you have found a bug, can't understand something, want some advice then.
+Submit an Issue using the https://github.com/camac/BuildXPages/issues[Project's Github Issues page] and I will get back to you!
+
+== Feedback :) 
+
+Over the past couple of years lots of trial, error and research has gone into getting this project to where it is (for my own benefit!) 
+
+I recently decided to spend some further time to clean it all up and write documentation so it is easily available to the rest of the community. It has taken about a month to get all this done, so if this actually helps anyone else I would love to hear it! 
+
+If this project helps you, if you have suggestions anything just send me a tweet at @gregorbyte or put through an issue in the https://github.com/camac/BuildXPages/issues[Project's Github Issues page]

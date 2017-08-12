@@ -1,0 +1,38 @@
+==== Install the BuildXPages Ant Library
+
+In order for Ant to be able to use the BuildXPages Library, the **BuildXPages.jar** and **jna-4.1.0.jar** libraries must be made available to it.
+
+You can make the library available to every ant project, or if you prefer you can make the library available just each individual project that needs it.
+
+===== Installing System-wide
+
+When ANT runs, there are 2 locations in which it will check for additional libraries. You should put BuildXPages.jar and JNA
+
+${user.home}/.ant/lib::
+Libraries installed here will be available for the user who's home directory it is.
+For example my user directory on windows is *C:\Users\Cameron\.ant\lib*
+The Benefit of installing libraries here is that they will be available for both Ant in eclipse, and ant on the command line.
+ANT_HOME/lib::
+Libraries installed here will be available for all users. For example on windows, if you have installed ant to *C:\ant*, then any libraries present in the *C:\ant\lib* directory will be available to be used.
+
+[TIP]
+====
+If you are trying to create the *.ant* directory in your user folder using Windows Explorer, it may not let you. So you need to use the command line, navigate to your user directory, and then issue the command `mkdir .ant`
+====
+
+===== Installing for a Single project
+
+If you don't want to install to the global library locations, you can just make it available for your single project.
+
+Create a directory in your project called lib
+Put the BuildXPages.jar in that location
+
+when running ant, you will need to specify the library location with -lib command
+
+[source,xml]
+----
+<taskdef 
+	uri="antlib:com.gregorbyte.buildxpages.ant" 
+	resource="com/gregorbyte/buildxpages/ant/antlib.xml"
+	classpath="lib/BuildXPagesAntLib.jar"></taskdef>
+----

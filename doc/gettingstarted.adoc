@@ -3,13 +3,20 @@
 In order to use the BuildXPages there is a little bit of setup to be done.
 This section will hopefully guide you through the process. Please let me know via an Issue on the Github Project page if anything was left out.
 
-=== First Time Setup Tasks
+==== Install IBM Notes/Designer 
 
-* Install IBM Notes/Designer (This is assumed!)
-* Install a JDK
-* Install Ant
-* Install the BuildXPages ANT Task Library
-* Install Eclipse
-* Setup Environment Variables
-* Install the Headless Designer Plugin to Notes/Designer
-* Remove the Password from the Notes ID
+I won't tell you how to do that because you should know by now :)
+
+include::howto_installjdk.adoc[]
+
+include::howto_installant.adoc[]
+
+include::howto_installantlibrary.adoc[]
+
+include::howto_installeclipse.adoc[]
+
+include::howto_environmentvars.adoc[]
+
+==== Install the Headless Designer Plugin to Notes/Designer
+
+include::howto_removeidpassword.adoc[]
