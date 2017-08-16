@@ -753,6 +753,7 @@ div.olist { padding-left: 1.25em; }
 </li>
 <li><a href="#_tutorials">Tutorials</a>
 <ul class="sectlevel2">
+<li><a href="#_introduction_to_apache_ant">Introduction to Apache Ant</a></li>
 <li><a href="#_building_an_nsf">Building an NSF</a></li>
 <li><a href="#_deploying_an_nsf">Deploying an NSF</a></li>
 <li><a href="#_building_features_and_plugins">Building Features and Plugins</a></li>
@@ -768,7 +769,7 @@ div.olist { padding-left: 1.25em; }
 </ul>
 </li>
 <li><a href="#_having_trouble">Having Trouble?</a></li>
-<li><a href="#_feedback">Feedback :)</a></li>
+<li><a href="#_feedback_welcome">Feedback Welcome!</a></li>
 </ul>
 </div>
 </div>
@@ -1146,6 +1147,302 @@ The green button is the 'start' button, so if you can see it, that means the ser
 It is intended that these tutorials can be used to verify that everything is working correctly, and you can then take the build files for these tutorials and customise them for your own projects.</p>
 </div>
 <div style="page-break-after: always;"></div>
+<div class="sect2">
+<h3 id="_introduction_to_apache_ant">Introduction to Apache Ant</h3>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Before doing this tutorial make sure you have performed necessary setup detailed in the <strong>gettingstarted</strong> page</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This tutorial is a very basic introduction to the concepts of Ant. If you already have used ant before then you can skip this tutorial.</p>
+</div>
+<div class="paragraph">
+<p>We are going to cover the following concepts</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The Build File (build.xml)</p>
+</li>
+<li>
+<p>Targets</p>
+</li>
+<li>
+<p>Tasks</p>
+</li>
+<li>
+<p>Properties</p>
+</li>
+<li>
+<p>Task Dependencies</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_diving_straight_in">Diving Straight In</h4>
+<div class="paragraph">
+<p>Ant is a command line program, which you run by using the command <code>ant</code> and then supplying some command line arguments.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s run our first ant build, our sample build will just print a hello message to the console.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open your command line</p>
+</li>
+<li>
+<p>Change directory to the the <strong>demo/antintro</strong> folder</p>
+</li>
+<li>
+<p>issue the command <code>ant</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You should see the following output</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\antintro\build.xml
+hello:
+     [echo] Hello Alice!
+BUILD SUCCESSFUL
+Total time: 289 milliseconds</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So we told Ant to run, but how did Ant know what we wanted to do?</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_build_file_build_xml">The Build File (build.xml)</h4>
+<div class="paragraph">
+<p>The build file is an xml file that contains all the instructions of what you want to automate.</p>
+</div>
+<div class="paragraph">
+<p>By default Ant will look for a build file named <strong>build.xml</strong>.
+You are able to call it something else if you want, but you will need to specify it as a command line argument.</p>
+</div>
+<div class="paragraph">
+<p>Lets have a look at our build file for this project</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">&lt;project name="Introduction to Ant" default="hello"&gt;
+
+	&lt;description&gt;This is a simple sample to demonstrate some concepts of ant&lt;/description&gt;
+
+	&lt;!-- tag::properties[] --&gt;
+	&lt;property name="firstname" value="Alice"&gt;&lt;/property&gt;
+	&lt;!-- end::properties[] --&gt;
+
+	&lt;!-- tag::targets[] --&gt;
+	&lt;target name="hello" description="Says Hello"&gt;
+		&lt;echo message="Hello ${firstname}!"&gt;&lt;/echo&gt;
+	&lt;/target&gt;
+
+	&lt;target name="goodbye" depends="hello" description="Says Goodbye"&gt;
+		&lt;echo message="Goodbye ${firstname}!"&gt;&lt;/echo&gt;
+	&lt;/target&gt;
+	&lt;!-- end::targets[] --&gt;
+
+&lt;/project&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can see the root element of the build file is 'project'. We have a name for this project and a default target 'hello'.</p>
+</div>
+<div class="paragraph">
+<p>There is a longer description of the build project, then some property definitions, and finally some targets each with one task within it.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_targets">Targets</h4>
+<div class="paragraph">
+<p>Targets are used to create a sequence of tasks that you want to perform, and refer to that sequence by a name.</p>
+</div>
+<div class="paragraph">
+<p>In this build file we have 2 targets <strong>hello</strong> and <strong>goodbye</strong>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="hello" description="Says Hello"&gt;
+		&lt;echo message="Hello ${firstname}!"&gt;&lt;/echo&gt;
+	&lt;/target&gt;
+
+	&lt;target name="goodbye" depends="hello" description="Says Goodbye"&gt;
+		&lt;echo message="Goodbye ${firstname}!"&gt;&lt;/echo&gt;
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can see in the root project element, <strong>hello</strong> is specified as the default target, and therefore this is the target that was executed when we told ant to run</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tasks">Tasks</h4>
+<div class="paragraph">
+<p>Tasks are the building blocks of what you can automate. In this sample we are keeping it very simple and only using the 'echo' task to print messages to the console. But there are a whole bunch of default tasks available.</p>
+</div>
+<div class="paragraph">
+<p>The Apache Ant project site is very well documented and I recommend having a look through the
+<a href="https://ant.apache.org/manual-1.9.x/tasksoverview.html">Overview of Apache Ant Tasks</a></p>
+</div>
+<div class="sect4">
+<h5 id="_custom_tasks">Custom Tasks</h5>
+<div class="paragraph">
+<p>If there is no task that suits your need, you can make custom tasks yourselves! This is precisely what I have done for BuildXPages. See the other tutorials for demonstration of the custom tasks made available by the BuildXPages project</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_properties">Properties</h4>
+<div class="paragraph">
+<p>Properties are useful to allow you to use the same build file, but customise it for different projects and environments.</p>
+</div>
+<div class="paragraph">
+<p>Properties can be provided using a properties file, and they can also be provided directly in the build file.</p>
+</div>
+<div class="paragraph">
+<p>In this build file, our <strong>echo</strong> tasks use a property called <strong>firstname</strong></p>
+</div>
+<div class="paragraph">
+<p>This <strong>firstname</strong> property is specified at the top of the build file.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;property name="firstname" value="Alice"&gt;&lt;/property&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once a property is set, it cannot be changed, so the property value will remain whatever it was first set as.</p>
+</div>
+<div class="sect4">
+<h5 id="_loading_from_a_properties_file">Loading from a Properties file</h5>
+<div class="paragraph">
+<p>It is often easier to keep custom property values in a properties file, and supply this as an argument when running Ant.</p>
+</div>
+<div class="paragraph">
+<p>In our tutorial directory we have a demo properties file called <strong>build.properties</strong> which specifies the firstname to be bob</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt"># Set firstname to bob
+firstname=Bob</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can tell ant to use this property file using the <code>-propertyfile</code> option</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>ant -propertyfile build.properties</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Buildfile: V:\Projects\BuildXPages\demo\antintro\build.xml
+
+hello:
+     [echo] Hello Bob!
+
+BUILD SUCCESSFUL
+Total time: 0 seconds</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We now see a message to Bob because the firstname property is being set from the <strong>build.properties</strong> file <em>before</em> it is attempted to be set as <strong>Alice</strong> within the <strong>build.xml</strong> file.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_specifying_a_property_as_command_line_argument">Specifying a Property as Command line Argument</h5>
+<div class="paragraph">
+<p>You can also provide a property directly on the command line when running ant.
+The argument takes the form <code>-D&lt;propertyname&gt;=&lt;value&gt;</code></p>
+</div>
+<div class="paragraph">
+<p>Try it now by putting your own name in. Because this property is set before the <strong>build.properties</strong> file is loaded</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>ant -Dfirstname=Cam</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Buildfile: V:\Projects\BuildXPages\demo\antintro\build.xml
+
+hello:
+     [echo] Hello Cam!
+
+BUILD SUCCESSFUL
+Total time: 0 seconds</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_task_dependencies">Task Dependencies</h4>
+<div class="paragraph">
+<p>A task can be set to depend on another task, in our example, the <strong>goodbye</strong> target is set to depend on the <strong>hello</strong> target (using the <em>depends</em> attribute). This means before we say <strong>goodbye</strong> we must say <strong>hello</strong>!.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="hello" description="Says Hello"&gt;
+		&lt;echo message="Hello ${firstname}!"&gt;&lt;/echo&gt;
+	&lt;/target&gt;
+
+	&lt;target name="goodbye" depends="hello" description="Says Goodbye"&gt;
+		&lt;echo message="Goodbye ${firstname}!"&gt;&lt;/echo&gt;
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s try it out. This time because we are not running the default target we must specify it.
+Issue the following command</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>ant goodbye</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Buildfile: V:\Projects\BuildXPages\demo\antintro\build.xml
+
+hello:
+     [echo] Hello Alice!
+
+goodbye:
+     [echo] Goodbye Alice!
+
+BUILD SUCCESSFUL
+Total time: 0 seconds</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_conclusion">Conclusion</h4>
+<div class="paragraph">
+<p>So this was a very short, very simple introduction to the concepts of Ant. We learned about the concepts of The Build File, Targets, Tasks, Properties and Task Dependencies.</p>
+</div>
+<div class="paragraph">
+<p>These concepts will hopefully give you a good start to comprehend the rest of the tutorials in BuildXPages, in which we will use much more complicated targets and tasks to achieve some tasks for building and deploying XPages applications.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
 <div class="sect2">
 <h3 id="_building_an_nsf">Building an NSF</h3>
 <div class="admonitionblock important">
@@ -2240,7 +2537,7 @@ eclipsedir
 <p>After building plugins, sometimes you want to put them in an update site on the filesystem. This task will copy the plugins to your target update site, and also generate the site xml.</p>
 </div>
 <div class="sect4">
-<h5 id="_properties">Properties</h5>
+<h5 id="_properties_2">Properties</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -2301,7 +2598,7 @@ eclipsedir
 <p>Before building an NSF with the Headless Designer Plugin, you need to make sure designer is running. You can use the <strong>checkDesignerRunning</strong> task to check, and if it is not running you can use this <strong>startDesigner</strong> task.</p>
 </div>
 <div class="sect4">
-<h5 id="_properties_2">Properties</h5>
+<h5 id="_properties_3">Properties</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -2534,7 +2831,7 @@ You can then use this property to decide whether to take some other action.</p>
 <p>This task is used to set up an update site that will always be loaded when Designer Is started up. This is only used when you are deploying plugins to Domino Designer using the sneaky 'permanent update site' method.</p>
 </div>
 <div class="sect4">
-<h5 id="_properties_3">Properties</h5>
+<h5 id="_properties_4">Properties</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -2606,7 +2903,7 @@ updateSiteDir
 <p>You can then copy plugins to this update site, and they will be loaded by designer (if you have configured platform.xml using the <strong>checkplatformxml</strong> task)</p>
 </div>
 <div class="sect4">
-<h5 id="_properties_4">Properties</h5>
+<h5 id="_properties_5">Properties</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -2650,7 +2947,7 @@ updateSiteLabel
 <p>This checks that the IBM Notes Installation&#8217;s platform.xml file is configured to automatically load plugins from the filesystem. The task will fail if the file is not configured properly.</p>
 </div>
 <div class="sect4">
-<h5 id="_properties_5">Properties</h5>
+<h5 id="_properties_6">Properties</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -2685,7 +2982,7 @@ notesProgDir
 <p>Usually you need to go through the whole provisioning process for plugin updates, but this task will put IBM Notes into a configuration that bypasses this.</p>
 </div>
 <div class="sect4">
-<h5 id="_properties_6">Properties</h5>
+<h5 id="_properties_7">Properties</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -2876,13 +3173,13 @@ Submit an Issue using the <a href="https://github.com/camac/BuildXPages/issues">
 </div>
 </div>
 <div class="sect1">
-<h2 id="_feedback">Feedback :)</h2>
+<h2 id="_feedback_welcome">Feedback Welcome!</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Over the past couple of years lots of trial, error and research has gone into getting this project to where it is (for my own benefit!)</p>
+<p>Over the past couple of years, lots of trial, error and research has gone into getting this project to where it is (for my own benefit!)</p>
 </div>
 <div class="paragraph">
-<p>I recently decided to spend some further time to clean it all up and write documentation so it is easily available to the rest of the community. It has taken about a month to get all this done, so if this actually helps anyone else I would love to hear it!</p>
+<p>I recently decided to spend some further time to clean it all up and write documentation so it is easily available to the rest of the community. It has taken about a month to get all this done, so if this actually helps anyone else I would love to hear about it so I know it was worth the effort!</p>
 </div>
 <div class="paragraph">
 <p>If this project helps you, if you have suggestions anything just send me a tweet at @gregorbyte or put through an issue in the <a href="https://github.com/camac/BuildXPages/issues">Project&#8217;s Github Issues page</a></p>
@@ -2892,7 +3189,7 @@ Submit an Issue using the <a href="https://github.com/camac/BuildXPages/issues">
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-12 23:26:15 AEST
+Last updated 2017-08-12 23:35:39 AEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">

@@ -1,0 +1,185 @@
+== Introduction to Apache Ant
+:imagesdir: ./images
+
+[IMPORTANT]
+====
+Before doing this tutorial make sure you have performed necessary setup detailed in the *gettingstarted* page
+====
+
+This tutorial is a very basic introduction to the concepts of Ant. If you already have used ant before then you can skip this tutorial.
+
+We are going to cover the following concepts
+
+* The Build File (build.xml)
+* Targets
+* Tasks
+* Properties
+* Task Dependencies
+
+=== Diving Straight In
+
+Ant is a command line program, which you run by using the command `ant` and then supplying some command line arguments.
+
+Let's run our first ant build, our sample build will just print a hello message to the console.
+
+1. Open your command line
+2. Change directory to the the *demo/antintro* folder
+3. issue the command `ant`
+
+You should see the following output
+
+[source,txt]
+----
+Buildfile: V:\Projects\BuildXPages\demo\antintro\build.xml
+hello:
+     [echo] Hello Alice!
+BUILD SUCCESSFUL
+Total time: 289 milliseconds
+----
+
+So we told Ant to run, but how did Ant know what we wanted to do?
+
+=== The Build File (build.xml)
+
+The build file is an xml file that contains all the instructions of what you want to automate. 
+
+By default Ant will look for a build file named **build.xml**.
+You are able to call it something else if you want, but you will need to specify it as a command line argument.
+
+Lets have a look at our build file for this project
+
+[source,xml]
+----
+include::../demo/antintro/build.xml[]
+----
+
+We can see the root element of the build file is 'project'. We have a name for this project and a default target 'hello'.
+
+There is a longer description of the build project, then some property definitions, and finally some targets each with one task within it.
+
+=== Targets
+
+Targets are used to create a sequence of tasks that you want to perform, and refer to that sequence by a name.
+
+In this build file we have 2 targets **hello** and **goodbye**.
+
+[source,xml]
+----
+include::../demo/antintro/build.xml[tag=targets]
+----
+
+You can see in the root project element, *hello* is specified as the default target, and therefore this is the target that was executed when we told ant to run
+
+=== Tasks
+
+Tasks are the building blocks of what you can automate. In this sample we are keeping it very simple and only using the 'echo' task to print messages to the console. But there are a whole bunch of default tasks available.
+
+The Apache Ant project site is very well documented and I recommend having a look through the
+https://ant.apache.org/manual-1.9.x/tasksoverview.html[Overview of Apache Ant Tasks]
+
+==== Custom Tasks
+
+If there is no task that suits your need, you can make custom tasks yourselves! This is precisely what I have done for BuildXPages. See the other tutorials for demonstration of the custom tasks made available by the BuildXPages project
+
+=== Properties
+
+Properties are useful to allow you to use the same build file, but customise it for different projects and environments.
+
+Properties can be provided using a properties file, and they can also be provided directly in the build file.
+
+In this build file, our *echo* tasks use a property called **firstname** 
+
+This **firstname** property is specified at the top of the build file.
+
+[source,xml]
+----
+include::../demo/antintro/build.xml[tag=properties]
+----
+
+Once a property is set, it cannot be changed, so the property value will remain whatever it was first set as.
+
+==== Loading from a Properties file
+
+It is often easier to keep custom property values in a properties file, and supply this as an argument when running Ant.
+
+In our tutorial directory we have a demo properties file called **build.properties** which specifies the firstname to be bob
+
+[source,txt]
+----
+include::../demo/antintro/build.properties[]
+----
+
+We can tell ant to use this property file using the `-propertyfile` option
+
+```
+ant -propertyfile build.properties
+```
+
+----
+Buildfile: V:\Projects\BuildXPages\demo\antintro\build.xml
+
+hello:
+     [echo] Hello Bob!
+
+BUILD SUCCESSFUL
+Total time: 0 seconds
+----
+
+We now see a message to Bob because the firstname property is being set from the **build.properties** file _before_ it is attempted to be set as *Alice* within the **build.xml** file.
+
+==== Specifying a Property as Command line Argument
+
+You can also provide a property directly on the command line when running ant.
+The argument takes the form `-D<propertyname>=<value>`
+
+Try it now by putting your own name in. Because this property is set before the **build.properties** file is loaded
+
+```
+ant -Dfirstname=Cam
+```
+
+----
+Buildfile: V:\Projects\BuildXPages\demo\antintro\build.xml
+
+hello:
+     [echo] Hello Cam!
+
+BUILD SUCCESSFUL
+Total time: 0 seconds
+----
+
+=== Task Dependencies
+
+A task can be set to depend on another task, in our example, the **goodbye** target is set to depend on the **hello** target (using the _depends_ attribute). This means before we say **goodbye** we must say **hello**!.
+
+[source,xml]
+----
+include::../demo/antintro/build.xml[tag=targets]
+----
+
+Let's try it out. This time because we are not running the default target we must specify it.
+Issue the following command
+
+```
+ant goodbye
+```
+
+----
+Buildfile: V:\Projects\BuildXPages\demo\antintro\build.xml
+
+hello:
+     [echo] Hello Alice!
+
+goodbye:
+     [echo] Goodbye Alice!
+
+BUILD SUCCESSFUL
+Total time: 0 seconds
+----
+
+=== Conclusion
+
+So this was a very short, very simple introduction to the concepts of Ant. We learned about the concepts of The Build File, Targets, Tasks, Properties and Task Dependencies. 
+
+These concepts will hopefully give you a good start to comprehend the rest of the tutorials in BuildXPages, in which we will use much more complicated targets and tasks to achieve some tasks for building and deploying XPages applications. 
+
