@@ -48,32 +48,39 @@
 		<fail message="Please Specify Destination NSF Filepath" unless="nsf.production.filepath"/>
 		
 		<bxp:copynsf srcfilepath="${nsf.filepath}" dstfilepath="${nsf.production.filepath}" />
+		<bxp:copynsf srcfilepath="${nsf.filepath}" dstfilepath="${nsf.template.filepath}" />
 		
 	</target>
 	
+	<!-- tag::linktemplates -->
 	<target name="linktemplates">
 	
 		<fail message="Please Specify NSF Filepath" unless="nsf.filepath"/>
 		<fail message="Please Specify Production NSF Filepath" unless="nsf.production.filepath"/>
 		<fail message="Please Specify the Master Template Name" unless="nsf.mastername"/>
 		
-		<bxp:settemplatenames database="${nsf.filepath}" mastername="${nsf.mastername}" />
+		<bxp:settemplatenames database="${nsf.template.filepath}" mastername="${nsf.mastername}" />
 		<bxp:settemplatenames database="${nsf.production.filepath}" inheritfrom="${nsf.mastername}" />
-
 	
 	</target>
+	<!-- end::linktemplates -->
 	
+	<!-- tag::refresh[] -->
 	<target name="refreshtemplate">
 	
 		<bxp:refreshdbdesign database="${nsf.production.filepath}"/>
 	
 	</target>
+	<!-- end::refresh[] -->
 
+	<!-- tag::clean[] -->
 	<target name="clean">
 	
 		<bxp:deletensf filename="${nsf.production.filepath}"/>
+		<bxp:deletensf filename="${nsf.template.filepath}"/>
 		
 	</target>
+	<!-- end::clean[] -->
 	
 
 

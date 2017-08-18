@@ -1,16 +1,43 @@
 == Deploying an NSF
 
-Building an NSF is one thing, but it is no good if you don't get it into the live system! Let's have a look at how we can acheive that.
+Once you have built an NSF, you may want to deploy the latest changes to it's target environment.
 
 There is more than one way to deploy an NSF, not everyone is going to do it the same way. This tutorial will hopefully demonstrate some of the tasks you could use to acheive your desired deployment.
 
-=== Scenario 1 - Super Simple
+This tutorial assumes that you have successfully completed the Build An NSF tutorial. In this case you will have an NSF in your local workspace. We are going to deploy this NSF.
 
-After building an NSF, you simply want to make it available to someone who will perform manual deployment.
+=== Basic File-Level Copying
 
-Automated deployment is not for everyone and maybe manual deployement
+At the most basic Level, you may have built your NSF directly to a local Notes workspace, and just want to copy the *.nsf* file to another location. In this case you would just use a simple Apache Ant copy task.
 
-=== Scenario 2 - Refresh an Existing Template
+In this example, we are going to copy the NSF that you built into a local directory
+
+=== Copying an NSF using Notes/Domino
+
+Instead of doing basic file-based copying, we can actually use IBM Notes to copy an NSF from our local workspace to a server, or from one server to another server etc.
+
+To do this we use BuildXPages' *copynsf* task.
+
+We are going to create 2 copies of this NSF just so we can use them both in our next example
+
+
+
+=== Setting up template names
+
+BuildXPages has a *settemplatenames* task which is useful for configuring template inheritance dynamically. 
+
+
+=== Refreshing a Template
+
+When you are ready to refresh teh design of a database, you can simple use the *refreshdbdesign* task.
+
+What is handy about this is that you can refresh the design of a target nsf using an NSF from your local workspace. So, if you have built an NSF in your local workspace you can refresh an NSF on a server using the design on your local workspace.
+
+
+
+=== Deleting NSFs
+
+If you have a need to delete nsfs during your deployment process, you can use the *deletensf* task
 
 This is my preferred option.
 
