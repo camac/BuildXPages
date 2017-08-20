@@ -723,22 +723,55 @@ div.olist { padding-left: 1.25em; }
 <h2 id="_deploying_an_nsf">Deploying an NSF</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Building an NSF is one thing, but it is no good if you don&#8217;t get it into the live system! Let&#8217;s have a look at how we can acheive that.</p>
+<p>Once you have built an NSF, you may want to deploy the latest changes to it&#8217;s target environment.</p>
 </div>
 <div class="paragraph">
 <p>There is more than one way to deploy an NSF, not everyone is going to do it the same way. This tutorial will hopefully demonstrate some of the tasks you could use to acheive your desired deployment.</p>
 </div>
-<div class="sect2">
-<h3 id="_scenario_1_super_simple">Scenario 1 - Super Simple</h3>
 <div class="paragraph">
-<p>After building an NSF, you simply want to make it available to someone who will perform manual deployment.</p>
-</div>
-<div class="paragraph">
-<p>Automated deployment is not for everyone and maybe manual deployement</p>
-</div>
+<p>This tutorial assumes that you have successfully completed the Build An NSF tutorial. In this case you will have an NSF in your local workspace. We are going to deploy this NSF.</p>
 </div>
 <div class="sect2">
-<h3 id="_scenario_2_refresh_an_existing_template">Scenario 2 - Refresh an Existing Template</h3>
+<h3 id="_basic_file_level_copying">Basic File-Level Copying</h3>
+<div class="paragraph">
+<p>At the most basic Level, you may have built your NSF directly to a local Notes workspace, and just want to copy the <strong>.nsf</strong> file to another location. In this case you would just use a simple Apache Ant copy task.</p>
+</div>
+<div class="paragraph">
+<p>In this example, we are going to copy the NSF that you built into a local directory</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_copying_an_nsf_using_notes_domino">Copying an NSF using Notes/Domino</h3>
+<div class="paragraph">
+<p>Instead of doing basic file-based copying, we can actually use IBM Notes to copy an NSF from our local workspace to a server, or from one server to another server etc.</p>
+</div>
+<div class="paragraph">
+<p>To do this we use BuildXPages' <strong>copynsf</strong> task.</p>
+</div>
+<div class="paragraph">
+<p>We are going to create 2 copies of this NSF just so we can use them both in our next example</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_setting_up_template_names">Setting up template names</h3>
+<div class="paragraph">
+<p>BuildXPages has a <strong>settemplatenames</strong> task which is useful for configuring template inheritance dynamically.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_refreshing_a_template">Refreshing a Template</h3>
+<div class="paragraph">
+<p>When you are ready to refresh teh design of a database, you can simple use the <strong>refreshdbdesign</strong> task.</p>
+</div>
+<div class="paragraph">
+<p>What is handy about this is that you can refresh the design of a target nsf using an NSF from your local workspace. So, if you have built an NSF in your local workspace you can refresh an NSF on a server using the design on your local workspace.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deleting_nsfs">Deleting NSFs</h3>
+<div class="paragraph">
+<p>If you have a need to delete nsfs during your deployment process, you can use the <strong>deletensf</strong> task</p>
+</div>
 <div class="paragraph">
 <p>This is my preferred option.</p>
 </div>
@@ -766,7 +799,7 @@ I either allow the design task to run overnight, or if doing an immediate deploy
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-10 22:42:38 AEST
+Last updated 2017-08-18 23:07:49 AEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">

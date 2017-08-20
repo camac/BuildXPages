@@ -1680,22 +1680,55 @@ If you were to look in Designer you would see the problem there too.</p>
 <div class="sect2">
 <h3 id="_deploying_an_nsf">Deploying an NSF</h3>
 <div class="paragraph">
-<p>Building an NSF is one thing, but it is no good if you don&#8217;t get it into the live system! Let&#8217;s have a look at how we can acheive that.</p>
+<p>Once you have built an NSF, you may want to deploy the latest changes to it&#8217;s target environment.</p>
 </div>
 <div class="paragraph">
 <p>There is more than one way to deploy an NSF, not everyone is going to do it the same way. This tutorial will hopefully demonstrate some of the tasks you could use to acheive your desired deployment.</p>
 </div>
-<div class="sect3">
-<h4 id="_scenario_1_super_simple">Scenario 1 - Super Simple</h4>
 <div class="paragraph">
-<p>After building an NSF, you simply want to make it available to someone who will perform manual deployment.</p>
-</div>
-<div class="paragraph">
-<p>Automated deployment is not for everyone and maybe manual deployement</p>
-</div>
+<p>This tutorial assumes that you have successfully completed the Build An NSF tutorial. In this case you will have an NSF in your local workspace. We are going to deploy this NSF.</p>
 </div>
 <div class="sect3">
-<h4 id="_scenario_2_refresh_an_existing_template">Scenario 2 - Refresh an Existing Template</h4>
+<h4 id="_basic_file_level_copying">Basic File-Level Copying</h4>
+<div class="paragraph">
+<p>At the most basic Level, you may have built your NSF directly to a local Notes workspace, and just want to copy the <strong>.nsf</strong> file to another location. In this case you would just use a simple Apache Ant copy task.</p>
+</div>
+<div class="paragraph">
+<p>In this example, we are going to copy the NSF that you built into a local directory</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_copying_an_nsf_using_notes_domino">Copying an NSF using Notes/Domino</h4>
+<div class="paragraph">
+<p>Instead of doing basic file-based copying, we can actually use IBM Notes to copy an NSF from our local workspace to a server, or from one server to another server etc.</p>
+</div>
+<div class="paragraph">
+<p>To do this we use BuildXPages' <strong>copynsf</strong> task.</p>
+</div>
+<div class="paragraph">
+<p>We are going to create 2 copies of this NSF just so we can use them both in our next example</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setting_up_template_names">Setting up template names</h4>
+<div class="paragraph">
+<p>BuildXPages has a <strong>settemplatenames</strong> task which is useful for configuring template inheritance dynamically.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_refreshing_a_template">Refreshing a Template</h4>
+<div class="paragraph">
+<p>When you are ready to refresh teh design of a database, you can simple use the <strong>refreshdbdesign</strong> task.</p>
+</div>
+<div class="paragraph">
+<p>What is handy about this is that you can refresh the design of a target nsf using an NSF from your local workspace. So, if you have built an NSF in your local workspace you can refresh an NSF on a server using the design on your local workspace.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_deleting_nsfs">Deleting NSFs</h4>
+<div class="paragraph">
+<p>If you have a need to delete nsfs during your deployment process, you can use the <strong>deletensf</strong> task</p>
+</div>
 <div class="paragraph">
 <p>This is my preferred option.</p>
 </div>
@@ -1813,8 +1846,414 @@ In Newer versions of eclipse it will be located under your user home directory&#
 </div>
 <div class="sect2">
 <h3 id="_deploying_plugins">Deploying Plugins</h3>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>TODO</p>
+<p>This tutorial is designed to be completed after the successful completion of the buildfeature tutorial.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>After building your plugins, now you might want to deploy to either:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A Domino Server</p>
+</li>
+<li>
+<p>IBM Notes / Designer Client</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_preparing_an_update_site">Preparing an Update Site</h4>
+<div class="paragraph">
+<p>At the end of the headless feature build process, you will have a .zip file of your plugins and features. The contents of your zip file will be something like:</p>
+</div>
+<div class="openblock tree">
+<div class="content">
+<div class="paragraph">
+<p>|--eclipse
+|  |--plugins
+|  |  |--com.your.plugin.jar
+|  |--features
+|  |  |--com.your.feature.jar</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Unfortunately although this format looks a bit like an Update Site, it isn&#8217;t quite there yet.
+We are missing is the <strong>site.xml</strong> file, which is a list of the features that can be found in the update site.
+So what we are going to do is to extract the contents of the zip and then generate our site.xml
+We will then have an update site! We will also create a <strong>.zip</strong> version of this update site.</p>
+</div>
+<div class="paragraph">
+<p>The steps necessary for this are contained within the <strong>prepareupdatesite</strong> target in our
+tutorial&#8217;s build.xml file.</p>
+</div>
+<div class="paragraph">
+<p>There are 3 tasks in this target</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">unzip</dt>
+<dd>
+<p>Unzips the contents of the built plugins zip to a local directory. Note we are also removing the leading 'eclipse' directory as we are not interested in keeping that</p>
+</dd>
+<dt class="hdlist1">bxp:generatesitexml</dt>
+<dd>
+<p>This is our custom task from the BuildXPages library which will generate the site.xml file that we need to make this an update site</p>
+</dd>
+<dt class="hdlist1">zip</dt>
+<dd>
+<p>This will create a zip of our update site so that we have this as another option for easy distribution as a single file</p>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="prepareupdatesite" depends="clean"&gt;
+
+		&lt;!-- Unzip the contents of the .zip                                   --&gt;
+		&lt;unzip src="${builtPluginsZip}" dest="${updateSiteName}"&gt;
+
+			&lt;!-- We are not interested in keeping the 'eclipse' directory so we   --&gt;
+			&lt;!-- use a mapper called the 'cutdirsmapper' which will strip off the --&gt;
+			&lt;!-- specified number of directories. in this case 1                  --&gt;
+			&lt;cutdirsmapper dirs="1" /&gt;
+
+			&lt;!-- If you built 'source' versions of your plugins, for some reasion --&gt;
+			&lt;!-- it will also have included this org.eclipse.pde.build.uber.feature --&gt;
+			&lt;!-- which we don't care about so we exclude it from our unzip task --&gt;
+			&lt;patternset&gt;
+				&lt;exclude name="**/org.eclipse.pde.build.uber.feature.source*" /&gt;
+			&lt;/patternset&gt;
+
+		&lt;/unzip&gt;
+
+		&lt;!-- Generate the site.xml --&gt;
+		&lt;bxp:generatesitexml eclipsedir="${updateSiteName}" /&gt;
+
+		&lt;!-- (Optional) make a zip of this update site --&gt;
+		&lt;zip destfile="${updateSiteName}.zip" basedir="${updateSiteName}" /&gt;
+
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Lets have a look at the properties that this task depends on. We see we have defined whereabouts to find the built plugins zip, and we define the name of our update site that we are creating.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;!-- The location of our built plugins that we are turning into an update site --&gt;
+	&lt;property name="builtPluginsZip" location="../buildfeature/buildDirectory/BuildXPagesDemo/com.gregorbyte.buildxpages.demo.feature-1.zip"&gt;
+	&lt;/property&gt;
+	&lt;!-- The name of the updatesite we are creating --&gt;
+	&lt;property name="updateSiteName" value="com.gregorbyte.buildxpages.demo.updatesite"&gt;
+	&lt;/property&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Also note our target depends on the <strong>clean</strong> target, so lets have a look at that target.
+This target simply deletes the output of any previous run of this task.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="clean"&gt;
+		&lt;delete dir="${updateSiteName}"&gt;
+		&lt;/delete&gt;
+		&lt;delete file="${updateSiteName}.zip"&gt;
+		&lt;/delete&gt;
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Lets give this a go by issuing the command</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>ant prepareupdatesite</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see some output similar to this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\deployplugins\build.xml
+
+clean:
+
+prepareupdatesite:
+    [unzip] Expanding: V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\BuildXPagesDemo\com.gregorbyte.buildxpages.demo.feature-1.zip into V:\Projects\BuildXPages\demo\deployplugins\com.gregorbyte.buildxpages.demo.updatesite
+[bxp:generatesitexml] File saved!
+      [zip] Building zip: V:\Projects\BuildXPages\demo\deployplugins\com.gregorbyte.buildxpages.demo.updatesite.zip
+
+BUILD SUCCESSFUL
+Total time: 0 seconds</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And if you look in the tutorial folder, you should see 2 new entries which is our built update site in both directory and archive format</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a new directory com.gregorbyte.buildxpages.demo.updatesite</p>
+</li>
+<li>
+<p>a new zip file com.gregorbyte.buildxpages.demo.updatesite.zip</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_deploying_to_domino_server">Deploying to Domino Server</h4>
+<div class="paragraph">
+<p>The main 2 options you have for Deploying plugins to a server are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Copy the Features and Plugins to the &lt;dominoData&gt;/workspace/applications update site</p>
+</li>
+<li>
+<p>Deploy to an NSF Update Site</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>My preferred method of deploying plugins to a server is to use an Update Site NSF. The advantage is that this NSF Update site can replicate to other servers, and that means you only have to deploy to your primary server. Another advantage is that you can delete older versions of plugins whilst the server is still running.</p>
+</div>
+<div class="paragraph">
+<p>Otherwise if you are deploying to the filesystem of every server you may have a tricky time accessing each server remotely, also you cannot delete plugins that are in use when the server is running. It can be an option though if you are deploying to a local testing server</p>
+</div>
+<div class="sect4">
+<h5 id="_deploying_to_an_nsf_update_site">Deploying to an NSF Update Site</h5>
+<div class="paragraph">
+<p>IBM provides a standard template for the NSF Update Site, however the standard template requires a user to manually import an update site using the IBM Notes Client.</p>
+</div>
+<div class="paragraph">
+<p>If you want to be able to automatically import plugins you will need to use the Open Eclipse Update Site which is the same template with a minor modification made to allow the plugins to be imported headlessly. The modification provides an agent which can be run to import an update site to the NSF update site.</p>
+</div>
+<div class="paragraph">
+<p>BuildXPages provides an Ant task which will run this agent for us. The task is called <strong>importplugins</strong></p>
+</div>
+<div class="paragraph">
+<p>Our tutorial has a target which will do this for us, but we just need to tell it the server and database of the update site to import to.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>To perform this part of the tutorial you will need to have set up an Open Eclipse Update Site
+Make sure you change these properties to the server and database that you have set up.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;property name="nsfupdatesite.server" value="domino02"&gt;
+	&lt;/property&gt;
+	&lt;property name="nsfupdatesite.database" value="temp/TestUpdateSite.nsf"&gt;
+	&lt;/property&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is the target that we will run that executes the importplugins task using the properties set above (and the previously mentioned <strong>updateSiteName</strong> property from earlier in the tutorial).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="importdominoplugins"&gt;
+
+		&lt;bxp:importplugins
+			database="${nsfupdatesite.database}"
+			sitexml="${updateSiteName}/site.xml"
+			deletefirst="false"/&gt;
+
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We have set the <strong>deletefirst</strong> attribute as 'false', but you can set this to 'true' if you would like the entire contents of the NSF Update Site deleted before you import. This would mean that after the import, only the features and plugin that import here are contained in the NSF Update Site.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Lets run the target and see what happens</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>ant importdominoplugins</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see some output like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">TODO</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ignore the errors, they always show up and I have never been bothered enough to fix that, the end result though is you should see these plugins and features in your NSF Update Site</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/NSFUpdateSiteImported.JPG" alt="NSFUpdateSiteImported">
+</div>
+</div>
+<div class="paragraph">
+<p>Assuming that your server is configured to load plugins from this update site, you now just need to restart the http server and the new plugins should load.</p>
+</div>
+<div class="paragraph">
+<p>We can do this using BuildXPages <strong>controlhttp</strong> task</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="restarthttp"&gt;
+		&lt;bxp:controlhttp server="${nsfupdatesite.server}" action="restart" /&gt;
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In practice, restarting http in a production system should be done in a deliberate manner at previously communicated times. Use this task appropriately! Personally I only use this task for User Acceptance Testing servers, and rely on a scheduled domino program entry that restarts http in the dead of the night, scheduled after the design task will have refreshed any templates.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_deploying_to_domino_designer">Deploying to Domino Designer</h4>
+<div class="paragraph">
+<p>If you are building NSFs headlessly then you may need to be able to automatically install the plugins to Domino Designer. Another reason may be that you want to automate this process for your developer machine, because it can get quite annoying to have to frequently update your own Designer Client with latest versions of the plugins that you are working on.</p>
+</div>
+<div class="paragraph">
+<p>In any case here are some techinques to deploy plugnis to Designer.</p>
+</div>
+<div class="sect4">
+<h5 id="_deploying_manually">Deploying Manually</h5>
+<div class="sect5">
+<h6 id="_selecting_from_the_filesystem">Selecting from the Filesystem</h6>
+<div class="paragraph">
+<p>Follow your usual steps to import an update site and just choose either the directory or archive version of the update site that we just built!</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_continual_refresh_from_nsf_update_site">Continual Refresh from NSF Update Site</h6>
+<div class="paragraph">
+<p>If you are already importing these plugins to an NSF update site, you can set your Notes/Designer client up so it can check the NSF for latest Updates.</p>
+</div>
+<div class="paragraph">
+<p>Just go to File &#8594; Application &#8594; Install and then choose search for new features to install
+Make sure your previously used NSF Update Site Location is selected and then click finish. It should discover the new versions of your feature</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_deploying_to_dropins_style_designer_plugins_directory">Deploying to 'dropins' style Designer Plugins Directory</h5>
+<div class="paragraph">
+<p>There is a method which was previously communicated by Niklas Heidloff when he was working as a developer evangelist for XPages.</p>
+</div>
+<div class="paragraph">
+<p>The method basically involves making some edits to a 'platform.xml' file, and also setting up a 'link' file which points to an update site. There is one caveat that the update site must contain the root directory 'eclipse'</p>
+</div>
+<div class="paragraph">
+<p>BuildXPages provides 2 tasks that help to do all this for you. They are both utilised in the <strong>configuredesigner</strong> target</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">configureDynamicPlugins</dt>
+<dd>
+<p>will edit the <strong>platform.xml</strong> to allow this dynamic loading of plugins</p>
+</dd>
+<dt class="hdlist1">initDesignerSite</dt>
+<dd>
+<p>will set up the link file to point to the update site that we want to load during startup of designer</p>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="configuredesigner"&gt;
+
+		&lt;bxp:configureDynamicPlugins/&gt;
+
+		&lt;bxp:initDesignerSite updateSiteLabel="${updateSiteLabel}" updateSiteDir="${updateSiteName}"/&gt;
+
+	&lt;/target&gt;
+
+
+&lt;/project&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>lets run this target</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>ant configuredesigner</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now when we start Designer it should load our plugins! And we didn&#8217;t have to go through all that provisioning operations.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_deploying_using_the_headless_designer_plugin">Deploying using the Headless Designer Plugin</h5>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This functionality is not yet complete but is next on my list</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_conclusion_2">Conclusion</h4>
+<div class="paragraph">
+<p>Hopefully this tutorial has demonstrated some of the tasks that you can use to get your plugins where you need them to be! Let me know if you have any questions or suggested improvements to this tutorial.</p>
+</div>
 </div>
 </div>
 </div>

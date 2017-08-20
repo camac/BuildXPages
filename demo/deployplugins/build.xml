@@ -1,0 +1,92 @@
+<project name="BuildXPages Deploying Plugins" xmlns:bxp="antlib:com.gregorbyte.buildxpages.ant">
+
+	<description>Demonstration of Tasks Involved when Deploying Plugins</description>
+
+	<property file="build.properties" />
+
+	<property environment="env" />
+	<property name="notesProgDir" location="${env.NOTES_PROG}" />
+
+	<!-- tag::properties[] -->
+	<!-- The location of our built plugins that we are turning into an update site -->
+	<property name="builtPluginsZip" location="../buildfeature/buildDirectory/BuildXPagesDemo/com.gregorbyte.buildxpages.demo.feature-1.zip">
+	</property>
+	<!-- The name of the updatesite we are creating -->
+	<property name="updateSiteName" value="com.gregorbyte.buildxpages.demo.updatesite">
+	</property>
+	<!-- end::properties[] -->
+
+	<!-- tag::nsfupdatesiteproperties[] -->
+	<property name="nsfupdatesite.server" value="domino02">
+	</property>
+	<property name="nsfupdatesite.database" value="temp/TestUpdateSite.nsf">
+	</property>
+	<!-- end::nsfupdatesiteproperties[] -->
+
+	<!-- tag::clean[] -->
+	<target name="clean">
+		<delete dir="${updateSiteName}">
+		</delete>
+		<delete file="${updateSiteName}.zip">
+		</delete>
+	</target>
+	<!-- end::clean[] -->
+
+	<!-- tag::prepareupdatesite[] -->
+	<target name="prepareupdatesite" depends="clean">
+
+		<!-- Unzip the contents of the .zip                                   -->
+		<unzip src="${builtPluginsZip}" dest="${updateSiteName}">
+
+			<!-- We are not interested in keeping the 'eclipse' directory so we   -->
+			<!-- use a mapper called the 'cutdirsmapper' which will strip off the -->
+			<!-- specified number of directories. in this case 1                  -->
+			<cutdirsmapper dirs="1" />
+
+			<!-- If you built 'source' versions of your plugins, for some reasion -->
+			<!-- it will also have included this org.eclipse.pde.build.uber.feature -->
+			<!-- which we don't care about so we exclude it from our unzip task -->
+			<patternset>
+				<exclude name="**/org.eclipse.pde.build.uber.feature.source*" />
+			</patternset>
+
+		</unzip>
+
+		<!-- Generate the site.xml -->
+		<bxp:generatesitexml eclipsedir="${updateSiteName}" />
+
+		<!-- (Optional) make a zip of this update site -->
+		<zip destfile="${updateSiteName}.zip" basedir="${updateSiteName}" />
+
+	</target>
+	<!-- end::prepareupdatesite[] -->
+
+	<!-- tag::importdominoplugins[] -->
+	<target name="importdominoplugins">
+
+		<bxp:importplugins 
+			database="${nsfupdatesite.database}" 
+			sitexml="${updateSiteName}/site.xml"
+			deletefirst="false"/>
+
+	</target>
+	<!-- end::importdominoplugins[] -->
+	
+	<!-- tag::restarthttp[] -->
+	<target name="restarthttp">
+		<bxp:controlhttp server="${nsfupdatesite.server}" action="restart" />
+	</target>
+	<!-- end::restarthttp[] -->
+
+	<!-- tag::configuredesigner[] -->
+	<target name="configuredesigner">
+	
+		<bxp:configureDynamicPlugins/>
+		
+		<bxp:initDesignerSite updateSiteLabel="${updateSiteLabel}" updateSiteDir="${updateSiteName}"/>		
+		
+	</target>
+	<!-- tag::configuredesigner[] -->
+
+
+</project>
