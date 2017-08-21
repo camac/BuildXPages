@@ -57,9 +57,13 @@ public class ImportPluginsTask extends Task {
 	@Override
 	public void execute() throws BuildException {
 
-		log("Server is " + getServer());
-		log("Database is " + getDatabase());
-		log("SiteXml is " + getSitexml());
+		if (getServer() == null) {
+			log("Server  : (Local)");
+		} else {
+			log("Server  : " + getServer());
+		}
+		log("Database: " + getDatabase());
+		log("SiteXml : " + getSitexml());
 
 		try {
 
@@ -75,7 +79,7 @@ public class ImportPluginsTask extends Task {
 
 			Agent agent = db.getAgent(AGENT_NAME);
 
-			log("Running " + AGENT_NAME + " as " + s.getEffectiveUserName());
+			log("Running Agent: " + AGENT_NAME + " as " + s.getEffectiveUserName());
 
 			if (isDeletefirst()) {
 				log("Deleting existing Plugins");
@@ -108,7 +112,7 @@ public class ImportPluginsTask extends Task {
 		} catch (NotesException e) {
 			e.printStackTrace();
 		} finally {
-			System.out.println("Terminating Notes Thread");
+			//System.out.println("Terminating Notes Thread");
 			NotesThread.stermThread();
 		}
 
