@@ -1,6 +1,6 @@
 ==== Install a JDK (Java Development Kit)
 
-I recommend installing a 32-bit JDK, because IBM Notes is 32-bit
+
 
 [NOTE]
 ====

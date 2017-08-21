@@ -1,13 +1,68 @@
 ==== Install Ant
 
-Installing Ant is a matter of downloading and extracting ant
+We will be using Apache Ant as our main build tool, so we need to install it!
 
-If < FP8 use Ant 1.9
+===== Download Ant
 
-Set JAVA_HOME to Notes JRE
+Installing Ant is a matter of downloading and extracting Ant to your desired location
 
-If you see 'Unable to locate tools.jar'ant
+Go to http://ant.apache.org/bindownload.cgi and download the appropriate archive.
+For Example, I am on a windows machine so I will download the zip archive.
 
-DORY has NOTES_PROGDIR on the path
-but listed as E:\Program Files etc
-did we try using Notes?
+[IMPORTANT]
+====
+Ant version 1.10 requires Java 8, Although this may work with Notes FP8 and later, I recommend sticking with version 1.9.x due to the likelihood of having to run it using a Java 6 runtime, and the fact that I haven't tested BuildXPages with Ant 1.10 yet.
+====
+
+image::images\AntDownload.JPG[]
+
+===== Extract the Downloaded Archive
+
+Extract your download ant archive to it's final destination. I usually put it in a directory called `ant` in the root, and keep it with it's version name
+`C:\ant\apache-ant-1.9.9`
+
+===== Setup Environment Variables
+
+Add Ant's *bin* directory (e.g. C:\ant\apache-ant-1.9.9\bin) to your PATH Environment variable. This will enable you to be able to run the command `ant` from anywhere
+
+====== Set ANT_HOME Environment Variables
+
+Add an *ANT_HOME* Environment Variable that points to Ant's home directory
+
+image::images\AntHomeEnvVar.JPG[]
+
+====== Set JAVA_HOME Environment Variable to Notes JRE
+
+Ant is a java program that runs within a Java Runtime Environment (JRE) or Java Development Kit (JDK).
+Usually you would install and configure a JDK for Ant to be run on.
+The common way to tell Ant where to find the JRE/JDK is to use the *JAVA_HOME* environment variable.
+
+Some of BuildXPages tasks require the Notes Java API, and these tasks need access to the Notes Java Libraries and also a compatible environment. The easiest method here is to set JAVA_HOME to point to the JRE which is provided by IBM Notes, as this should already have all the necessary libraries on the class path.
+
+If you are running any other Java programs that utilise JAVA_HOME, then maybe they will be affected by this. I leave it up to you to decide on this! 
+
+So we can simply add this JVM as the JAVA_HOME
+
+image::images\JavaHomeEnvVar.JPG[]
+
+Be aware that with IBM Notes FP8 and greater, there are 2 JVMs 
+
+* %NOTES_PROGDIR%\jvm
+* %NOTES_PROGDIR%\jvm1.6
+
+You should be fine with using either but let me know if I'm wrong!
+
+=== Verify Installation
+
+Once you have everything setup, it is time to test it out
+Open up a fresh Command Prompt, and type
+```
+ant -version
+```
+
+If everything is fine you should see output similar to this (but with your version and maybe a different date):
+[source,txt]
+----
+Apache Ant(TM) version 1.9.9 compiled on <somedate>
+
+----

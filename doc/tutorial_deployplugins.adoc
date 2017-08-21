@@ -79,10 +79,12 @@ BUILD SUCCESSFUL
 Total time: 0 seconds
 ----
 
-And if you look in the tutorial folder, you should see 2 new entries which is our built update site in both directory and archive format
+And if you look in the tutorial folder, you should see 2 new entries: 
 
 * a new directory com.gregorbyte.buildxpages.demo.updatesite
 * a new zip file com.gregorbyte.buildxpages.demo.updatesite.zip
+
+We now have an Update Site! Even better, we have 2 to choose from, we can use it in archive format (.zip) or as the directory format.
 
 === Deploying to Domino Server
 
@@ -93,7 +95,12 @@ The main 2 options you have for Deploying plugins to a server are:
 
 My preferred method of deploying plugins to a server is to use an Update Site NSF. The advantage is that this NSF Update site can replicate to other servers, and that means you only have to deploy to your primary server. Another advantage is that you can delete older versions of plugins whilst the server is still running. 
 
-Otherwise if you are deploying to the filesystem of every server you may have a tricky time accessing each server remotely, also you cannot delete plugins that are in use when the server is running. It can be an option though if you are deploying to a local testing server
+Otherwise if you are deploying to the filesystem of every server you may have a tricky time accessing each server remotely, also you cannot delete plugins that are in use when the server is running. It can be an option though if you are deploying to a local testing server.
+
+[TIP]
+====
+If you are deploying via the filesystem, and your plugin contains a 3rd party jar library within it, you may need to 'unpack' your plugin. Buildxpages provides an 'unpackplugin' task to help you with this. I have not included it in the tutorial but if you have trouble let me know
+====
 
 ==== Deploying to an NSF Update Site
 
@@ -138,10 +145,26 @@ You should see some output like this:
 
 [source,txt]
 ----
-TODO
+Buildfile: V:\Projects\BuildXPages\demo\deployplugins\build.xml
+
+importdominoplugins:
+[bxp:importplugins] Server  : (Local)
+[bxp:importplugins] Database: temp/TestUpdateSite.nsf
+[bxp:importplugins] SiteXml : V:\Projects\BuildXPages\demo\deployplugins\com.gregorbyte.buildxpages.demo.updatesite\site.xml
+[bxp:importplugins] Running Agent: (API) as CN=Cameron Gregor/O=Gregorbyte
+[bxp:importplugins] Can't find resource for bundle feature, key en_AU in V:\Projects\BuildXPages\demo\deployplugins\com.gregorbyte.buildxpages.demo.updatesite\features\com.gregorbyte.buildxpages.demo.feature_1.0.0.201708202137.jar
+[bxp:importplugins] Trying en
+[bxp:importplugins] Can't find resource for bundle feature, key en in V:\Projects\BuildXPages\demo\deployplugins\com.gregorbyte.buildxpages.demo.updatesite\features\com.gregorbyte.buildxpages.demo.feature_1.0.0.201708202137.jar
+[25F8:0002-0FCC] 21/08/2017 10:04:26 PM  Agent 'API' error: Object variable not set
+[25F8:0002-0FCC] 21/08/2017 10:04:26 PM  Agent 'API' error: Object variable not set
+[25F8:0002-0FCC] 21/08/2017 10:04:26 PM  Agent 'API' error: Object variable not set
+[25F8:0002-0FCC] 21/08/2017 10:04:26 PM  Agent 'API' error: Object variable not set
+
+BUILD SUCCESSFUL
+Total time: 2 seconds
 ----
 
-Ignore the errors, they always show up and I have never been bothered enough to fix that, the end result though is you should see these plugins and features in your NSF Update Site
+Ignore the errors, they always show up but do not prevent the import from happening. I have never been bothered enough to fix that, the end result though is you should see these plugins and features in your NSF Update Site
 
 image::..\images\NSFUpdateSiteImported.JPG[]
 
@@ -203,11 +226,16 @@ ant configuredesigner
 
 Now when we start Designer it should load our plugins! And we didn't have to go through all that provisioning operations.
 
+[TIP]
+====
+If you have a plugin that contains a 3rd party jar within it, you may need to 'unpack' the plugin. See BuildXPages 'unpackplugin' task for more info
+====
+
 ==== Deploying using the Headless Designer Plugin
 
 [NOTE]
 ====
-This functionality is not yet complete but is next on my list
+This functionality is not yet complete but is next on my list! The intention is to use Eclipse's Library Update Manager. IBM's default Headless system provided a similar functionality but I am not sure if it is still supported or documented. I hope to provide the same idea
 ====
 
 === Conclusion

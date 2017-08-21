@@ -7,8 +7,6 @@ This section will hopefully guide you through the process. Please let me know vi
 
 I won't tell you how to do that because you should know by now :)
 
-include::howto_installjdk.adoc[]
-
 include::howto_installant.adoc[]
 
 include::howto_installantlibrary.adoc[]

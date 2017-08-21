@@ -14,6 +14,9 @@
 	<!-- The name of the updatesite we are creating -->
 	<property name="updateSiteName" value="com.gregorbyte.buildxpages.demo.updatesite">
 	</property>
+	<!-- The location of the site.xml file -->
+	<property name="updateSite.siteXml" location="${updateSiteName}/site.xml"></property>
+	
 	<!-- end::properties[] -->
 
 	<!-- tag::nsfupdatesiteproperties[] -->
@@ -66,7 +69,7 @@
 
 		<bxp:importplugins 
 			database="${nsfupdatesite.database}" 
-			sitexml="${updateSiteName}/site.xml"
+			sitexml="${updateSite.siteXml}"
 			deletefirst="false"/>
 
 	</target>
