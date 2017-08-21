@@ -722,12 +722,27 @@ div.olist { padding-left: 1.25em; }
 <div class="sect3">
 <h4 id="_environment_variables">Environment Variables</h4>
 <div class="paragraph">
-<p>NOTES_PROGDIR
-NOTES_DATADIR
-DOMINO_PROGDIR
-DOMINO_DATADIR
-ECLIPSE_BASE</p>
+<p>Some of the BuildXPages tasks need to know the location of some things that are common to the entire computer. These locations can be specified once and for all by setting them up as the following environment variables.</p>
 </div>
+<div class="paragraph">
+<p>If you don&#8217;t want to set these up, that is fine but you will then need to provide them when running ant using a properties file or similar.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Once you open up a command prompt, it has loaded it&#8217;s environment variables and will not receive any new or modified variables. So if you have added or changed environment variables, you will need to start a fresh new console prompt to see the updated variables.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_ibm_notes_directory_locations">IBM Notes Directory Locations</h5>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -742,25 +757,57 @@ ECLIPSE_BASE</p>
 </tr>
 </table>
 </div>
-<div class="admonitionblock tip">
+<div class="hdlist">
 <table>
 <tr>
-<td class="icon">
-<div class="title">Tip</div>
+<td class="hdlist1">
+NOTES_PROGDIR
 </td>
-<td class="content">
-<div class="paragraph">
-<p>Once a console prompt has opened up, it has loaded it&#8217;s environment variables and will not receive any new or modified variables. So if you have added or changed environment variables, you will need to start a new console prompt to see the effect.</p>
-</div>
+<td class="hdlist2">
+<p>IBM Notes' Program Directory e.g. <code>C:\Progra~2\IBM\Notes</code></p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+NOTES_DATADIR
+</td>
+<td class="hdlist2">
+<p>Your Notes Data Directory e.g. <code>C:\Progra~2\IBM\Notes\Data</code></p>
 </td>
 </tr>
 </table>
 </div>
 </div>
+<div class="sect4">
+<h5 id="_headless_plugin_building">Headless Plugin Building</h5>
+<div class="paragraph">
+<p>The following Environment Variables are only useful if you are intending to build plugins and features headless eclipse.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">BXP_ECLIPSE_BASE</dt>
+<dd>
+<p>This is the root folder of your Eclipse installation</p>
+</dd>
+<dt class="hdlist1">BXP_PDEBUILDXML</dt>
+<dd>
+<p>This is the location of your PDE Build XML file.
+This is a file which provides the actual recipe to build plugins. In older versions of eclipse it will be under <code>&lt;eclipse&gt;/plugins/org.eclipse.pde.build_&lt;version&gt;/scripts/build.xml</code>
+In Newer versions of eclipse it will be located under your user home directory&#8217;s p2 pool of plugins <code>&lt;userhome&gt;/.p2/pool/plugins/org.eclipse.pde.build_&lt;version&gt;/scripts/build.xml</code></p>
+</dd>
+<dt class="hdlist1">BXP_EQUINOX_LAUNCHER</dt>
+<dd>
+<p>This is an executable jar which launches the plugin build process. In older versions of eclipse it will be under &lt;eclipse&gt;/plugins/org.eclipse.equinox.launcher_&lt;version&gt;.jar
+In Newer versions of eclipse it will be located under your user home directory&#8217;s p2 pool of plugins &lt;userhome&gt;/.p2/pool/plugins/org.eclipse.equinox.launcher_&lt;version&gt;.jar</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-12 22:36:12 AEST
+Last updated 2017-08-21 23:22:43 AEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">

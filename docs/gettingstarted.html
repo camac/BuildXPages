@@ -733,43 +733,119 @@ This section will hopefully guide you through the process. Please let me know vi
 </div>
 </div>
 <div class="sect3">
-<h4 id="_install_a_jdk_java_development_kit">Install a JDK (Java Development Kit)</h4>
+<h4 id="_install_ant">Install Ant</h4>
 <div class="paragraph">
-<p>I recommend installing a 32-bit JDK, because IBM Notes is 32-bit</p>
+<p>We will be using Apache Ant as our main build tool, so we need to install it!</p>
 </div>
-<div class="admonitionblock note">
+<div class="sect4">
+<h5 id="_download_ant">Download Ant</h5>
+<div class="paragraph">
+<p>Installing Ant is a matter of downloading and extracting Ant to your desired location</p>
+</div>
+<div class="paragraph">
+<p>Go to <a href="http://ant.apache.org/bindownload.cgi" class="bare">http://ant.apache.org/bindownload.cgi</a> and download the appropriate archive.
+For Example, I am on a windows machine so I will download the zip archive.</p>
+</div>
+<div class="admonitionblock important">
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<div class="title">Important</div>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>You may actually be able to use the JDK in IBM Notes!</p>
+<p>Ant version 1.10 requires Java 8, Although this may work with Notes FP8 and later, I recommend sticking with version 1.9.x due to the likelihood of having to run it using a Java 6 runtime, and the fact that I haven&#8217;t tested BuildXPages with Ant 1.10 yet.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="images/images/AntDownload.JPG" alt="AntDownload">
 </div>
-<div class="sect3">
-<h4 id="_install_ant">Install Ant</h4>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_extract_the_downloaded_archive">Extract the Downloaded Archive</h5>
 <div class="paragraph">
-<p>Installing Ant is a matter of downloading and extracting ant</p>
+<p>Extract your download ant archive to it&#8217;s final destination. I usually put it in a directory called <code>ant</code> in the root, and keep it with it&#8217;s version name
+<code>C:\ant\apache-ant-1.9.9</code></p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_setup_environment_variables">Setup Environment Variables</h5>
+<div class="paragraph">
+<p>Add Ant&#8217;s <strong>bin</strong> directory (e.g. C:\ant\apache-ant-1.9.9\bin) to your PATH Environment variable. This will enable you to be able to run the command <code>ant</code> from anywhere</p>
+</div>
+<div class="sect5">
+<h6 id="_set_ant_home_environment_variables">Set ANT_HOME Environment Variables</h6>
+<div class="paragraph">
+<p>Add an <strong>ANT_HOME</strong> Environment Variable that points to Ant&#8217;s home directory</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/images/AntHomeEnvVar.JPG" alt="AntHomeEnvVar">
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_set_java_home_environment_variable_to_notes_jre">Set JAVA_HOME Environment Variable to Notes JRE</h6>
+<div class="paragraph">
+<p>Ant is a java program that runs within a Java Runtime Environment (JRE) or Java Development Kit (JDK).
+Usually you would install and configure a JDK for Ant to be run on.
+The common way to tell Ant where to find the JRE/JDK is to use the <strong>JAVA_HOME</strong> environment variable.</p>
 </div>
 <div class="paragraph">
-<p>If &lt; FP8 use Ant 1.9</p>
+<p>Some of BuildXPages tasks require the Notes Java API, and these tasks need access to the Notes Java Libraries and also a compatible environment. The easiest method here is to set JAVA_HOME to point to the JRE which is provided by IBM Notes, as this should already have all the necessary libraries on the class path.</p>
 </div>
 <div class="paragraph">
-<p>Set JAVA_HOME to Notes JRE</p>
+<p>If you are running any other Java programs that utilise JAVA_HOME, then maybe they will be affected by this. I leave it up to you to decide on this!</p>
 </div>
 <div class="paragraph">
-<p>If you see 'Unable to locate tools.jar&#8217;ant</p>
+<p>So we can simply add this JVM as the JAVA_HOME</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/images/JavaHomeEnvVar.JPG" alt="JavaHomeEnvVar">
+</div>
 </div>
 <div class="paragraph">
-<p>DORY has NOTES_PROGDIR on the path
-but listed as E:\Program Files etc
-did we try using Notes?</p>
+<p>Be aware that with IBM Notes FP8 and greater, there are 2 JVMs</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>%NOTES_PROGDIR%\jvm</p>
+</li>
+<li>
+<p>%NOTES_PROGDIR%\jvm1.6</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You should be fine with using either but let me know if I&#8217;m wrong!</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_verify_installation">Verify Installation</h3>
+<div class="paragraph">
+<p>Once you have everything setup, it is time to test it out
+Open up a fresh Command Prompt, and type</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>ant -version</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If everything is fine you should see output similar to this (but with your version and maybe a different date):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Apache Ant(TM) version 1.9.9 compiled on &lt;somedate&gt;</code></pre>
 </div>
 </div>
 <div class="sect3">
@@ -860,12 +936,27 @@ Follow the instructions!</p>
 <div class="sect3">
 <h4 id="_environment_variables">Environment Variables</h4>
 <div class="paragraph">
-<p>NOTES_PROGDIR
-NOTES_DATADIR
-DOMINO_PROGDIR
-DOMINO_DATADIR
-ECLIPSE_BASE</p>
+<p>Some of the BuildXPages tasks need to know the location of some things that are common to the entire computer. These locations can be specified once and for all by setting them up as the following environment variables.</p>
 </div>
+<div class="paragraph">
+<p>If you don&#8217;t want to set these up, that is fine but you will then need to provide them when running ant using a properties file or similar.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Once you open up a command prompt, it has loaded it&#8217;s environment variables and will not receive any new or modified variables. So if you have added or changed environment variables, you will need to start a fresh new console prompt to see the updated variables.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_ibm_notes_directory_locations">IBM Notes Directory Locations</h5>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -880,19 +971,51 @@ ECLIPSE_BASE</p>
 </tr>
 </table>
 </div>
-<div class="admonitionblock tip">
+<div class="hdlist">
 <table>
 <tr>
-<td class="icon">
-<div class="title">Tip</div>
+<td class="hdlist1">
+NOTES_PROGDIR
 </td>
-<td class="content">
-<div class="paragraph">
-<p>Once a console prompt has opened up, it has loaded it&#8217;s environment variables and will not receive any new or modified variables. So if you have added or changed environment variables, you will need to start a new console prompt to see the effect.</p>
-</div>
+<td class="hdlist2">
+<p>IBM Notes' Program Directory e.g. <code>C:\Progra~2\IBM\Notes</code></p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+NOTES_DATADIR
+</td>
+<td class="hdlist2">
+<p>Your Notes Data Directory e.g. <code>C:\Progra~2\IBM\Notes\Data</code></p>
 </td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_headless_plugin_building">Headless Plugin Building</h5>
+<div class="paragraph">
+<p>The following Environment Variables are only useful if you are intending to build plugins and features headless eclipse.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">BXP_ECLIPSE_BASE</dt>
+<dd>
+<p>This is the root folder of your Eclipse installation</p>
+</dd>
+<dt class="hdlist1">BXP_PDEBUILDXML</dt>
+<dd>
+<p>This is the location of your PDE Build XML file.
+This is a file which provides the actual recipe to build plugins. In older versions of eclipse it will be under <code>&lt;eclipse&gt;/plugins/org.eclipse.pde.build_&lt;version&gt;/scripts/build.xml</code>
+In Newer versions of eclipse it will be located under your user home directory&#8217;s p2 pool of plugins <code>&lt;userhome&gt;/.p2/pool/plugins/org.eclipse.pde.build_&lt;version&gt;/scripts/build.xml</code></p>
+</dd>
+<dt class="hdlist1">BXP_EQUINOX_LAUNCHER</dt>
+<dd>
+<p>This is an executable jar which launches the plugin build process. In older versions of eclipse it will be under &lt;eclipse&gt;/plugins/org.eclipse.equinox.launcher_&lt;version&gt;.jar
+In Newer versions of eclipse it will be located under your user home directory&#8217;s p2 pool of plugins &lt;userhome&gt;/.p2/pool/plugins/org.eclipse.equinox.launcher_&lt;version&gt;.jar</p>
+</dd>
+</dl>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -944,9 +1067,10 @@ ECLIPSE_BASE</p>
 </div>
 </div>
 </div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-12 23:13:16 AEST
+Last updated 2017-08-21 22:15:23 AEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">

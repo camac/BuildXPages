@@ -1538,7 +1538,9 @@ tutorial&#8217;s build.xml file.</p>
 	&lt;/property&gt;
 	&lt;!-- The name of the updatesite we are creating --&gt;
 	&lt;property name="updateSiteName" value="com.gregorbyte.buildxpages.demo.updatesite"&gt;
-	&lt;/property&gt;</code></pre>
+	&lt;/property&gt;
+	&lt;!-- The location of the site.xml file --&gt;
+	&lt;property name="updateSite.siteXml" location="${updateSiteName}/site.xml"&gt;&lt;/property&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1582,7 +1584,7 @@ Total time: 0 seconds</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And if you look in the tutorial folder, you should see 2 new entries which is our built update site in both directory and archive format</p>
+<p>And if you look in the tutorial folder, you should see 2 new entries:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1593,6 +1595,9 @@ Total time: 0 seconds</code></pre>
 <p>a new zip file com.gregorbyte.buildxpages.demo.updatesite.zip</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>We now have an Update Site! Even better, we have 2 to choose from, we can use it in archive format (.zip) or as the directory format.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1614,7 +1619,21 @@ Total time: 0 seconds</code></pre>
 <p>My preferred method of deploying plugins to a server is to use an Update Site NSF. The advantage is that this NSF Update site can replicate to other servers, and that means you only have to deploy to your primary server. Another advantage is that you can delete older versions of plugins whilst the server is still running.</p>
 </div>
 <div class="paragraph">
-<p>Otherwise if you are deploying to the filesystem of every server you may have a tricky time accessing each server remotely, also you cannot delete plugins that are in use when the server is running. It can be an option though if you are deploying to a local testing server</p>
+<p>Otherwise if you are deploying to the filesystem of every server you may have a tricky time accessing each server remotely, also you cannot delete plugins that are in use when the server is running. It can be an option though if you are deploying to a local testing server.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you are deploying via the filesystem, and your plugin contains a 3rd party jar library within it, you may need to 'unpack' your plugin. Buildxpages provides an 'unpackplugin' task to help you with this. I have not included it in the tutorial but if you have trouble let me know</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="sect4">
 <h5 id="_deploying_to_an_nsf_update_site">Deploying to an NSF Update Site</h5>
@@ -1662,7 +1681,7 @@ Make sure you change these properties to the server and database that you have s
 
 		&lt;bxp:importplugins
 			database="${nsfupdatesite.database}"
-			sitexml="${updateSiteName}/site.xml"
+			sitexml="${updateSite.siteXml}"
 			deletefirst="false"/&gt;
 
 	&lt;/target&gt;</code></pre>
@@ -1695,11 +1714,27 @@ Make sure you change these properties to the server and database that you have s
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">TODO</code></pre>
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\deployplugins\build.xml
+
+importdominoplugins:
+[bxp:importplugins] Server  : (Local)
+[bxp:importplugins] Database: temp/TestUpdateSite.nsf
+[bxp:importplugins] SiteXml : V:\Projects\BuildXPages\demo\deployplugins\com.gregorbyte.buildxpages.demo.updatesite\site.xml
+[bxp:importplugins] Running Agent: (API) as CN=Cameron Gregor/O=Gregorbyte
+[bxp:importplugins] Can't find resource for bundle feature, key en_AU in V:\Projects\BuildXPages\demo\deployplugins\com.gregorbyte.buildxpages.demo.updatesite\features\com.gregorbyte.buildxpages.demo.feature_1.0.0.201708202137.jar
+[bxp:importplugins] Trying en
+[bxp:importplugins] Can't find resource for bundle feature, key en in V:\Projects\BuildXPages\demo\deployplugins\com.gregorbyte.buildxpages.demo.updatesite\features\com.gregorbyte.buildxpages.demo.feature_1.0.0.201708202137.jar
+[25F8:0002-0FCC] 21/08/2017 10:04:26 PM  Agent 'API' error: Object variable not set
+[25F8:0002-0FCC] 21/08/2017 10:04:26 PM  Agent 'API' error: Object variable not set
+[25F8:0002-0FCC] 21/08/2017 10:04:26 PM  Agent 'API' error: Object variable not set
+[25F8:0002-0FCC] 21/08/2017 10:04:26 PM  Agent 'API' error: Object variable not set
+
+BUILD SUCCESSFUL
+Total time: 2 seconds</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Ignore the errors, they always show up and I have never been bothered enough to fix that, the end result though is you should see these plugins and features in your NSF Update Site</p>
+<p>Ignore the errors, they always show up but do not prevent the import from happening. I have never been bothered enough to fix that, the end result though is you should see these plugins and features in your NSF Update Site</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1810,6 +1845,20 @@ Make sure your previously used NSF Update Site Location is selected and then cli
 <div class="paragraph">
 <p>Now when we start Designer it should load our plugins! And we didn&#8217;t have to go through all that provisioning operations.</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you have a plugin that contains a 3rd party jar within it, you may need to 'unpack' the plugin. See BuildXPages 'unpackplugin' task for more info</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect4">
 <h5 id="_deploying_using_the_headless_designer_plugin">Deploying using the Headless Designer Plugin</h5>
@@ -1821,7 +1870,7 @@ Make sure your previously used NSF Update Site Location is selected and then cli
 </td>
 <td class="content">
 <div class="paragraph">
-<p>This functionality is not yet complete but is next on my list</p>
+<p>This functionality is not yet complete but is next on my list! The intention is to use Eclipse&#8217;s Library Update Manager. IBM&#8217;s default Headless system provided a similar functionality but I am not sure if it is still supported or documented. I hope to provide the same idea</p>
 </div>
 </td>
 </tr>

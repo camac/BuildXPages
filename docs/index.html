@@ -735,13 +735,8 @@ div.olist { padding-left: 1.25em; }
 <li><a href="#_getting_started">Getting Started</a>
 <ul class="sectlevel3">
 <li><a href="#_install_ibm_notes_designer">Install IBM Notes/Designer</a></li>
-<li><a href="#_install_a_jdk_java_development_kit">Install a JDK (Java Development Kit)</a></li>
 <li><a href="#_install_ant">Install Ant</a></li>
-<li><a href="#_install_the_buildxpages_ant_library">Install the BuildXPages Ant Library</a></li>
-<li><a href="#_install_eclipse_plugin_building_only">Install Eclipse (Plugin Building only)</a></li>
-<li><a href="#_environment_variables">Environment Variables</a></li>
-<li><a href="#_install_the_headless_designer_plugin_to_notes_designer">Install the Headless Designer Plugin to Notes/Designer</a></li>
-<li><a href="#_removing_a_password_from_notes_id">Removing a Password from Notes ID</a></li>
+<li><a href="#_verify_installation">Verify Installation</a></li>
 </ul>
 </li>
 <li><a href="#_build4xpages_designer_plugin">Build4XPages Designer plugin</a>
@@ -861,43 +856,119 @@ This section will hopefully guide you through the process. Please let me know vi
 </div>
 </div>
 <div class="sect3">
-<h4 id="_install_a_jdk_java_development_kit">Install a JDK (Java Development Kit)</h4>
+<h4 id="_install_ant">Install Ant</h4>
 <div class="paragraph">
-<p>I recommend installing a 32-bit JDK, because IBM Notes is 32-bit</p>
+<p>We will be using Apache Ant as our main build tool, so we need to install it!</p>
 </div>
-<div class="admonitionblock note">
+<div class="sect4">
+<h5 id="_download_ant">Download Ant</h5>
+<div class="paragraph">
+<p>Installing Ant is a matter of downloading and extracting Ant to your desired location</p>
+</div>
+<div class="paragraph">
+<p>Go to <a href="http://ant.apache.org/bindownload.cgi" class="bare">http://ant.apache.org/bindownload.cgi</a> and download the appropriate archive.
+For Example, I am on a windows machine so I will download the zip archive.</p>
+</div>
+<div class="admonitionblock important">
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<div class="title">Important</div>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>You may actually be able to use the JDK in IBM Notes!</p>
+<p>Ant version 1.10 requires Java 8, Although this may work with Notes FP8 and later, I recommend sticking with version 1.9.x due to the likelihood of having to run it using a Java 6 runtime, and the fact that I haven&#8217;t tested BuildXPages with Ant 1.10 yet.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="images/images/AntDownload.JPG" alt="AntDownload">
 </div>
-<div class="sect3">
-<h4 id="_install_ant">Install Ant</h4>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_extract_the_downloaded_archive">Extract the Downloaded Archive</h5>
 <div class="paragraph">
-<p>Installing Ant is a matter of downloading and extracting ant</p>
+<p>Extract your download ant archive to it&#8217;s final destination. I usually put it in a directory called <code>ant</code> in the root, and keep it with it&#8217;s version name
+<code>C:\ant\apache-ant-1.9.9</code></p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_setup_environment_variables">Setup Environment Variables</h5>
+<div class="paragraph">
+<p>Add Ant&#8217;s <strong>bin</strong> directory (e.g. C:\ant\apache-ant-1.9.9\bin) to your PATH Environment variable. This will enable you to be able to run the command <code>ant</code> from anywhere</p>
+</div>
+<div class="sect5">
+<h6 id="_set_ant_home_environment_variables">Set ANT_HOME Environment Variables</h6>
+<div class="paragraph">
+<p>Add an <strong>ANT_HOME</strong> Environment Variable that points to Ant&#8217;s home directory</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/images/AntHomeEnvVar.JPG" alt="AntHomeEnvVar">
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_set_java_home_environment_variable_to_notes_jre">Set JAVA_HOME Environment Variable to Notes JRE</h6>
+<div class="paragraph">
+<p>Ant is a java program that runs within a Java Runtime Environment (JRE) or Java Development Kit (JDK).
+Usually you would install and configure a JDK for Ant to be run on.
+The common way to tell Ant where to find the JRE/JDK is to use the <strong>JAVA_HOME</strong> environment variable.</p>
 </div>
 <div class="paragraph">
-<p>If &lt; FP8 use Ant 1.9</p>
+<p>Some of BuildXPages tasks require the Notes Java API, and these tasks need access to the Notes Java Libraries and also a compatible environment. The easiest method here is to set JAVA_HOME to point to the JRE which is provided by IBM Notes, as this should already have all the necessary libraries on the class path.</p>
 </div>
 <div class="paragraph">
-<p>Set JAVA_HOME to Notes JRE</p>
+<p>If you are running any other Java programs that utilise JAVA_HOME, then maybe they will be affected by this. I leave it up to you to decide on this!</p>
 </div>
 <div class="paragraph">
-<p>If you see 'Unable to locate tools.jar&#8217;ant</p>
+<p>So we can simply add this JVM as the JAVA_HOME</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/images/JavaHomeEnvVar.JPG" alt="JavaHomeEnvVar">
+</div>
 </div>
 <div class="paragraph">
-<p>DORY has NOTES_PROGDIR on the path
-but listed as E:\Program Files etc
-did we try using Notes?</p>
+<p>Be aware that with IBM Notes FP8 and greater, there are 2 JVMs</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>%NOTES_PROGDIR%\jvm</p>
+</li>
+<li>
+<p>%NOTES_PROGDIR%\jvm1.6</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You should be fine with using either but let me know if I&#8217;m wrong!</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_verify_installation">Verify Installation</h3>
+<div class="paragraph">
+<p>Once you have everything setup, it is time to test it out
+Open up a fresh Command Prompt, and type</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>ant -version</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If everything is fine you should see output similar to this (but with your version and maybe a different date):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Apache Ant(TM) version 1.9.9 compiled on &lt;somedate&gt;</code></pre>
 </div>
 </div>
 <div class="sect3">
@@ -988,12 +1059,27 @@ Follow the instructions!</p>
 <div class="sect3">
 <h4 id="_environment_variables">Environment Variables</h4>
 <div class="paragraph">
-<p>NOTES_PROGDIR
-NOTES_DATADIR
-DOMINO_PROGDIR
-DOMINO_DATADIR
-ECLIPSE_BASE</p>
+<p>Some of the BuildXPages tasks need to know the location of some things that are common to the entire computer. These locations can be specified once and for all by setting them up as the following environment variables.</p>
 </div>
+<div class="paragraph">
+<p>If you don&#8217;t want to set these up, that is fine but you will then need to provide them when running ant using a properties file or similar.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Once you open up a command prompt, it has loaded it&#8217;s environment variables and will not receive any new or modified variables. So if you have added or changed environment variables, you will need to start a fresh new console prompt to see the updated variables.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_ibm_notes_directory_locations">IBM Notes Directory Locations</h5>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -1008,19 +1094,51 @@ ECLIPSE_BASE</p>
 </tr>
 </table>
 </div>
-<div class="admonitionblock tip">
+<div class="hdlist">
 <table>
 <tr>
-<td class="icon">
-<div class="title">Tip</div>
+<td class="hdlist1">
+NOTES_PROGDIR
 </td>
-<td class="content">
-<div class="paragraph">
-<p>Once a console prompt has opened up, it has loaded it&#8217;s environment variables and will not receive any new or modified variables. So if you have added or changed environment variables, you will need to start a new console prompt to see the effect.</p>
-</div>
+<td class="hdlist2">
+<p>IBM Notes' Program Directory e.g. <code>C:\Progra~2\IBM\Notes</code></p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+NOTES_DATADIR
+</td>
+<td class="hdlist2">
+<p>Your Notes Data Directory e.g. <code>C:\Progra~2\IBM\Notes\Data</code></p>
 </td>
 </tr>
 </table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_headless_plugin_building">Headless Plugin Building</h5>
+<div class="paragraph">
+<p>The following Environment Variables are only useful if you are intending to build plugins and features headless eclipse.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">BXP_ECLIPSE_BASE</dt>
+<dd>
+<p>This is the root folder of your Eclipse installation</p>
+</dd>
+<dt class="hdlist1">BXP_PDEBUILDXML</dt>
+<dd>
+<p>This is the location of your PDE Build XML file.
+This is a file which provides the actual recipe to build plugins. In older versions of eclipse it will be under <code>&lt;eclipse&gt;/plugins/org.eclipse.pde.build_&lt;version&gt;/scripts/build.xml</code>
+In Newer versions of eclipse it will be located under your user home directory&#8217;s p2 pool of plugins <code>&lt;userhome&gt;/.p2/pool/plugins/org.eclipse.pde.build_&lt;version&gt;/scripts/build.xml</code></p>
+</dd>
+<dt class="hdlist1">BXP_EQUINOX_LAUNCHER</dt>
+<dd>
+<p>This is an executable jar which launches the plugin build process. In older versions of eclipse it will be under &lt;eclipse&gt;/plugins/org.eclipse.equinox.launcher_&lt;version&gt;.jar
+In Newer versions of eclipse it will be located under your user home directory&#8217;s p2 pool of plugins &lt;userhome&gt;/.p2/pool/plugins/org.eclipse.equinox.launcher_&lt;version&gt;.jar</p>
+</dd>
+</dl>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -1065,6 +1183,7 @@ ECLIPSE_BASE</p>
 <div class="imageblock">
 <div class="content">
 <img src="images/images/NotesDontPromptPasswordOthers.JPG" alt="NotesDontPromptPasswordOthers">
+</div>
 </div>
 </div>
 </div>
@@ -1958,7 +2077,9 @@ tutorial&#8217;s build.xml file.</p>
 	&lt;/property&gt;
 	&lt;!-- The name of the updatesite we are creating --&gt;
 	&lt;property name="updateSiteName" value="com.gregorbyte.buildxpages.demo.updatesite"&gt;
-	&lt;/property&gt;</code></pre>
+	&lt;/property&gt;
+	&lt;!-- The location of the site.xml file --&gt;
+	&lt;property name="updateSite.siteXml" location="${updateSiteName}/site.xml"&gt;&lt;/property&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2002,7 +2123,7 @@ Total time: 0 seconds</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And if you look in the tutorial folder, you should see 2 new entries which is our built update site in both directory and archive format</p>
+<p>And if you look in the tutorial folder, you should see 2 new entries:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2013,6 +2134,9 @@ Total time: 0 seconds</code></pre>
 <p>a new zip file com.gregorbyte.buildxpages.demo.updatesite.zip</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>We now have an Update Site! Even better, we have 2 to choose from, we can use it in archive format (.zip) or as the directory format.</p>
 </div>
 </div>
 <div class="sect3">
@@ -2034,7 +2158,21 @@ Total time: 0 seconds</code></pre>
 <p>My preferred method of deploying plugins to a server is to use an Update Site NSF. The advantage is that this NSF Update site can replicate to other servers, and that means you only have to deploy to your primary server. Another advantage is that you can delete older versions of plugins whilst the server is still running.</p>
 </div>
 <div class="paragraph">
-<p>Otherwise if you are deploying to the filesystem of every server you may have a tricky time accessing each server remotely, also you cannot delete plugins that are in use when the server is running. It can be an option though if you are deploying to a local testing server</p>
+<p>Otherwise if you are deploying to the filesystem of every server you may have a tricky time accessing each server remotely, also you cannot delete plugins that are in use when the server is running. It can be an option though if you are deploying to a local testing server.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you are deploying via the filesystem, and your plugin contains a 3rd party jar library within it, you may need to 'unpack' your plugin. Buildxpages provides an 'unpackplugin' task to help you with this. I have not included it in the tutorial but if you have trouble let me know</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="sect4">
 <h5 id="_deploying_to_an_nsf_update_site">Deploying to an NSF Update Site</h5>
@@ -2082,7 +2220,7 @@ Make sure you change these properties to the server and database that you have s
 
 		&lt;bxp:importplugins
 			database="${nsfupdatesite.database}"
-			sitexml="${updateSiteName}/site.xml"
+			sitexml="${updateSite.siteXml}"
 			deletefirst="false"/&gt;
 
 	&lt;/target&gt;</code></pre>
@@ -2115,11 +2253,27 @@ Make sure you change these properties to the server and database that you have s
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">TODO</code></pre>
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\deployplugins\build.xml
+
+importdominoplugins:
+[bxp:importplugins] Server  : (Local)
+[bxp:importplugins] Database: temp/TestUpdateSite.nsf
+[bxp:importplugins] SiteXml : V:\Projects\BuildXPages\demo\deployplugins\com.gregorbyte.buildxpages.demo.updatesite\site.xml
+[bxp:importplugins] Running Agent: (API) as CN=Cameron Gregor/O=Gregorbyte
+[bxp:importplugins] Can't find resource for bundle feature, key en_AU in V:\Projects\BuildXPages\demo\deployplugins\com.gregorbyte.buildxpages.demo.updatesite\features\com.gregorbyte.buildxpages.demo.feature_1.0.0.201708202137.jar
+[bxp:importplugins] Trying en
+[bxp:importplugins] Can't find resource for bundle feature, key en in V:\Projects\BuildXPages\demo\deployplugins\com.gregorbyte.buildxpages.demo.updatesite\features\com.gregorbyte.buildxpages.demo.feature_1.0.0.201708202137.jar
+[25F8:0002-0FCC] 21/08/2017 10:04:26 PM  Agent 'API' error: Object variable not set
+[25F8:0002-0FCC] 21/08/2017 10:04:26 PM  Agent 'API' error: Object variable not set
+[25F8:0002-0FCC] 21/08/2017 10:04:26 PM  Agent 'API' error: Object variable not set
+[25F8:0002-0FCC] 21/08/2017 10:04:26 PM  Agent 'API' error: Object variable not set
+
+BUILD SUCCESSFUL
+Total time: 2 seconds</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Ignore the errors, they always show up and I have never been bothered enough to fix that, the end result though is you should see these plugins and features in your NSF Update Site</p>
+<p>Ignore the errors, they always show up but do not prevent the import from happening. I have never been bothered enough to fix that, the end result though is you should see these plugins and features in your NSF Update Site</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -2230,6 +2384,20 @@ Make sure your previously used NSF Update Site Location is selected and then cli
 <div class="paragraph">
 <p>Now when we start Designer it should load our plugins! And we didn&#8217;t have to go through all that provisioning operations.</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you have a plugin that contains a 3rd party jar within it, you may need to 'unpack' the plugin. See BuildXPages 'unpackplugin' task for more info</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect4">
 <h5 id="_deploying_using_the_headless_designer_plugin">Deploying using the Headless Designer Plugin</h5>
@@ -2241,7 +2409,7 @@ Make sure your previously used NSF Update Site Location is selected and then cli
 </td>
 <td class="content">
 <div class="paragraph">
-<p>This functionality is not yet complete but is next on my list</p>
+<p>This functionality is not yet complete but is next on my list! The intention is to use Eclipse&#8217;s Library Update Manager. IBM&#8217;s default Headless system provided a similar functionality but I am not sure if it is still supported or documented. I hope to provide the same idea</p>
 </div>
 </td>
 </tr>
