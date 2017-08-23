@@ -46,6 +46,9 @@
 	<property name="equinoxLauncherJar" location="${eclipseBase}\plugins\org.eclipse.equinox.launcher_${equinoxLauncherVersion}.jar" />
 	<property name="pdeBuildXml" location="${eclipseBase}\plugins\org.eclipse.pde.build_${pdeBuildVersion}\scripts\build.xml" />
 
+	<property name="distversion" value="0.1.0">
+	</property>
+
 	<target name="help">
 
 		<echo>The following properties must be set</echo>
@@ -145,37 +148,92 @@
 	<target name="docs">
 
 		<taskdef uri="antlib:org.asciidoctor.ant" resource="org/asciidoctor/ant/antlib.xml" classpath="lib/asciidoctor-ant.jar" />
-		<asciidoctor:convert sourceDirectory="doc" outputDirectory="docs" backend="html5" 
-			relativebasedir="true" safemode="unsafe" sourceHighlighter="highlightjs">
+		<asciidoctor:convert sourceDirectory="doc" outputDirectory="docs" backend="html5" relativebasedir="true" safemode="unsafe" sourceHighlighter="highlightjs">
 
 			<attribute key="stylesdir" value="stylesheets">
 			</attribute>
 			<attribute key="stylesheet" value="readthedocs.css">
 			</attribute>
+			<attribute key="revnumber" value="${distversion}" />
 
 			<!-- <resource dir="src/asciidoc/images"/> -->
 
 		</asciidoctor:convert>
 
-		<asciidoctor:convert sourceDirectory="doc" sourceDocumentName="index.adoc" 
-			outputDirectory="docs" backend="pdf" 
-			relativebasedir="true" safemode="unsafe" sourceHighlighter="coderay">
+		<asciidoctor:convert sourceDirectory="doc" sourceDocumentName="index.adoc" outputDirectory="docs" backend="pdf" relativebasedir="true" safemode="unsafe" sourceHighlighter="coderay">
 
 			<attribute key="stylesdir" value="stylesheets">
 			</attribute>
 			<attribute key="stylesheet" value="readthedocs.css">
 			</attribute>
+			<attribute key="revnumber" value="${distversion}" />
 
 
 		</asciidoctor:convert>
 
-		
+
 		<delete dir="docs/images" />
 
 		<copy todir="docs/images">
 			<fileset dir="doc/images">
 			</fileset>
 		</copy>
+
+
+	</target>
+
+	<target name="dist" description="Creates the Distributable Artifacts">
+
+		<delete dir="dist">
+		</delete>
+
+		<mkdir dir="dist" />
+
+		<copy todir="dist/docs">
+			<fileset dir="docs">
+			</fileset>
+		</copy>
+
+		<copy file="docs/index.pdf" tofile="dist/BuildXPagesUserGuide_${distversion}.pdf">
+		</copy>
+		<copy file="README.adoc" tofile="dist/README.txt">
+		</copy>
+		<copy file="LICENSE" tofile="dist/LICENSE.txt">
+		</copy>
+
+		<copy todir="dist/demo/antintro" file="demo/antintro/build.xml" />
+		<copy todir="dist/demo/antintro" file="demo/antintro/build.properties" />
+
+		<copy todir="dist/demo/buildfeature" file="demo/buildfeature/build.xml" />
+		<copy todir="dist/demo/buildfeature" file="demo/buildfeature/build.properties" />
+
+		<copy todir="dist/demo/buildnsf" file="demo/buildnsf/build.xml" />
+		<copy todir="dist/demo/buildnsf" file="demo/buildnsf/build.properties" />
+		<copy todir="dist/demo/buildnsf/sampleodp">
+			<fileset dir="demo/buildnsf/sampleodp">
+			</fileset>
+		</copy>
+
+		<copy todir="dist/demo/deploynsf" file="demo/deploynsf/build.xml" />
+		<copy todir="dist/demo/deploynsf" file="demo/deploynsf/build.properties" />
+
+		<copy todir="dist/demo/deployplugins" file="demo/deployplugins/build.xml" />
+		<!--<copy todir="dist/demo/deployplugins" file="demo/deployplugins/build.properties"/>-->
+
+		<copy file="com.gregorbyte.buildxpages.ant/dist/BuildXPagesAntLib.jar" tofile="dist/dist/BuildXPagesAntLib_${distversion}.jar">
+		</copy>
+
+		<copy file="com.gregorbyte.buildxpages.ant/buildInstall.xml" tofile="dist/build.xml">
+		</copy>
+
+		<copy todir="dist/lib" file="com.gregorbyte.buildxpages.ant/lib/jna-4.1.0.jar" />
+		<copy todir="dist/lib" file="lib/LICENSE_JNA.txt" />
+
+		<zip destfile="dist/dist/com.gregorbyte.designer.headless.updatesite_${distversion}.zip" basedir="com.gregorbyte.designer.headless.updatesite">
+		</zip>
+
+		<zip destfile="dist/BuildXPages_${distversion}.zip" basedir="dist">
+		</zip>
 
 
 	</target>

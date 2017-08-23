@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="BuildXPagesAntLib" basedir="." default="install">
+
+	<typedef file="antlib.xml" onerror="ignore">
+	</typedef>
+
+	<property name="src.dir" value="src" />
+	<property name="bin.dir" value="bin" />
+	<property name="res.dir" value="res" />
+	<property name="lib.dir" value="lib" />
+	<property name="dist.dir" value="dist" />
+
+	<target name="help">
+		<echo>This task will Install the BuildXPages and JNA libraries to your user's ant lib directory</echo>
+		<echo></echo>
+		<echo>If this task fails, make sure you are usingthe -nouserlib option when running ant.</echo>
+		<echo>Also, if you have Eclipse IDE open, it may not be able to delete the previous version of BuildXPages.</echo>
+		<echo>You may need to shut down Eclipse in order to install this library.</echo>
+	</target>
+
+	<target name="installtouserhome" description="Install XPagesCI to user ant dir" depends="help">
+
+		<delete>
+			<fileset dir="${user.home}/.ant/lib" includes="${ant.project.name}*.jar" />
+		</delete>
+
+		<copy todir="${user.home}/.ant/lib">
+			<fileset dir="${dist.dir}" includes="${ant.project.name}*.jar">
+			</fileset>
+		</copy>
+
+		<copy file="${lib.dir}/jna-4.1.0.jar" todir="${user.home}/.ant/lib" overwrite="false">
+		</copy>
+
+	</target>
+
+	<target name="installtoant" description="Install BuildXPages to ant">
+
+		<echo message="${user.home}" />
+
+		<delete file="${ant.library.dir}/${ant.project.name}.jar">
+		</delete>
+		<copy file="${dist.dir}/${ant.project.name}.jar" todir="${ant.library.dir}">
+		</copy>
+
+	</target>
+
+	<target name="install" depends="installtouserhome">
+
+	</target>
+
+</project>
