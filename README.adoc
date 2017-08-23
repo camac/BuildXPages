@@ -1,0 +1,37 @@
+= BuildXPages
+
+BuildXPages is a project which is useful if you are interested in Automating tasks that are involved in building XPages.
+
+For example you may be interested in automating some of these tasks:
+
+* Building NSFs from an On-Disk Project
+* Building Plugins and Features
+* Refreshing NSF Designs
+* Setting Template Inheritance of NSFs
+* Start, Stop and Restart Http server
+* Uploading Plugins to an NSF Update Site
+* Deploy Plugins to Notes/Designer
+
+BuildXPages provides tools which can be used to achieve tasks like these.
+The main part of the project is a collection of 
+
+== Obtaining the Project
+
+Download the latest Release from the Projects Github Releases page, and unzip it to your local filesystem.
+
+=== Contents of Release
+
+The Root directory should contain this README and the LICENCE file, and also the PDF version of the User Guide
+
+The Root directory should have these folders:
+
+demo:: Contains Sample build scripts that demonstrate the tasks that you can achieve with BuildXPages
+dist:: This contains the actual BuildXPages binary distributable artifacts
+docs:: Documentation folder of the User Guide
+lib:: 3rd Party libraries that are used by BuildXPages
+
+=== Getting Started
+
+The best place to start is the user guide! This has instructions on how to install and setup your computer to use BuildXPages.
+
+The release you downloaded will contain a PDF and HTML version of the user guide, but you can always access the latest version of the user guide from the GitHub Project page.
