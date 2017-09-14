@@ -1,18 +1,24 @@
-=== copyplugintobuilddir 
+=== copytobuilddir 
 
 This task is used during preparation for a headless eclipse plugin build. 
-It is used to copy the source code of of a plugin, into the _build directory_ which is a special working directory used to build the plugins and features.
+It is used to copy the source code of of a plugin or feature, into the _build directory_ which is a special working directory used to build the plugins and features.
+The _build directory_ contains 2 subfolders *plugins* and *features* and the plugin or feature will automatically be copied into the correct folder.
+The task will exclude contents of the *bin* folder when copying. The idea is to copy source files only.
 
 ==== Properties used
 
 [horizontal]
-pluginsDir:: The Destination directory, usually the eclipse/plugins folder of the build Directory 
+buildDir:: The Build Directory in which the Headless Plugin Build will take place. this is commonly set to 'buildDirectory'
 
 ==== Attributes
 
+You specify either the plugin you want to copy, or the feature you want to copy.
+You can set both at the same time if you like but I think it makes more sense to separate them into sepearate tasks.
+
 [horizontal]
-plugin:: the folder name of the plugin to copy
+plugin:: the folder location of the plugin to copy
+feature:: the folder location of the feature to copy
 
 ==== Example
 
-include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=copypluginstobuilddir]
+include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=copytobuilddir]

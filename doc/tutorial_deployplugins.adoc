@@ -14,7 +14,6 @@ After building your plugins, now you might want to deploy to either:
 
 At the end of the headless feature build process, you will have a .zip file of your plugins and features. The contents of your zip file will be something like:
 
-[tree,file="images/teset.png"]
 --
 |--eclipse
 |  |--plugins

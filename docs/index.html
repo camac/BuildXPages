@@ -722,7 +722,7 @@ div.olist { padding-left: 1.25em; }
 <div class="details">
 <span id="author" class="author">Cameron Gregor</span><br>
 <span id="email" class="email">camerongregor.com</span><br>
-<span id="revnumber">version 0.1.0</span>
+<span id="revnumber">version 1.0.0</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -734,20 +734,24 @@ div.olist { padding-left: 1.25em; }
 </ul>
 </li>
 <li><a href="#_getting_started">Getting Started</a>
-<ul class="sectlevel3">
+<ul class="sectlevel2">
 <li><a href="#_install_ibm_notes_designer">Install IBM Notes/Designer</a></li>
 <li><a href="#_install_ant">Install Ant</a></li>
-<li><a href="#_verify_installation">Verify Installation</a></li>
+<li><a href="#_install_the_buildxpages_ant_library">Install the BuildXPages Ant Library</a></li>
+<li><a href="#_install_eclipse_plugin_building_only">Install Eclipse (Plugin Building only)</a></li>
+<li><a href="#_environment_variables">Environment Variables</a></li>
+<li><a href="#_installing_buildxpages_designer_plugin">Installing BuildXPages Designer Plugin</a></li>
+<li><a href="#_notes_id_password">Notes ID Password</a></li>
 </ul>
 </li>
 <li><a href="#_build4xpages_designer_plugin">Build4XPages Designer plugin</a>
 <ul class="sectlevel2">
-<li><a href="#_installation">Installation</a></li>
+<li><a href="#_installing_buildxpages_designer_plugin_2">Installing BuildXPages Designer Plugin</a></li>
 <li><a href="#_starting_and_stopping_the_headless_server">Starting and Stopping the Headless Server</a></li>
 <li><a href="#Preferences">Preferences</a></li>
 </ul>
 </li>
-<li><a href="#_tutorials">Tutorials</a>
+<li><a href="#_demonstration_tutorials">Demonstration Tutorials</a>
 <ul class="sectlevel2">
 <li><a href="#_introduction_to_apache_ant">Introduction to Apache Ant</a></li>
 <li><a href="#_building_an_nsf">Building an NSF</a></li>
@@ -850,19 +854,19 @@ The mechanism also involved writing a text 'command file', which was fed in when
 <p>In order to use the BuildXPages there is a little bit of setup to be done.
 This section will hopefully guide you through the process. Please let me know via an Issue on the Github Project page if anything was left out.</p>
 </div>
-<div class="sect3">
-<h4 id="_install_ibm_notes_designer">Install IBM Notes/Designer</h4>
+<div class="sect2">
+<h3 id="_install_ibm_notes_designer">Install IBM Notes/Designer</h3>
 <div class="paragraph">
 <p>I won&#8217;t tell you how to do that because you should know by now :)</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_install_ant">Install Ant</h4>
+<div class="sect2">
+<h3 id="_install_ant">Install Ant</h3>
 <div class="paragraph">
 <p>We will be using Apache Ant as our main build tool, so we need to install it!</p>
 </div>
-<div class="sect4">
-<h5 id="_download_ant">Download Ant</h5>
+<div class="sect3">
+<h4 id="_download_ant">Download Ant</h4>
 <div class="paragraph">
 <p>Installing Ant is a matter of downloading and extracting Ant to your desired location</p>
 </div>
@@ -886,8 +890,7 @@ For Example, I am on a windows machine so I will download the zip archive.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/images/AntDownload.JPG" alt="AntDownload">
-</div>
+<img src="images/AntDownload.JPG" alt="AntDownload">
 </div>
 </div>
 <div class="sect4">
@@ -909,7 +912,7 @@ For Example, I am on a windows machine so I will download the zip archive.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/images/AntHomeEnvVar.JPG" alt="AntHomeEnvVar">
+<img src="images/AntHomeEnvVar.JPG" alt="AntHomeEnvVar">
 </div>
 </div>
 </div>
@@ -931,7 +934,7 @@ The common way to tell Ant where to find the JRE/JDK is to use the <strong>JAVA_
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/images/JavaHomeEnvVar.JPG" alt="JavaHomeEnvVar">
+<img src="images/JavaHomeEnvVar.JPG" alt="JavaHomeEnvVar">
 </div>
 </div>
 <div class="paragraph">
@@ -952,9 +955,8 @@ The common way to tell Ant where to find the JRE/JDK is to use the <strong>JAVA_
 </div>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_verify_installation">Verify Installation</h3>
+<div class="sect4">
+<h5 id="_verify_installation">Verify Installation</h5>
 <div class="paragraph">
 <p>Once you have everything setup, it is time to test it out
 Open up a fresh Command Prompt, and type</p>
@@ -972,16 +974,19 @@ Open up a fresh Command Prompt, and type</p>
 <pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Apache Ant(TM) version 1.9.9 compiled on &lt;somedate&gt;</code></pre>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_install_the_buildxpages_ant_library">Install the BuildXPages Ant Library</h4>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_install_the_buildxpages_ant_library">Install the BuildXPages Ant Library</h3>
 <div class="paragraph">
 <p>In order for Ant to be able to use the BuildXPages Library, the <strong>BuildXPages.jar</strong> and <strong>jna-4.1.0.jar</strong> libraries must be made available to it.</p>
 </div>
 <div class="paragraph">
 <p>You can make the library available to every ant project, or if you prefer you can make the library available just each individual project that needs it.</p>
 </div>
-<div class="sect4">
-<h5 id="_installing_system_wide">Installing System-wide</h5>
+<div class="sect3">
+<h4 id="_installing_system_wide">Installing System-wide</h4>
 <div class="paragraph">
 <p>When ANT runs, there are 2 locations in which it will check for additional libraries. You should put BuildXPages.jar and JNA</p>
 </div>
@@ -1014,8 +1019,8 @@ The Benefit of installing libraries here is that they will be available for both
 </table>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_installing_for_a_single_project">Installing for a Single project</h5>
+<div class="sect3">
+<h4 id="_installing_for_a_single_project">Installing for a Single project</h4>
 <div class="paragraph">
 <p>If you don&#8217;t want to install to the global library locations, you can just make it available for your single project.</p>
 </div>
@@ -1036,8 +1041,8 @@ Put the BuildXPages.jar in that location</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_install_eclipse_plugin_building_only">Install Eclipse (Plugin Building only)</h4>
+<div class="sect2">
+<h3 id="_install_eclipse_plugin_building_only">Install Eclipse (Plugin Building only)</h3>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -1057,8 +1062,8 @@ Put the BuildXPages.jar in that location</p>
 Follow the instructions!</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_environment_variables">Environment Variables</h4>
+<div class="sect2">
+<h3 id="_environment_variables">Environment Variables</h3>
 <div class="paragraph">
 <p>Some of the BuildXPages tasks need to know the location of some things that are common to the entire computer. These locations can be specified once and for all by setting them up as the following environment variables.</p>
 </div>
@@ -1079,8 +1084,8 @@ Follow the instructions!</p>
 </tr>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_ibm_notes_directory_locations">IBM Notes Directory Locations</h5>
+<div class="sect3">
+<h4 id="_ibm_notes_directory_locations">IBM Notes Directory Locations</h4>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -1116,8 +1121,8 @@ NOTES_DATADIR
 </table>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_headless_plugin_building">Headless Plugin Building</h5>
+<div class="sect3">
+<h4 id="_headless_plugin_building">Headless Plugin Building</h4>
 <div class="paragraph">
 <p>The following Environment Variables are only useful if you are intending to build plugins and features headless eclipse.</p>
 </div>
@@ -1142,23 +1147,23 @@ In Newer versions of eclipse it will be located under your user home directory&#
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_installing_buildxpages_designer_plugin">Installing BuildXPages Designer Plugin</h3>
+<div class="paragraph">
+<p>Obtain the latest version of the BuildXPages project from the <a href="https://github.com/camac/BuildXPages/releases" target="_blank">projects releases page</a>
+and install the <strong>com.gregorbyte.designer.headless.updatesite</strong>  update site (from within the dist folder) to Domino Designer using the instructions in <a href="howto_installpluginsdesigner.html">How to Install Plugins to Domino Designer</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_notes_id_password">Notes ID Password</h3>
+<div class="paragraph">
+<p>In order for the Notes C API tasks to run they must use a Notes ID.</p>
+</div>
+<div class="paragraph">
+<p>The easiest option is to make the ID file have no password. It goes without saying that this is a security risk but you can decide for yourself if you feel you can secure the computer so that nobody can access it.</p>
+</div>
 <div class="sect3">
-<h4 id="_install_the_headless_designer_plugin_to_notes_designer">Install the Headless Designer Plugin to Notes/Designer</h4>
-
-</div>
-<div class="sect3">
-<h4 id="_removing_a_password_from_notes_id">Removing a Password from Notes ID</h4>
-<div class="paragraph">
-<p>In order for the Notes C API tasks to run smoothly, the ID file on the computer needs to have no password.</p>
-</div>
-<div class="paragraph">
-<p>It goes without saying that this is a security risk but you can decide for yourself if you feel you can secure the computer so that nobody can access it.</p>
-</div>
-<div class="paragraph">
-<p>Alternatively, you can ensure that IBM Notes is running, in which case the automated tasks will <em>hopefully</em> not be prompted for a password.</p>
-</div>
-<div class="sect4">
-<h5 id="_to_remove_the_password">To Remove the Password</h5>
+<h4 id="_to_remove_the_password">To Remove the Password</h4>
 <div class="paragraph">
 <p>The ID file that you have been issued by an administrated must be created with settings that allow the password to be removed.</p>
 </div>
@@ -1178,13 +1183,15 @@ In Newer versions of eclipse it will be located under your user home directory&#
 </li>
 </ul>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_alternative_to_password_removal">Alternative to Password Removal</h4>
 <div class="paragraph">
-<p>If you can&#8217;t remove the password, then make sure you will always keep IBM Notes running and logged in, and that you tick the <strong>Don&#8217;t Prompt for a password from other Notes-based programs (reduces security)</strong></p>
+<p>Alternatively, you can ensure that IBM Notes is running and logged in. In this case the automated tasks will <em>hopefully</em> not be prompted for a password if you tick the <strong>Don&#8217;t Prompt for a password from other Notes-based programs (reduces security)</strong> in your Notes Login and Password Settings</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/images/NotesDontPromptPasswordOthers.JPG" alt="NotesDontPromptPasswordOthers">
-</div>
+<img src="images/NotesDontPromptPasswordOthers.JPG" alt="NotesDontPromptPasswordOthers">
 </div>
 </div>
 </div>
@@ -1195,10 +1202,10 @@ In Newer versions of eclipse it will be located under your user home directory&#
 <h2 id="_build4xpages_designer_plugin">Build4XPages Designer plugin</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This project provides a plugin that is installed to Domino Designer. The plugin runs a 'server' which waits for instructions that are issued by teh build tasks. For example an instruction to build an NSF, a request to shutdown the designer</p>
+<p>This project provides a plugin that is installed to Domino Designer. The plugin runs a 'server' which waits for instructions that are issued by the build tasks. For example an instruction to build an NSF, a request to shutdown the designer</p>
 </div>
 <div class="sect2">
-<h3 id="_installation">Installation</h3>
+<h3 id="_installing_buildxpages_designer_plugin_2">Installing BuildXPages Designer Plugin</h3>
 <div class="paragraph">
 <p>Obtain the latest version of the BuildXPages project from the <a href="https://github.com/camac/BuildXPages/releases" target="_blank">projects releases page</a>
 and install the <strong>com.gregorbyte.designer.headless.updatesite</strong>  update site to Domino Designer using the instructions in <a href="howto_installpluginsdesigner.html">How to Install Plugins to Domino Designer</a></p>
@@ -1207,7 +1214,7 @@ and install the <strong>com.gregorbyte.designer.headless.updatesite</strong>  up
 <div class="sect2">
 <h3 id="_starting_and_stopping_the_headless_server">Starting and Stopping the Headless Server</h3>
 <div class="paragraph">
-<p>By Default, the headless server does auto-started when you start Domino Designer (you can change this, see <a href="#Preferences">Preferences</a>), so you must know how to start and stop it!</p>
+<p>By Default, the headless server does not auto-start when you start Domino Designer (you can change this, see <a href="#Preferences">Preferences</a>), so you must know how to start and stop it!</p>
 </div>
 <div class="paragraph">
 <p>You can find the Headless toolbar, and you will see one button grayed out, and one coloured button.
@@ -1260,11 +1267,11 @@ The green button is the 'start' button, so if you can see it, that means the ser
 </div>
 </div>
 <div class="sect1">
-<h2 id="_tutorials">Tutorials</h2>
+<h2 id="_demonstration_tutorials">Demonstration Tutorials</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>These Tutorials are designed to demonstrate the different tasks that are available.
-It is intended that these tutorials can be used to verify that everything is working correctly, and you can then take the build files for these tutorials and customise them for your own projects.</p>
+It is intended that these tutorials can be used to verify that everything is working correctly, and you can then take the build files for these demonstrations and customise them for your own projects.</p>
 </div>
 <div style="page-break-after: always;"></div>
 <div class="sect2">
@@ -1879,7 +1886,7 @@ I either allow the design task to run overnight, or if doing an immediate deploy
 <p>In this sample we build the plugins for a feature, and prepare an Update Site that can be used to deploy to Domino or Domino Designer</p>
 </div>
 <div class="sect3">
-<h4 id="_first_time_setup">First Time Setup</h4>
+<h4 id="_requirements">Requirements</h4>
 <div class="paragraph">
 <p>Before we build plugins, we need to make sure we are set up properly</p>
 </div>
@@ -1998,7 +2005,7 @@ In Newer versions of eclipse it will be located under your user home directory&#
 <div class="paragraph">
 <p>At the end of the headless feature build process, you will have a .zip file of your plugins and features. The contents of your zip file will be something like:</p>
 </div>
-<div class="openblock tree">
+<div class="openblock">
 <div class="content">
 <div class="paragraph">
 <p>|--eclipse
@@ -2959,10 +2966,12 @@ deletefirst
 </div>
 </div>
 <div class="sect3">
-<h4 id="_copyplugintobuilddir">copyplugintobuilddir</h4>
+<h4 id="_copytobuilddir">copytobuilddir</h4>
 <div class="paragraph">
 <p>This task is used during preparation for a headless eclipse plugin build.
-It is used to copy the source code of of a plugin, into the <em>build directory</em> which is a special working directory used to build the plugins and features.</p>
+It is used to copy the source code of of a plugin or feature, into the <em>build directory</em> which is a special working directory used to build the plugins and features.
+The <em>build directory</em> contains 2 subfolders <strong>plugins</strong> and <strong>features</strong> and the plugin or feature will automatically be copied into the correct folder.
+The task will exclude contents of the <strong>bin</strong> folder when copying. The idea is to copy source files only.</p>
 </div>
 <div class="sect4">
 <h5 id="_properties_used">Properties used</h5>
@@ -2970,10 +2979,10 @@ It is used to copy the source code of of a plugin, into the <em>build directory<
 <table>
 <tr>
 <td class="hdlist1">
-pluginsDir
+buildDir
 </td>
 <td class="hdlist2">
-<p>The Destination directory, usually the eclipse/plugins folder of the build Directory</p>
+<p>The Build Directory in which the Headless Plugin Build will take place. this is commonly set to 'buildDirectory'</p>
 </td>
 </tr>
 </table>
@@ -2981,6 +2990,10 @@ pluginsDir
 </div>
 <div class="sect4">
 <h5 id="_attributes_8">Attributes</h5>
+<div class="paragraph">
+<p>You specify either the plugin you want to copy, or the feature you want to copy.
+You can set both at the same time if you like but I think it makes more sense to separate them into sepearate tasks.</p>
+</div>
 <div class="hdlist">
 <table>
 <tr>
@@ -2988,7 +3001,15 @@ pluginsDir
 plugin
 </td>
 <td class="hdlist2">
-<p>the folder name of the plugin to copy</p>
+<p>the folder location of the plugin to copy</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+feature
+</td>
+<td class="hdlist2">
+<p>the folder location of the feature to copy</p>
 </td>
 </tr>
 </table>
@@ -2998,7 +3019,8 @@ plugin
 <h5 id="_example_8">Example</h5>
 <div class="literalblock">
 <div class="content">
-<pre>&lt;bxp:copyplugintobuilddir plugin="com.acme.myplugin" /&gt;</pre>
+<pre>&lt;bxp:copytobuilddir plugin="com.acme.myplugin" /&gt;
+&lt;bxp:copytobuilddir feature="com.acme.myplugin.feature" /&gt;</pre>
 </div>
 </div>
 </div>
@@ -3797,8 +3819,8 @@ Submit an Issue using the <a href="https://github.com/camac/BuildXPages/issues">
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.1.0<br>
-Last updated 2017-08-23 23:23:08 AEST
+Version 1.0.0<br>
+Last updated 2017-08-24 21:17:43 AEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">

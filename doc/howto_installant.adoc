@@ -1,8 +1,9 @@
-==== Install Ant
+= Install Ant
+:imagesdir: images
 
 We will be using Apache Ant as our main build tool, so we need to install it!
 
-===== Download Ant
+== Download Ant
 
 Installing Ant is a matter of downloading and extracting Ant to your desired location
 
@@ -14,24 +15,24 @@ For Example, I am on a windows machine so I will download the zip archive.
 Ant version 1.10 requires Java 8, Although this may work with Notes FP8 and later, I recommend sticking with version 1.9.x due to the likelihood of having to run it using a Java 6 runtime, and the fact that I haven't tested BuildXPages with Ant 1.10 yet.
 ====
 
-image::images\AntDownload.JPG[]
+image::AntDownload.JPG[]
 
-===== Extract the Downloaded Archive
+=== Extract the Downloaded Archive
 
 Extract your download ant archive to it's final destination. I usually put it in a directory called `ant` in the root, and keep it with it's version name
 `C:\ant\apache-ant-1.9.9`
 
-===== Setup Environment Variables
+=== Setup Environment Variables
 
 Add Ant's *bin* directory (e.g. C:\ant\apache-ant-1.9.9\bin) to your PATH Environment variable. This will enable you to be able to run the command `ant` from anywhere
 
-====== Set ANT_HOME Environment Variables
+==== Set ANT_HOME Environment Variables
 
 Add an *ANT_HOME* Environment Variable that points to Ant's home directory
 
-image::images\AntHomeEnvVar.JPG[]
+image::AntHomeEnvVar.JPG[]
 
-====== Set JAVA_HOME Environment Variable to Notes JRE
+==== Set JAVA_HOME Environment Variable to Notes JRE
 
 Ant is a java program that runs within a Java Runtime Environment (JRE) or Java Development Kit (JDK).
 Usually you would install and configure a JDK for Ant to be run on.
@@ -43,7 +44,7 @@ If you are running any other Java programs that utilise JAVA_HOME, then maybe th
 
 So we can simply add this JVM as the JAVA_HOME
 
-image::images\JavaHomeEnvVar.JPG[]
+image::JavaHomeEnvVar.JPG[]
 
 Be aware that with IBM Notes FP8 and greater, there are 2 JVMs 
 

@@ -1,11 +1,13 @@
-== Getting Started
+= Getting Started
 
 In order to use the BuildXPages there is a little bit of setup to be done.
 This section will hopefully guide you through the process. Please let me know via an Issue on the Github Project page if anything was left out.
 
-==== Install IBM Notes/Designer 
+== Install IBM Notes/Designer 
 
 I won't tell you how to do that because you should know by now :)
+
+:leveloffset: +1
 
 include::howto_installant.adoc[]
 
@@ -15,6 +17,8 @@ include::howto_installeclipse.adoc[]
 
 include::howto_environmentvars.adoc[]
 
-==== Install the Headless Designer Plugin to Notes/Designer
+include::howto_installheadless.adoc[]
 
 include::howto_removeidpassword.adoc[]
+
+:leveloffset: -1

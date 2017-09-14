@@ -1,15 +1,15 @@
 == Build4XPages Designer plugin
 
-This project provides a plugin that is installed to Domino Designer. The plugin runs a 'server' which waits for instructions that are issued by teh build tasks. For example an instruction to build an NSF, a request to shutdown the designer
+This project provides a plugin that is installed to Domino Designer. The plugin runs a 'server' which waits for instructions that are issued by the build tasks. For example an instruction to build an NSF, a request to shutdown the designer
 
-=== Installation
+=== Installing BuildXPages Designer Plugin
 
 Obtain the latest version of the BuildXPages project from the https://github.com/camac/BuildXPages/releases[projects releases page^]
 and install the *com.gregorbyte.designer.headless.updatesite*  update site to Domino Designer using the instructions in link:howto_installpluginsdesigner.html[How to Install Plugins to Domino Designer]
 
 === Starting and Stopping the Headless Server
 
-By Default, the headless server does auto-started when you start Domino Designer (you can change this, see <<Preferences>>), so you must know how to start and stop it!
+By Default, the headless server does not auto-start when you start Domino Designer (you can change this, see <<Preferences>>), so you must know how to start and stop it!
 
 You can find the Headless toolbar, and you will see one button grayed out, and one coloured button.
 The green button is the 'start' button, so if you can see it, that means the server is not running.

@@ -39,7 +39,11 @@ The mechanism also involved writing a text 'command file', which was fed in when
 
 So I decided to extend it and turn the functionality into a 'headless server'. This allow designer to remain open the whole time and listen for instructions from my ant tasks. If I need designer to restart and can tell it to shut down, and then start designer again and the 'headless server' starts again to wait for more instructions.
 
+:leveloffset: +1
+
 include::gettingstarted.adoc[]
+
+:leveloffset: -1
 
 include::headlessplugin.adoc[]
 

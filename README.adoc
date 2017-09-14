@@ -13,11 +13,11 @@ For example you may be interested in automating some of these tasks:
 * Deploy Plugins to Notes/Designer
 
 BuildXPages provides tools which can be used to achieve tasks like these.
-The main part of the project is a collection of 
+The main artifact of the project is a collection of custom ANT Tasks, but it also provides a Domino Designer Plugin to help with Headless Building of NSFs
 
 == Obtaining the Project
 
-Download the latest Release from the Projects Github Releases page, and unzip it to your local filesystem.
+Download the latest Release from the https://github.com/camac/BuildXPages/releases[projects releases page^], and unzip it to your local filesystem.
 
 === Contents of Release
 
@@ -34,4 +34,8 @@ lib:: 3rd Party libraries that are used by BuildXPages
 
 The best place to start is the user guide! This has instructions on how to install and setup your computer to use BuildXPages.
 
-The release you downloaded will contain a PDF and HTML version of the user guide, but you can always access the latest version of the user guide from the GitHub Project page.
+The release you downloaded will contain a PDF and HTML version of the user guide, but you can always access the latest version of the user guide from the http://camac.github.io/BuildXPages/[Project Documentation Page^].
+
+== Problems / Troubleshooting / Suggestions / Feedback
+
+Any questions or problems please submit through the Project's Github Issues page so that other people will also be able to see if anyone has a similar problem!

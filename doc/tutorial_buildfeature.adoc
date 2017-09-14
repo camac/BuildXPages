@@ -2,7 +2,7 @@
 
 In this sample we build the plugins for a feature, and prepare an Update Site that can be used to deploy to Domino or Domino Designer
 
-=== First Time Setup
+=== Requirements
 
 Before we build plugins, we need to make sure we are set up properly
 

@@ -1,4 +1,4 @@
-==== Install Eclipse (Plugin Building only)
+= Install Eclipse (Plugin Building only)
 
 [TIP]
 ====

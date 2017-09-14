@@ -135,7 +135,3 @@ Notice that the 'PROBLEMS STATUS' is fail and the last line is telling us the ex
 If you were to look in Designer you would see the problem there too.
 
 image::NSFDemoError.JPG[]
-
-
-
-
