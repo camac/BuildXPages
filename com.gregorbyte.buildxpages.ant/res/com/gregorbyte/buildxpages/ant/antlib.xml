@@ -1,4 +1,4 @@
-<antlib xmlns:current="ant:current">
+<antlib xmlns:current="ant:current" xmlns:if="ant:if" xmlns:unless="ant:unless">
 
 	<taskdef name="copynsf" classname="com.gregorbyte.buildxpages.ant.CopyNsfTask" classpath="BuildXPagesAntLib.jar" onerror="ignore" />
 
@@ -44,8 +44,8 @@
 		<attribute name="plugin" />
 		<sequential>
 
-			<local name="pluginName"/>
-			<basename property="pluginName" file="@{plugin}"/>
+			<local name="pluginName" />
+			<basename property="pluginName" file="@{plugin}" />
 
 			<copy todir="${pluginsDir}/${pluginName}">
 				<fileset dir="@{plugin}">
@@ -57,6 +57,38 @@
 		</sequential>
 
 	</macrodef>
+
+	<macrodef name="copytobuilddir">
+		<attribute name="feature" default="" />
+		<attribute name="plugin" default="" />
+		<sequential>
+
+			<fail unless="buildDir" message="Please Ensure buildDir property has been set" />
+
+			<local name="featureName" />
+			<basename property="featureName" file="@{feature}" />
+
+			<copy todir="${buildDir}/features/${featureName}" unless:blank="@{feature}">
+				<fileset dir="@{feature}">
+					<exclude name="**/bin/**">
+					</exclude>
+				</fileset>
+			</copy>
+
+			<local name="pluginName" />
+			<basename property="pluginName" file="@{plugin}" />
+
+			<copy todir="${buildDir}/plugins/${pluginName}" unless:blank="@{plugin}">
+				<fileset dir="@{plugin}">
+					<exclude name="**/bin/**">
+					</exclude>
+				</fileset>
+			</copy>
+
+		</sequential>
+
+	</macrodef>
+
 
 	<macrodef name="checkDesignerRunning">
 		<sequential>
@@ -72,43 +104,53 @@
 
 	<macrodef name="initDefaultProperties">
 		<sequential>
-		
-			<property environment="env"/>		
-			<property name="notesProgDir" location="${env.NOTES_PROGDIR}"/>
+
+			<echo message="Init Default Properties"/>
 			
+			<property environment="env" />
+			<property name="notesProgDir" location="${env.NOTES_PROGDIR}" />
+			<property name="notesDataDir" location="${env.NOTES_DATADIR}" />
+			<property name="notesFrameworkDir" location="${notesProgDir}\framework" />
+			<property name="notesFrameworkEclipse" location="${notesProgDir}\framework\rcp\eclipse" />
+			<property name="dominoProgDir" location="${env.DOMINO_PROGDIR}" />
+			<property name="dominoDataDir" location="${env.DOMINO_DATADIR}" />
+			<property name="equinoxLauncherJar" location="${env.BXP_EQUINOXLAUNCHER}" />
+			<property name="pdeBuildXml" location="${env.BXP_PDEBUILDXML}" />
+			<property name="eclipseBase" location="${env.BXP_ECLIPSEBASE}" />
+
 		</sequential>
 	</macrodef>
 
 	<macrodef name="startDesigner">
 		<sequential>
-			<current:initDefaultProperties/>
+			<current:initDefaultProperties />
 			<exec executable="${notesProgDir}/designer.exe" spawn="true">
 			</exec>
 		</sequential>
 	</macrodef>
 
 	<macrodef name="unpackplugin">
-		<attribute name="dir"/>
+		<attribute name="dir" />
 		<attribute name="pluginid" />
 		<sequential>
-			<local name="jar.dir"/>
-			<property name="jar.dir" location="@{dir}"/>
-		
+			<local name="jar.dir" />
+			<property name="jar.dir" location="@{dir}" />
+
 			<fileset id="jar.file.id" dir="${jar.dir}" includes="@{pluginid}_*.jar" />
-						
+
 			<local name="jar.file" />
 			<local name="jar.basename" />
 			<local name="unjar.dir" />
 			<property name="jar.file" refid="jar.file.id" />
 
-			<echo message="${jar.file}"/>
+			<echo message="${jar.file}" />
 
 			<basename property="jar.basename" file="${jar.file}" suffix=".jar" />
 			<property name="unjar.dir" location="${jar.dir}/${jar.basename}" />
 			<mkdir dir="${unjar.dir}" />
 			<unzip dest="${unjar.dir}" src="${jar.dir}/${jar.file}" />
 
-			<delete file="${jar.dir}/${jar.file}"/>
+			<delete file="${jar.dir}/${jar.file}" />
 
 		</sequential>
 	</macrodef>
@@ -117,17 +159,17 @@
 		<attribute name="updateSiteLabel"></attribute>
 		<attribute name="updateSiteDir"></attribute>
 		<sequential>
-			<local name="linkfile"/>
-			
-			<local name="updateSiteDirLocal"/>
-			<property name="updateSiteDirLocal" location="@{updateSiteDir}"/>
-			
+			<local name="linkfile" />
+
+			<local name="updateSiteDirLocal" />
+			<property name="updateSiteDirLocal" location="@{updateSiteDir}" />
+
 			<property name="linkfile" location="${notesProgDir}\framework\rcp\eclipse\links\@{updateSiteLabel}.link" />
 
 			<touch file="${linkfile}">
 			</touch>
 
-			<local name="updateSiteDirAmended"/>
+			<local name="updateSiteDirAmended" />
 			<loadresource property="updateSiteDirAmended">
 				<propertyresource name="updateSiteDirLocal" />
 				<filterchain>
@@ -143,7 +185,7 @@
 			</echo>
 
 		</sequential>
-			
+
 	</macrodef>
 
 	<macrodef name="initDesignerSite">
@@ -178,7 +220,7 @@
 
 	<macrodef name="checkPlatformXml">
 		<sequential>
-			<local name="src.dir"/>
+			<local name="src.dir" />
 			<property name="src.dir" location="${notesDataDir}/workspace/.config/org.eclipse.update/" />
 			<property name="search.string" value="MANAGED-ONLY" />
 
@@ -204,12 +246,12 @@
 
 	<macrodef name="configureDynamicPlugins">
 		<sequential>
-		
-			<local name="platformxml"/>
+
+			<local name="platformxml" />
 			<property name="platformxml" location="${notesDataDir}/workspace/.config/org.eclipse.update/platform.xml" />
-		
-			<tstamp/>
-		
+
+			<tstamp />
+
 			<copy file="${platformxml}" tofile="${notesDataDir}/workspace/.config/org.eclipse.update/platform${DSTAMP}${TSTAMP}.xml"></copy>
 
 			<replace file="${platformxml}">
@@ -218,7 +260,7 @@
 			</replace>
 
 			<replace file="${platformxml}" token="MANAGED-ONLY" value="USER-EXCLUDE"></replace>
-			
+
 		</sequential>
 	</macrodef>
 
@@ -272,17 +314,24 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="buildFeature">
+	<macrodef name="buildfeature">
 
-		<attribute name="pluginPath" />
+		<attribute name="feature" />
+		<attribute name="pluginPath" default="" />
 
 		<sequential>
-			<current:collectJvmJars />
+
+			<current:initDefaultProperties />
 
 			<fail unless="eclipseBase">eclipseBase property must be set</fail>
-			<fail unless="equinoxLauncherVersion">equinoxLauncherVersion property must be set</fail>
+			<fail unless="equinoxLauncherJar">equinoxLauncherVersion property must be set</fail>
+			<fail unless="pdeBuildXml">pdeBuildXml property must be set</fail>
+			<fail unless="buildConfigDir">Build Configuration Dir must be set</fail>
+			<fail unless="buildDir">buildDir must be set</fail>
 
-			<java jar="${equinoxLauncherJar}" fork="true" failonerror="true">
+			<java jar="${equinoxLauncherJar}" fork="true" failonerror="true" dir="${notesFrameworkEclipse}">
+
+				<!-- <arg value="-debug" /> -->
 
 				<arg value="-application" />
 				<arg value="org.eclipse.ant.core.antRunner" />
@@ -297,25 +346,31 @@
 				<arg value="-DrunPackager=false" />
 				<arg value="-DoutputUpdateJars=true" />
 
+				<arg value="-Dresolution.devMode=true" />
+				<arg value="-DsourceBundleMode=all" />
+
 				<arg value="-DbuildId=${buildId}" />
 				<arg value="-DbuildLabel=${buildLabel}" />
 
 				<arg value="-DarchivePrefix=eclipse" />
 
 				<arg value="-Dbase=${eclipseBase}" />
-				<arg value="-DbaseLocation=C:\Notes\framework" />
+				<arg value="-DbaseLocation=${notesFrameworkEclipse}" />
 
 				<arg value="-DskipBase=true" />
 				<arg value="-DpluginPath=${pluginPath}" />
 
-				<arg value="-DJavaSE-1.6=${JavaSE16Jars}" />
+				<!-- <arg value="-DJavaSE-1.6=${JavaSE16Jars}" /> -->
 				<arg value="-DtopLevelElementType=feature" />
-				<arg value="-DtopLevelElementId=${featureId}" />
+				<arg value="-DtopLevelElementId=@{feature}" />
 
-				<arg value="-DjavacSource=1.6" /> <!-- These were here for Hapi.Lib -->
-				<arg value="-DjavacTarget=1.6" /> <!-- These were here for Hapi.Lib -->
+				<arg value="-DjavacSource=1.6" />
+				<!-- These were here for Hapi.Lib -->
+				<arg value="-DjavacTarget=1.6" />
+				<!-- These were here for Hapi.Lib -->
 
-				<arg value="-DcompilerArg=-g" /><!-- With Line Numbers -->
+				<arg value="-DcompilerArg=-g" />
+				<!-- With Line Numbers -->
 
 			</java>
 		</sequential>

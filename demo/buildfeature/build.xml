@@ -11,12 +11,6 @@
 	<property name="featuresDir" location="${buildDir}/features">
 	</property>
 
-	<property environment="env"></property>
-	<property name="notesProgDir" location="${env.NOTES_PROGDIR}"></property>
-	<property name="dominoProgDir" location="${env.DOMINO_PROGDIR}"></property>
-	
-	<property name="notesFrameworkEclipse" location="${notesProgDir}\framework\rcp\eclipse" />
-	
 	<property name="featureId" value="com.gregorbyte.buildxpages.demo.feature" />
 	<property name="buildId" value="1" />
 	<property name="buildLabel" value="BuildXPagesDemo" />
