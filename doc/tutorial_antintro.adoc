@@ -109,11 +109,15 @@ In our tutorial directory we have a demo properties file called **build.properti
 include::../demo/antintro/build.properties[]
 ----
 
-We can tell ant to use this property file using the `-propertyfile` option
+We can tell ant to use this property file using the `-propertyfile` option.
+
+Issue the following command in your command line:
 
 ```
 ant -propertyfile build.properties
 ```
+
+You should see output similar to:
 
 ----
 Buildfile: V:\Projects\BuildXPages\demo\antintro\build.xml
