@@ -4,13 +4,24 @@ Once you have built an NSF, you may want to deploy the latest changes to it's ta
 
 There is more than one way to deploy an NSF, not everyone is going to do it the same way. This tutorial will hopefully demonstrate some of the tasks you could use to acheive your desired deployment.
 
-This tutorial assumes that you have successfully completed the Build An NSF tutorial. In this case you will have an NSF in your local workspace. We are going to deploy this NSF.
+=== Preparation
+
+This tutorial assumes that you have successfully completed the 'Building An NSF' tutorial. After completing the 'Building an NSF' tutorial you should have an NSF in your local workspace. We will use this NSF as the basis for some of the deployment examples.
+
+Then open your command prompt and navigate to the *demo/deploynsf* directory. Now you should be ready to start the demo!
+
+=== build.properties file
+
+This demonstration has some properties supplied via a build.properties file. You will see some of these properties referenced later on in the demonstration.
+
+[source,txt]
+----
+include::../demo/deploynsf/build.properties[]
+----
 
 === Basic File-Level Copying
 
-At the most basic Level, you may have built your NSF directly to a local Notes workspace, and just want to copy the *.nsf* file to another location. In this case you would just use a simple Apache Ant copy task.
-
-In this example, we are going to copy the NSF that you built into a local directory
+At the most basic Level, you may have built your NSF directly to a local Notes workspace, and just want to copy the *.nsf* file to another location. In this case you would just use a simple Apache Ant copy task. I will leave that up to you to research as it is very simple.
 
 === Copying an NSF using Notes/Domino
 
@@ -18,33 +29,125 @@ Instead of doing basic file-based copying, we can actually use IBM Notes to copy
 
 To do this we use BuildXPages' *copynsf* task.
 
-We are going to create 2 copies of this NSF just so we can use them both in our next example
+We are going to create 2 copies of the NSF that we built in the 'Building an NSF' demonstration, so that we can use these 2 copies in our next few deployment demonstrations.
 
+We are going to create one copy to act as a template, and then another copy that will act as our 'production' nsf.
 
+Here is the *copydatabase*  target that we are going to run, you can see we are specifying the source and destination filepaths using the properties from the *build.properties* file. The copynsf task also has available attributes for source and destination server, but since we have not included them, it will just use the local notes workspace as the source and destination server.
+
+[source,xml]
+----
+include::../demo/deploynsf/build.xml[tag=copynsf]
+----
+
+To execute this target issue the console command ```ant copynsf```
+
+You should see some output like:
+[source,txt]
+----
+Buildfile: V:\Projects\BuildXPages\demo\deploynsf\build.xml
+copydatabase:
+[bxp:copynsf] temp\BuildXPagesDemo.nsf
+[bxp:copynsf] temp\BuildXPages.nsf
+[bxp:copynsf] temp\BuildXPagesDemo.nsf
+[bxp:copynsf] temp\BuildXPages.ntf
+BUILD SUCCESSFUL
+Total time: 1 second
+----
+
+You should now have 2 new databases in your workspace:
+
+* temp\BuildXPages.nsf - which will act as the Production NSF
+* temp\BuildXPages.ntf - which will act as the Master Template
 
 === Setting up template names
 
+Now that we have our Production and Master templates, we will configure one to inherit Design from the other.
 BuildXPages has a *settemplatenames* task which is useful for configuring template inheritance dynamically. 
 
+We will execute the following target which first sets the ntf's master template name, and then it sets the production nsf to inherit from that template
+
+[source,xml]
+----
+include::../demo/deploynsf/build.xml[tag=linktemplates]
+----
+
+To execute this target, issue the command ```ant linktemplates```
+
+You should see some output like:
+
+[source,txt]
+----
+Buildfile: V:\Projects\BuildXPages\demo\deploynsf\build.xml
+linktemplates:
+[bxp:settemplatenames] Setting Template Names for: local!!temp\BuildXPages.ntf
+[bxp:settemplatenames] ... Inherit From:       <no change>
+[bxp:settemplatenames] ... Is Master Template: 'BuildXPagesTemplate'
+[bxp:settemplatenames] Setting Template Names for: local!!temp\BuildXPages.nsf
+[bxp:settemplatenames] ... Inherit From:       'BuildXPagesTemplate'
+[bxp:settemplatenames] ... Is Master Template: <no change>
+BUILD SUCCESSFUL
+Total time: 912 milliseconds
+----
+
+You should also be able to inspect the database application properties in IBM Notes and verify that the templates have been set properly.
 
 === Refreshing a Template
 
-When you are ready to refresh teh design of a database, you can simple use the *refreshdbdesign* task.
+When you are ready to refresh the design of a database, you can simple use the *refreshdbdesign* task. The task allows us to choose the database we want to refresh, which can be local or on another server, and then also choose which server to refresh from which can also be local or another server.
 
 What is handy about this is that you can refresh the design of a target nsf using an NSF from your local workspace. So, if you have built an NSF in your local workspace you can refresh an NSF on a server using the design on your local workspace.
 
+In this demonstration we will just refresh a the local production database from the local template. This inheritance should already be set up in the previous set templates example, so we just need to specify the database that we want to refresh
 
+[source,xml]
+----
+include::../demo/deploynsf/build.xml[tag=refresh]
+----
+
+To execute the target, issue the command ```ant refreshtemplate```
+
+You should see some output like this:
+
+[source,txt]
+----
+Buildfile: V:\Projects\BuildXPages\demo\deploynsf\build.xml
+refreshtemplate:
+[bxp:refreshdbdesign] Refreshing Design of Db : local!!temp\BuildXPages.nsf
+[bxp:refreshdbdesign] Refreshing From Server  : local
+[bxp:refreshdbdesign] Building list of design templates...
+[bxp:refreshdbdesign] Refreshing design of Build NSF Demo...
+[bxp:refreshdbdesign] Updating Build NSF Demo from the Build NSF Demo design template...
+[bxp:refreshdbdesign] Design refresh of Build NSF Demo completed
+BUILD SUCCESSFUL
+Total time: 1 second
+----
+
+Since both the template and the production database were copied from the same nsf, there is nothing to refresh so you don't see any design elements listed in the output, but if you were to make a change in the template and then run it again you will see the updated design element in the output
 
 === Deleting NSFs
 
-If you have a need to delete nsfs during your deployment process, you can use the *deletensf* task
+In this last step of our demonstration we will clean up after ourselves and delete the 'Production' NSF and the 'template' that we just created. To do this we can use the *deletensf* task.
 
-This is my preferred option.
+[source,xml]
+----
+include::../demo/deploynsf/build.xml[tag=clean]
+----
 
-* I have 'local' nsfs located on the headless build machine
-* I have a Production Template
-* I have one or more Production Applications
+To execute this task issue the command ```ant clean```
 
-I set the 'master template' name of the built nsf, and the inherit of the template
-I refresh the production template
-I either allow the design task to run overnight, or if doing an immediate deployment, I issue the load design task console command
+The output of the deletensf task is not very useful, you should see some ouput like this:
+
+[source,txt]
+----
+Buildfile: V:\Projects\BuildXPages\demo\deploynsf\build.xml
+clean:
+BUILD SUCCESSFUL
+Total time: 839 milliseconds
+----
+
+If the database did not exist (so could not be deleted) you will get a build failed warning
+
+=== Conclusion
+
+In this demonstration we have shown how to copy databases around servers and local workspaces, setup design inheritance, refresh database designs and to delete databases. Hopefully these tools will come in handy when designing your own deployment process.
