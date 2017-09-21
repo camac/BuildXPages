@@ -729,22 +729,31 @@ div.olist { padding-left: 1.25em; }
 <ul class="sectlevel1">
 <li><a href="#_introduction">Introduction</a>
 <ul class="sectlevel2">
-<li><a href="#_what_can_i_use_it_for">What Can I use it for?</a></li>
+<li><a href="#_what_can_i_use_buildxpages_for">What can I use BuildXPages for?</a></li>
 <li><a href="#_what_does_the_project_provide">What does the project provide?</a></li>
 </ul>
 </li>
+<li><a href="#_troubleshooting_bugs_feedback">Troubleshooting / Bugs / Feedback</a></li>
 <li><a href="#_getting_started">Getting Started</a>
 <ul class="sectlevel2">
 <li><a href="#_install_ibm_notes_designer">Install IBM Notes/Designer</a></li>
 <li><a href="#_install_ant">Install Ant</a></li>
 <li><a href="#_install_the_buildxpages_ant_library">Install the BuildXPages Ant Library</a></li>
 <li><a href="#_install_eclipse_plugin_building_only">Install Eclipse (Plugin Building only)</a></li>
-<li><a href="#_environment_variables">Environment Variables</a></li>
+<li><a href="#_setting_up_environment_variables">Setting up Environment Variables</a></li>
 <li><a href="#_installing_buildxpages_designer_plugin">Installing BuildXPages Designer Plugin</a></li>
 <li><a href="#_notes_id_password">Notes ID Password</a></li>
 </ul>
 </li>
-<li><a href="#_build4xpages_designer_plugin">Build4XPages Designer plugin</a>
+<li><a href="#TasksLibrary">BuildXPages Ant Task Library</a>
+<ul class="sectlevel2">
+<li><a href="#TasksDeployingNSF">NSF Deployment Related Tasks</a></li>
+<li><a href="#TasksPlugin">Plugin Related Tasks</a></li>
+<li><a href="#TasksDesigner">Designer Related Tasks</a></li>
+<li><a href="#TasksServer">Server Related Ant Tasks</a></li>
+</ul>
+</li>
+<li><a href="#HeadlessPlugin">Build4XPages Designer plugin</a>
 <ul class="sectlevel2">
 <li><a href="#_installing_buildxpages_designer_plugin_2">Installing BuildXPages Designer Plugin</a></li>
 <li><a href="#_starting_and_stopping_the_headless_server">Starting and Stopping the Headless Server</a></li>
@@ -760,16 +769,6 @@ div.olist { padding-left: 1.25em; }
 <li><a href="#_deploying_plugins">Deploying Plugins</a></li>
 </ul>
 </li>
-<li><a href="#_buildxpages_ant_task_reference">BuildXPages Ant Task Reference</a>
-<ul class="sectlevel2">
-<li><a href="#TasksDeployingNSF">NSF Deployment Related Tasks</a></li>
-<li><a href="#TasksPlugin">Plugin Related Tasks</a></li>
-<li><a href="#TasksDesigner">Designer Related Tasks</a></li>
-<li><a href="#TasksServer">Server Related Ant Tasks</a></li>
-</ul>
-</li>
-<li><a href="#_having_trouble">Having Trouble?</a></li>
-<li><a href="#_feedback_welcome">Feedback Welcome!</a></li>
 </ul>
 </div>
 </div>
@@ -785,13 +784,20 @@ div.olist { padding-left: 1.25em; }
 <h2 id="_introduction">Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>BuildXPages is a collection of tools which can aid in the Building and Deployment of XPages NSFs and XPages plugins.</p>
+<p>BuildXPages is a collection of tools which can aid in the Building and Deployment of XPages NSFs and XPages plugins. If you would like to automate some or all of your XPages Deployment then there might be something in here for you!</p>
 </div>
 <div class="paragraph">
-<p>If you would like to automate some or all of your XPages Deployment then there might be something in here for you!</p>
+<p>Over the past couple of years, I have developed these tools for my own use. Although the tools worked fine, there was no documentation and they were not necessarily easy to understand or use.</p>
+</div>
+<div class="paragraph">
+<p>I decided to spend some further time to clean it all up and write documentation so it is easily available to the rest of the community. It has taken a couple of months to get all this done, so if this actually helps anyone else I would love to hear about it so I know it was worth the effort!</p>
+</div>
+<div class="paragraph">
+<p>There is a good chance I have a bug here or there or have made mistakes in the documentation. In order to use this project there is a bit of setup required and everyone&#8217;s environment will be slightly different.
+I have tried to document as much as I can but if something is hard to understand or doesn&#8217;t work as expected please let me know so I can help you figure out where the problem lies and fix any bugs or documentation.</p>
 </div>
 <div class="sect2">
-<h3 id="_what_can_i_use_it_for">What Can I use it for?</h3>
+<h3 id="_what_can_i_use_buildxpages_for">What can I use BuildXPages for?</h3>
 <div class="paragraph">
 <p>Some ideas of some tasks which this project can help you achieve</p>
 </div>
@@ -827,23 +833,53 @@ div.olist { padding-left: 1.25em; }
 <div class="sect2">
 <h3 id="_what_does_the_project_provide">What does the project provide?</h3>
 <div class="paragraph">
-<p>The Project contains a library of tasks that can be organised and executed by <a href="https://ant.apache.org/">Apache ANT</a>. Apache ANT is a build tool which helps you write instructions on how to automate tasks.</p>
+<p>There are 2 main artifacts that this project provides which is an ANT Library and a Domino Designer Plugin.</p>
+</div>
+<div class="sect3">
+<h4 id="_ant_library_of_notes_domino_related_tasks">ANT Library of Notes/Domino related tasks</h4>
+<div class="paragraph">
+<p>The Project contains a library of tasks that can be organised and executed by <a href="https://ant.apache.org/" target="_blank">Apache ANT</a>.</p>
 </div>
 <div class="paragraph">
-<p>If you haven&#8217;t used Ant before, don&#8217;t be scared! It is pretty simple once you get the hang of it.
+<p>See the <a href="#TasksLibrary">Documentation of the BuildXPages ANT Library</a> that is provided later is this user guide for more information.</p>
+</div>
+<div class="paragraph">
+<p>Apache ANT is a build tool which helps you write instructions on how to automate tasks. If you haven&#8217;t used Ant before, don&#8217;t be scared! It is pretty simple once you get the hang of it.
 Yes there are other options, but Ant is well documented which makes it easier to understand.
 I have also provided some tutorials which should give you a feel for how it all works.</p>
 </div>
 <div class="paragraph">
 <p>Ant has access to many commonly used steps such as manipluation of files in the filesystem (copy, move, delete, unzip etc.) and more complex tasks such as compiling java, running programs.</p>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_headless_domino_designer_plugin">Headless Domino Designer Plugin</h4>
 <div class="paragraph">
-<p>This project also includes a Plugin for Domino Designer which is used by the ANT task for building an NSF. The Plugin is basically an extension of the existing 'Headless Designer' system that was provided by IBM. The IBM Headless Designer system was a great start but could have used a little bit more love. There were a few annoyances, it was hard to tell when the build was finished, it was hard to tell that the build even started properly. There were some minor annoyances regarding project names and locations.
-The mechanism also involved writing a text 'command file', which was fed in when starting designer. This means each build would always have to starting designer, build and then shut it down. If designer did not shut down, then you couldn&#8217;t start it up again and weird things like that.</p>
+<p>This project also includes a Plugin for Domino Designer which is used by the ANT task for building an NSF.</p>
+</div>
+<div class="paragraph">
+<p>See the <a href="#TasksLibrary">Documentation of the BuildXPages ANT Library</a> that is provided later is this user guide for more information.</p>
+</div>
+<div class="paragraph">
+<p>The Plugin is basically an extension of the existing 'Headless Designer' system that was provided by IBM. The IBM Headless Designer system was a great start but could have used a little bit more love. There were a few annoyances, it was hard to tell when the build was finished, it was hard to tell that the build even started properly. There were some minor annoyances regarding project names and locations.
+The mechanism also involved writing a text 'command file', which was fed in when starting designer. This means each build would always have to start designer, build and then shut it down. If designer did not shut down, then you couldn&#8217;t start it up again and weird things like that.</p>
 </div>
 <div class="paragraph">
 <p>So I decided to extend it and turn the functionality into a 'headless server'. This allow designer to remain open the whole time and listen for instructions from my ant tasks. If I need designer to restart and can tell it to shut down, and then start designer again and the 'headless server' starts again to wait for more instructions.</p>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_troubleshooting_bugs_feedback">Troubleshooting / Bugs / Feedback</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you have found a bug, can&#8217;t understand something, want some advice then you can
+submit an Issue using the <a href="https://github.com/camac/BuildXPages/issues" target="_blank">Project&#8217;s Github Issues page</a> and I will get back to you!</p>
+</div>
+<div class="paragraph">
+<p>If this project is helping you out I would love to hear it as well! I&#8217;m on twitter <a href="https://twitter.com/gregorbyte" target="_blank">@gregorbyte</a> and my blog is at <a href="https://camerongregor.com/" target="_blank">camerongregor.com</a> you can also find me in the <a href="https://xpages-slack.herokuapp.com/" target="_blank">XPages Slack Community</a> which you can join using that link</p>
 </div>
 </div>
 </div>
@@ -980,7 +1016,7 @@ Open up a fresh Command Prompt, and type</p>
 <div class="sect2">
 <h3 id="_install_the_buildxpages_ant_library">Install the BuildXPages Ant Library</h3>
 <div class="paragraph">
-<p>In order for Ant to be able to use the BuildXPages Library, the <strong>BuildXPages.jar</strong> and <strong>jna-4.1.0.jar</strong> libraries must be made available to it.</p>
+<p>In order for Ant to be able to use the BuildXPages Library, the <strong>BuildXPagesAntLib_&lt;version&gt;.jar</strong> and <strong>jna-4.1.0.jar</strong> libraries must be made available to it.</p>
 </div>
 <div class="paragraph">
 <p>You can make the library available to every ant project, or if you prefer you can make the library available just each individual project that needs it.</p>
@@ -988,7 +1024,7 @@ Open up a fresh Command Prompt, and type</p>
 <div class="sect3">
 <h4 id="_installing_system_wide">Installing System-wide</h4>
 <div class="paragraph">
-<p>When ANT runs, there are 2 locations in which it will check for additional libraries. You should put BuildXPages.jar and JNA</p>
+<p>When ANT runs, there are 2 locations in which it will check for additional libraries. You should put BuildXPages jar and JNA in one of these locations.</p>
 </div>
 <div class="dlist">
 <dl>
@@ -1003,6 +1039,22 @@ The Benefit of installing libraries here is that they will be available for both
 <p>Libraries installed here will be available for all users. For example on windows, if you have installed ant to <strong>C:\ant</strong>, then any libraries present in the <strong>C:\ant\lib</strong> directory will be available to be used.</p>
 </dd>
 </dl>
+</div>
+<div class="sect4">
+<h5 id="_install_using_my_install_script">Install using my Install script</h5>
+<div class="paragraph">
+<p>I have included an ant build script which should install these files for you.
+Open a command prompt and navigate to the <strong>demo/install</strong> directory of the extracted download
+Then issue the following command to install the libaries to your userhome  ant lib directory</p>
+</div>
+<div class="paragraph">
+<p><code>ant installtouserhome</code></p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_manual_install">Manual Install</h5>
+<div class="paragraph">
+<p>If you don&#8217;t want to use my install script, you can just copy the BuildXPagesAntLib jar out of the <strong>dist</strong> folder of the project download, and you can copy the JNA jar out of the <strong>lib</strong> folder, and put them in one of the above locations</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1019,6 +1071,7 @@ The Benefit of installing libraries here is that they will be available for both
 </table>
 </div>
 </div>
+</div>
 <div class="sect3">
 <h4 id="_installing_for_a_single_project">Installing for a Single project</h4>
 <div class="paragraph">
@@ -1026,7 +1079,7 @@ The Benefit of installing libraries here is that they will be available for both
 </div>
 <div class="paragraph">
 <p>Create a directory in your project called lib
-Put the BuildXPages.jar in that location</p>
+Put the BuildXPagesAntLib and JNA jar in that location</p>
 </div>
 <div class="paragraph">
 <p>when running ant, you will need to specify the library location with -lib command</p>
@@ -1059,16 +1112,19 @@ Put the BuildXPages.jar in that location</p>
 </div>
 <div class="paragraph">
 <p>Go to eclipse.org and download 'Eclipse for RCP and RAP Developers'
-Follow the instructions!</p>
+Follow the instructions! If you are building plugins then I assume you know this already!</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_environment_variables">Environment Variables</h3>
+<h3 id="_setting_up_environment_variables">Setting up Environment Variables</h3>
 <div class="paragraph">
 <p>Some of the BuildXPages tasks need to know the location of some things that are common to the entire computer. These locations can be specified once and for all by setting them up as the following environment variables.</p>
 </div>
 <div class="paragraph">
 <p>If you don&#8217;t want to set these up, that is fine but you will then need to provide them when running ant using a properties file or similar.</p>
+</div>
+<div class="paragraph">
+<p>If you don&#8217;t know how to set up environment variables then just do a google search for how to do so for your operating system (Windows etc.)</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1078,7 +1134,7 @@ Follow the instructions!</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Once you open up a command prompt, it has loaded it&#8217;s environment variables and will not receive any new or modified variables. So if you have added or changed environment variables, you will need to start a fresh new console prompt to see the updated variables.</p>
+<p>Command prompts that have already been opened will not receive any new or modified Environment variables. So if you have added or changed environment variables, you will need to start a fresh new console prompt to see the updated variables.</p>
 </div>
 </td>
 </tr>
@@ -1100,25 +1156,17 @@ Follow the instructions!</p>
 </tr>
 </table>
 </div>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-NOTES_PROGDIR
-</td>
-<td class="hdlist2">
-<p>IBM Notes' Program Directory e.g. <code>C:\Progra~2\IBM\Notes</code></p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-NOTES_DATADIR
-</td>
-<td class="hdlist2">
-<p>Your Notes Data Directory e.g. <code>C:\Progra~2\IBM\Notes\Data</code></p>
-</td>
-</tr>
-</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">NOTES_PROGDIR</dt>
+<dd>
+<p>Set to your IBM Notes' Program Directory e.g. <code>C:\Progra~2\IBM\Notes</code></p>
+</dd>
+<dt class="hdlist1">NOTES_DATADIR</dt>
+<dd>
+<p>Set to your Your Notes Data Directory e.g. <code>C:\Progra~2\IBM\Notes\Data</code></p>
+</dd>
+</dl>
 </div>
 </div>
 <div class="sect3">
@@ -1130,7 +1178,7 @@ NOTES_DATADIR
 <dl>
 <dt class="hdlist1">BXP_ECLIPSE_BASE</dt>
 <dd>
-<p>This is the root folder of your Eclipse installation</p>
+<p>This is the root folder of your Eclipse installation (the directory that contains eclipse.exe)</p>
 </dd>
 <dt class="hdlist1">BXP_PDEBUILDXML</dt>
 <dd>
@@ -1151,7 +1199,7 @@ In Newer versions of eclipse it will be located under your user home directory&#
 <h3 id="_installing_buildxpages_designer_plugin">Installing BuildXPages Designer Plugin</h3>
 <div class="paragraph">
 <p>Obtain the latest version of the BuildXPages project from the <a href="https://github.com/camac/BuildXPages/releases" target="_blank">projects releases page</a>
-and install the <strong>com.gregorbyte.designer.headless.updatesite</strong>  update site (from within the dist folder) to Domino Designer using the instructions in <a href="howto_installpluginsdesigner.html">How to Install Plugins to Domino Designer</a></p>
+and install the <strong>com.gregorbyte.designer.headless.updatesite</strong>  update site (from within the dist folder) to Domino Designer using the instructions in <a href="howto_installpluginsdesigner.html" target="_blank">How to Install Plugins to Domino Designer</a></p>
 </div>
 </div>
 <div class="sect2">
@@ -1199,10 +1247,1364 @@ and install the <strong>com.gregorbyte.designer.headless.updatesite</strong>  up
 </div>
 </div>
 <div class="sect1">
-<h2 id="_build4xpages_designer_plugin">Build4XPages Designer plugin</h2>
+<h2 id="TasksLibrary">BuildXPages Ant Task Library</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This project provides a plugin that is installed to Domino Designer. The plugin runs a 'server' which waits for instructions that are issued by the build tasks. For example an instruction to build an NSF, a request to shutdown the designer</p>
+<p>The following is a list of the Ant tasks provided by the project and some documentation and examples of how to use them.</p>
+</div>
+<div class="paragraph">
+<p><a href="#TasksDeployingNSF">Deploying NSFs to a Server</a></p>
+</div>
+<div class="paragraph">
+<p><a href="#TasksPlugin">Building and Deploying Plugins</a></p>
+</div>
+<div class="paragraph">
+<p><a href="#TasksDesigner">Interacting with Domino Designer for Building NSFs</a></p>
+</div>
+<div class="paragraph">
+<p><a href="#TasksServer">Controlling a Domino Server</a></p>
+</div>
+<div class="sect2">
+<h3 id="TasksDeployingNSF">NSF Deployment Related Tasks</h3>
+<div class="paragraph">
+<p>The following tasks are usually useful after you have built NSF&#8217;s and need to move them around, refresh templates etc. to acheive deployment of an  NSF that has been successfully built.</p>
+</div>
+<div class="sect3">
+<h4 id="_copynsf">copynsf</h4>
+<div class="paragraph">
+<p>Copies an NSF from one place to another using the Notes C API&#8217;s 'NSFDbCreateAndCopy' function.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Currently this tasks only copies the Note class 'ALLNONDATA' which means design elements only. It could easily be modified to include all documents if you like. Let me know if you want this done.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_attributes">Attributes</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+srcserver
+</td>
+<td class="hdlist2">
+<p>The Server of the Database to be copied. Optional - defaults to Local</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+srcfilepath
+</td>
+<td class="hdlist2">
+<p>The Filepath of the Database to be copied</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+dstserver
+</td>
+<td class="hdlist2">
+<p>The Destination Server for the newly created database. Optional - defaults to Local</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+dstfilepath
+</td>
+<td class="hdlist2">
+<p>The Filepath the Database to be created.</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;copynsf srcfilepath="demo\\CopyMe.nsf" dstfilepath="demo\\ToHere.nsf" /&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_deletensf">deletensf</h4>
+<div class="paragraph">
+<p>Deletes an NSF using the Notes C API&#8217;s NSFDbDelete method.</p>
+</div>
+<div class="sect4">
+<h5 id="_attributes_2">Attributes</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+server
+</td>
+<td class="hdlist2">
+<p>The Server of the NSF that you want to Delete. Optional - defaults to Local</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+filename
+</td>
+<td class="hdlist2">
+<p>The filepath of the NSF that you want to Delete</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_2">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Delete a Local NSF --&gt;
+&lt;deletensf filename="demo\\DeleteMe.nsf" /&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Delete an NSF on another Server --&gt;
+&lt;deletensf server="Domino01" filename="demo\\DeleteMe.nsf" /&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_settemplatenames">settemplatenames</h4>
+<div class="paragraph">
+<p>Updates the Template Inheritance settings of an NSF.
+You can set an NSF To be a master template, or you can set an NSF to Inherit from another Template, or Both!
+You can also clear the 'inherit from' or 'master template' settings.</p>
+</div>
+<div class="sect4">
+<h5 id="_attributes_3">Attributes</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+server
+</td>
+<td class="hdlist2">
+<p>The Server of the NSF that you are modifying template settings for</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+database
+</td>
+<td class="hdlist2">
+<p>The filepath of the NSF that you are modifying template settinsg for</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+clearinheritfrom
+</td>
+<td class="hdlist2">
+<p>Defaults to false. When set to 'true' will clear any inheritance settings if they exist</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+inheritfrom
+</td>
+<td class="hdlist2">
+<p>The Name of the Master Template that you would like the NSF To inherit from</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+clearmastername
+</td>
+<td class="hdlist2">
+<p>Defaults to false. When set to 'true' will clear the 'Is Master Template' settings of the nsf if they exist</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+mastername
+</td>
+<td class="hdlist2">
+<p>This is the Template Name that you would like this NSF to be known as.</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_3">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Set an NSF to inherit from 'DemoTemplate' --&gt;
+&lt;bxp:settemplatenames database="MyFolder\MyNSF.nsf" server="Domino01" inheritfrom="DemoTemplate"&gt;
+&lt;/bxp:settemplatenames&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Set an NSF to be a Master Template called 'DemoTemplate' --&gt;
+&lt;bxp:settemplatenames database="MyFolder\MyNSF.nsf" server="Domino01" mastername="DemoTemplate"&gt;
+&lt;/bxp:settemplatenames&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Clear the Inherit From settings so the NSF will no longer inherit from a template --&gt;
+&lt;bxp:settemplatenames database="MyFolder\MyNSF.nsf" server="Domino01" clearinheritfrom="true"&gt;
+&lt;/bxp:settemplatenames&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Clear the Master Template settings so the NSF will no longer be a Master template --&gt;
+&lt;bxp:settemplatenames database="MyFolder\MyNSF.nsf" server="Domino01" clearmastername="true"&gt;
+&lt;/bxp:settemplatenames&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_scxd">scxd</h4>
+<div class="paragraph">
+<p>Sets the Single Copy XPage Design settings of an NSF. You can set both the relevant properties of the SCXD path, and the Flag which determines whether to use the SCXD template or not.</p>
+</div>
+<div class="sect4">
+<h5 id="_attributes_4">Attributes</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+server
+</td>
+<td class="hdlist2">
+<p>The server of the NSF that you would like to set SCXD settings for</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+database
+</td>
+<td class="hdlist2">
+<p>The filepath of the nsf that you would like to set SCXD settings for</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+scxdpath
+</td>
+<td class="hdlist2">
+<p>The path of the XPages database which you would like to use as the SCXD</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+scxdflag
+</td>
+<td class="hdlist2">
+<p>true/false determines whether the 'Use Single Copy XPage Design' checkbox is will be ticked in the Database Properties</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_4">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Set an NSF to use 'scxd\Awesome.nsf' as it's single copy xpage design --&gt;
+&lt;bxp:scxd database="MyFolder\MyNSF.nsf" server="Domino01" scxdpath="scxd\Awesome.nsf" scxdflag="true" /&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Set an NSF to not use any SCXD --&gt;
+&lt;bxp:scxd database="MyFolder\MyNSF.nsf" server="Domino01" scxdpath="" scxdflag="false" /&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_refreshdbdesign">refreshdbdesign</h4>
+<div class="paragraph">
+<p>Refreshes an NSF&#8217;s design from a server using the Notes C API DesignRefresh method.</p>
+</div>
+<div class="paragraph">
+<p>The console output shows all the design elements that are modified which is great to verify what has changed.</p>
+</div>
+<div class="paragraph">
+<p>This task uses existing template settings of the NSF so if you need to change them you should use the settemplatenames task before using this task.</p>
+</div>
+<div class="sect4">
+<h5 id="_attributes_5">Attributes</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+server
+</td>
+<td class="hdlist2">
+<p>The server of the NSF that you would like to Refresh the Design of</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+database
+</td>
+<td class="hdlist2">
+<p>The filepath of the NSF that you would like to refresh the Design of</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+templateserver
+</td>
+<td class="hdlist2">
+<p>The server which has the Template that will be refreshed from</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_5">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;!-- Refresh MyNSF.nsf from the Domino03 server --&gt;
+&lt;refreshdbdesign server="Domino02" database="MyFolder\\MyNSF.nsf" templateserver="Domino03" /&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="TasksPlugin">Plugin Related Tasks</h3>
+<div class="paragraph">
+<p>The following tasks are all related to the building and deployment of OSGi plugins for XPages and Notes/Designer.</p>
+</div>
+<div class="sect3">
+<h4 id="_buildfeature">buildfeature</h4>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This Task and Documentation needs a little bit of love before it is truly re-usable. If you are keen to use this then let me know and I will improve it!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This task will build all the Plugins listed in a feature, using the headless eclipse PDE build system.</p>
+</div>
+<div class="paragraph">
+<p>Before using this task, you will need to have prepared the build directory with the source code of the plugins that are to be built, and the the feature that is to be built.</p>
+</div>
+<div class="sect4">
+<h5 id="_properties_that_are_used_in_this_task">Properties that are used in this task</h5>
+<div class="paragraph">
+<p>This task is actually a macro, and currently relies on some properties to have already been set in ant</p>
+</div>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+featureId
+</td>
+<td class="hdlist2">
+<p>The feature to be built</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+eclipseBase
+</td>
+<td class="hdlist2">
+<p>Root directory of eclipse</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+pdeBuildVersion
+</td>
+<td class="hdlist2">
+<p>PDE Build version</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+equinoxLauncherVersion
+</td>
+<td class="hdlist2">
+<p>Equinox Launcher Version</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+buildId
+</td>
+<td class="hdlist2">
+<p>Usually the build number</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+buildLabel
+</td>
+<td class="hdlist2">
+<p>Project Name</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+buildConfigDir
+</td>
+<td class="hdlist2">
+<p>Directory of build.properties</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+buildDir
+</td>
+<td class="hdlist2">
+<p>The working directory in which the plugins will be built</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_attributes_6">Attributes</h5>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">pluginPath</dt>
+<dd>
+<p>This is a semi-colon delimited string of the target platform plugin paths</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_6">Example</h5>
+<div class="paragraph">
+<p>For the best example have a look at the Demonstration Tutorial <strong>Building Features and Plugins</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="build" depends="init"&gt;
+
+		&lt;bxp:copytobuilddir plugin="com.gregorbyte.buildxpages.demo" /&gt;
+		&lt;bxp:copytobuilddir feature="com.gregorbyte.buildxpages.demo.feature" /&gt;
+
+		&lt;bxp:buildfeature feature="com.gregorbyte.buildxpages.demo.feature"/&gt;
+
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_importplugins">importplugins</h4>
+<div class="paragraph">
+<p>Imports plugins/features from an update site on the filesystem into an
+<a href="https://www.openntf.org/main.nsf/project.xsp?r=project/Open%20Eclipse%20Update%20Site" target="_blank">Open Eclipse NSF Update Site</a></p>
+</div>
+<div class="sect4">
+<h5 id="_attributes_7">Attributes</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+server
+</td>
+<td class="hdlist2">
+<p>The server that the <strong>Open Eclipse NSF Update Site</strong> is located on</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+database
+</td>
+<td class="hdlist2">
+<p>The filepath of the <strong>Open Eclipse NSF Update Site</strong></p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+sitexml
+</td>
+<td class="hdlist2">
+<p>The location of the site.xml of the <strong> Filesystem update site</strong> that you want to import</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+deletefirst
+</td>
+<td class="hdlist2">
+<p>true/false, defaults to false. If set to true, it will clear the updatesite nsf of all existing plugins/features</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_7">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:importplugins server="Domino02" database="UpdateSite\MyUpdateSite.nsf" sitexml="C:\MyFolder\MyProject\com.my.updatesite\site.xml" /&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_copytobuilddir">copytobuilddir</h4>
+<div class="paragraph">
+<p>This task is used during preparation for a headless eclipse plugin build.
+It is used to copy the source code of of a plugin or feature, into the <em>build directory</em> which is a special working directory used to build the plugins and features.
+The <em>build directory</em> contains 2 subfolders <strong>plugins</strong> and <strong>features</strong> and the plugin or feature will automatically be copied into the correct folder.
+The task will exclude contents of the <strong>bin</strong> folder when copying. The idea is to copy source files only.</p>
+</div>
+<div class="sect4">
+<h5 id="_properties_used">Properties used</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+buildDir
+</td>
+<td class="hdlist2">
+<p>The Build Directory in which the Headless Plugin Build will take place. this is commonly set to 'buildDirectory'</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_attributes_8">Attributes</h5>
+<div class="paragraph">
+<p>You specify either the plugin you want to copy, or the feature you want to copy.
+You can set both at the same time if you like but I think it makes more sense to separate them into sepearate tasks.</p>
+</div>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+plugin
+</td>
+<td class="hdlist2">
+<p>the folder location of the plugin to copy</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+feature
+</td>
+<td class="hdlist2">
+<p>the folder location of the feature to copy</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_8">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:copytobuilddir plugin="com.acme.myplugin" /&gt;
+&lt;bxp:copytobuilddir feature="com.acme.myplugin.feature" /&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_unpackplugin">unpackplugin</h4>
+<div class="paragraph">
+<p>Usually you update Domino Designer with new plugins by going through the normal installation process. But there is another way in which you can build plugins into a particular folder, and Domino Designer always picks up new versions.</p>
+</div>
+<div class="paragraph">
+<p>When deploying plugins this way, some plugins need to be 'unpacked' which means they don&#8217;t exist as a jar file, but the contents are unpacked into a folder.</p>
+</div>
+<div class="paragraph">
+<p>This task will unpack a plugin to a folder with the same name as the plugin. You only need to specify the plugin name, and it will find the version information automatically</p>
+</div>
+<div class="sect4">
+<h5 id="_attributes_9">Attributes</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+dir
+</td>
+<td class="hdlist2">
+<p>The directory that the plugin is in</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+pluginid
+</td>
+<td class="hdlist2">
+<p>the plugin id that you want to unpack</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_9">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:unpackplugin dir="eclipse/plugins" pluginid="com.acme.superplugin" /&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_generatesitexml">generatesitexml</h4>
+<div class="paragraph">
+<p>After building your plugins headlessly with eclipse PDE, you will then have a directory of plugins and features, but
+before importing plugins into an <a href="https://www.openntf.org/main.nsf/project.xsp?r=project/Open%20Eclipse%20Update%20Site" target="_blank">Open Eclipse NSF Update Site</a> you will also need a <strong>site.xml</strong> file.</p>
+</div>
+<div class="paragraph">
+<p>Newer versions of eclipse use a <em>p2 repository</em> format which does not require a site.xml, but with Notes/Domino running on a much older version of eclipse, it still uses an older format which uses the <strong>site.xml</strong> file.</p>
+</div>
+<div class="paragraph">
+<p>The build process does not generate one for us so we do it ourselvels with this task, which scans the features directory and builds the necessary xml.</p>
+</div>
+<div class="sect4">
+<h5 id="_attributes_10">Attributes</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+eclipsedir
+</td>
+<td class="hdlist2">
+<p>The root folder that contains the plugins and features directory. I call it eclipse directory because often you will find it in the structure ../something/<strong>eclipse</strong>/plugins and ../something/<strong>eclipse</strong>/features</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_10">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:generatesitexml eclipsedir="somefolder/eclipse" /&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_clearupdatesite">clearupdatesite</h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This task does not refer to clearing an NSF update site, this task is for clearing and update site on the filesystem</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>After building plugins, sometimes you want to put them in an update site on the filesystem. You may want to make sure the update site is empty before you put your plugins there, so this task can clear out an existing update site.</p>
+</div>
+<div class="sect4">
+<h5 id="_attributes_11">Attributes</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+eclipsedir
+</td>
+<td class="hdlist2">
+<p>The root folder that contains the plugins and features directory. I call it eclipse directory because often you will find it in the structure ../something/<strong>eclipse</strong>/plugins and ../something/<strong>eclipse</strong>/features</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_11">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:clearupdatesite eclipsedir="myplugins" /&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_copypluginstoupdatesite">copypluginstoupdatesite</h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This task does not refer to copying an NSF update site, this task is for copying to an update site on the filesystem</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>After building plugins, sometimes you want to put them in an update site on the filesystem. This task will copy the plugins to your target update site, and also generate the site xml.</p>
+</div>
+<div class="sect4">
+<h5 id="_properties">Properties</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+builtPluginsZip
+</td>
+<td class="hdlist2">
+<p>the zip file of the built plugins after headless build</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_attributes_12">Attributes</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+eclipsedir
+</td>
+<td class="hdlist2">
+<p>The root folder that contains the plugins and features directory. I call it eclipse directory because often you will find it in the structure ../something/<strong>eclipse</strong>/plugins and ../something/<strong>eclipse</strong>/features</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_12">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:copypluginstoupdatesite eclipsedir="my/target/updatesite/eclipse" /&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="TasksDesigner">Designer Related Tasks</h3>
+<div class="sect3">
+<h4 id="_startdesigner">startDesigner</h4>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Using this task to start designer will cause designer to shutdown at the end of the ant build process. Due the the process being a sub-process. I need to do this a better way such as the powershell script way but I haven&#8217;t got around to it yet. I actually in real life just leave designer running all the time so I don&#8217;t need to start/close it.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Before building an NSF with the Headless Designer Plugin, you need to make sure designer is running. You can use the <strong>checkDesignerRunning</strong> task to check, and if it is not running you can use this <strong>startDesigner</strong> task.</p>
+</div>
+<div class="sect4">
+<h5 id="_properties_2">Properties</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+notesProgDir
+</td>
+<td class="hdlist2">
+<p>The Notes program directory on this machine</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_13">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:startDesigner /&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_buildnsf">buildnsf</h4>
+<div class="paragraph">
+<p>The buildnsf task is used to build an ODP into an NSF. To do this it connects to the Designer Headless Server, and instructs it to build.
+If the NSF that is specified does not yet exist, it will be created.
+You</p>
+</div>
+<div class="sect4">
+<h5 id="_attributes_13">Attributes</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+project
+</td>
+<td class="hdlist2">
+<p>This is the .project file that is in the root directory of the On-Disk Project</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+projectname
+</td>
+<td class="hdlist2">
+<p>When the on disk project is imported it must be given a 'name'. This name needs to be unique, so you can specify it here. Note: Do not put your ODP under the Notes Workspace.</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+server
+</td>
+<td class="hdlist2">
+<p>This is the server of the NSF that you are building</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+nsf
+</td>
+<td class="hdlist2">
+<p>This is the filepath of the nsf that your building with</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+port
+</td>
+<td class="hdlist2">
+<p>This specifies the port that your Designer Headless Server is running on (Default 8282)</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+failonerror
+</td>
+<td class="hdlist2">
+<p>If Errors are found against the nsf after building, fail the task</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_14">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;target name="testbuildnsf" description="Build an NSF"&gt;
+	&lt;bxp:buildnsf project="D:\\workspaces\\testworkpace\\WahWah\\.project" projectname="FromAnt" nsf="stageing\\fromant2.nsf"&gt;
+	&lt;/bxp:buildnsf&gt;
+&lt;/target&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;target name="testbuildnsf2" description="Build an NSF"&gt;
+	&lt;bxp:buildnsf ondiskproject="V:\\eclipse-kepler\\runtime-DominoDesigner\\DoraHeadless\\.project" targetfilename="fromant2.nsf" port="8283"&gt;
+	&lt;/bxp:buildnsf&gt;
+&lt;/target&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_closedesigner">closedesigner</h4>
+<div class="paragraph">
+<p>This task connects to the Headless Designer Plugin and instructs it to shutdown.</p>
+</div>
+<div class="sect4">
+<h5 id="_attributes_14">Attributes</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+port
+</td>
+<td class="hdlist2">
+<p>The port that the Headless Designer Plugin is running on. Default = 8282</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_15">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:closedesigner /&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_markersreport">markersreport</h4>
+<div class="paragraph">
+<p>This task connects to the Headless Designer Plugin, and requests a report of all the problem markers (e.g. Error, Info, Warning etc.) for a particular NSF.</p>
+</div>
+<div class="paragraph">
+<p>If you like , you can cause the build to fail if there are errors present on the NSF, to prevent further tasks like deployment.</p>
+</div>
+<div class="sect4">
+<h5 id="_attributes_15">Attributes</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+ondiskproject
+</td>
+<td class="hdlist2">
+<p>The On Disk Project file (.project) of the NSF that you want a report for.</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+failonerror
+</td>
+<td class="hdlist2">
+<p>When set to true (Default) the build will fail if errors are present on the NSF</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+port
+</td>
+<td class="hdlist2">
+<p>The port which Headless Designer Plugin is running on (default = 8282)</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_16">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:markersreport ondiskproject="C:\\workspaces\\neon-64\\runtime-HeadlessPlugin\\DeleteMe\\.project"&gt;
+&lt;/bxp:markersreport&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_checkdesignerrunning">checkdesignerrunning</h4>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Windows only!</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This task checks if the nlnotes.exe process is running, if so it sets a property <strong>designer.running</strong>.
+You can then use this property to decide whether to take some other action.</p>
+</div>
+<div class="sect4">
+<h5 id="_example_17">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:checkDesignerRunning /&gt;
+&lt;fail if="designer.running" message="Designer was running" /&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_updatedesignerlink">updateDesignerLink</h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>I am not sure this is a great way to deploy plugins so  I haven&#8217;t detailed this part yet.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This task is used to set up an update site that will always be loaded when Designer Is started up. This is only used when you are deploying plugins to Domino Designer using the sneaky 'permanent update site' method.</p>
+</div>
+<div class="sect4">
+<h5 id="_properties_3">Properties</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+notesProgDir
+</td>
+<td class="hdlist2">
+<p>The Notes Program Directory on this machine</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_attributes_16">Attributes</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+updateSiteLabel
+</td>
+<td class="hdlist2">
+<p>This is a short code to be used as a name for the update site. It will be used in a filename so it should be something simple e.g. 'extlib'</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+updateSiteDir
+</td>
+<td class="hdlist2">
+<p>This is the Directory that contains the update site. It is expected to have a subdirectory called <strong>eclipse</strong>, and within that subdirectory should be the site.xml, <strong>features</strong> directory and <strong>plugins</strong> directory</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_18">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:updateDesignerLink updateSiteLabel="extlib" updateSiteDir="C:\\Projects\\extlib\updatesite" /&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_initdesignersite">initdesignersite</h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>I am not sure this is a great way to deploy plugins so  I haven&#8217;t detailed this part yet.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This task is used to set up an update site that will always be loaded when Designer Is started up. This is only used when you are deploying plugins to Domino Designer using the sneaky 'permanent update site' method.</p>
+</div>
+<div class="paragraph">
+<p>This task is just like the <strong>updateDesignerLink</strong> task, however it will create the update site folder structure within the framework directory of the Notes Installation.</p>
+</div>
+<div class="paragraph">
+<p>You can then copy plugins to this update site, and they will be loaded by designer (if you have configured platform.xml using the <strong>checkplatformxml</strong> task)</p>
+</div>
+<div class="sect4">
+<h5 id="_properties_4">Properties</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+notesProgDir
+</td>
+<td class="hdlist2">
+<p>The Notes Program Directory on this machine</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_attributes_17">Attributes</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+updateSiteLabel
+</td>
+<td class="hdlist2">
+<p>This is a short code to be used as a name for the update site. It will be used in a filename so it should be something simple e.g. 'extlib'</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_19">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;bxp:updateDesignerLink updateSiteLabel="extlib" updateSiteDir="C:\\Projects\\extlib\updatesite" /&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_checkplatformxml">checkplatformxml</h4>
+<div class="paragraph">
+<p>This checks that the IBM Notes Installation&#8217;s platform.xml file is configured to automatically load plugins from the filesystem. The task will fail if the file is not configured properly.</p>
+</div>
+<div class="sect4">
+<h5 id="_properties_5">Properties</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+notesProgDir
+</td>
+<td class="hdlist2">
+<p>The Notes Program Directory on this machine</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_20">Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">		&lt;!-- Make sure notesDataDir property is set --&gt;
+		&lt;property name="notesDataDir" location="H:\Notes\Data"/&gt;
+
+		&lt;bxp:checkPlatformXml/&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuredynamicplugins">configuredynamicplugins</h4>
+<div class="paragraph">
+<p>This task configures IBM Notes' <strong>platform.xml</strong> file so that IBM Notes will load plugins from the filesystem without the need to 'approve' them via the User Interface.</p>
+</div>
+<div class="paragraph">
+<p>Usually you need to go through the whole provisioning process for plugin updates, but this task will put IBM Notes into a configuration that bypasses this.</p>
+</div>
+<div class="sect4">
+<h5 id="_properties_6">Properties</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+notesDataDir
+</td>
+<td class="hdlist2">
+<p>the location of IBM Notes Data directory on this machine</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_21">Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">		&lt;!-- Make sure notesDataDir property is set --&gt;
+		&lt;property name="notesDataDir" location="H:\Notes\Data"/&gt;
+
+		&lt;bxp:configureDynamicPlugins /&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="TasksServer">Server Related Ant Tasks</h3>
+<div class="paragraph">
+<p>These tasks are designed to interact with the domino server by issuing commands to the console.</p>
+</div>
+<div class="sect3">
+<h4 id="_controlhttp">controlhttp</h4>
+<div class="paragraph">
+<p>The controlhttp task is used to control a Domino Server&#8217;s http tasks.
+It ultimately just issues a console command to the domino console.</p>
+</div>
+<div class="sect4">
+<h5 id="_attributes_18">Attributes</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+server
+</td>
+<td class="hdlist2">
+<p>The server that you are controlling</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+action
+</td>
+<td class="hdlist2">
+<p>start|stop|restart</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_22">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;target name="teststarthttp"&gt;
+	&lt;bxp:controlhttp server="Domino02" action="start" /&gt;
+&lt;/target&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;target name="teststophttp"&gt;
+	&lt;bxp:controlhttp server="Domino02" action="stop" /&gt;
+&lt;/target&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;target name="testrestarthttp"&gt;
+	&lt;bxp:controlhttp server="Domino02" action="restart" /&gt;
+&lt;/target&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_maintenancewarning">maintenancewarning</h4>
+<div class="paragraph">
+<p>The maintenance warning task issues a console command to the Domino OSGi console which tells current users that there will be a maintenance outage in a certain amount of time</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>The Maintenance warning relies on another plugin that has not yet been added to BuildXPages so this task wont be useful until that plugin is added to this project</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_attributes_19">Attributes</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+server
+</td>
+<td class="hdlist2">
+<p>The server that you are controlling</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+minutes
+</td>
+<td class="hdlist2">
+<p>in how many minutes time is the outage going to occur</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_23">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;target name="testmaintenancewarn"&gt;
+	&lt;bxp:maintenancewarning server="CameronWS" minutes="20" /&gt;
+&lt;/target&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;target name="testmwcancel"&gt;
+	&lt;bxp:maintenancewarning server="CameronWS" cancelwarning="true" /&gt;
+&lt;/target&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_loaddesign">loaddesign</h4>
+<div class="paragraph">
+<p>Issues a 'load design' console command for a server</p>
+</div>
+<div class="sect4">
+<h5 id="_attributes_20">Attributes</h5>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+server
+</td>
+<td class="hdlist2">
+<p>The server that you are controlling</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+directory
+</td>
+<td class="hdlist2">
+<p>which directory should have it&#8217;s designs refreshed</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_24">Example</h5>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;target name="testloaddesign"&gt;
+	&lt;bxp:loaddesign server="CameronWS" directory="Cameron\Jogs\JobHub" /&gt;
+&lt;/target&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="HeadlessPlugin">Build4XPages Designer plugin</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This project provides a plugin that is installed to Domino Designer. The plugin runs a 'server' which waits for instructions that are issued by the build tasks.</p>
 </div>
 <div class="sect2">
 <h3 id="_installing_buildxpages_designer_plugin_2">Installing BuildXPages Designer Plugin</h3>
@@ -1214,7 +2616,7 @@ and install the <strong>com.gregorbyte.designer.headless.updatesite</strong>  up
 <div class="sect2">
 <h3 id="_starting_and_stopping_the_headless_server">Starting and Stopping the Headless Server</h3>
 <div class="paragraph">
-<p>By Default, the headless server does not auto-start when you start Domino Designer (you can change this, see <a href="#Preferences">Preferences</a>), so you must know how to start and stop it!</p>
+<p>By Default, the headless server does not auto-start when you start Domino Designer so you must know how to start and stop it!</p>
 </div>
 <div class="paragraph">
 <p>You can find the Headless toolbar, and you will see one button grayed out, and one coloured button.
@@ -1434,7 +2836,7 @@ You are able to call it something else if you want, but you will need to specify
 </div>
 </div>
 <div class="sect3">
-<h4 id="_properties">Properties</h4>
+<h4 id="_properties_7">Properties</h4>
 <div class="paragraph">
 <p>Properties are useful to allow you to use the same build file, but customise it for different projects and environments.</p>
 </div>
@@ -1470,12 +2872,18 @@ firstname=Bob</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We can tell ant to use this property file using the <code>-propertyfile</code> option</p>
+<p>We can tell ant to use this property file using the <code>-propertyfile</code> option.</p>
+</div>
+<div class="paragraph">
+<p>Issue the following command in your command line:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code>ant -propertyfile build.properties</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>You should see output similar to:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1596,20 +3004,25 @@ Total time: 0 seconds</pre>
 <p>The files for this Demonstration are in the <strong>demo/buildnsf</strong> folder of the Build4XPages distribution files. The sample On-Disk Project is located within the tutorial folder as <strong>sampleodp</strong>.
 The Application has a Custom Control and an XPage which uses that custom control.</p>
 </div>
-<div class="sect3">
-<h4 id="_build_xml">build.xml</h4>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>Our 'recipe' for the build is contained in the <strong>build.xml</strong> file located in the <strong>demo/buildnsf</strong> directory. <strong>build.xml</strong> is the default name for an Ant build file, you can call it another filename but if so you would need to specify extra command line argument <code>-b myfile.xml</code></p>
+<p>If you are not familiar with Ant be sure to have a look at the 'Introduction to Apache Ant' tutorial for understanding of things like build.xml, targets, tasks etc.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>Within the build.xml file are things called <em>targets</em>. A target is a bit like a code block.
-Targets can be configured to depend on another target, so that means executing a <em>target</em> will cause the other targets that it depends on to be executed first.</p>
+<p>Within the build.xml file for this demo are 2 <em>targets</em> that are used to setup the demonstration <strong>clean</strong> and <strong>init</strong></p>
 </div>
 <div class="paragraph">
-<p>Within this build.xml file are 2 <em>targets</em> that are used to setup the demo <strong>clean</strong> and <strong>init</strong></p>
-</div>
-<div class="paragraph">
-<p><strong>clean</strong> is used to clean up any previous attempt at this tutorial, and <strong>init</strong> is used to initialise a new attempt.</p>
+<p><strong>clean</strong> is used to clean up any previous attempt at this tutorial, and <strong>init</strong> is used to initialise the tutorial by making sure we have 2 on disk projects that we can try to build, one that should build successfully and the other which should fail.</p>
 </div>
 <div class="paragraph">
 <p>You can see that <strong>init</strong> has been set to depend on <strong>clean</strong> so that before the <strong>init</strong> target is executed, the <strong>clean</strong> target will be executed.</p>
@@ -1639,12 +3052,11 @@ Targets can be configured to depend on another target, so that means executing a
 	&lt;/target&gt;</code></pre>
 </div>
 </div>
-</div>
 <div class="sect3">
 <h4 id="_run_a_successful_build">Run a Successful Build</h4>
 <div class="paragraph">
-<p>Within this <strong>build.xml</strong> file is a target called <strong>build</strong>. This will build the NSF that should not have any problems.
-This target is listed as the default target in the root element of the build.xml file (not shown here).</p>
+<p>There is also a target called <strong>build</strong>. This will build the NSF.
+This target is also listed as the default target in the root element of the build.xml file.</p>
 </div>
 <div class="paragraph">
 <p>This target makes use of the <strong>bxp:buildnsf</strong> task which will connect to the Headless Designer Plugin, and instruct it to build the nsf as specified by the task attributes.</p>
@@ -1665,7 +3077,7 @@ This target is listed as the default target in the root element of the build.xml
 </div>
 </div>
 <div class="paragraph">
-<p>You can see that this target depends on <strong>init</strong>. <strong>init</strong> depends on clean, so when we execute this <strong>build</strong> target what will really happen is the following order of execution:</p>
+<p>You can see that the <strong>build</strong> target depends on <strong>init</strong>. <strong>init</strong> depends on clean, so when we execute this <strong>build</strong> target what will really happen is the following order of execution:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -1674,6 +3086,13 @@ This target is listed as the default target in the root element of the build.xml
 </div>
 <div class="sect4">
 <h5 id="_to_run_the_build">To run the Build</h5>
+<div class="paragraph">
+<p>Before running the build, we make sure Domino Designer will be able to listen for the instructions to build something.</p>
+</div>
+<div class="paragraph">
+<p>If Domino Designer is running, make sure the Headless designer PLugin server is started.
+If Domino Designer is not running, make sure the Headless designer plugin is configured to auto-start when Domino Designer starts.</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1722,11 +3141,11 @@ Total time: 2 seconds</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Also, in your domino Designer workspace you should see a new NSF with filepath temp\BuildXPagesDemo.nsf</p>
+<p>Also, in your domino Designer workspace you should see a new NSF with filepath <strong>temp\BuildXPagesDemo.nsf</strong></p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_run_a_build_with_errors">Run a Build with Errors</h5>
+<h5 id="_example_of_an_nsf_build_with_errors">Example of an NSF Build with Errors</h5>
 <div class="paragraph">
 <p>Let&#8217;s see an example of running an NSF Build that results in some errors. To do this we will use the same sample On-Disk Project, but before we run the build we will sneakily delete the custom controls.
 This should cause an error when Designer tries to build the XPages that use those missing custom controls.</p>
@@ -1754,12 +3173,12 @@ This should cause an error when Designer tries to build the XPages that use thos
 </div>
 </div>
 <div class="paragraph">
-<p>Since it is not the default target, we will tell ant that that is the target we want to build by including the target name in the command line arguments.</p>
+<p>Since <strong>buildfail</strong> is not the default target, we will tell ant that that is the target we want to build by including the target name in the command line arguments.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>issue the command `ant buildfail'</p>
+<p>issue the command <code><code>ant buildfail</code></code></p>
 </li>
 </ol>
 </div>
@@ -1800,8 +3219,15 @@ If you were to look in Designer you would see the problem there too.</p>
 <img src="images/NSFDemoError.JPG" alt="NSFDemoError">
 </div>
 </div>
-<div style="page-break-after: always;"></div>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_conclusion_2">Conclusion</h4>
+<div class="paragraph">
+<p>In this demonstration tutorial we have shown how the <strong>buildnsf</strong> task from the BuildXPages Ant Library works together with the headless designer plugin.
+We have demonstrated how to successfully build an NSF and also what it looks like when an NSF does not successfully build.</p>
+</div>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 <div class="sect2">
@@ -1812,16 +3238,43 @@ If you were to look in Designer you would see the problem there too.</p>
 <div class="paragraph">
 <p>There is more than one way to deploy an NSF, not everyone is going to do it the same way. This tutorial will hopefully demonstrate some of the tasks you could use to acheive your desired deployment.</p>
 </div>
+<div class="sect3">
+<h4 id="_preparation">Preparation</h4>
 <div class="paragraph">
-<p>This tutorial assumes that you have successfully completed the Build An NSF tutorial. In this case you will have an NSF in your local workspace. We are going to deploy this NSF.</p>
+<p>This tutorial assumes that you have successfully completed the 'Building An NSF' tutorial. After completing the 'Building an NSF' tutorial you should have an NSF in your local workspace. We will use this NSF as the basis for some of the deployment examples.</p>
+</div>
+<div class="paragraph">
+<p>Then open your command prompt and navigate to the <strong>demo/deploynsf</strong> directory. Now you should be ready to start the demo!</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_build_properties_file">build.properties file</h4>
+<div class="paragraph">
+<p>This demonstration has some properties supplied via a build.properties file. You will see some of these properties referenced later on in the demonstration.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt"># it is recommended to set your notesProgDir using
+# the NOTES_PROGDIR environment variable but you can specify it here instead if you like
+#notesProgDir=C:\\Path\\To\\Notes
+
+# You can change this and it will change the location of the nsf that is built
+nsf.filepath=temp\\BuildXPagesDemo.nsf
+nsf.templatename=BuildXPagesTemplate
+
+# Uncomment the server if you would like to deploy to a server instead of just to your own workspace
+#nsf.production.server=
+nsf.production.filepath=temp\\BuildXPages.nsf
+
+#nsf.template.server=
+nsf.template.filepath=temp\\BuildXPages.ntf</code></pre>
+</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_basic_file_level_copying">Basic File-Level Copying</h4>
 <div class="paragraph">
-<p>At the most basic Level, you may have built your NSF directly to a local Notes workspace, and just want to copy the <strong>.nsf</strong> file to another location. In this case you would just use a simple Apache Ant copy task.</p>
-</div>
-<div class="paragraph">
-<p>In this example, we are going to copy the NSF that you built into a local directory</p>
+<p>At the most basic Level, you may have built your NSF directly to a local Notes workspace, and just want to copy the <strong>.nsf</strong> file to another location. In this case you would just use a simple Apache Ant copy task. I will leave that up to you to research as it is very simple.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1833,49 +3286,187 @@ If you were to look in Designer you would see the problem there too.</p>
 <p>To do this we use BuildXPages' <strong>copynsf</strong> task.</p>
 </div>
 <div class="paragraph">
-<p>We are going to create 2 copies of this NSF just so we can use them both in our next example</p>
+<p>We are going to create 2 copies of the NSF that we built in the 'Building an NSF' demonstration, so that we can use these 2 copies in our next few deployment demonstrations.</p>
+</div>
+<div class="paragraph">
+<p>We are going to create one copy to act as a template, and then another copy that will act as our 'production' nsf.</p>
+</div>
+<div class="paragraph">
+<p>Here is the <strong>copydatabase</strong>  target that we are going to run, you can see we are specifying the source and destination filepaths using the properties from the <strong>build.properties</strong> file. The copynsf task also has available attributes for source and destination server, but since we have not included them, it will just use the local notes workspace as the source and destination server.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="copydatabase"&gt;
+
+		&lt;fail message="Please Specify Source NSF Filepath" unless="nsf.filepath"/&gt;
+		&lt;fail message="Please Specify Destination NSF Filepath" unless="nsf.production.filepath"/&gt;
+
+		&lt;bxp:copynsf srcfilepath="${nsf.filepath}" dstfilepath="${nsf.production.filepath}" /&gt;
+		&lt;bxp:copynsf srcfilepath="${nsf.filepath}" dstfilepath="${nsf.template.filepath}" /&gt;
+
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To execute this target issue the console command <code><code>ant copynsf</code></code></p>
+</div>
+<div class="paragraph">
+<p>You should see some output like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\deploynsf\build.xml
+copydatabase:
+[bxp:copynsf] temp\BuildXPagesDemo.nsf
+[bxp:copynsf] temp\BuildXPages.nsf
+[bxp:copynsf] temp\BuildXPagesDemo.nsf
+[bxp:copynsf] temp\BuildXPages.ntf
+BUILD SUCCESSFUL
+Total time: 1 second</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should now have 2 new databases in your workspace:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>temp\BuildXPages.nsf - which will act as the Production NSF</p>
+</li>
+<li>
+<p>temp\BuildXPages.ntf - which will act as the Master Template</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_setting_up_template_names">Setting up template names</h4>
 <div class="paragraph">
-<p>BuildXPages has a <strong>settemplatenames</strong> task which is useful for configuring template inheritance dynamically.</p>
+<p>Now that we have our Production and Master templates, we will configure one to inherit Design from the other.
+BuildXPages has a <strong>settemplatenames</strong> task which is useful for configuring template inheritance dynamically.</p>
+</div>
+<div class="paragraph">
+<p>We will execute the following target which first sets the ntf&#8217;s master template name, and then it sets the production nsf to inherit from that template</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="linktemplates"&gt;
+
+		&lt;fail message="Please Specify NSF Filepath" unless="nsf.filepath"/&gt;
+		&lt;fail message="Please Specify Production NSF Filepath" unless="nsf.production.filepath"/&gt;
+		&lt;fail message="Please Specify the Master Template Name" unless="nsf.templatename"/&gt;
+
+		&lt;bxp:settemplatenames database="${nsf.template.filepath}" mastername="${nsf.templatename}" /&gt;
+		&lt;bxp:settemplatenames database="${nsf.production.filepath}" inheritfrom="${nsf.templatename}" /&gt;
+
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To execute this target, issue the command <code><code>ant linktemplates</code></code></p>
+</div>
+<div class="paragraph">
+<p>You should see some output like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\deploynsf\build.xml
+linktemplates:
+[bxp:settemplatenames] Setting Template Names for: local!!temp\BuildXPages.ntf
+[bxp:settemplatenames] ... Inherit From:       &lt;no change&gt;
+[bxp:settemplatenames] ... Is Master Template: 'BuildXPagesTemplate'
+[bxp:settemplatenames] Setting Template Names for: local!!temp\BuildXPages.nsf
+[bxp:settemplatenames] ... Inherit From:       'BuildXPagesTemplate'
+[bxp:settemplatenames] ... Is Master Template: &lt;no change&gt;
+BUILD SUCCESSFUL
+Total time: 912 milliseconds</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should also be able to inspect the database application properties in IBM Notes and verify that the templates have been set properly.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_refreshing_a_template">Refreshing a Template</h4>
 <div class="paragraph">
-<p>When you are ready to refresh teh design of a database, you can simple use the <strong>refreshdbdesign</strong> task.</p>
+<p>When you are ready to refresh the design of a database, you can simple use the <strong>refreshdbdesign</strong> task. The task allows us to choose the database we want to refresh, which can be local or on another server, and then also choose which server to refresh from which can also be local or another server.</p>
 </div>
 <div class="paragraph">
 <p>What is handy about this is that you can refresh the design of a target nsf using an NSF from your local workspace. So, if you have built an NSF in your local workspace you can refresh an NSF on a server using the design on your local workspace.</p>
+</div>
+<div class="paragraph">
+<p>In this demonstration we will just refresh a the local production database from the local template. This inheritance should already be set up in the previous set templates example, so we just need to specify the database that we want to refresh</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="refreshtemplate"&gt;
+
+		&lt;bxp:refreshdbdesign database="${nsf.production.filepath}"/&gt;
+
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To execute the target, issue the command <code><code>ant refreshtemplate</code></code></p>
+</div>
+<div class="paragraph">
+<p>You should see some output like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\deploynsf\build.xml
+refreshtemplate:
+[bxp:refreshdbdesign] Refreshing Design of Db : local!!temp\BuildXPages.nsf
+[bxp:refreshdbdesign] Refreshing From Server  : local
+[bxp:refreshdbdesign] Building list of design templates...
+[bxp:refreshdbdesign] Refreshing design of Build NSF Demo...
+[bxp:refreshdbdesign] Updating Build NSF Demo from the Build NSF Demo design template...
+[bxp:refreshdbdesign] Design refresh of Build NSF Demo completed
+BUILD SUCCESSFUL
+Total time: 1 second</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Since both the template and the production database were copied from the same nsf, there is nothing to refresh so you don&#8217;t see any design elements listed in the output, but if you were to make a change in the template and then run it again you will see the updated design element in the output</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_deleting_nsfs">Deleting NSFs</h4>
 <div class="paragraph">
-<p>If you have a need to delete nsfs during your deployment process, you can use the <strong>deletensf</strong> task</p>
+<p>In this last step of our demonstration we will clean up after ourselves and delete the 'Production' NSF and the 'template' that we just created. To do this we can use the <strong>deletensf</strong> task.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="clean"&gt;
+
+		&lt;bxp:deletensf filename="${nsf.production.filepath}"/&gt;
+		&lt;bxp:deletensf filename="${nsf.template.filepath}"/&gt;
+
+	&lt;/target&gt;</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>This is my preferred option.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>I have 'local' nsfs located on the headless build machine</p>
-</li>
-<li>
-<p>I have a Production Template</p>
-</li>
-<li>
-<p>I have one or more Production Applications</p>
-</li>
-</ul>
+<p>To execute this task issue the command <code><code>ant clean</code></code></p>
 </div>
 <div class="paragraph">
-<p>I set the 'master template' name of the built nsf, and the inherit of the template
-I refresh the production template
-I either allow the design task to run overnight, or if doing an immediate deployment, I issue the load design task console command</p>
+<p>The output of the deletensf task is not very useful, you should see some ouput like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\deploynsf\build.xml
+clean:
+BUILD SUCCESSFUL
+Total time: 839 milliseconds</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the database did not exist (so could not be deleted) you will get a build failed warning</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_conclusion_3">Conclusion</h4>
+<div class="paragraph">
+<p>In this demonstration we have shown how to copy databases around servers and local workspaces, setup design inheritance, refresh database designs and to delete databases. Hopefully these tools will come in handy when designing your own deployment process.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -1883,75 +3474,74 @@ I either allow the design task to run overnight, or if doing an immediate deploy
 <div class="sect2">
 <h3 id="_building_features_and_plugins">Building Features and Plugins</h3>
 <div class="paragraph">
-<p>In this sample we build the plugins for a feature, and prepare an Update Site that can be used to deploy to Domino or Domino Designer</p>
+<p>In this Demonstration we build a plugin by doing a Headless Eclipse feature build.</p>
+</div>
+<div class="paragraph">
+<p>The general way this works is, you create a feature that lists the plugins that you want to build. You then tell eclipse (via a command line instruction) to build this feature, and it will build each plugin and package it up for you.</p>
+</div>
+<div class="paragraph">
+<p>BuildXPages has a task <strong>buildfeature</strong> which basically just helps issue the command line instruction.</p>
+</div>
+<div class="paragraph">
+<p>This is a very short demonstration, as I am not very sure there is a very big audience for this.
+Hopefully this demonstration will give you an idea of how it works but if you need to know more please feel free to ask me questions about it.</p>
+</div>
+<div class="paragraph">
+<p>If you want to learn more about the headless eclipse works, then check out the following link <a href="https://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.pde.doc.user%2Ftasks%2Fpde_feature_build.htm">Automated building of Features</a></p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Make sure you have performed the necessary setup as in the getting started section</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="sect3">
-<h4 id="_requirements">Requirements</h4>
+<h4 id="_building_the_plugin_feature">Building the Plugin/Feature</h4>
 <div class="paragraph">
-<p>Before we build plugins, we need to make sure we are set up properly</p>
+<p>The <strong>demo/buildfeature</strong> directory contains the source code of a plugin, and also a feature.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Install Eclipse for RCP and RAP Development</p>
+<p>com.gregorbyte.buildxpages.demo</p>
 </li>
 <li>
-<p>Install Ant</p>
-</li>
-<li>
-<p>Install Build4XPages Ant tasks</p>
+<p>com.gregorbyte.buildxpages.demo.feature</p>
 </li>
 </ul>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_configure_your_notes_and_domino_program_directories">Configure Your Notes and Domino Program Directories</h4>
 <div class="paragraph">
-<p>In order to run the build steps, we need to know where Notes and Domino are</p>
+<p>We are going to execute the <strong>build</strong> target, lets have a look at it</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Set them up as Environment Variables</p>
-</li>
-<li>
-<p>Specify them in the build.properties file</p>
-</li>
-</ul>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="build" depends="init"&gt;
+
+		&lt;bxp:copytobuilddir plugin="com.gregorbyte.buildxpages.demo" /&gt;
+		&lt;bxp:copytobuilddir feature="com.gregorbyte.buildxpages.demo.feature" /&gt;
+
+		&lt;bxp:buildfeature feature="com.gregorbyte.buildxpages.demo.feature"/&gt;
+
+	&lt;/target&gt;</code></pre>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_configure_eclipse_properties">Configure Eclipse Properties</h4>
-<div class="paragraph">
-<p>The build script needs to know 3 things in order to build your plugins</p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">What is the base directory of Eclipse?</dt>
-<dd>
-<p>This may be something like <code>C:\eclipse</code></p>
-</dd>
-<dt class="hdlist1">Where can I find the PDE Build.xml file?</dt>
-<dd>
-<p>This is a file which provides the actual recipe to build plugins. In older versions of eclipse it will be under &lt;eclipse&gt;/plugins/org.eclipse.pde.build_&lt;version&gt;/scripts/build.xml
-In Newer versions of eclipse it will be located under your user home directory&#8217;s p2 pool of plugins &lt;userhome&gt;/.p2/pool/plugins/org.eclipse.pde.build_&lt;version&gt;/scripts/build.xml</p>
-</dd>
-<dt class="hdlist1">Where can I find the equinox launcher jar?</dt>
-<dd>
-<p>This is an executable jar which launches the plugin build process. In older versions of eclipse it will be under &lt;eclipse&gt;/plugins/org.eclipse.equinox.launcher_&lt;version&gt;.jar
-In Newer versions of eclipse it will be located under your user home directory&#8217;s p2 pool of plugins &lt;userhome&gt;/.p2/pool/plugins/org.eclipse.equinox.launcher_&lt;version&gt;.jar</p>
-</dd>
-</dl>
 </div>
 <div class="paragraph">
-<p>These 3 things should be the same for every project you build on the computer, so you can set these up as Environment Varables as well</p>
+<p>The eclipse headless build performs all it&#8217;s operations in a 'build directory' which is basically like a working area, so before running a build, we have to prepare this build directory and make sure it has plugins and features we need to build.</p>
 </div>
 <div class="paragraph">
-<p>If you don&#8217;t want to set them up as environment variables, you can specify them in the accompanying build.properties file</p>
+<p>We do this using buildxpages <strong>copytobuilddir</strong> task which copies a plugin or a feature to the build directory. The <strong>copytobuilddir</strong> expects there to be a <strong>buildDir</strong> set which specifieds the build directory location.</p>
 </div>
+<div class="paragraph">
+<p>We then use buildxpages <strong>buildfeature</strong> task to trigger the build, and we specify the feature that we are building.</p>
 </div>
-<div class="sect3">
-<h4 id="_run_the_build">Run the Build!</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1960,13 +3550,73 @@ In Newer versions of eclipse it will be located under your user home directory&#
 <li>
 <p>Type <code>ant</code></p>
 </li>
-<li>
-<p>Cross your fingers</p>
-</li>
 </ol>
 </div>
 <div class="paragraph">
-<p>After the build is finished you should see a zip file in the demo/buildfeature/BuildXPages directory.</p>
+<p>You should then see some output like so:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\buildfeature\build.xml
+
+clean:
+   [delete] Deleting directory V:\Projects\BuildXPages\demo\buildfeature\buildDirectory
+
+init:
+    [mkdir] Created dir: V:\Projects\BuildXPages\demo\buildfeature\buildDirectory
+    [mkdir] Created dir: V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\plugins
+    [mkdir] Created dir: V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features
+
+build:
+     [copy] Copying 7 files to V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\plugins\com.gregorbyte.buildxpages.demo
+     [copy] Copying 3 files to V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features\com.gregorbyte.buildxpages.demo.feature
+     [echo] Init Default Properties
+     [java] org.eclipse.m2e.logback.configuration: The org.eclipse.m2e.logback.configuration bundle was activated before the state location was initialized.  Will retry after the state location is initialized.
+     [java] Starting Groovy-Eclipse compiler resolver.  Specified compiler level: unspecified
+     [java] 850 2.3.7.xx-201411061335-e44-RELEASE = STARTING
+     [java] org.eclipse.m2e.logback.configuration: Logback config file: V:\Cameron\workspace\.metadata\.plugins\org.eclipse.m2e.logback.configuration\logback.1.5.1.20150109-1820.xml
+     [java] org.eclipse.m2e.logback.configuration: Initializing logback
+     [java] Unknown argument: -DpluginPath=
+     [java] Buildfile: C:/eclipse-luna/eclipse/plugins/org.eclipse.pde.build_3.9.0.v20140415-2029/scripts/build.xml
+     [java]
+     [java] main:
+     [java]
+     [java] preBuild:
+     [java]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And then a lot more of that kind of stuff and finally, hopefully you see the BUILD SUCCESSFULL message</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">     [java] gather.logs:
+     [java]     [mkdir] Created dir: V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features\com.gregorbyte.buildxpages.demo.feature\feature.temp.folder\plugins\com.gregorbyte.buildxpages.demo_1.0.0.201709212144
+     [java]      [copy] Copying 1 file to V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features\com.gregorbyte.buildxpages.demo.feature\feature.temp.folder\plugins\com.gregorbyte.buildxpages.demo_1.0.0.201709212144
+     [java]
+     [java] update.feature:
+     [java]
+     [java] all.children:
+     [java]       [zip] Building zip: V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features\com.gregorbyte.buildxpages.demo.feature\com.gregorbyte.buildxpages.demo.feature_1.0.0.201709212144.log.zip
+     [java]    [delete] Deleting directory V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features\com.gregorbyte.buildxpages.demo.feature\feature.temp.folder
+     [java]     [unzip] Expanding: V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features\com.gregorbyte.buildxpages.demo.feature\com.gregorbyte.buildxpages.demo.feature_1.0.0.201709212144.log.zip into V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\BuildXPagesDemo\compilelogs
+     [java] BUILD SUCCESSFUL
+     [java]
+     [java] BUILD SUCCESSFUL
+     [java] Total time: 3 seconds
+
+BUILD SUCCESSFUL
+Total time: 5 seconds</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After the build is finished you should see (among other things) a zip file in the <strong>demo/buildfeature/buildDirectory/BuildXPagesDemo</strong> directory. This zip file contains the plugins and features that were built!</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_conclusion_4">Conclusion</h4>
+<div class="paragraph">
+<p>So this was a short demo of building a plugin using headless eclipse. The next demonstration tutorial shows how we can take these plugins and deploy them somewhere</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -2005,16 +3655,36 @@ In Newer versions of eclipse it will be located under your user home directory&#
 <div class="paragraph">
 <p>At the end of the headless feature build process, you will have a .zip file of your plugins and features. The contents of your zip file will be something like:</p>
 </div>
-<div class="openblock">
-<div class="content">
-<div class="paragraph">
-<p>|--eclipse
-|  |--plugins
-|  |  |--com.your.plugin.jar
-|  |--features
-|  |  |--com.your.feature.jar</p>
+<div class="ulist">
+<ul>
+<li>
+<p>eclipse</p>
+<div class="ulist">
+<ul>
+<li>
+<p>plugins</p>
+<div class="ulist">
+<ul>
+<li>
+<p>com.your.plugin.jar</p>
+</li>
+</ul>
 </div>
+</li>
+<li>
+<p>features</p>
+<div class="ulist">
+<ul>
+<li>
+<p>com.your.feature.jar</p>
+</li>
+</ul>
 </div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>Unfortunately although this format looks a bit like an Update Site, it isn&#8217;t quite there yet.
@@ -2359,7 +4029,7 @@ Make sure your previously used NSF Update Site Location is selected and then cli
 <dl>
 <dt class="hdlist1">configureDynamicPlugins</dt>
 <dd>
-<p>will edit the <strong>platform.xml</strong> to allow this dynamic loading of plugins</p>
+<p>will edit the <strong>platform.xml</strong> to allow this dynamic loading of plugins. It will also create a backup copy of platform.xml</p>
 </dd>
 <dt class="hdlist1">initDesignerSite</dt>
 <dd>
@@ -2381,13 +4051,19 @@ Make sure your previously used NSF Update Site Location is selected and then cli
 &lt;/project&gt;</code></pre>
 </div>
 </div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>lets run this target</p>
+<p>Don&#8217;t actually run this target, I have only included it as an example of what you would do if you wanted to try out the dropins style deployment. It is really only a technique you would use if you are developing XPages Controls and want to frequently update your designer plugins after you make changes to your controls</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code>ant configuredesigner</code></pre>
-</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Now when we start Designer it should load our plugins! And we didn&#8217;t have to go through all that provisioning operations.</p>
@@ -2426,7 +4102,7 @@ Make sure your previously used NSF Update Site Location is selected and then cli
 </div>
 </div>
 <div class="sect3">
-<h4 id="_conclusion_2">Conclusion</h4>
+<h4 id="_conclusion_5">Conclusion</h4>
 <div class="paragraph">
 <p>Hopefully this tutorial has demonstrated some of the tasks that you can use to get your plugins where you need them to be! Let me know if you have any questions or suggested improvements to this tutorial.</p>
 </div>
@@ -2434,1393 +4110,11 @@ Make sure your previously used NSF Update Site Location is selected and then cli
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_buildxpages_ant_task_reference">BuildXPages Ant Task Reference</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The following is a list of the Ant tasks provided by the project and some documentation and examples of how to use them.</p>
-</div>
-<div class="paragraph">
-<p><a href="#TasksDeployingNSF">Deploying NSFs to a Server</a></p>
-</div>
-<div class="paragraph">
-<p><a href="#TasksPlugin">Building and Deploying Plugins</a></p>
-</div>
-<div class="paragraph">
-<p><a href="#TasksDesigner">Interacting with Domino Designer for Building NSFs</a></p>
-</div>
-<div class="paragraph">
-<p><a href="#TasksServer">Controlling a Domino Server</a></p>
-</div>
-<div class="sect2">
-<h3 id="TasksDeployingNSF">NSF Deployment Related Tasks</h3>
-<div class="paragraph">
-<p>The following tasks are usually useful after you have built NSF&#8217;s and need to move them around, refresh templates etc. to acheive deployment of an  NSF that has been successfully built.</p>
-</div>
-<div class="sect3">
-<h4 id="_copynsf">copynsf</h4>
-<div class="paragraph">
-<p>Copies an NSF from one place to another using the Notes C API&#8217;s 'NSFDbCreateAndCopy' function.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Currently this tasks only copies the Note class 'ALLNONDATA' which means design elements only. It could easily be modified to include all documents if you like. Let me know if you want this done.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="sect4">
-<h5 id="_attributes">Attributes</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-srcserver
-</td>
-<td class="hdlist2">
-<p>The Server of the Database to be copied. Optional - defaults to Local</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-srcfilepath
-</td>
-<td class="hdlist2">
-<p>The Filepath of the Database to be copied</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-dstserver
-</td>
-<td class="hdlist2">
-<p>The Destination Server for the newly created database. Optional - defaults to Local</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-dstfilepath
-</td>
-<td class="hdlist2">
-<p>The Filepath the Database to be created.</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;copynsf srcfilepath="demo\\GitTest.nsf" dstfilepath="demo\\DidItwork.nsf" /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_deletensf">deletensf</h4>
-<div class="paragraph">
-<p>Deletes an NSF using the Notes C API&#8217;s NSFDbDelete method.</p>
-</div>
-<div class="sect4">
-<h5 id="_attributes_2">Attributes</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-server
-</td>
-<td class="hdlist2">
-<p>The Server of the NSF that you want to Delete. Optional - defaults to Local</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-filename
-</td>
-<td class="hdlist2">
-<p>The filepath of the NSF that you want to Delete</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_2">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;!-- Delete a Local NSF --&gt;
-&lt;deletensf filename="demo\\DidItwork.nsf" /&gt;</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;!-- Delete an NSF on another Server --&gt;
-&lt;deletensf server="Domino02" filename="demo\\DidItwork.nsf" /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_settemplatenames">settemplatenames</h4>
-<div class="paragraph">
-<p>Updates the Template Inheritance settings of an NSF.
-You can set an NSF To be a master template, or you can set an NSF to Inherit from another Template, or Both!
-You can also clear the 'inherit from' or 'master template' settings.</p>
-</div>
-<div class="sect4">
-<h5 id="_attributes_3">Attributes</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-server
-</td>
-<td class="hdlist2">
-<p>The Server of the NSF that you are modifying template settings for</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-database
-</td>
-<td class="hdlist2">
-<p>The filepath of the NSF that you are modifying template settinsg for</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-clearinheritfrom
-</td>
-<td class="hdlist2">
-<p>Defaults to false. When set to 'true' will clear any inheritance settings if they exist</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-inheritfrom
-</td>
-<td class="hdlist2">
-<p>The Name of the Master Template that you would like the NSF To inherit from</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-clearmastername
-</td>
-<td class="hdlist2">
-<p>Defaults to false. When set to 'true' will clear the 'Is Master Template' settings of the nsf if they exist</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-mastername
-</td>
-<td class="hdlist2">
-<p>This is the Template Name that you would like this NSF to be known as.</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_3">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;!-- Set an NSF to inherit from 'DemoTemplate' --&gt;
-&lt;bxp:settemplatenames database="MyFolder\MyNSF.nsf" server="Domino01" inheritfrom="DemoTemplate"&gt;
-&lt;/bxp:settemplatenames&gt;</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;!-- Set an NSF to be a Master Template called 'DemoTemplate' --&gt;
-&lt;bxp:settemplatenames database="MyFolder\MyNSF.nsf" server="Domino01" mastername="DemoTemplate"&gt;
-&lt;/bxp:settemplatenames&gt;</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;!-- Clear the Inherit From settings so the NSF will no longer inherit from a template --&gt;
-&lt;bxp:settemplatenames database="MyFolder\MyNSF.nsf" server="Domino01" clearinheritfrom="true"&gt;
-&lt;/bxp:settemplatenames&gt;</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;!-- Clear the Master Template settings so the NSF will no longer be a Master template --&gt;
-&lt;bxp:settemplatenames database="MyFolder\MyNSF.nsf" server="Domino01" clearmastername="true"&gt;
-&lt;/bxp:settemplatenames&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_scxd">scxd</h4>
-<div class="paragraph">
-<p>Sets the Single Copy XPage Design settings of an NSF. You can set both the relevant properties of the SCXD path, and the Flag which determines whether to use the SCXD template or not.</p>
-</div>
-<div class="sect4">
-<h5 id="_attributes_4">Attributes</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-server
-</td>
-<td class="hdlist2">
-<p>The server of the NSF that you would like to set SCXD settings for</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-database
-</td>
-<td class="hdlist2">
-<p>The filepath of the nsf that you would like to set SCXD settings for</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-scxdpath
-</td>
-<td class="hdlist2">
-<p>The path of the XPages database which you would like to use as the SCXD</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-scxdflag
-</td>
-<td class="hdlist2">
-<p>true/false determines whether the 'Use Single Copy XPage Design' checkbox is will be ticked in the Database Properties</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_4">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;!-- Set an NSF to use 'scxd\Awesome.nsf' as it's single copy xpage design --&gt;
-&lt;bxp:scxd database="MyFolder\MyNSF.nsf" server="Domino01" scxdpath="scxd\Awesome.nsf" scxdflag="true" /&gt;</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;!-- Set an NSF to not use any SCXD --&gt;
-&lt;bxp:scxd database="MyFolder\MyNSF.nsf" server="Domino01" scxdpath="" scxdflag="false" /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_refreshdbdesign">refreshdbdesign</h4>
-<div class="paragraph">
-<p>Refreshes an NSF&#8217;s design from a server using the Notes C API DesignRefresh method.</p>
-</div>
-<div class="paragraph">
-<p>The console output shows all the design elements that are modified which is great to verify what has changed.</p>
-</div>
-<div class="paragraph">
-<p>This task uses existing template settings of the NSF so if you need to change them you should use the settemplatenames task before using this task.</p>
-</div>
-<div class="sect4">
-<h5 id="_attributes_5">Attributes</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-server
-</td>
-<td class="hdlist2">
-<p>The server of the NSF that you would like to Refresh the Design of</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-database
-</td>
-<td class="hdlist2">
-<p>The filepath of the NSF that you would like to refresh the Design of</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-templateserver
-</td>
-<td class="hdlist2">
-<p>The server which has the Template that will be refreshed from</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_5">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;!-- Refresh MyNSF.nsf from the Domino03 server --&gt;
-&lt;refreshdbdesign server="Domino02" database="MyFolder\\MyNSF.nsf" templateserver="Domino03" /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="TasksPlugin">Plugin Related Tasks</h3>
-<div class="paragraph">
-<p>The following tasks are all related to the building and deployment of OSGi plugins for XPages and Notes/Designer.</p>
-</div>
-<div class="sect3">
-<h4 id="_buildfeature">buildfeature</h4>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Caution</div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>This Task and Documentation needs a little bit of love before it is truly re-usable. If you are keen to use this then let me know and I will improve it!</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>This task will build all the Plugins listed in a feature, using the headless eclipse PDE build system.</p>
-</div>
-<div class="paragraph">
-<p>Before using this task, you will need to have prepared the build directory with the source code of the plugins that are to be built, and the the feature that is to be built.</p>
-</div>
-<div class="sect4">
-<h5 id="_properties_that_are_used_in_this_task">Properties that are used in this task</h5>
-<div class="paragraph">
-<p>This task is actually a macro, and currently relies on some properties to have already been set in ant</p>
-</div>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-featureId
-</td>
-<td class="hdlist2">
-<p>The feature to be built</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-eclipseBase
-</td>
-<td class="hdlist2">
-<p>Root directory of eclipse</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-pdeBuildVersion
-</td>
-<td class="hdlist2">
-<p>PDE Build version</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-equinoxLauncherVersion
-</td>
-<td class="hdlist2">
-<p>Equinox Launcher Version</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-buildId
-</td>
-<td class="hdlist2">
-<p>Usually the build number</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-buildLabel
-</td>
-<td class="hdlist2">
-<p>Project Name</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-buildConfigDir
-</td>
-<td class="hdlist2">
-<p>Directory of build.properties</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-buildDir
-</td>
-<td class="hdlist2">
-<p>The working directory in which the plugins will be built</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_attributes_6">Attributes</h5>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">pluginPath</dt>
-<dd>
-<p>This is a semi-colon delimited string of the target platform plugin paths</p>
-</dd>
-</dl>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_6">Example</h5>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Caution</div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>You really need a lot more information than this to use this task but I have just put this all here as a starting point. Please feel free to contact me to make me provide more information.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;!-- Plugin path is supplied by a build.properties file --&gt;
-&lt;bxp:buildfeature pluginpath="${pluginPath}" /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_importplugins">importplugins</h4>
-<div class="paragraph">
-<p>Imports plugins/features from an update site on the filesystem into an
-<a href="https://www.openntf.org/main.nsf/project.xsp?r=project/Open%20Eclipse%20Update%20Site" target="_blank">Open Eclipse NSF Update Site</a></p>
-</div>
-<div class="sect4">
-<h5 id="_attributes_7">Attributes</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-server
-</td>
-<td class="hdlist2">
-<p>The server that the <strong>Open Eclipse NSF Update Site</strong> is located on</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-database
-</td>
-<td class="hdlist2">
-<p>The filepath of the <strong>Open Eclipse NSF Update Site</strong></p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-sitexml
-</td>
-<td class="hdlist2">
-<p>The location of the site.xml of the <strong> Filesystem update site</strong> that you want to import</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-deletefirst
-</td>
-<td class="hdlist2">
-<p>true/false, defaults to false. If set to true, it will clear the updatesite nsf of all existing plugins/features</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_7">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;bxp:importplugins server="Domino02" database="UpdateSite\MyUpdateSite.nsf" sitexml="C:\MyFolder\MyProject\com.my.updatesite\site.xml" /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_copytobuilddir">copytobuilddir</h4>
-<div class="paragraph">
-<p>This task is used during preparation for a headless eclipse plugin build.
-It is used to copy the source code of of a plugin or feature, into the <em>build directory</em> which is a special working directory used to build the plugins and features.
-The <em>build directory</em> contains 2 subfolders <strong>plugins</strong> and <strong>features</strong> and the plugin or feature will automatically be copied into the correct folder.
-The task will exclude contents of the <strong>bin</strong> folder when copying. The idea is to copy source files only.</p>
-</div>
-<div class="sect4">
-<h5 id="_properties_used">Properties used</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-buildDir
-</td>
-<td class="hdlist2">
-<p>The Build Directory in which the Headless Plugin Build will take place. this is commonly set to 'buildDirectory'</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_attributes_8">Attributes</h5>
-<div class="paragraph">
-<p>You specify either the plugin you want to copy, or the feature you want to copy.
-You can set both at the same time if you like but I think it makes more sense to separate them into sepearate tasks.</p>
-</div>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-plugin
-</td>
-<td class="hdlist2">
-<p>the folder location of the plugin to copy</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-feature
-</td>
-<td class="hdlist2">
-<p>the folder location of the feature to copy</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_8">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;bxp:copytobuilddir plugin="com.acme.myplugin" /&gt;
-&lt;bxp:copytobuilddir feature="com.acme.myplugin.feature" /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_unpackplugin">unpackplugin</h4>
-<div class="paragraph">
-<p>Usually you update Domino Designer with new plugins by going through the normal installation process. But there is another way in which you can build plugins into a particular folder, and Domino Designer always picks up new versions.</p>
-</div>
-<div class="paragraph">
-<p>When deploying plugins this way, some plugins need to be 'unpacked' which means they don&#8217;t exist as a jar file, but the contents are unpacked into a folder.</p>
-</div>
-<div class="paragraph">
-<p>This task will unpack a plugin to a folder. You just need to give the plugin name, and it will find the version information automatically</p>
-</div>
-<div class="sect4">
-<h5 id="_attributes_9">Attributes</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-dir
-</td>
-<td class="hdlist2">
-<p>The directory that the plugin is in</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-pluginid
-</td>
-<td class="hdlist2">
-<p>the plugin id that you want to unpack</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_9">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;bxp:unpackplugin dir="eclipse/plugins" pluginid="com.acme.superplugin" /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_generatesitexml">generatesitexml</h4>
-<div class="paragraph">
-<p>After building your plugins headlessly with eclipse PDE, you will then have a directory of plugins and features, but
-before importing plugins into an <a href="https://www.openntf.org/main.nsf/project.xsp?r=project/Open%20Eclipse%20Update%20Site" target="_blank">Open Eclipse NSF Update Site</a> you will also need a <strong>site.xml</strong> file.</p>
-</div>
-<div class="paragraph">
-<p>Newer versions of eclipse use a <em>p2 repository</em> format which does not require a site.xml, but with Notes/Domino running on a much older version of eclipse, it still uses an older format which uses the <strong>site.xml</strong> file.</p>
-</div>
-<div class="paragraph">
-<p>The build process does not generate one for us so we do it ourselvels with this task, which scans the features directory and builds the necessary xml.</p>
-</div>
-<div class="sect4">
-<h5 id="_attributes_10">Attributes</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-eclipsedir
-</td>
-<td class="hdlist2">
-<p>The root folder that contains the plugins and features directory. I call it eclipse directory because often you will find it in the structure ../something/<strong>eclipse</strong>/plugins and ../something/<strong>eclipse</strong>/features</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_10">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;bxp:generatesitexml eclipsedir="testgen" /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_clearupdatesite">clearupdatesite</h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>This task does not refer to clearing an NSF update site, this task is for clearing and update site on the filesystem</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>After building plugins, sometimes you want to put them in an update site on the filesystem. You may want to make sure the update site is empty before you put your plugins there, so this task can clear out an existing update site.</p>
-</div>
-<div class="sect4">
-<h5 id="_attributes_11">Attributes</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-eclipsedir
-</td>
-<td class="hdlist2">
-<p>The root folder that contains the plugins and features directory. I call it eclipse directory because often you will find it in the structure ../something/<strong>eclipse</strong>/plugins and ../something/<strong>eclipse</strong>/features</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_11">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;bxp:clearupdatesite eclipsedir="myplugins" /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_copypluginstoupdatesite">copypluginstoupdatesite</h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>This task does not refer to copying an NSF update site, this task is for copying to an update site on the filesystem</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>After building plugins, sometimes you want to put them in an update site on the filesystem. This task will copy the plugins to your target update site, and also generate the site xml.</p>
-</div>
-<div class="sect4">
-<h5 id="_properties_2">Properties</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-builtPluginsZip
-</td>
-<td class="hdlist2">
-<p>the zip file of the built plugins after headless build</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_attributes_12">Attributes</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-eclipsedir
-</td>
-<td class="hdlist2">
-<p>The root folder that contains the plugins and features directory. I call it eclipse directory because often you will find it in the structure ../something/<strong>eclipse</strong>/plugins and ../something/<strong>eclipse</strong>/features</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_12">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;bxp:copypluginstoupdatesite eclipsedir="my/target/updatesite/eclipse" /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="TasksDesigner">Designer Related Tasks</h3>
-<div class="sect3">
-<h4 id="_startdesigner">startDesigner</h4>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Caution</div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Using this task to start designer will cause designer to shutdown at the end of the ant build process. Due the the process being a sub-process. I need to do this a better way such as the powershell script way but I haven&#8217;t got around to it yet. I actually in real life just leave designer running all the time so I don&#8217;t need to start/close it.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Before building an NSF with the Headless Designer Plugin, you need to make sure designer is running. You can use the <strong>checkDesignerRunning</strong> task to check, and if it is not running you can use this <strong>startDesigner</strong> task.</p>
-</div>
-<div class="sect4">
-<h5 id="_properties_3">Properties</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-notesProgDir
-</td>
-<td class="hdlist2">
-<p>The Notes program directory on this machine</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_13">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;bxp:startDesigner /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_buildnsf">buildnsf</h4>
-<div class="paragraph">
-<p>The buildnsf task is used to build an ODP into an NSF. To do this it connects to the Designer Headless Server, and instructs it to build.
-If the NSF that is specified does not yet exist, it will be created.
-You</p>
-</div>
-<div class="sect4">
-<h5 id="_attributes_13">Attributes</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-project
-</td>
-<td class="hdlist2">
-<p>This is the .project file that is in the root directory of the On-Disk Project</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-projectname
-</td>
-<td class="hdlist2">
-<p>When the on disk project is imported it must be given a 'name'. This name needs to be unique, so you can specify it here. Note: Do not put your ODP under the Notes Workspace.</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-server
-</td>
-<td class="hdlist2">
-<p>This is the server of the NSF that you are building</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-nsf
-</td>
-<td class="hdlist2">
-<p>This is the filepath of the nsf that your building with</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-port
-</td>
-<td class="hdlist2">
-<p>This specifies the port that your Designer Headless Server is running on (Default 8282)</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-failonerror
-</td>
-<td class="hdlist2">
-<p>If Errors are found against the nsf after building, fail the task</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_14">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;target name="testbuildnsf" description="Build an NSF"&gt;
-	&lt;bxp:buildnsf project="D:\\workspaces\\testworkpace\\WahWah\\.project" projectname="FromAnt" nsf="stageing\\fromant2.nsf"&gt;
-	&lt;/bxp:buildnsf&gt;
-&lt;/target&gt;</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;target name="testbuildnsf2" description="Build an NSF"&gt;
-	&lt;bxp:buildnsf ondiskproject="V:\\eclipse-kepler\\runtime-DominoDesigner\\DoraHeadless\\.project" targetfilename="fromant2.nsf" port="8283"&gt;
-	&lt;/bxp:buildnsf&gt;
-&lt;/target&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_closedesigner">closedesigner</h4>
-<div class="paragraph">
-<p>This task connects to the Headless Designer Plugin and instructs it to shutdown.</p>
-</div>
-<div class="sect4">
-<h5 id="_attributes_14">Attributes</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-port
-</td>
-<td class="hdlist2">
-<p>The port that the Headless Designer Plugin is running on. Default = 8282</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_15">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;bxp:closedesigner /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_markersreport">markersreport</h4>
-<div class="paragraph">
-<p>This task connects to the Headless Designer Plugin, and requests a report of all the problem markse (e.g. Error, Info, Warning etc.) for a particular NSF.</p>
-</div>
-<div class="paragraph">
-<p>If you like , you can cause the build to fail if there are errors present on the NSF, to prevent further tasks like deployment.</p>
-</div>
-<div class="sect4">
-<h5 id="_attributes_15">Attributes</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-ondiskproject
-</td>
-<td class="hdlist2">
-<p>The On Disk Project file (.project) of the NSF that you want a report for.</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-failonerror
-</td>
-<td class="hdlist2">
-<p>When set to true (Default) the build will fail if errors are present on the NSF</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-port
-</td>
-<td class="hdlist2">
-<p>The port which Headless Designer Plugin is running on (default = 8282)</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_16">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;bxp:markersreport ondiskproject="C:\\workspaces\\neon-64\\runtime-HeadlessPlugin\\DeleteMe\\.project"&gt;
-&lt;/bxp:markersreport&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_checkdesignerrunning">checkdesignerrunning</h4>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Caution</div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Windows only!</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>This task checks if the nlnotes.exe process is running, if so it sets a property <strong>designer.running</strong>.
-You can then use this property to decide whether to take some other action.</p>
-</div>
-<div class="sect4">
-<h5 id="_example_17">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;bxp:checkDesignerRunning /&gt;
-&lt;fail if="designer.running" message="Designer was running" /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_updatedesignerlink">updateDesignerLink</h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>I am not sure this is a great way to deploy plugins so  I haven&#8217;t detailed this part yet.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>This task is used to set up an update site that will always be loaded when Designer Is started up. This is only used when you are deploying plugins to Domino Designer using the sneaky 'permanent update site' method.</p>
-</div>
-<div class="sect4">
-<h5 id="_properties_4">Properties</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-notesProgDir
-</td>
-<td class="hdlist2">
-<p>The Notes Program Directory on this machine</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_attributes_16">Attributes</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-updateSiteLabel
-</td>
-<td class="hdlist2">
-<p>This is a short code to be used as a name for the update site. It will be used in a filename so it should be something simple e.g. 'extlib'</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-updateSiteDir
-</td>
-<td class="hdlist2">
-<p>This is the Directory that contains the update site. It is expected to have a subdirectory called <strong>eclipse</strong>, and within that subdirectory should be the site.xml, <strong>features</strong> directory and <strong>plugins</strong> directory</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_18">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;bxp:updateDesignerLink updateSiteLabel="extlib" updateSiteDir="C:\\Projects\\extlib\updatesite" /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_initdesignersite">initdesignersite</h4>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>I am not sure this is a great way to deploy plugins so  I haven&#8217;t detailed this part yet.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>This task is used to set up an update site that will always be loaded when Designer Is started up. This is only used when you are deploying plugins to Domino Designer using the sneaky 'permanent update site' method.</p>
-</div>
-<div class="paragraph">
-<p>This task is just like the <strong>updateDesignerLink</strong> task, however it will create the update site folder structure within the framework directory of the Notes Installation.</p>
-</div>
-<div class="paragraph">
-<p>You can then copy plugins to this update site, and they will be loaded by designer (if you have configured platform.xml using the <strong>checkplatformxml</strong> task)</p>
-</div>
-<div class="sect4">
-<h5 id="_properties_5">Properties</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-notesProgDir
-</td>
-<td class="hdlist2">
-<p>The Notes Program Directory on this machine</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_attributes_17">Attributes</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-updateSiteLabel
-</td>
-<td class="hdlist2">
-<p>This is a short code to be used as a name for the update site. It will be used in a filename so it should be something simple e.g. 'extlib'</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_19">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;bxp:updateDesignerLink updateSiteLabel="extlib" updateSiteDir="C:\\Projects\\extlib\updatesite" /&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_checkplatformxml">checkplatformxml</h4>
-<div class="paragraph">
-<p>This checks that the IBM Notes Installation&#8217;s platform.xml file is configured to automatically load plugins from the filesystem. The task will fail if the file is not configured properly.</p>
-</div>
-<div class="sect4">
-<h5 id="_properties_6">Properties</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-notesProgDir
-</td>
-<td class="hdlist2">
-<p>The Notes Program Directory on this machine</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_20">Example</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">		&lt;!-- Make sure notesDataDir property is set --&gt;
-		&lt;property name="notesDataDir" location="H:\Notes\Data"/&gt;
-
-		&lt;bxp:checkPlatformXml/&gt;</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_configuredynamicplugins">configuredynamicplugins</h4>
-<div class="paragraph">
-<p>This task configures IBM Notes' <strong>platform.xml</strong> file so that IBM Notes will load plugins from the filesystem without the need to 'approve' them via the User Interface.</p>
-</div>
-<div class="paragraph">
-<p>Usually you need to go through the whole provisioning process for plugin updates, but this task will put IBM Notes into a configuration that bypasses this.</p>
-</div>
-<div class="sect4">
-<h5 id="_properties_7">Properties</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-notesDataDir
-</td>
-<td class="hdlist2">
-<p>the location of IBM Notes Data directory on this machine</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_21">Example</h5>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">		&lt;!-- Make sure notesDataDir property is set --&gt;
-		&lt;property name="notesDataDir" location="H:\Notes\Data"/&gt;
-
-		&lt;bxp:configureDynamicPlugins /&gt;</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="TasksServer">Server Related Ant Tasks</h3>
-<div class="paragraph">
-<p>These tasks are designed to interact with the domino server by issuing commands to the console.</p>
-</div>
-<div class="sect3">
-<h4 id="_controlhttp">controlhttp</h4>
-<div class="paragraph">
-<p>The controlhttp task is used to control a Domino Server&#8217;s http tasks.
-It ultimately just issues a console command to the domino console.</p>
-</div>
-<div class="sect4">
-<h5 id="_attributes_18">Attributes</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-server
-</td>
-<td class="hdlist2">
-<p>The server that you are controlling</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-action
-</td>
-<td class="hdlist2">
-<p>start|stop|restart</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_22">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;target name="teststarthttp"&gt;
-	&lt;bxp:controlhttp server="Domino02" action="start" /&gt;
-&lt;/target&gt;</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;target name="teststophttp"&gt;
-	&lt;bxp:controlhttp server="Domino02" action="stop" /&gt;
-&lt;/target&gt;</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;target name="testrestarthttp"&gt;
-	&lt;bxp:controlhttp server="Domino02" action="restart" /&gt;
-&lt;/target&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_maintenancewarning">maintenancewarning</h4>
-<div class="paragraph">
-<p>The maintenance warning task issues a console command to the Domino OSGi console which tells current users that there will be a maintenance outage in a certain amount of time</p>
-</div>
-<div class="exampleblock">
-<div class="content">
-<div class="paragraph">
-<p>The Maintenance warning relies on another plugin that has not yet been added to BuildXPages so this task wont be useful until that plugin is added to this project</p>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_attributes_19">Attributes</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-server
-</td>
-<td class="hdlist2">
-<p>The server that you are controlling</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-minutes
-</td>
-<td class="hdlist2">
-<p>in how many minutes time is the outage going to occur</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_23">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;target name="testmaintenancewarn"&gt;
-	&lt;bxp:maintenancewarning server="CameronWS" minutes="20" /&gt;
-&lt;/target&gt;</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;target name="testmwcancel"&gt;
-	&lt;bxp:maintenancewarning server="CameronWS" cancelwarning="true" /&gt;
-&lt;/target&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_loaddesign">loaddesign</h4>
-<div class="paragraph">
-<p>Issues a 'load design' console command for a server</p>
-</div>
-<div class="sect4">
-<h5 id="_attributes_20">Attributes</h5>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-server
-</td>
-<td class="hdlist2">
-<p>The server that you are controlling</p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-directory
-</td>
-<td class="hdlist2">
-<p>which directory should have it&#8217;s designs refreshed</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_example_24">Example</h5>
-<div class="literalblock">
-<div class="content">
-<pre>&lt;target name="testloaddesign"&gt;
-	&lt;bxp:loaddesign server="CameronWS" directory="Cameron\Jogs\JobHub" /&gt;
-&lt;/target&gt;</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_having_trouble">Having Trouble?</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>If you have found a bug, can&#8217;t understand something, want some advice then.
-Submit an Issue using the <a href="https://github.com/camac/BuildXPages/issues">Project&#8217;s Github Issues page</a> and I will get back to you!</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_feedback_welcome">Feedback Welcome!</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Over the past couple of years, lots of trial, error and research has gone into getting this project to where it is (for my own benefit!)</p>
-</div>
-<div class="paragraph">
-<p>I recently decided to spend some further time to clean it all up and write documentation so it is easily available to the rest of the community. It has taken about a month to get all this done, so if this actually helps anyone else I would love to hear about it so I know it was worth the effort!</p>
-</div>
-<div class="paragraph">
-<p>If this project helps you, if you have suggestions anything just send me a tweet at @gregorbyte or put through an issue in the <a href="https://github.com/camac/BuildXPages/issues">Project&#8217;s Github Issues page</a></p>
-</div>
-</div>
-</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0<br>
-Last updated 2017-08-24 21:17:43 AEST
+Last updated 2017-09-21 21:42:33 AEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">

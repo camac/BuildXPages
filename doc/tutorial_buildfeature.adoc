@@ -1,47 +1,103 @@
 == Building Features and Plugins
 
-In this sample we build the plugins for a feature, and prepare an Update Site that can be used to deploy to Domino or Domino Designer
+In this Demonstration we build a plugin by doing a Headless Eclipse feature build.
 
-=== Requirements
+The general way this works is, you create a feature that lists the plugins that you want to build. You then tell eclipse (via a command line instruction) to build this feature, and it will build each plugin and package it up for you.
 
-Before we build plugins, we need to make sure we are set up properly
+BuildXPages has a task *buildfeature* which basically just helps issue the command line instruction.
 
-* Install Eclipse for RCP and RAP Development
-* Install Ant
-* Install Build4XPages Ant tasks
+This is a very short demonstration, as I am not very sure there is a very big audience for this.
+Hopefully this demonstration will give you an idea of how it works but if you need to know more please feel free to ask me questions about it.
 
-=== Configure Your Notes and Domino Program Directories
+If you want to learn more about the headless eclipse works, then check out the following link https://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.pde.doc.user%2Ftasks%2Fpde_feature_build.htm[Automated building of Features]
 
-In order to run the build steps, we need to know where Notes and Domino are
+[IMPORTANT]
+====
+Make sure you have performed the necessary setup as in the getting started section
+====
 
-* Set them up as Environment Variables
-* Specify them in the build.properties file
+=== Building the Plugin/Feature
 
-=== Configure Eclipse Properties
+The *demo/buildfeature* directory contains the source code of a plugin, and also a feature.
 
-The build script needs to know 3 things in order to build your plugins
+* com.gregorbyte.buildxpages.demo
+* com.gregorbyte.buildxpages.demo.feature
 
-What is the base directory of Eclipse?::
-This may be something like `C:\eclipse`
+We are going to execute the *build* target, lets have a look at it
 
-Where can I find the PDE Build.xml file?::
-This is a file which provides the actual recipe to build plugins. In older versions of eclipse it will be under <eclipse>/plugins/org.eclipse.pde.build_<version>/scripts/build.xml
-In Newer versions of eclipse it will be located under your user home directory's p2 pool of plugins <userhome>/.p2/pool/plugins/org.eclipse.pde.build_<version>/scripts/build.xml
+[source,xml]
+----
+include::../demo/buildfeature/build.xml[tag=build]
+----
 
-Where can I find the equinox launcher jar?::
-This is an executable jar which launches the plugin build process. In older versions of eclipse it will be under <eclipse>/plugins/org.eclipse.equinox.launcher_<version>.jar
-In Newer versions of eclipse it will be located under your user home directory's p2 pool of plugins <userhome>/.p2/pool/plugins/org.eclipse.equinox.launcher_<version>.jar
+The eclipse headless build performs all it's operations in a 'build directory' which is basically like a working area, so before running a build, we have to prepare this build directory and make sure it has plugins and features we need to build. 
 
-These 3 things should be the same for every project you build on the computer, so you can set these up as Environment Varables as well
+We do this using buildxpages *copytobuilddir* task which copies a plugin or a feature to the build directory. The *copytobuilddir* expects there to be a *buildDir* set which specifieds the build directory location.
 
-If you don't want to set them up as environment variables, you can specify them in the accompanying build.properties file
-
-=== Run the Build!
+We then use buildxpages *buildfeature* task to trigger the build, and we specify the feature that we are building. 
 
 1. Open your console and navigate to the demo/buildfeature folder
 2. Type `ant`
-3. Cross your fingers
 
-After the build is finished you should see a zip file in the demo/buildfeature/BuildXPages directory.
+You should then see some output like so:
+
+[source,txt]
+----
+Buildfile: V:\Projects\BuildXPages\demo\buildfeature\build.xml
+
+clean:
+   [delete] Deleting directory V:\Projects\BuildXPages\demo\buildfeature\buildDirectory
+
+init:
+    [mkdir] Created dir: V:\Projects\BuildXPages\demo\buildfeature\buildDirectory
+    [mkdir] Created dir: V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\plugins
+    [mkdir] Created dir: V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features
+
+build:
+     [copy] Copying 7 files to V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\plugins\com.gregorbyte.buildxpages.demo
+     [copy] Copying 3 files to V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features\com.gregorbyte.buildxpages.demo.feature
+     [echo] Init Default Properties
+     [java] org.eclipse.m2e.logback.configuration: The org.eclipse.m2e.logback.configuration bundle was activated before the state location was initialized.  Will retry after the state location is initialized.
+     [java] Starting Groovy-Eclipse compiler resolver.  Specified compiler level: unspecified
+     [java] 850 2.3.7.xx-201411061335-e44-RELEASE = STARTING
+     [java] org.eclipse.m2e.logback.configuration: Logback config file: V:\Cameron\workspace\.metadata\.plugins\org.eclipse.m2e.logback.configuration\logback.1.5.1.20150109-1820.xml
+     [java] org.eclipse.m2e.logback.configuration: Initializing logback
+     [java] Unknown argument: -DpluginPath=
+     [java] Buildfile: C:/eclipse-luna/eclipse/plugins/org.eclipse.pde.build_3.9.0.v20140415-2029/scripts/build.xml
+     [java] 
+     [java] main:
+     [java] 
+     [java] preBuild:
+     [java] 
+----
+
+And then a lot more of that kind of stuff and finally, hopefully you see the BUILD SUCCESSFULL message
+
+[source,txt]
+----
+     [java] gather.logs:
+     [java]     [mkdir] Created dir: V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features\com.gregorbyte.buildxpages.demo.feature\feature.temp.folder\plugins\com.gregorbyte.buildxpages.demo_1.0.0.201709212144
+     [java]      [copy] Copying 1 file to V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features\com.gregorbyte.buildxpages.demo.feature\feature.temp.folder\plugins\com.gregorbyte.buildxpages.demo_1.0.0.201709212144
+     [java] 
+     [java] update.feature:
+     [java] 
+     [java] all.children:
+     [java]       [zip] Building zip: V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features\com.gregorbyte.buildxpages.demo.feature\com.gregorbyte.buildxpages.demo.feature_1.0.0.201709212144.log.zip
+     [java]    [delete] Deleting directory V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features\com.gregorbyte.buildxpages.demo.feature\feature.temp.folder
+     [java]     [unzip] Expanding: V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features\com.gregorbyte.buildxpages.demo.feature\com.gregorbyte.buildxpages.demo.feature_1.0.0.201709212144.log.zip into V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\BuildXPagesDemo\compilelogs
+     [java] BUILD SUCCESSFUL
+     [java] 
+     [java] BUILD SUCCESSFUL
+     [java] Total time: 3 seconds
+
+BUILD SUCCESSFUL
+Total time: 5 seconds
+----
+
+After the build is finished you should see (among other things) a zip file in the *demo/buildfeature/buildDirectory/BuildXPagesDemo* directory. This zip file contains the plugins and features that were built!
+
+=== Conclusion
+
+So this was a short demo of building a plugin using headless eclipse. The next demonstration tutorial shows how we can take these plugins and deploy them somewhere
 
 

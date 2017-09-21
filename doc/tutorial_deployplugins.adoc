@@ -14,13 +14,11 @@ After building your plugins, now you might want to deploy to either:
 
 At the end of the headless feature build process, you will have a .zip file of your plugins and features. The contents of your zip file will be something like:
 
---
-|--eclipse
-|  |--plugins
-|  |  |--com.your.plugin.jar
-|  |--features
-|  |  |--com.your.feature.jar
---
+* eclipse
+** plugins
+*** com.your.plugin.jar
+** features
+*** com.your.feature.jar
 
 Unfortunately although this format looks a bit like an Update Site, it isn't quite there yet.
 We are missing is the **site.xml** file, which is a list of the features that can be found in the update site.
@@ -209,7 +207,7 @@ The method basically involves making some edits to a 'platform.xml' file, and al
 
 BuildXPages provides 2 tasks that help to do all this for you. They are both utilised in the *configuredesigner* target
 
-configureDynamicPlugins:: will edit the *platform.xml* to allow this dynamic loading of plugins
+configureDynamicPlugins:: will edit the *platform.xml* to allow this dynamic loading of plugins. It will also create a backup copy of platform.xml
 initDesignerSite:: will set up the link file to point to the update site that we want to load during startup of designer
 
 [source,xml]
@@ -217,11 +215,10 @@ initDesignerSite:: will set up the link file to point to the update site that we
 include::../demo/deployplugins/build.xml[tag=configuredesigner]
 ----
 
-lets run this target
-
-```
-ant configuredesigner
-```
+[CAUTION]
+====
+Don't actually run this target, I have only included it as an example of what you would do if you wanted to try out the dropins style deployment. It is really only a technique you would use if you are developing XPages Controls and want to frequently update your designer plugins after you make changes to your controls
+====
 
 Now when we start Designer it should load our plugins! And we didn't have to go through all that provisioning operations.
 

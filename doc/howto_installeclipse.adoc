@@ -6,4 +6,4 @@ You only need to install Eclipse if you are **Building plugins**. It is not requ
 ====
 
 Go to eclipse.org and download 'Eclipse for RCP and RAP Developers'
-Follow the instructions!
+Follow the instructions! If you are building plugins then I assume you know this already!

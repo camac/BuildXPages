@@ -1,12 +1,14 @@
-= Environment Variables
+= Setting up Environment Variables
 
 Some of the BuildXPages tasks need to know the location of some things that are common to the entire computer. These locations can be specified once and for all by setting them up as the following environment variables.
 
 If you don't want to set these up, that is fine but you will then need to provide them when running ant using a properties file or similar. 
 
+If you don't know how to set up environment variables then just do a google search for how to do so for your operating system (Windows etc.)
+
 [TIP]
 ====
-Once you open up a command prompt, it has loaded it's environment variables and will not receive any new or modified variables. So if you have added or changed environment variables, you will need to start a fresh new console prompt to see the updated variables.
+Command prompts that have already been opened will not receive any new or modified Environment variables. So if you have added or changed environment variables, you will need to start a fresh new console prompt to see the updated variables.
 ====
 
 == IBM Notes Directory Locations
@@ -16,15 +18,14 @@ Once you open up a command prompt, it has loaded it's environment variables and 
 On windows, if your Notes/Domino is within a directory with spaces e.g. 'Program Files (x86)' it may be a good idea to use the 8.3 format of that directory e.g. 'Progra~2'
 ====
 
-[horizontal]
-NOTES_PROGDIR:: IBM Notes' Program Directory e.g. `C:\Progra~2\IBM\Notes`
-NOTES_DATADIR:: Your Notes Data Directory e.g. `C:\Progra~2\IBM\Notes\Data`
+NOTES_PROGDIR:: Set to your IBM Notes' Program Directory e.g. `C:\Progra~2\IBM\Notes`
+NOTES_DATADIR:: Set to your Your Notes Data Directory e.g. `C:\Progra~2\IBM\Notes\Data`
 
 == Headless Plugin Building
 
 The following Environment Variables are only useful if you are intending to build plugins and features headless eclipse.
 
-BXP_ECLIPSE_BASE:: This is the root folder of your Eclipse installation
+BXP_ECLIPSE_BASE:: This is the root folder of your Eclipse installation (the directory that contains eclipse.exe)
 BXP_PDEBUILDXML:: 
 This is the location of your PDE Build XML file.
 This is a file which provides the actual recipe to build plugins. In older versions of eclipse it will be under `<eclipse>/plugins/org.eclipse.pde.build_<version>/scripts/build.xml`

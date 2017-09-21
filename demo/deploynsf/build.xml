@@ -19,7 +19,7 @@
 	</target>
 	<!-- end::copynsf[] -->
 	
-	<!-- tag::linktemplates -->
+	<!-- tag::linktemplates[] -->
 	<target name="linktemplates">
 	
 		<fail message="Please Specify NSF Filepath" unless="nsf.filepath"/>
@@ -30,7 +30,7 @@
 		<bxp:settemplatenames database="${nsf.production.filepath}" inheritfrom="${nsf.templatename}" />
 	
 	</target>
-	<!-- end::linktemplates -->
+	<!-- end::linktemplates[] -->
 	
 	<!-- tag::refresh[] -->
 	<target name="refreshtemplate">

@@ -1,4 +1,5 @@
-== BuildXPages Ant Task Reference
+[[TasksLibrary]]
+== BuildXPages Ant Task Library
 
 The following is a list of the Ant tasks provided by the project and some documentation and examples of how to use them.
 

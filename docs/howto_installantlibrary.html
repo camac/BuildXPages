@@ -726,7 +726,7 @@ div.olist { padding-left: 1.25em; }
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In order for Ant to be able to use the BuildXPages Library, the <strong>BuildXPages.jar</strong> and <strong>jna-4.1.0.jar</strong> libraries must be made available to it.</p>
+<p>In order for Ant to be able to use the BuildXPages Library, the <strong>BuildXPagesAntLib_&lt;version&gt;.jar</strong> and <strong>jna-4.1.0.jar</strong> libraries must be made available to it.</p>
 </div>
 <div class="paragraph">
 <p>You can make the library available to every ant project, or if you prefer you can make the library available just each individual project that needs it.</p>
@@ -737,7 +737,7 @@ div.olist { padding-left: 1.25em; }
 <h2 id="_installing_system_wide">Installing System-wide</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>When ANT runs, there are 2 locations in which it will check for additional libraries. You should put BuildXPages.jar and JNA</p>
+<p>When ANT runs, there are 2 locations in which it will check for additional libraries. You should put BuildXPages jar and JNA in one of these locations.</p>
 </div>
 <div class="dlist">
 <dl>
@@ -752,6 +752,22 @@ The Benefit of installing libraries here is that they will be available for both
 <p>Libraries installed here will be available for all users. For example on windows, if you have installed ant to <strong>C:\ant</strong>, then any libraries present in the <strong>C:\ant\lib</strong> directory will be available to be used.</p>
 </dd>
 </dl>
+</div>
+<div class="sect2">
+<h3 id="_install_using_my_install_script">Install using my Install script</h3>
+<div class="paragraph">
+<p>I have included an ant build script which should install these files for you.
+Open a command prompt and navigate to the <strong>demo/install</strong> directory of the extracted download
+Then issue the following command to install the libaries to your userhome  ant lib directory</p>
+</div>
+<div class="paragraph">
+<p><code>ant installtouserhome</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_manual_install">Manual Install</h3>
+<div class="paragraph">
+<p>If you don&#8217;t want to use my install script, you can just copy the BuildXPagesAntLib jar out of the <strong>dist</strong> folder of the project download, and you can copy the JNA jar out of the <strong>lib</strong> folder, and put them in one of the above locations</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -769,6 +785,7 @@ The Benefit of installing libraries here is that they will be available for both
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
 <h2 id="_installing_for_a_single_project">Installing for a Single project</h2>
 <div class="sectionbody">
@@ -777,7 +794,7 @@ The Benefit of installing libraries here is that they will be available for both
 </div>
 <div class="paragraph">
 <p>Create a directory in your project called lib
-Put the BuildXPages.jar in that location</p>
+Put the BuildXPagesAntLib and JNA jar in that location</p>
 </div>
 <div class="paragraph">
 <p>when running ant, you will need to specify the library location with -lib command</p>
@@ -796,7 +813,7 @@ Put the BuildXPages.jar in that location</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0<br>
-Last updated 2017-08-24 21:11:24 AEST
+Last updated 2017-09-20 22:28:10 AEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">

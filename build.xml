@@ -17,7 +17,7 @@
 	<property name="branchName" value="${env.BRANCH_NAME}">
 	</property>
 	
-	<property name="updateSiteRoot" value="D:\UpdateSites">
+	<property name="updateSiteDir" location="com.gregorbyte.designer.headless.updatesite">
 	</property>
 
 	<property name="dominoPluginsDir" location="${dominoDataDir}/domino/workspace/applications/eclipse/plugins" />
@@ -107,10 +107,10 @@
 		<mkdir dir="${updateSiteDir}/plugins" />
 		<mkdir dir="${updateSiteDir}/features" />
 
-		<bxp:clearUpdateSite eclipseDir="${updateSiteDir}" />
+		<bxp:clearupdatesite eclipseDir="${updateSiteDir}" />
 
-		<bxp:copyPluginsToUpdateSite eclipseDir="${updateSiteDir}">
-		</bxp:copyPluginsToUpdateSite>
+		<bxp:copypluginstoupdatesite eclipseDir="${updateSiteDir}">
+		</bxp:copypluginstoupdatesite>
 
 	</target>
 

@@ -728,16 +728,43 @@ div.olist { padding-left: 1.25em; }
 <div class="paragraph">
 <p>There is more than one way to deploy an NSF, not everyone is going to do it the same way. This tutorial will hopefully demonstrate some of the tasks you could use to acheive your desired deployment.</p>
 </div>
+<div class="sect2">
+<h3 id="_preparation">Preparation</h3>
 <div class="paragraph">
-<p>This tutorial assumes that you have successfully completed the Build An NSF tutorial. In this case you will have an NSF in your local workspace. We are going to deploy this NSF.</p>
+<p>This tutorial assumes that you have successfully completed the 'Building An NSF' tutorial. After completing the 'Building an NSF' tutorial you should have an NSF in your local workspace. We will use this NSF as the basis for some of the deployment examples.</p>
+</div>
+<div class="paragraph">
+<p>Then open your command prompt and navigate to the <strong>demo/deploynsf</strong> directory. Now you should be ready to start the demo!</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_build_properties_file">build.properties file</h3>
+<div class="paragraph">
+<p>This demonstration has some properties supplied via a build.properties file. You will see some of these properties referenced later on in the demonstration.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt"># it is recommended to set your notesProgDir using
+# the NOTES_PROGDIR environment variable but you can specify it here instead if you like
+#notesProgDir=C:\\Path\\To\\Notes
+
+# You can change this and it will change the location of the nsf that is built
+nsf.filepath=temp\\BuildXPagesDemo.nsf
+nsf.templatename=BuildXPagesTemplate
+
+# Uncomment the server if you would like to deploy to a server instead of just to your own workspace
+#nsf.production.server=
+nsf.production.filepath=temp\\BuildXPages.nsf
+
+#nsf.template.server=
+nsf.template.filepath=temp\\BuildXPages.ntf</code></pre>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_basic_file_level_copying">Basic File-Level Copying</h3>
 <div class="paragraph">
-<p>At the most basic Level, you may have built your NSF directly to a local Notes workspace, and just want to copy the <strong>.nsf</strong> file to another location. In this case you would just use a simple Apache Ant copy task.</p>
-</div>
-<div class="paragraph">
-<p>In this example, we are going to copy the NSF that you built into a local directory</p>
+<p>At the most basic Level, you may have built your NSF directly to a local Notes workspace, and just want to copy the <strong>.nsf</strong> file to another location. In this case you would just use a simple Apache Ant copy task. I will leave that up to you to research as it is very simple.</p>
 </div>
 </div>
 <div class="sect2">
@@ -749,49 +776,187 @@ div.olist { padding-left: 1.25em; }
 <p>To do this we use BuildXPages' <strong>copynsf</strong> task.</p>
 </div>
 <div class="paragraph">
-<p>We are going to create 2 copies of this NSF just so we can use them both in our next example</p>
+<p>We are going to create 2 copies of the NSF that we built in the 'Building an NSF' demonstration, so that we can use these 2 copies in our next few deployment demonstrations.</p>
+</div>
+<div class="paragraph">
+<p>We are going to create one copy to act as a template, and then another copy that will act as our 'production' nsf.</p>
+</div>
+<div class="paragraph">
+<p>Here is the <strong>copydatabase</strong>  target that we are going to run, you can see we are specifying the source and destination filepaths using the properties from the <strong>build.properties</strong> file. The copynsf task also has available attributes for source and destination server, but since we have not included them, it will just use the local notes workspace as the source and destination server.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="copydatabase"&gt;
+
+		&lt;fail message="Please Specify Source NSF Filepath" unless="nsf.filepath"/&gt;
+		&lt;fail message="Please Specify Destination NSF Filepath" unless="nsf.production.filepath"/&gt;
+
+		&lt;bxp:copynsf srcfilepath="${nsf.filepath}" dstfilepath="${nsf.production.filepath}" /&gt;
+		&lt;bxp:copynsf srcfilepath="${nsf.filepath}" dstfilepath="${nsf.template.filepath}" /&gt;
+
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To execute this target issue the console command <code><code>ant copynsf</code></code></p>
+</div>
+<div class="paragraph">
+<p>You should see some output like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\deploynsf\build.xml
+copydatabase:
+[bxp:copynsf] temp\BuildXPagesDemo.nsf
+[bxp:copynsf] temp\BuildXPages.nsf
+[bxp:copynsf] temp\BuildXPagesDemo.nsf
+[bxp:copynsf] temp\BuildXPages.ntf
+BUILD SUCCESSFUL
+Total time: 1 second</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should now have 2 new databases in your workspace:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>temp\BuildXPages.nsf - which will act as the Production NSF</p>
+</li>
+<li>
+<p>temp\BuildXPages.ntf - which will act as the Master Template</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_setting_up_template_names">Setting up template names</h3>
 <div class="paragraph">
-<p>BuildXPages has a <strong>settemplatenames</strong> task which is useful for configuring template inheritance dynamically.</p>
+<p>Now that we have our Production and Master templates, we will configure one to inherit Design from the other.
+BuildXPages has a <strong>settemplatenames</strong> task which is useful for configuring template inheritance dynamically.</p>
+</div>
+<div class="paragraph">
+<p>We will execute the following target which first sets the ntf&#8217;s master template name, and then it sets the production nsf to inherit from that template</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="linktemplates"&gt;
+
+		&lt;fail message="Please Specify NSF Filepath" unless="nsf.filepath"/&gt;
+		&lt;fail message="Please Specify Production NSF Filepath" unless="nsf.production.filepath"/&gt;
+		&lt;fail message="Please Specify the Master Template Name" unless="nsf.templatename"/&gt;
+
+		&lt;bxp:settemplatenames database="${nsf.template.filepath}" mastername="${nsf.templatename}" /&gt;
+		&lt;bxp:settemplatenames database="${nsf.production.filepath}" inheritfrom="${nsf.templatename}" /&gt;
+
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To execute this target, issue the command <code><code>ant linktemplates</code></code></p>
+</div>
+<div class="paragraph">
+<p>You should see some output like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\deploynsf\build.xml
+linktemplates:
+[bxp:settemplatenames] Setting Template Names for: local!!temp\BuildXPages.ntf
+[bxp:settemplatenames] ... Inherit From:       &lt;no change&gt;
+[bxp:settemplatenames] ... Is Master Template: 'BuildXPagesTemplate'
+[bxp:settemplatenames] Setting Template Names for: local!!temp\BuildXPages.nsf
+[bxp:settemplatenames] ... Inherit From:       'BuildXPagesTemplate'
+[bxp:settemplatenames] ... Is Master Template: &lt;no change&gt;
+BUILD SUCCESSFUL
+Total time: 912 milliseconds</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should also be able to inspect the database application properties in IBM Notes and verify that the templates have been set properly.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_refreshing_a_template">Refreshing a Template</h3>
 <div class="paragraph">
-<p>When you are ready to refresh teh design of a database, you can simple use the <strong>refreshdbdesign</strong> task.</p>
+<p>When you are ready to refresh the design of a database, you can simple use the <strong>refreshdbdesign</strong> task. The task allows us to choose the database we want to refresh, which can be local or on another server, and then also choose which server to refresh from which can also be local or another server.</p>
 </div>
 <div class="paragraph">
 <p>What is handy about this is that you can refresh the design of a target nsf using an NSF from your local workspace. So, if you have built an NSF in your local workspace you can refresh an NSF on a server using the design on your local workspace.</p>
+</div>
+<div class="paragraph">
+<p>In this demonstration we will just refresh a the local production database from the local template. This inheritance should already be set up in the previous set templates example, so we just need to specify the database that we want to refresh</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="refreshtemplate"&gt;
+
+		&lt;bxp:refreshdbdesign database="${nsf.production.filepath}"/&gt;
+
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To execute the target, issue the command <code><code>ant refreshtemplate</code></code></p>
+</div>
+<div class="paragraph">
+<p>You should see some output like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\deploynsf\build.xml
+refreshtemplate:
+[bxp:refreshdbdesign] Refreshing Design of Db : local!!temp\BuildXPages.nsf
+[bxp:refreshdbdesign] Refreshing From Server  : local
+[bxp:refreshdbdesign] Building list of design templates...
+[bxp:refreshdbdesign] Refreshing design of Build NSF Demo...
+[bxp:refreshdbdesign] Updating Build NSF Demo from the Build NSF Demo design template...
+[bxp:refreshdbdesign] Design refresh of Build NSF Demo completed
+BUILD SUCCESSFUL
+Total time: 1 second</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Since both the template and the production database were copied from the same nsf, there is nothing to refresh so you don&#8217;t see any design elements listed in the output, but if you were to make a change in the template and then run it again you will see the updated design element in the output</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_deleting_nsfs">Deleting NSFs</h3>
 <div class="paragraph">
-<p>If you have a need to delete nsfs during your deployment process, you can use the <strong>deletensf</strong> task</p>
+<p>In this last step of our demonstration we will clean up after ourselves and delete the 'Production' NSF and the 'template' that we just created. To do this we can use the <strong>deletensf</strong> task.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="clean"&gt;
+
+		&lt;bxp:deletensf filename="${nsf.production.filepath}"/&gt;
+		&lt;bxp:deletensf filename="${nsf.template.filepath}"/&gt;
+
+	&lt;/target&gt;</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>This is my preferred option.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>I have 'local' nsfs located on the headless build machine</p>
-</li>
-<li>
-<p>I have a Production Template</p>
-</li>
-<li>
-<p>I have one or more Production Applications</p>
-</li>
-</ul>
+<p>To execute this task issue the command <code><code>ant clean</code></code></p>
 </div>
 <div class="paragraph">
-<p>I set the 'master template' name of the built nsf, and the inherit of the template
-I refresh the production template
-I either allow the design task to run overnight, or if doing an immediate deployment, I issue the load design task console command</p>
+<p>The output of the deletensf task is not very useful, you should see some ouput like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\deploynsf\build.xml
+clean:
+BUILD SUCCESSFUL
+Total time: 839 milliseconds</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the database did not exist (so could not be deleted) you will get a build failed warning</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_conclusion">Conclusion</h3>
+<div class="paragraph">
+<p>In this demonstration we have shown how to copy databases around servers and local workspaces, setup design inheritance, refresh database designs and to delete databases. Hopefully these tools will come in handy when designing your own deployment process.</p>
 </div>
 </div>
 </div>
@@ -800,7 +965,7 @@ I either allow the design task to run overnight, or if doing an immediate deploy
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0<br>
-Last updated 2017-08-18 23:07:49 AEST
+Last updated 2017-09-18 22:40:48 AEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">

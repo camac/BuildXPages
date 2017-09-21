@@ -754,16 +754,36 @@ div.olist { padding-left: 1.25em; }
 <div class="paragraph">
 <p>At the end of the headless feature build process, you will have a .zip file of your plugins and features. The contents of your zip file will be something like:</p>
 </div>
-<div class="openblock">
-<div class="content">
-<div class="paragraph">
-<p>|--eclipse
-|  |--plugins
-|  |  |--com.your.plugin.jar
-|  |--features
-|  |  |--com.your.feature.jar</p>
+<div class="ulist">
+<ul>
+<li>
+<p>eclipse</p>
+<div class="ulist">
+<ul>
+<li>
+<p>plugins</p>
+<div class="ulist">
+<ul>
+<li>
+<p>com.your.plugin.jar</p>
+</li>
+</ul>
 </div>
+</li>
+<li>
+<p>features</p>
+<div class="ulist">
+<ul>
+<li>
+<p>com.your.feature.jar</p>
+</li>
+</ul>
 </div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>Unfortunately although this format looks a bit like an Update Site, it isn&#8217;t quite there yet.
@@ -1108,7 +1128,7 @@ Make sure your previously used NSF Update Site Location is selected and then cli
 <dl>
 <dt class="hdlist1">configureDynamicPlugins</dt>
 <dd>
-<p>will edit the <strong>platform.xml</strong> to allow this dynamic loading of plugins</p>
+<p>will edit the <strong>platform.xml</strong> to allow this dynamic loading of plugins. It will also create a backup copy of platform.xml</p>
 </dd>
 <dt class="hdlist1">initDesignerSite</dt>
 <dd>
@@ -1130,13 +1150,19 @@ Make sure your previously used NSF Update Site Location is selected and then cli
 &lt;/project&gt;</code></pre>
 </div>
 </div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>lets run this target</p>
+<p>Don&#8217;t actually run this target, I have only included it as an example of what you would do if you wanted to try out the dropins style deployment. It is really only a technique you would use if you are developing XPages Controls and want to frequently update your designer plugins after you make changes to your controls</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code>ant configuredesigner</code></pre>
-</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Now when we start Designer it should load our plugins! And we didn&#8217;t have to go through all that provisioning operations.</p>
@@ -1186,7 +1212,7 @@ Make sure your previously used NSF Update Site Location is selected and then cli
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0<br>
-Last updated 2017-08-24 21:19:04 AEST
+Last updated 2017-09-20 21:10:34 AEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">

@@ -1,12 +1,12 @@
 = Install the BuildXPages Ant Library
 
-In order for Ant to be able to use the BuildXPages Library, the **BuildXPages.jar** and **jna-4.1.0.jar** libraries must be made available to it.
+In order for Ant to be able to use the BuildXPages Library, the **BuildXPagesAntLib_<version>.jar** and **jna-4.1.0.jar** libraries must be made available to it.
 
 You can make the library available to every ant project, or if you prefer you can make the library available just each individual project that needs it.
 
 == Installing System-wide
 
-When ANT runs, there are 2 locations in which it will check for additional libraries. You should put BuildXPages.jar and JNA
+When ANT runs, there are 2 locations in which it will check for additional libraries. You should put BuildXPages jar and JNA in one of these locations.
 
 ${user.home}/.ant/lib::
 Libraries installed here will be available for the user who's home directory it is.
@@ -14,6 +14,18 @@ For example my user directory on windows is *C:\Users\Cameron\.ant\lib*
 The Benefit of installing libraries here is that they will be available for both Ant in eclipse, and ant on the command line.
 ANT_HOME/lib::
 Libraries installed here will be available for all users. For example on windows, if you have installed ant to *C:\ant*, then any libraries present in the *C:\ant\lib* directory will be available to be used.
+
+=== Install using my Install script
+
+I have included an ant build script which should install these files for you.
+Open a command prompt and navigate to the **demo/install** directory of the extracted download
+Then issue the following command to install the libaries to your userhome  ant lib directory
+
+`ant installtouserhome`
+
+=== Manual Install
+
+If you don't want to use my install script, you can just copy the BuildXPagesAntLib jar out of the *dist* folder of the project download, and you can copy the JNA jar out of the *lib* folder, and put them in one of the above locations
 
 [TIP]
 ====
@@ -25,7 +37,7 @@ If you are trying to create the *.ant* directory in your user folder using Windo
 If you don't want to install to the global library locations, you can just make it available for your single project.
 
 Create a directory in your project called lib
-Put the BuildXPages.jar in that location
+Put the BuildXPagesAntLib and JNA jar in that location
 
 when running ant, you will need to specify the library location with -lib command
 

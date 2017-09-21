@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>Environment Variables</title>
+<title>Setting up Environment Variables</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -717,7 +717,7 @@ div.olist { padding-left: 1.25em; }
 </head>
 <body class="article">
 <div id="header">
-<h1>Environment Variables</h1>
+<h1>Setting up Environment Variables</h1>
 <div class="details">
 <span id="revnumber">version 1.0.0</span>
 </div>
@@ -731,6 +731,9 @@ div.olist { padding-left: 1.25em; }
 <div class="paragraph">
 <p>If you don&#8217;t want to set these up, that is fine but you will then need to provide them when running ant using a properties file or similar.</p>
 </div>
+<div class="paragraph">
+<p>If you don&#8217;t know how to set up environment variables then just do a google search for how to do so for your operating system (Windows etc.)</p>
+</div>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -739,7 +742,7 @@ div.olist { padding-left: 1.25em; }
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Once you open up a command prompt, it has loaded it&#8217;s environment variables and will not receive any new or modified variables. So if you have added or changed environment variables, you will need to start a fresh new console prompt to see the updated variables.</p>
+<p>Command prompts that have already been opened will not receive any new or modified Environment variables. So if you have added or changed environment variables, you will need to start a fresh new console prompt to see the updated variables.</p>
 </div>
 </td>
 </tr>
@@ -764,25 +767,17 @@ div.olist { padding-left: 1.25em; }
 </tr>
 </table>
 </div>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-NOTES_PROGDIR
-</td>
-<td class="hdlist2">
-<p>IBM Notes' Program Directory e.g. <code>C:\Progra~2\IBM\Notes</code></p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-NOTES_DATADIR
-</td>
-<td class="hdlist2">
-<p>Your Notes Data Directory e.g. <code>C:\Progra~2\IBM\Notes\Data</code></p>
-</td>
-</tr>
-</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">NOTES_PROGDIR</dt>
+<dd>
+<p>Set to your IBM Notes' Program Directory e.g. <code>C:\Progra~2\IBM\Notes</code></p>
+</dd>
+<dt class="hdlist1">NOTES_DATADIR</dt>
+<dd>
+<p>Set to your Your Notes Data Directory e.g. <code>C:\Progra~2\IBM\Notes\Data</code></p>
+</dd>
+</dl>
 </div>
 </div>
 </div>
@@ -796,7 +791,7 @@ NOTES_DATADIR
 <dl>
 <dt class="hdlist1">BXP_ECLIPSE_BASE</dt>
 <dd>
-<p>This is the root folder of your Eclipse installation</p>
+<p>This is the root folder of your Eclipse installation (the directory that contains eclipse.exe)</p>
 </dd>
 <dt class="hdlist1">BXP_PDEBUILDXML</dt>
 <dd>
@@ -817,7 +812,7 @@ In Newer versions of eclipse it will be located under your user home directory&#
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0<br>
-Last updated 2017-08-24 21:12:23 AEST
+Last updated 2017-09-20 22:30:31 AEST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">

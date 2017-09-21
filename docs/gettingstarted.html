@@ -862,7 +862,7 @@ Open up a fresh Command Prompt, and type</p>
 <h2 id="_install_the_buildxpages_ant_library">Install the BuildXPages Ant Library</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In order for Ant to be able to use the BuildXPages Library, the <strong>BuildXPages.jar</strong> and <strong>jna-4.1.0.jar</strong> libraries must be made available to it.</p>
+<p>In order for Ant to be able to use the BuildXPages Library, the <strong>BuildXPagesAntLib_&lt;version&gt;.jar</strong> and <strong>jna-4.1.0.jar</strong> libraries must be made available to it.</p>
 </div>
 <div class="paragraph">
 <p>You can make the library available to every ant project, or if you prefer you can make the library available just each individual project that needs it.</p>
@@ -870,7 +870,7 @@ Open up a fresh Command Prompt, and type</p>
 <div class="sect2">
 <h3 id="_installing_system_wide">Installing System-wide</h3>
 <div class="paragraph">
-<p>When ANT runs, there are 2 locations in which it will check for additional libraries. You should put BuildXPages.jar and JNA</p>
+<p>When ANT runs, there are 2 locations in which it will check for additional libraries. You should put BuildXPages jar and JNA in one of these locations.</p>
 </div>
 <div class="dlist">
 <dl>
@@ -885,6 +885,22 @@ The Benefit of installing libraries here is that they will be available for both
 <p>Libraries installed here will be available for all users. For example on windows, if you have installed ant to <strong>C:\ant</strong>, then any libraries present in the <strong>C:\ant\lib</strong> directory will be available to be used.</p>
 </dd>
 </dl>
+</div>
+<div class="sect3">
+<h4 id="_install_using_my_install_script">Install using my Install script</h4>
+<div class="paragraph">
+<p>I have included an ant build script which should install these files for you.
+Open a command prompt and navigate to the <strong>demo/install</strong> directory of the extracted download
+Then issue the following command to install the libaries to your userhome  ant lib directory</p>
+</div>
+<div class="paragraph">
+<p><code>ant installtouserhome</code></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_manual_install">Manual Install</h4>
+<div class="paragraph">
+<p>If you don&#8217;t want to use my install script, you can just copy the BuildXPagesAntLib jar out of the <strong>dist</strong> folder of the project download, and you can copy the JNA jar out of the <strong>lib</strong> folder, and put them in one of the above locations</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -901,6 +917,7 @@ The Benefit of installing libraries here is that they will be available for both
 </table>
 </div>
 </div>
+</div>
 <div class="sect2">
 <h3 id="_installing_for_a_single_project">Installing for a Single project</h3>
 <div class="paragraph">
@@ -908,7 +925,7 @@ The Benefit of installing libraries here is that they will be available for both
 </div>
 <div class="paragraph">
 <p>Create a directory in your project called lib
-Put the BuildXPages.jar in that location</p>
+Put the BuildXPagesAntLib and JNA jar in that location</p>
 </div>
 <div class="paragraph">
 <p>when running ant, you will need to specify the library location with -lib command</p>
@@ -943,18 +960,21 @@ Put the BuildXPages.jar in that location</p>
 </div>
 <div class="paragraph">
 <p>Go to eclipse.org and download 'Eclipse for RCP and RAP Developers'
-Follow the instructions!</p>
+Follow the instructions! If you are building plugins then I assume you know this already!</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_environment_variables">Environment Variables</h2>
+<h2 id="_setting_up_environment_variables">Setting up Environment Variables</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Some of the BuildXPages tasks need to know the location of some things that are common to the entire computer. These locations can be specified once and for all by setting them up as the following environment variables.</p>
 </div>
 <div class="paragraph">
 <p>If you don&#8217;t want to set these up, that is fine but you will then need to provide them when running ant using a properties file or similar.</p>
+</div>
+<div class="paragraph">
+<p>If you don&#8217;t know how to set up environment variables then just do a google search for how to do so for your operating system (Windows etc.)</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -964,7 +984,7 @@ Follow the instructions!</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Once you open up a command prompt, it has loaded it&#8217;s environment variables and will not receive any new or modified variables. So if you have added or changed environment variables, you will need to start a fresh new console prompt to see the updated variables.</p>
+<p>Command prompts that have already been opened will not receive any new or modified Environment variables. So if you have added or changed environment variables, you will need to start a fresh new console prompt to see the updated variables.</p>
 </div>
 </td>
 </tr>
@@ -986,25 +1006,17 @@ Follow the instructions!</p>
 </tr>
 </table>
 </div>
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-NOTES_PROGDIR
-</td>
-<td class="hdlist2">
-<p>IBM Notes' Program Directory e.g. <code>C:\Progra~2\IBM\Notes</code></p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-NOTES_DATADIR
-</td>
-<td class="hdlist2">
-<p>Your Notes Data Directory e.g. <code>C:\Progra~2\IBM\Notes\Data</code></p>
-</td>
-</tr>
-</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">NOTES_PROGDIR</dt>
+<dd>
+<p>Set to your IBM Notes' Program Directory e.g. <code>C:\Progra~2\IBM\Notes</code></p>
+</dd>
+<dt class="hdlist1">NOTES_DATADIR</dt>
+<dd>
+<p>Set to your Your Notes Data Directory e.g. <code>C:\Progra~2\IBM\Notes\Data</code></p>
+</dd>
+</dl>
 </div>
 </div>
 <div class="sect2">
@@ -1016,7 +1028,7 @@ NOTES_DATADIR
 <dl>
 <dt class="hdlist1">BXP_ECLIPSE_BASE</dt>
 <dd>
-<p>This is the root folder of your Eclipse installation</p>
+<p>This is the root folder of your Eclipse installation (the directory that contains eclipse.exe)</p>
 </dd>
 <dt class="hdlist1">BXP_PDEBUILDXML</dt>
 <dd>
@@ -1039,7 +1051,7 @@ In Newer versions of eclipse it will be located under your user home directory&#
 <div class="sectionbody">
 <div class="paragraph">
 <p>Obtain the latest version of the BuildXPages project from the <a href="https://github.com/camac/BuildXPages/releases" target="_blank">projects releases page</a>
-and install the <strong>com.gregorbyte.designer.headless.updatesite</strong>  update site (from within the dist folder) to Domino Designer using the instructions in <a href="howto_installpluginsdesigner.html">How to Install Plugins to Domino Designer</a></p>
+and install the <strong>com.gregorbyte.designer.headless.updatesite</strong>  update site (from within the dist folder) to Domino Designer using the instructions in <a href="howto_installpluginsdesigner.html" target="_blank">How to Install Plugins to Domino Designer</a></p>
 </div>
 </div>
 </div>

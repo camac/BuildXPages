@@ -18,9 +18,9 @@ The Application has a Custom Control and an XPage which uses that custom control
 If you are not familiar with Ant be sure to have a look at the 'Introduction to Apache Ant' tutorial for understanding of things like build.xml, targets, tasks etc.
 ====
 
-Within the build.xml file for this demo are 2 _targets_ that are used to setup the demo *clean* and *init*
+Within the build.xml file for this demo are 2 _targets_ that are used to setup the demonstration *clean* and *init*
 
-*clean* is used to clean up any previous attempt at this tutorial, and *init* is used to initialise a new attempt.
+*clean* is used to clean up any previous attempt at this tutorial, and *init* is used to initialise the tutorial by making sure we have 2 on disk projects that we can try to build, one that should build successfully and the other which should fail.
 
 You can see that *init* has been set to depend on *clean* so that before the *init* target is executed, the *clean* target will be executed.
 
