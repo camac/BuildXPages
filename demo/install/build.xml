@@ -8,6 +8,9 @@
 	
 	<property name="notesProgDir" value="${env.NOTES_PROGDIR}"></property>
 	
+	<property name="distversion" value="1.0.0">
+	</property>
+	
 	<target name="help">
 	
 		<echo>This task will Install the BuildXPages and JNA libraries</echo>
@@ -25,7 +28,7 @@
 		<delete file="${user.home}/.ant/lib/${ant.project.name}.jar">
 		</delete>
 
-		<copy file="${dist.dir}/${ant.project.name}.jar" todir="${user.home}/.ant/lib" overwrite="false"/>
+		<copy file="${dist.dir}/${ant.project.name}_${distversion}.jar" todir="${user.home}/.ant/lib" overwrite="false"/>
 		<copy file="${lib.dir}/jna-4.1.0.jar" todir="${user.home}/.ant/lib" overwrite="false"/>
 
 
@@ -33,7 +36,7 @@
 
 	<target name="installtoanthome" description="Install BuildXPages Libraries to Ant Home (All Users)">
 
-		<copy file="${dist.dir}/${ant.project.name}.jar" todir="${ant.library.dir}" overwrite="false"/>
+		<copy file="${dist.dir}/${ant.project.name}_${distversion}.jar" todir="${ant.library.dir}" overwrite="false"/>
 		<copy file="${lib.dir}/jna-4.1.0.jar" todir="${ant.library.dir}" overwrite="false"/>
 		
 	</target>

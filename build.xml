@@ -218,7 +218,15 @@
 
 		<copy todir="dist/demo/buildfeature" file="demo/buildfeature/build.xml" />
 		<copy todir="dist/demo/buildfeature" file="demo/buildfeature/build.properties" />
-
+		<copy todir="dist/demo/buildfeature/com.gregorbyte.buildxpages.demo">
+			<fileset dir="demo/buildfeature/com.gregorbyte.buildxpages.demo">
+			</fileset>
+		</copy>
+		<copy todir="dist/demo/buildfeature/com.gregorbyte.buildxpages.demo.feature">
+			<fileset dir="demo/buildfeature/com.gregorbyte.buildxpages.demo.feature">
+			</fileset>
+		</copy>
+		
 		<copy todir="dist/demo/buildnsf" file="demo/buildnsf/build.xml" />
 		<copy todir="dist/demo/buildnsf" file="demo/buildnsf/build.properties" />
 		<copy todir="dist/demo/buildnsf/sampleodp">
@@ -231,6 +239,8 @@
 
 		<copy todir="dist/demo/deployplugins" file="demo/deployplugins/build.xml" />
 		<!--<copy todir="dist/demo/deployplugins" file="demo/deployplugins/build.properties"/>-->
+		<copy todir="dist/demo/install" file="demo/install/build.xml" />
+
 
 		<copy file="com.gregorbyte.buildxpages.ant/dist/BuildXPagesAntLib.jar" tofile="dist/dist/BuildXPagesAntLib_${distversion}.jar">
 		</copy>
