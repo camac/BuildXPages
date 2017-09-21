@@ -210,6 +210,11 @@ BuildXPages provides 2 tasks that help to do all this for you. They are both uti
 configureDynamicPlugins:: will edit the *platform.xml* to allow this dynamic loading of plugins. It will also create a backup copy of platform.xml
 initDesignerSite:: will set up the link file to point to the update site that we want to load during startup of designer
 
+[WARNING]
+====
+Use this deployment style at your own risk. Everything should be fine but just be aware you may need to do it again if you upgrade notes and a new platform.xml is created, or sometimes if you install other plugins using the IBM Notes User interface, it can reset the platform.xml file.
+====
+
 [source,xml]
 ----
 include::../demo/deployplugins/build.xml[tag=configuredesigner]

@@ -49,7 +49,7 @@ Ant has access to many commonly used steps such as manipluation of files in the 
 
 This project also includes a Plugin for Domino Designer which is used by the ANT task for building an NSF.
 
-See the <<TasksLibrary,Documentation of the BuildXPages ANT Library>> that is provided later is this user guide for more information.
+See the <<TasksLibrary,Documentation of the Headless Designer Plugin>> that is provided later is this user guide for more information.
 
 The Plugin is basically an extension of the existing 'Headless Designer' system that was provided by IBM. The IBM Headless Designer system was a great start but could have used a little bit more love. There were a few annoyances, it was hard to tell when the build was finished, it was hard to tell that the build even started properly. There were some minor annoyances regarding project names and locations. 
 The mechanism also involved writing a text 'command file', which was fed in when starting designer. This means each build would always have to start designer, build and then shut it down. If designer did not shut down, then you couldn't start it up again and weird things like that.
