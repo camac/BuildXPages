@@ -1,0 +1,20 @@
+<project name="Introduction to Ant" default="hello">
+
+	<description>This is a simple sample to demonstrate some concepts of ant</description>
+
+	<!-- tag::properties[] -->
+	<property name="firstname" value="Alice"></property>
+	<!-- end::properties[] -->
+
+	<!-- tag::targets[] -->
+	<target name="hello" description="Says Hello">
+		<echo message="Hello ${firstname}!"></echo>
+	</target>
+
+	<target name="goodbye" depends="hello" description="Says Goodbye">
+		<echo message="Goodbye ${firstname}!"></echo>
+	</target>
+	<!-- end::targets[] -->
+	
+</project>
+

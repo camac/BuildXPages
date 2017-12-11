@@ -18,3 +18,7 @@ demo/buildnsf/odperror/
 mybuild.properties
 com.gregorbyte.buildxpages.ant/Delete4Install.bat
 com.gregorbyte.designer.headless.updatesite/site.xml
+com.gregorbyte.designer.headless.updatesite/
+demo/deployplugins/com.gregorbyte.buildxpages.demo.updatesite.zip
+demo/deployplugins/com.gregorbyte.buildxpages.demo.updatesite/
+dist/

@@ -8,10 +8,10 @@
 		<!-- tag::deletensf[] -->
 
 		<!-- Delete a Local NSF -->
-		<deletensf filename="demo\\DidItwork.nsf" />
+		<deletensf filename="demo\\DeleteMe.nsf" />
 
 		<!-- Delete an NSF on another Server -->
-		<deletensf server="Domino02" filename="demo\\DidItwork.nsf" />
+		<deletensf server="Domino01" filename="demo\\DeleteMe.nsf" />
 
 		<!-- end::deletensf[] -->
 	</target>
@@ -19,7 +19,7 @@
 
 	<target name="copynsf" description="Copies an NSF">
 		<!-- tag::copynsf[] -->
-		<copynsf srcfilepath="demo\\GitTest.nsf" dstfilepath="demo\\DidItwork.nsf" />
+		<copynsf srcfilepath="demo\\CopyMe.nsf" dstfilepath="demo\\ToHere.nsf" />
 		<!-- end::copynsf[] -->
 	</target>
 
@@ -87,7 +87,7 @@
 	<target name="testgeneratesitexml" description="Generates a Site XML" depends="setupforgeneratesitexml">
 
 		<!-- tag::generatesitexml[] -->
-		<bxp:generatesitexml eclipsedir="testgen" />
+		<bxp:generatesitexml eclipsedir="somefolder/eclipse" />
 		<!-- end::generatesitexml[] -->
 
 	</target>
@@ -104,15 +104,15 @@
 
 	<!-- tag::controlhttp[] -->
 	<target name="teststarthttp">
-		<bxp:controlhttp server="CameronWS" action="start" />
+		<bxp:controlhttp server="Domino02" action="start" />
 	</target>
 
 	<target name="teststophttp">
-		<bxp:controlhttp server="CameronWS" action="stop" />
+		<bxp:controlhttp server="Domino02" action="stop" />
 	</target>
 
 	<target name="testrestarthttp">
-		<bxp:controlhttp server="CameronWS" action="restart" />
+		<bxp:controlhttp server="Domino02" action="restart" />
 	</target>
 	<!-- end::controlhttp[] -->
 
@@ -143,9 +143,10 @@
 	</target>
 
 	<target name="testcopyplugin">
-		<!-- tag::copypluginstobuilddir[] -->
-		<bxp:copyplugintobuilddir plugin="com.acme.myplugin" />
-		<!-- end::copypluginstobuilddir[] -->
+		<!-- tag::copytobuilddir[] -->
+		<bxp:copytobuilddir plugin="com.acme.myplugin" />
+		<bxp:copytobuilddir feature="com.acme.myplugin.feature" />
+		<!-- end::copytobuilddir[] -->
 	</target>
 
 	<target name="testsettemplatenames">

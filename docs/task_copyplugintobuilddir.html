@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>copyplugintobuilddir</title>
+<title>copytobuilddir</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -708,6 +708,11 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 
 #footer-text { color: #eee; font-size: 0.8em; text-align: center; }
 
+/* Added by Cameron */
+div.ulist { padding-left: 1.25em; }
+
+div.olist { padding-left: 1.25em; }
+
 </style>
 </head>
 <body class="article">
@@ -715,10 +720,12 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 </div>
 <div id="content">
 <div class="sect2">
-<h3 id="_copyplugintobuilddir">copyplugintobuilddir</h3>
+<h3 id="_copytobuilddir">copytobuilddir</h3>
 <div class="paragraph">
 <p>This task is used during preparation for a headless eclipse plugin build.
-It is used to copy the source code of of a plugin, into the <em>build directory</em> which is a special working directory used to build the plugins and features.</p>
+It is used to copy the source code of of a plugin or feature, into the <em>build directory</em> which is a special working directory used to build the plugins and features.
+The <em>build directory</em> contains 2 subfolders <strong>plugins</strong> and <strong>features</strong> and the plugin or feature will automatically be copied into the correct folder.
+The task will exclude contents of the <strong>bin</strong> folder when copying. The idea is to copy source files only.</p>
 </div>
 <div class="sect3">
 <h4 id="_properties_used">Properties used</h4>
@@ -726,10 +733,10 @@ It is used to copy the source code of of a plugin, into the <em>build directory<
 <table>
 <tr>
 <td class="hdlist1">
-pluginsDir
+buildDir
 </td>
 <td class="hdlist2">
-<p>The Destination directory, usually the eclipse/plugins folder of the build Directory</p>
+<p>The Build Directory in which the Headless Plugin Build will take place. this is commonly set to 'buildDirectory'</p>
 </td>
 </tr>
 </table>
@@ -737,6 +744,10 @@ pluginsDir
 </div>
 <div class="sect3">
 <h4 id="_attributes">Attributes</h4>
+<div class="paragraph">
+<p>You specify either the plugin you want to copy, or the feature you want to copy.
+You can set both at the same time if you like but I think it makes more sense to separate them into sepearate tasks.</p>
+</div>
 <div class="hdlist">
 <table>
 <tr>
@@ -744,7 +755,15 @@ pluginsDir
 plugin
 </td>
 <td class="hdlist2">
-<p>the folder name of the plugin to copy</p>
+<p>the folder location of the plugin to copy</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+feature
+</td>
+<td class="hdlist2">
+<p>the folder location of the feature to copy</p>
 </td>
 </tr>
 </table>
@@ -754,7 +773,8 @@ plugin
 <h4 id="_example">Example</h4>
 <div class="literalblock">
 <div class="content">
-<pre>&lt;bxp:copyplugintobuilddir plugin="com.acme.myplugin" /&gt;</pre>
+<pre>&lt;bxp:copytobuilddir plugin="com.acme.myplugin" /&gt;
+&lt;bxp:copytobuilddir feature="com.acme.myplugin.feature" /&gt;</pre>
 </div>
 </div>
 </div>
@@ -762,8 +782,12 @@ plugin
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-05 19:47:39 AEST
+Version 1.0.0<br>
+Last updated 2017-08-28 21:49:14 AEST
 </div>
 </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
 </body>
 </html>

@@ -31,9 +31,9 @@ pluginPath:: This is a semi-colon delimited string of the target platform plugin
 
 ==== Example
 
-[CAUTION]
-====
-You really need a lot more information than this to use this task but I have just put this all here as a starting point. Please feel free to contact me to make me provide more information.
-====
+For the best example have a look at the Demonstration Tutorial *Building Features and Plugins*
 
-include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=buildfeature]
+[source,xml]
+----
+include::../demo/buildfeature/build.xml[tag=build]
+----

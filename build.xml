@@ -14,22 +14,10 @@
 
 	<property environment="env" />
 
-	<property name="dominoProgDir" location="${env.DOMINO_PROG}" />
-	<property name="dominoDataDir" location="${env.DOMINO_DATA}" />
-	<property name="notesProgDir" location="${env.NOTES_PROG}" />
-	<property name="notesDataDir" location="${env.NOTES_DATA}" />
-
 	<property name="branchName" value="${env.BRANCH_NAME}">
 	</property>
-
-	<property name="equinoxLauncherVersion" value="${env.EQUINOXLAUNCHER_VERSION}">
-	</property>
-	<property name="eclipseBase" value="${env.ECLIPSE_BASEDIR}">
-	</property>
-	<property name="pdeBuildVersion" value="${env.PDEBUILD_VERSION}">
-	</property>
-
-	<property name="updateSiteRoot" value="D:\UpdateSites">
+	
+	<property name="updateSiteDir" location="com.gregorbyte.designer.headless.updatesite">
 	</property>
 
 	<property name="dominoPluginsDir" location="${dominoDataDir}/domino/workspace/applications/eclipse/plugins" />
@@ -43,8 +31,9 @@
 	<property name="buildNumber" value="${env.BUILD_NUMBER}" />
 
 	<property name="builtPluginsZip" location="${buildDir}\${buildLabel}\${featureId}-${buildId}.zip" />
-	<property name="equinoxLauncherJar" location="${eclipseBase}\plugins\org.eclipse.equinox.launcher_${equinoxLauncherVersion}.jar" />
-	<property name="pdeBuildXml" location="${eclipseBase}\plugins\org.eclipse.pde.build_${pdeBuildVersion}\scripts\build.xml" />
+	
+	<property name="distversion" value="1.0.0">
+	</property>
 
 	<target name="help">
 
@@ -75,27 +64,22 @@
 
 	<target name="copyPlugins" depends="init">
 
-		<bxp:copyplugintobuilddir plugin="com.gregorbyte.designer.headless" />
-
-		<copy todir="${featuresDir}/com.gregorbyte.designer.headless.feature">
-			<fileset dir="com.gregorbyte.designer.headless.feature" />
-		</copy>
+		<bxp:copytobuilddir plugin="com.gregorbyte.designer.headless" />
+		<bxp:copytobuilddir feature="com.gregorbyte.designer.headless.feature" />
 
 	</target>
 
 	<target name="buildPlugins">
-
+		<!--
 		<pathconvert targetos="unix" property="dominoProgDir.unix">
 			<path location="${dominoProgDir}" />
 		</pathconvert>
 
 		<property name="pluginPath" value="${dominoProgDir.unix}/osgi/rcp/eclipse;${dominoProgDir.unix}/osgi/shared/eclipse;">
 		</property>
+		-->
 
-		<echoproperties>
-		</echoproperties>
-
-		<bxp:buildPlugins pluginpath="${pluginPath}" />
+		<bxp:buildfeature feature="com.gregorbyte.designer.headless.feature" />
 
 	</target>
 
@@ -123,10 +107,10 @@
 		<mkdir dir="${updateSiteDir}/plugins" />
 		<mkdir dir="${updateSiteDir}/features" />
 
-		<bxp:clearUpdateSite eclipseDir="${updateSiteDir}" />
+		<bxp:clearupdatesite eclipseDir="${updateSiteDir}" />
 
-		<bxp:copyPluginsToUpdateSite eclipseDir="${updateSiteDir}">
-		</bxp:copyPluginsToUpdateSite>
+		<bxp:copypluginstoupdatesite eclipseDir="${updateSiteDir}">
+		</bxp:copypluginstoupdatesite>
 
 	</target>
 
@@ -142,18 +126,63 @@
 
 	</target>
 
-	<target name="docs">
+	<target name="docspdf">
 
 		<taskdef uri="antlib:org.asciidoctor.ant" resource="org/asciidoctor/ant/antlib.xml" classpath="lib/asciidoctor-ant.jar" />
-		<asciidoctor:convert sourceDirectory="doc" outputDirectory="docs" backend="html5" relativebasedir="true" safemode="unsafe">
+
+		<asciidoctor:convert sourceDirectory="doc" sourceDocumentName="index.adoc" outputDirectory="docs" backend="pdf" baseDir="doc" safemode="unsafe" sourceHighlighter="coderay">
 
 			<attribute key="stylesdir" value="stylesheets">
 			</attribute>
 			<attribute key="stylesheet" value="readthedocs.css">
 			</attribute>
+			<attribute key="revnumber" value="${distversion}" />
+			<attribute key="imagesdir" value="images" />
 
 
 		</asciidoctor:convert>
+
+		<asciidoctor:convert sourceDirectory="doc" sourceDocumentName="tutorial_buildannsf.adoc" outputDirectory="docs" backend="pdf" baseDir="doc" safemode="unsafe" sourceHighlighter="coderay">
+
+			<attribute key="stylesdir" value="stylesheets">
+			</attribute>
+			<attribute key="stylesheet" value="readthedocs.css">
+			</attribute>
+			<attribute key="revnumber" value="${distversion}" />
+
+		</asciidoctor:convert>
+
+
+	</target>
+
+	<target name="docs">
+
+		<taskdef uri="antlib:org.asciidoctor.ant" resource="org/asciidoctor/ant/antlib.xml" classpath="lib/asciidoctor-ant.jar" />
+		<asciidoctor:convert sourceDirectory="doc" outputDirectory="docs" backend="html5" relativebasedir="true" safemode="unsafe" sourceHighlighter="highlightjs">
+
+			<attribute key="stylesdir" value="stylesheets">
+			</attribute>
+			<attribute key="stylesheet" value="readthedocs.css">
+			</attribute>
+			<attribute key="revnumber" value="${distversion}" />
+			<attribute key="imagesdir" value="images" />
+
+			<!-- <resource dir="src/asciidoc/images"/> -->
+
+		</asciidoctor:convert>
+
+		<asciidoctor:convert sourceDirectory="doc" sourceDocumentName="index.adoc" outputDirectory="docs" backend="pdf" relativebasedir="true" safemode="unsafe" sourceHighlighter="coderay">
+
+			<attribute key="stylesdir" value="stylesheets">
+			</attribute>
+			<attribute key="stylesheet" value="readthedocs.css">
+			</attribute>
+			<attribute key="revnumber" value="${distversion}" />
+			<attribute key="imagesdir" value="images" />
+
+
+		</asciidoctor:convert>
+
 
 		<delete dir="docs/images" />
 
@@ -161,6 +190,72 @@
 			<fileset dir="doc/images">
 			</fileset>
 		</copy>
+
+
+	</target>
+
+	<target name="dist" description="Creates the Distributable Artifacts" depends="docs">
+
+		<delete dir="dist">
+		</delete>
+
+		<mkdir dir="dist" />
+
+		<copy todir="dist/docs">
+			<fileset dir="docs">
+			</fileset>
+		</copy>
+
+		<copy file="docs/index.pdf" tofile="dist/BuildXPagesUserGuide_${distversion}.pdf">
+		</copy>
+		<copy file="README.adoc" tofile="dist/README.txt">
+		</copy>
+		<copy file="LICENSE" tofile="dist/LICENSE.txt">
+		</copy>
+
+		<copy todir="dist/demo/antintro" file="demo/antintro/build.xml" />
+		<copy todir="dist/demo/antintro" file="demo/antintro/build.properties" />
+
+		<copy todir="dist/demo/buildfeature" file="demo/buildfeature/build.xml" />
+		<copy todir="dist/demo/buildfeature" file="demo/buildfeature/build.properties" />
+		<copy todir="dist/demo/buildfeature/com.gregorbyte.buildxpages.demo">
+			<fileset dir="demo/buildfeature/com.gregorbyte.buildxpages.demo">
+			</fileset>
+		</copy>
+		<copy todir="dist/demo/buildfeature/com.gregorbyte.buildxpages.demo.feature">
+			<fileset dir="demo/buildfeature/com.gregorbyte.buildxpages.demo.feature">
+			</fileset>
+		</copy>
+		
+		<copy todir="dist/demo/buildnsf" file="demo/buildnsf/build.xml" />
+		<copy todir="dist/demo/buildnsf" file="demo/buildnsf/build.properties" />
+		<copy todir="dist/demo/buildnsf/sampleodp">
+			<fileset dir="demo/buildnsf/sampleodp">
+			</fileset>
+		</copy>
+
+		<copy todir="dist/demo/deploynsf" file="demo/deploynsf/build.xml" />
+		<copy todir="dist/demo/deploynsf" file="demo/deploynsf/build.properties" />
+
+		<copy todir="dist/demo/deployplugins" file="demo/deployplugins/build.xml" />
+		<!--<copy todir="dist/demo/deployplugins" file="demo/deployplugins/build.properties"/>-->
+		<copy todir="dist/demo/install" file="demo/install/build.xml" />
+
+
+		<copy file="com.gregorbyte.buildxpages.ant/dist/BuildXPagesAntLib.jar" tofile="dist/dist/BuildXPagesAntLib_${distversion}.jar">
+		</copy>
+
+		<copy file="com.gregorbyte.buildxpages.ant/buildInstall.xml" tofile="dist/build.xml">
+		</copy>
+
+		<copy todir="dist/lib" file="com.gregorbyte.buildxpages.ant/lib/jna-4.1.0.jar" />
+		<copy todir="dist/lib" file="lib/LICENSE_JNA.txt" />
+
+		<zip destfile="dist/dist/com.gregorbyte.designer.headless.updatesite_${distversion}.zip" basedir="com.gregorbyte.designer.headless.updatesite">
+		</zip>
+
+		<zip destfile="dist/BuildXPages_${distversion}.zip" basedir="dist">
+		</zip>
 
 
 	</target>

@@ -1,0 +1,54 @@
+<project name="BuildXPages Deploying NSF" xmlns:bxp="antlib:com.gregorbyte.buildxpages.ant">
+
+	<description>Demonstration of Tasks Involved when Deploying an NSF</description>
+
+	<property file="build.properties" />
+
+	<property environment="env" />
+	<property name="notesProgDir" location="${env.NOTES_PROG}" />
+	
+	<!-- tag::copynsf[] -->
+	<target name="copydatabase">
+
+		<fail message="Please Specify Source NSF Filepath" unless="nsf.filepath"/>
+		<fail message="Please Specify Destination NSF Filepath" unless="nsf.production.filepath"/>
+		
+		<bxp:copynsf srcfilepath="${nsf.filepath}" dstfilepath="${nsf.production.filepath}" />
+		<bxp:copynsf srcfilepath="${nsf.filepath}" dstfilepath="${nsf.template.filepath}" />
+		
+	</target>
+	<!-- end::copynsf[] -->
+	
+	<!-- tag::linktemplates[] -->
+	<target name="linktemplates">
+	
+		<fail message="Please Specify NSF Filepath" unless="nsf.filepath"/>
+		<fail message="Please Specify Production NSF Filepath" unless="nsf.production.filepath"/>
+		<fail message="Please Specify the Master Template Name" unless="nsf.templatename"/>
+		
+		<bxp:settemplatenames database="${nsf.template.filepath}" mastername="${nsf.templatename}" />
+		<bxp:settemplatenames database="${nsf.production.filepath}" inheritfrom="${nsf.templatename}" />
+	
+	</target>
+	<!-- end::linktemplates[] -->
+	
+	<!-- tag::refresh[] -->
+	<target name="refreshtemplate">
+	
+		<bxp:refreshdbdesign database="${nsf.production.filepath}"/>
+	
+	</target>
+	<!-- end::refresh[] -->
+
+	<!-- tag::clean[] -->
+	<target name="clean">
+	
+		<bxp:deletensf filename="${nsf.production.filepath}"/>
+		<bxp:deletensf filename="${nsf.template.filepath}"/>
+		
+	</target>
+	<!-- end::clean[] -->
+	
+
+
+</project>

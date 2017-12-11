@@ -1,0 +1,8 @@
+==== Install a JDK (Java Development Kit)
+
+
+
+[NOTE]
+====
+You may actually be able to use the JDK in IBM Notes!
+====

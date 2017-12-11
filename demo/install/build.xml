@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="BuildXPagesAntLib" basedir="." default="help">
+
+	<property name="lib.dir" value="../../lib" />
+	<property name="dist.dir" value="../../dist" />
+
+	<property environment="env"></property>
+	
+	<property name="notesProgDir" value="${env.NOTES_PROGDIR}"></property>
+	
+	<property name="distversion" value="1.0.0">
+	</property>
+	
+	<target name="help">
+	
+		<echo>This task will Install the BuildXPages and JNA libraries</echo>
+		<echo>You can choose either: </echo>
+		<echo></echo>
+		<echo>ant installtouserhome</echo>
+		<echo>ant installtoanthome</echo>
+		<echo></echo>
+		<echo>depending on where you prefer to install the libraries to</echo>
+	
+	</target>
+	
+	<target name="installtouserhome" description="Install BuildXPages Libraries to user's home directory (For Current User)">
+
+		<delete file="${user.home}/.ant/lib/${ant.project.name}.jar">
+		</delete>
+
+		<copy file="${dist.dir}/${ant.project.name}_${distversion}.jar" todir="${user.home}/.ant/lib" overwrite="false"/>
+		<copy file="${lib.dir}/jna-4.1.0.jar" todir="${user.home}/.ant/lib" overwrite="false"/>
+
+
+	</target>
+
+	<target name="installtoanthome" description="Install BuildXPages Libraries to Ant Home (All Users)">
+
+		<copy file="${dist.dir}/${ant.project.name}_${distversion}.jar" todir="${ant.library.dir}" overwrite="false"/>
+		<copy file="${lib.dir}/jna-4.1.0.jar" todir="${ant.library.dir}" overwrite="false"/>
+		
+	</target>
+	
+	<target name="copynoteslibtouserhome">
+		<copy todir="${user.home}/.ant/lib" overwrite="false">
+			<fileset dir="${notesProgDir}/jvm/lib/ext">
+				<include name="**/*.jar" />
+			</fileset>
+		</copy>
+	</target>
+	
+</project>

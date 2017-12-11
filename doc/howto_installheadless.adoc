@@ -1,0 +1,4 @@
+= Installing BuildXPages Designer Plugin
+
+Obtain the latest version of the BuildXPages project from the https://github.com/camac/BuildXPages/releases[projects releases page^]
+and install the *com.gregorbyte.designer.headless.updatesite*  update site (from within the dist folder) to Domino Designer using the instructions in link:howto_installpluginsdesigner.html[How to Install Plugins to Domino Designer^]

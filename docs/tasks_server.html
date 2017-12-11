@@ -708,6 +708,11 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 
 #footer-text { color: #eee; font-size: 0.8em; text-align: center; }
 
+/* Added by Cameron */
+div.ulist { padding-left: 1.25em; }
+
+div.olist { padding-left: 1.25em; }
+
 </style>
 </head>
 <body class="article">
@@ -754,21 +759,21 @@ action
 <div class="literalblock">
 <div class="content">
 <pre>&lt;target name="teststarthttp"&gt;
-	&lt;bxp:controlhttp server="CameronWS" action="start" /&gt;
+	&lt;bxp:controlhttp server="Domino02" action="start" /&gt;
 &lt;/target&gt;</pre>
 </div>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;target name="teststophttp"&gt;
-	&lt;bxp:controlhttp server="CameronWS" action="stop" /&gt;
+	&lt;bxp:controlhttp server="Domino02" action="stop" /&gt;
 &lt;/target&gt;</pre>
 </div>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;target name="testrestarthttp"&gt;
-	&lt;bxp:controlhttp server="CameronWS" action="restart" /&gt;
+	&lt;bxp:controlhttp server="Domino02" action="restart" /&gt;
 &lt;/target&gt;</pre>
 </div>
 </div>
@@ -871,8 +876,12 @@ directory
 </div>
 <div id="footer">
 <div id="footer-text">
+Version 1.0.0<br>
 Last updated 2017-08-05 15:28:49 AEST
 </div>
 </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
 </body>
 </html>

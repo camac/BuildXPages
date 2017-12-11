@@ -4,7 +4,7 @@ Usually you update Domino Designer with new plugins by going through the normal 
 
 When deploying plugins this way, some plugins need to be 'unpacked' which means they don't exist as a jar file, but the contents are unpacked into a folder.
 
-This task will unpack a plugin to a folder. You just need to give the plugin name, and it will find the version information automatically
+This task will unpack a plugin to a folder with the same name as the plugin. You only need to specify the plugin name, and it will find the version information automatically
 
 ==== Attributes
 

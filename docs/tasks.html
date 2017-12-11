@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
-<title>BuildXPages Ant Tasks</title>
+<title>BuildXPages Ant Task Library</title>
 <style>
 /*! normalize.css v2.1.2 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -708,6 +708,11 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 
 #footer-text { color: #eee; font-size: 0.8em; text-align: center; }
 
+/* Added by Cameron */
+div.ulist { padding-left: 1.25em; }
+
+div.olist { padding-left: 1.25em; }
+
 </style>
 </head>
 <body class="article">
@@ -715,18 +720,10 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_buildxpages_ant_tasks">BuildXPages Ant Tasks</h2>
+<h2 id="TasksLibrary">BuildXPages Ant Task Library</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_what_is_ant">What is Ant?</h3>
 <div class="paragraph">
-<p>Apache Ant is a tool which you can use to automate repetitive steps. Ant has access to many commonly used steps such as manipluation of files in the filesystem (copy, move, delete, unzip etc.) and more complex tasks such as compiling java, running programs.</p>
-</div>
-<div class="paragraph">
-<p>BuildXPages provides Ant with some custom tasks that are useful in the Build and Deployment process of XPages applications and XPages Plugins.</p>
-</div>
-<div class="paragraph">
-<p>BuildXPages provides tasks related to</p>
+<p>The following is a list of the Ant tasks provided by the project and some documentation and examples of how to use them.</p>
 </div>
 <div class="paragraph">
 <p><a href="#TasksDeployingNSF">Deploying NSFs to a Server</a></p>
@@ -740,17 +737,13 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 <div class="paragraph">
 <p><a href="#TasksServer">Controlling a Domino Server</a></p>
 </div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="TasksDeployingNSF">NSF Deployment Related Tasks</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="TasksDeployingNSF">NSF Deployment Related Tasks</h3>
 <div class="paragraph">
 <p>The following tasks are usually useful after you have built NSF&#8217;s and need to move them around, refresh templates etc. to acheive deployment of an  NSF that has been successfully built.</p>
 </div>
-<div class="sect2">
-<h3 id="_copynsf">copynsf</h3>
+<div class="sect3">
+<h4 id="_copynsf">copynsf</h4>
 <div class="paragraph">
 <p>Copies an NSF from one place to another using the Notes C API&#8217;s 'NSFDbCreateAndCopy' function.</p>
 </div>
@@ -768,8 +761,8 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 </tr>
 </table>
 </div>
-<div class="sect3">
-<h4 id="_attributes">Attributes</h4>
+<div class="sect4">
+<h5 id="_attributes">Attributes</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -807,22 +800,22 @@ dstfilepath
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example">Example</h4>
+<div class="sect4">
+<h5 id="_example">Example</h5>
 <div class="literalblock">
 <div class="content">
-<pre>&lt;copynsf srcfilepath="demo\\GitTest.nsf" dstfilepath="demo\\DidItwork.nsf" /&gt;</pre>
+<pre>&lt;copynsf srcfilepath="demo\\CopyMe.nsf" dstfilepath="demo\\ToHere.nsf" /&gt;</pre>
 </div>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_deletensf">deletensf</h3>
+<div class="sect3">
+<h4 id="_deletensf">deletensf</h4>
 <div class="paragraph">
 <p>Deletes an NSF using the Notes C API&#8217;s NSFDbDelete method.</p>
 </div>
-<div class="sect3">
-<h4 id="_attributes_2">Attributes</h4>
+<div class="sect4">
+<h5 id="_attributes_2">Attributes</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -844,31 +837,31 @@ filename
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_2">Example</h4>
+<div class="sect4">
+<h5 id="_example_2">Example</h5>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;!-- Delete a Local NSF --&gt;
-&lt;deletensf filename="demo\\DidItwork.nsf" /&gt;</pre>
+&lt;deletensf filename="demo\\DeleteMe.nsf" /&gt;</pre>
 </div>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;!-- Delete an NSF on another Server --&gt;
-&lt;deletensf server="Domino02" filename="demo\\DidItwork.nsf" /&gt;</pre>
+&lt;deletensf server="Domino01" filename="demo\\DeleteMe.nsf" /&gt;</pre>
 </div>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_settemplatenames">settemplatenames</h3>
+<div class="sect3">
+<h4 id="_settemplatenames">settemplatenames</h4>
 <div class="paragraph">
 <p>Updates the Template Inheritance settings of an NSF.
 You can set an NSF To be a master template, or you can set an NSF to Inherit from another Template, or Both!
 You can also clear the 'inherit from' or 'master template' settings.</p>
 </div>
-<div class="sect3">
-<h4 id="_attributes_3">Attributes</h4>
+<div class="sect4">
+<h5 id="_attributes_3">Attributes</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -922,8 +915,8 @@ mastername
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_3">Example</h4>
+<div class="sect4">
+<h5 id="_example_3">Example</h5>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;!-- Set an NSF to inherit from 'DemoTemplate' --&gt;
@@ -954,13 +947,13 @@ mastername
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_scxd">scxd</h3>
+<div class="sect3">
+<h4 id="_scxd">scxd</h4>
 <div class="paragraph">
 <p>Sets the Single Copy XPage Design settings of an NSF. You can set both the relevant properties of the SCXD path, and the Flag which determines whether to use the SCXD template or not.</p>
 </div>
-<div class="sect3">
-<h4 id="_attributes_4">Attributes</h4>
+<div class="sect4">
+<h5 id="_attributes_4">Attributes</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -998,8 +991,8 @@ scxdflag
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_4">Example</h4>
+<div class="sect4">
+<h5 id="_example_4">Example</h5>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;!-- Set an NSF to use 'scxd\Awesome.nsf' as it's single copy xpage design --&gt;
@@ -1014,8 +1007,8 @@ scxdflag
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_refreshdbdesign">refreshdbdesign</h3>
+<div class="sect3">
+<h4 id="_refreshdbdesign">refreshdbdesign</h4>
 <div class="paragraph">
 <p>Refreshes an NSF&#8217;s design from a server using the Notes C API DesignRefresh method.</p>
 </div>
@@ -1025,8 +1018,8 @@ scxdflag
 <div class="paragraph">
 <p>This task uses existing template settings of the NSF so if you need to change them you should use the settemplatenames task before using this task.</p>
 </div>
-<div class="sect3">
-<h4 id="_attributes_5">Attributes</h4>
+<div class="sect4">
+<h5 id="_attributes_5">Attributes</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -1056,8 +1049,8 @@ templateserver
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_5">Example</h4>
+<div class="sect4">
+<h5 id="_example_5">Example</h5>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;!-- Refresh MyNSF.nsf from the Domino03 server --&gt;
@@ -1067,15 +1060,13 @@ templateserver
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="TasksPlugin">Plugin Related Tasks</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="TasksPlugin">Plugin Related Tasks</h3>
 <div class="paragraph">
 <p>The following tasks are all related to the building and deployment of OSGi plugins for XPages and Notes/Designer.</p>
 </div>
-<div class="sect2">
-<h3 id="_buildfeature">buildfeature</h3>
+<div class="sect3">
+<h4 id="_buildfeature">buildfeature</h4>
 <div class="admonitionblock caution">
 <table>
 <tr>
@@ -1096,8 +1087,8 @@ templateserver
 <div class="paragraph">
 <p>Before using this task, you will need to have prepared the build directory with the source code of the plugins that are to be built, and the the feature that is to be built.</p>
 </div>
-<div class="sect3">
-<h4 id="_properties_that_are_used_in_this_task">Properties that are used in this task</h4>
+<div class="sect4">
+<h5 id="_properties_that_are_used_in_this_task">Properties that are used in this task</h5>
 <div class="paragraph">
 <p>This task is actually a macro, and currently relies on some properties to have already been set in ant</p>
 </div>
@@ -1170,8 +1161,8 @@ buildDir
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_attributes_6">Attributes</h4>
+<div class="sect4">
+<h5 id="_attributes_6">Attributes</h5>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">pluginPath</dt>
@@ -1181,38 +1172,33 @@ buildDir
 </dl>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_6">Example</h4>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Caution</div>
-</td>
-<td class="content">
+<div class="sect4">
+<h5 id="_example_6">Example</h5>
 <div class="paragraph">
-<p>You really need a lot more information than this to use this task but I have just put this all here as a starting point. Please feel free to contact me to make me provide more information.</p>
+<p>For the best example have a look at the Demonstration Tutorial <strong>Building Features and Plugins</strong></p>
 </div>
-</td>
-</tr>
-</table>
-</div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>&lt;!-- Plugin path is supplied by a build.properties file --&gt;
-&lt;bxp:buildfeature pluginpath="${pluginPath}" /&gt;</pre>
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="build" depends="init"&gt;
+
+		&lt;bxp:copytobuilddir plugin="com.gregorbyte.buildxpages.demo" /&gt;
+		&lt;bxp:copytobuilddir feature="com.gregorbyte.buildxpages.demo.feature" /&gt;
+
+		&lt;bxp:buildfeature feature="com.gregorbyte.buildxpages.demo.feature"/&gt;
+
+	&lt;/target&gt;</code></pre>
 </div>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_importplugins">importplugins</h3>
+<div class="sect3">
+<h4 id="_importplugins">importplugins</h4>
 <div class="paragraph">
 <p>Imports plugins/features from an update site on the filesystem into an
 <a href="https://www.openntf.org/main.nsf/project.xsp?r=project/Open%20Eclipse%20Update%20Site" target="_blank">Open Eclipse NSF Update Site</a></p>
 </div>
-<div class="sect3">
-<h4 id="_attributes_7">Attributes</h4>
+<div class="sect4">
+<h5 id="_attributes_7">Attributes</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -1250,8 +1236,8 @@ deletefirst
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_7">Example</h4>
+<div class="sect4">
+<h5 id="_example_7">Example</h5>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;bxp:importplugins server="Domino02" database="UpdateSite\MyUpdateSite.nsf" sitexml="C:\MyFolder\MyProject\com.my.updatesite\site.xml" /&gt;</pre>
@@ -1259,29 +1245,35 @@ deletefirst
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_copyplugintobuilddir">copyplugintobuilddir</h3>
+<div class="sect3">
+<h4 id="_copytobuilddir">copytobuilddir</h4>
 <div class="paragraph">
 <p>This task is used during preparation for a headless eclipse plugin build.
-It is used to copy the source code of of a plugin, into the <em>build directory</em> which is a special working directory used to build the plugins and features.</p>
+It is used to copy the source code of of a plugin or feature, into the <em>build directory</em> which is a special working directory used to build the plugins and features.
+The <em>build directory</em> contains 2 subfolders <strong>plugins</strong> and <strong>features</strong> and the plugin or feature will automatically be copied into the correct folder.
+The task will exclude contents of the <strong>bin</strong> folder when copying. The idea is to copy source files only.</p>
 </div>
-<div class="sect3">
-<h4 id="_properties_used">Properties used</h4>
+<div class="sect4">
+<h5 id="_properties_used">Properties used</h5>
 <div class="hdlist">
 <table>
 <tr>
 <td class="hdlist1">
-pluginsDir
+buildDir
 </td>
 <td class="hdlist2">
-<p>The Destination directory, usually the eclipse/plugins folder of the build Directory</p>
+<p>The Build Directory in which the Headless Plugin Build will take place. this is commonly set to 'buildDirectory'</p>
 </td>
 </tr>
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_attributes_8">Attributes</h4>
+<div class="sect4">
+<h5 id="_attributes_8">Attributes</h5>
+<div class="paragraph">
+<p>You specify either the plugin you want to copy, or the feature you want to copy.
+You can set both at the same time if you like but I think it makes more sense to separate them into sepearate tasks.</p>
+</div>
 <div class="hdlist">
 <table>
 <tr>
@@ -1289,23 +1281,32 @@ pluginsDir
 plugin
 </td>
 <td class="hdlist2">
-<p>the folder name of the plugin to copy</p>
+<p>the folder location of the plugin to copy</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+feature
+</td>
+<td class="hdlist2">
+<p>the folder location of the feature to copy</p>
 </td>
 </tr>
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_8">Example</h4>
+<div class="sect4">
+<h5 id="_example_8">Example</h5>
 <div class="literalblock">
 <div class="content">
-<pre>&lt;bxp:copyplugintobuilddir plugin="com.acme.myplugin" /&gt;</pre>
+<pre>&lt;bxp:copytobuilddir plugin="com.acme.myplugin" /&gt;
+&lt;bxp:copytobuilddir feature="com.acme.myplugin.feature" /&gt;</pre>
 </div>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_unpackplugin">unpackplugin</h3>
+<div class="sect3">
+<h4 id="_unpackplugin">unpackplugin</h4>
 <div class="paragraph">
 <p>Usually you update Domino Designer with new plugins by going through the normal installation process. But there is another way in which you can build plugins into a particular folder, and Domino Designer always picks up new versions.</p>
 </div>
@@ -1313,10 +1314,10 @@ plugin
 <p>When deploying plugins this way, some plugins need to be 'unpacked' which means they don&#8217;t exist as a jar file, but the contents are unpacked into a folder.</p>
 </div>
 <div class="paragraph">
-<p>This task will unpack a plugin to a folder. You just need to give the plugin name, and it will find the version information automatically</p>
+<p>This task will unpack a plugin to a folder with the same name as the plugin. You only need to specify the plugin name, and it will find the version information automatically</p>
 </div>
-<div class="sect3">
-<h4 id="_attributes_9">Attributes</h4>
+<div class="sect4">
+<h5 id="_attributes_9">Attributes</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -1338,8 +1339,8 @@ pluginid
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_9">Example</h4>
+<div class="sect4">
+<h5 id="_example_9">Example</h5>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;bxp:unpackplugin dir="eclipse/plugins" pluginid="com.acme.superplugin" /&gt;</pre>
@@ -1347,8 +1348,8 @@ pluginid
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_generatesitexml">generatesitexml</h3>
+<div class="sect3">
+<h4 id="_generatesitexml">generatesitexml</h4>
 <div class="paragraph">
 <p>After building your plugins headlessly with eclipse PDE, you will then have a directory of plugins and features, but
 before importing plugins into an <a href="https://www.openntf.org/main.nsf/project.xsp?r=project/Open%20Eclipse%20Update%20Site" target="_blank">Open Eclipse NSF Update Site</a> you will also need a <strong>site.xml</strong> file.</p>
@@ -1359,8 +1360,8 @@ before importing plugins into an <a href="https://www.openntf.org/main.nsf/proje
 <div class="paragraph">
 <p>The build process does not generate one for us so we do it ourselvels with this task, which scans the features directory and builds the necessary xml.</p>
 </div>
-<div class="sect3">
-<h4 id="_attributes_10">Attributes</h4>
+<div class="sect4">
+<h5 id="_attributes_10">Attributes</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -1374,17 +1375,17 @@ eclipsedir
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_10">Example</h4>
+<div class="sect4">
+<h5 id="_example_10">Example</h5>
 <div class="literalblock">
 <div class="content">
-<pre>&lt;bxp:generatesitexml eclipsedir="testgen" /&gt;</pre>
+<pre>&lt;bxp:generatesitexml eclipsedir="somefolder/eclipse" /&gt;</pre>
 </div>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_clearupdatesite">clearupdatesite</h3>
+<div class="sect3">
+<h4 id="_clearupdatesite">clearupdatesite</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1402,8 +1403,8 @@ eclipsedir
 <div class="paragraph">
 <p>After building plugins, sometimes you want to put them in an update site on the filesystem. You may want to make sure the update site is empty before you put your plugins there, so this task can clear out an existing update site.</p>
 </div>
-<div class="sect3">
-<h4 id="_attributes_11">Attributes</h4>
+<div class="sect4">
+<h5 id="_attributes_11">Attributes</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -1417,8 +1418,8 @@ eclipsedir
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_11">Example</h4>
+<div class="sect4">
+<h5 id="_example_11">Example</h5>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;bxp:clearupdatesite eclipsedir="myplugins" /&gt;</pre>
@@ -1426,8 +1427,8 @@ eclipsedir
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_copypluginstoupdatesite">copypluginstoupdatesite</h3>
+<div class="sect3">
+<h4 id="_copypluginstoupdatesite">copypluginstoupdatesite</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1445,8 +1446,8 @@ eclipsedir
 <div class="paragraph">
 <p>After building plugins, sometimes you want to put them in an update site on the filesystem. This task will copy the plugins to your target update site, and also generate the site xml.</p>
 </div>
-<div class="sect3">
-<h4 id="_properties">Properties</h4>
+<div class="sect4">
+<h5 id="_properties">Properties</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -1460,8 +1461,8 @@ builtPluginsZip
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_attributes_12">Attributes</h4>
+<div class="sect4">
+<h5 id="_attributes_12">Attributes</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -1475,8 +1476,8 @@ eclipsedir
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_12">Example</h4>
+<div class="sect4">
+<h5 id="_example_12">Example</h5>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;bxp:copypluginstoupdatesite eclipsedir="my/target/updatesite/eclipse" /&gt;</pre>
@@ -1485,12 +1486,10 @@ eclipsedir
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="TasksDesigner">Designer Related Tasks</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="_startdesigner">startDesigner</h3>
+<h3 id="TasksDesigner">Designer Related Tasks</h3>
+<div class="sect3">
+<h4 id="_startdesigner">startDesigner</h4>
 <div class="admonitionblock caution">
 <table>
 <tr>
@@ -1508,8 +1507,8 @@ eclipsedir
 <div class="paragraph">
 <p>Before building an NSF with the Headless Designer Plugin, you need to make sure designer is running. You can use the <strong>checkDesignerRunning</strong> task to check, and if it is not running you can use this <strong>startDesigner</strong> task.</p>
 </div>
-<div class="sect3">
-<h4 id="_properties_2">Properties</h4>
+<div class="sect4">
+<h5 id="_properties_2">Properties</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -1523,8 +1522,8 @@ notesProgDir
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_13">Example</h4>
+<div class="sect4">
+<h5 id="_example_13">Example</h5>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;bxp:startDesigner /&gt;</pre>
@@ -1532,15 +1531,15 @@ notesProgDir
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_buildnsf">buildnsf</h3>
+<div class="sect3">
+<h4 id="_buildnsf">buildnsf</h4>
 <div class="paragraph">
 <p>The buildnsf task is used to build an ODP into an NSF. To do this it connects to the Designer Headless Server, and instructs it to build.
 If the NSF that is specified does not yet exist, it will be created.
 You</p>
 </div>
-<div class="sect3">
-<h4 id="_attributes_13">Attributes</h4>
+<div class="sect4">
+<h5 id="_attributes_13">Attributes</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -1594,8 +1593,8 @@ failonerror
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_14">Example</h4>
+<div class="sect4">
+<h5 id="_example_14">Example</h5>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;target name="testbuildnsf" description="Build an NSF"&gt;
@@ -1614,13 +1613,13 @@ failonerror
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_closedesigner">closedesigner</h3>
+<div class="sect3">
+<h4 id="_closedesigner">closedesigner</h4>
 <div class="paragraph">
 <p>This task connects to the Headless Designer Plugin and instructs it to shutdown.</p>
 </div>
-<div class="sect3">
-<h4 id="_attributes_14">Attributes</h4>
+<div class="sect4">
+<h5 id="_attributes_14">Attributes</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -1634,8 +1633,8 @@ port
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_15">Example</h4>
+<div class="sect4">
+<h5 id="_example_15">Example</h5>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;bxp:closedesigner /&gt;</pre>
@@ -1643,16 +1642,16 @@ port
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_markersreport">markersreport</h3>
+<div class="sect3">
+<h4 id="_markersreport">markersreport</h4>
 <div class="paragraph">
-<p>This task connects to the Headless Designer Plugin, and requests a report of all the problem markse (e.g. Error, Info, Warning etc.) for a particular NSF.</p>
+<p>This task connects to the Headless Designer Plugin, and requests a report of all the problem markers (e.g. Error, Info, Warning etc.) for a particular NSF.</p>
 </div>
 <div class="paragraph">
 <p>If you like , you can cause the build to fail if there are errors present on the NSF, to prevent further tasks like deployment.</p>
 </div>
-<div class="sect3">
-<h4 id="_attributes_15">Attributes</h4>
+<div class="sect4">
+<h5 id="_attributes_15">Attributes</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -1682,8 +1681,8 @@ port
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_16">Example</h4>
+<div class="sect4">
+<h5 id="_example_16">Example</h5>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;bxp:markersreport ondiskproject="C:\\workspaces\\neon-64\\runtime-HeadlessPlugin\\DeleteMe\\.project"&gt;
@@ -1692,8 +1691,8 @@ port
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_checkdesignerrunning">checkdesignerrunning</h3>
+<div class="sect3">
+<h4 id="_checkdesignerrunning">checkdesignerrunning</h4>
 <div class="admonitionblock caution">
 <table>
 <tr>
@@ -1712,8 +1711,8 @@ port
 <p>This task checks if the nlnotes.exe process is running, if so it sets a property <strong>designer.running</strong>.
 You can then use this property to decide whether to take some other action.</p>
 </div>
-<div class="sect3">
-<h4 id="_example_17">Example</h4>
+<div class="sect4">
+<h5 id="_example_17">Example</h5>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;bxp:checkDesignerRunning /&gt;
@@ -1722,8 +1721,8 @@ You can then use this property to decide whether to take some other action.</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_updatedesignerlink">updateDesignerLink</h3>
+<div class="sect3">
+<h4 id="_updatedesignerlink">updateDesignerLink</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1741,8 +1740,8 @@ You can then use this property to decide whether to take some other action.</p>
 <div class="paragraph">
 <p>This task is used to set up an update site that will always be loaded when Designer Is started up. This is only used when you are deploying plugins to Domino Designer using the sneaky 'permanent update site' method.</p>
 </div>
-<div class="sect3">
-<h4 id="_properties_3">Properties</h4>
+<div class="sect4">
+<h5 id="_properties_3">Properties</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -1756,8 +1755,8 @@ notesProgDir
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_attributes_16">Attributes</h4>
+<div class="sect4">
+<h5 id="_attributes_16">Attributes</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -1779,8 +1778,8 @@ updateSiteDir
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_18">Example</h4>
+<div class="sect4">
+<h5 id="_example_18">Example</h5>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;bxp:updateDesignerLink updateSiteLabel="extlib" updateSiteDir="C:\\Projects\\extlib\updatesite" /&gt;</pre>
@@ -1788,8 +1787,8 @@ updateSiteDir
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_initdesignersite">initdesignersite</h3>
+<div class="sect3">
+<h4 id="_initdesignersite">initdesignersite</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1813,8 +1812,8 @@ updateSiteDir
 <div class="paragraph">
 <p>You can then copy plugins to this update site, and they will be loaded by designer (if you have configured platform.xml using the <strong>checkplatformxml</strong> task)</p>
 </div>
-<div class="sect3">
-<h4 id="_properties_4">Properties</h4>
+<div class="sect4">
+<h5 id="_properties_4">Properties</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -1828,8 +1827,8 @@ notesProgDir
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_attributes_17">Attributes</h4>
+<div class="sect4">
+<h5 id="_attributes_17">Attributes</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -1843,8 +1842,8 @@ updateSiteLabel
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_19">Example</h4>
+<div class="sect4">
+<h5 id="_example_19">Example</h5>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;bxp:updateDesignerLink updateSiteLabel="extlib" updateSiteDir="C:\\Projects\\extlib\updatesite" /&gt;</pre>
@@ -1852,13 +1851,13 @@ updateSiteLabel
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_checkplatformxml">checkplatformxml</h3>
+<div class="sect3">
+<h4 id="_checkplatformxml">checkplatformxml</h4>
 <div class="paragraph">
 <p>This checks that the IBM Notes Installation&#8217;s platform.xml file is configured to automatically load plugins from the filesystem. The task will fail if the file is not configured properly.</p>
 </div>
-<div class="sect3">
-<h4 id="_properties_5">Properties</h4>
+<div class="sect4">
+<h5 id="_properties_5">Properties</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -1872,11 +1871,11 @@ notesProgDir
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_20">Example</h4>
+<div class="sect4">
+<h5 id="_example_20">Example</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">		&lt;!-- Make sure notesDataDir property is set --&gt;
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">		&lt;!-- Make sure notesDataDir property is set --&gt;
 		&lt;property name="notesDataDir" location="H:\Notes\Data"/&gt;
 
 		&lt;bxp:checkPlatformXml/&gt;</code></pre>
@@ -1884,16 +1883,16 @@ notesProgDir
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_configuredynamicplugins">configuredynamicplugins</h3>
+<div class="sect3">
+<h4 id="_configuredynamicplugins">configuredynamicplugins</h4>
 <div class="paragraph">
 <p>This task configures IBM Notes' <strong>platform.xml</strong> file so that IBM Notes will load plugins from the filesystem without the need to 'approve' them via the User Interface.</p>
 </div>
 <div class="paragraph">
 <p>Usually you need to go through the whole provisioning process for plugin updates, but this task will put IBM Notes into a configuration that bypasses this.</p>
 </div>
-<div class="sect3">
-<h4 id="_properties_6">Properties</h4>
+<div class="sect4">
+<h5 id="_properties_6">Properties</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -1907,11 +1906,11 @@ notesDataDir
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_21">Example</h4>
+<div class="sect4">
+<h5 id="_example_21">Example</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-xml" data-lang="xml">		&lt;!-- Make sure notesDataDir property is set --&gt;
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">		&lt;!-- Make sure notesDataDir property is set --&gt;
 		&lt;property name="notesDataDir" location="H:\Notes\Data"/&gt;
 
 		&lt;bxp:configureDynamicPlugins /&gt;</code></pre>
@@ -1920,21 +1919,19 @@ notesDataDir
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="TasksServer">Server Related Ant Tasks</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="TasksServer">Server Related Ant Tasks</h3>
 <div class="paragraph">
 <p>These tasks are designed to interact with the domino server by issuing commands to the console.</p>
 </div>
-<div class="sect2">
-<h3 id="_controlhttp">controlhttp</h3>
+<div class="sect3">
+<h4 id="_controlhttp">controlhttp</h4>
 <div class="paragraph">
 <p>The controlhttp task is used to control a Domino Server&#8217;s http tasks.
 It ultimately just issues a console command to the domino console.</p>
 </div>
-<div class="sect3">
-<h4 id="_attributes_18">Attributes</h4>
+<div class="sect4">
+<h5 id="_attributes_18">Attributes</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -1956,33 +1953,33 @@ action
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_22">Example</h4>
+<div class="sect4">
+<h5 id="_example_22">Example</h5>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;target name="teststarthttp"&gt;
-	&lt;bxp:controlhttp server="CameronWS" action="start" /&gt;
+	&lt;bxp:controlhttp server="Domino02" action="start" /&gt;
 &lt;/target&gt;</pre>
 </div>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;target name="teststophttp"&gt;
-	&lt;bxp:controlhttp server="CameronWS" action="stop" /&gt;
+	&lt;bxp:controlhttp server="Domino02" action="stop" /&gt;
 &lt;/target&gt;</pre>
 </div>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;target name="testrestarthttp"&gt;
-	&lt;bxp:controlhttp server="CameronWS" action="restart" /&gt;
+	&lt;bxp:controlhttp server="Domino02" action="restart" /&gt;
 &lt;/target&gt;</pre>
 </div>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_maintenancewarning">maintenancewarning</h3>
+<div class="sect3">
+<h4 id="_maintenancewarning">maintenancewarning</h4>
 <div class="paragraph">
 <p>The maintenance warning task issues a console command to the Domino OSGi console which tells current users that there will be a maintenance outage in a certain amount of time</p>
 </div>
@@ -1993,8 +1990,8 @@ action
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_attributes_19">Attributes</h4>
+<div class="sect4">
+<h5 id="_attributes_19">Attributes</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -2016,8 +2013,8 @@ minutes
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_23">Example</h4>
+<div class="sect4">
+<h5 id="_example_23">Example</h5>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;target name="testmaintenancewarn"&gt;
@@ -2034,13 +2031,13 @@ minutes
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_loaddesign">loaddesign</h3>
+<div class="sect3">
+<h4 id="_loaddesign">loaddesign</h4>
 <div class="paragraph">
 <p>Issues a 'load design' console command for a server</p>
 </div>
-<div class="sect3">
-<h4 id="_attributes_20">Attributes</h4>
+<div class="sect4">
+<h5 id="_attributes_20">Attributes</h5>
 <div class="hdlist">
 <table>
 <tr>
@@ -2062,8 +2059,8 @@ directory
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_24">Example</h4>
+<div class="sect4">
+<h5 id="_example_24">Example</h5>
 <div class="literalblock">
 <div class="content">
 <pre>&lt;target name="testloaddesign"&gt;
@@ -2076,10 +2073,15 @@ directory
 </div>
 </div>
 </div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-08-06 07:13:01 AEST
+Version 1.0.0<br>
+Last updated 2017-09-20 22:32:27 AEST
 </div>
 </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
 </body>
 </html>

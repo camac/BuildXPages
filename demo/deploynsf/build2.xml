@@ -1,0 +1,169 @@
+<project name="Headless Designer" default="build" xmlns:bxp="antlib:com.gregorbyte.buildxpages.ant" xmlns:asciidoctor="antlib:org.asciidoctor.ant">
+
+	<description>Build Tasks for Headless Designer</description>
+
+	<property file="mybuild.properties" />
+	<property file="build.properties" />
+
+	<property name="featureId" value="com.gregorbyte.designer.headless.feature" />
+
+	<property name="buildDir" location="buildDirectory" />
+	<property name="buildConfigDir" location="buildConfig" />
+	<property name="pluginsDir" location="${buildDir}/plugins" />
+	<property name="featuresDir" location="${buildDir}/features" />
+
+	<property environment="env" />
+
+	<property name="dominoProgDir" location="${env.DOMINO_PROG}" />
+	<property name="dominoDataDir" location="${env.DOMINO_DATA}" />
+	<property name="notesProgDir" location="${env.NOTES_PROG}" />
+	<property name="notesDataDir" location="${env.NOTES_DATA}" />
+
+	<property name="branchName" value="${env.BRANCH_NAME}">
+	</property>
+
+	<property name="equinoxLauncherVersion" value="${env.EQUINOXLAUNCHER_VERSION}">
+	</property>
+	<property name="eclipseBase" value="${env.ECLIPSE_BASEDIR}">
+	</property>
+	<property name="pdeBuildVersion" value="${env.PDEBUILD_VERSION}">
+	</property>
+
+	<property name="updateSiteRoot" value="D:\UpdateSites">
+	</property>
+
+	<property name="dominoPluginsDir" location="${dominoDataDir}/domino/workspace/applications/eclipse/plugins" />
+	<property name="dominoFeaturesDir" location="${dominoDataDir}/domino/workspace/applications/eclipse/features" />
+
+	<property name="updateSitePluginsDir" location="${updateSiteDir}/plugins" />
+	<property name="updateSiteFeaturesDir" location="${updateSiteDir}/features" />
+
+	<property name="buildId" value="Headless" />
+	<property name="buildLabel" value="Headless" />
+	<property name="buildNumber" value="${env.BUILD_NUMBER}" />
+
+	<property name="builtPluginsZip" location="${buildDir}\${buildLabel}\${featureId}-${buildId}.zip" />
+	<property name="equinoxLauncherJar" location="${eclipseBase}\plugins\org.eclipse.equinox.launcher_${equinoxLauncherVersion}.jar" />
+	<property name="pdeBuildXml" location="${eclipseBase}\plugins\org.eclipse.pde.build_${pdeBuildVersion}\scripts\build.xml" />
+
+	<target name="help">
+
+		<echo>The following properties must be set</echo>
+		<echo>
+		</echo>
+		<echo>eclipseBase - base folder where eclipse.exe is located</echo>
+		<echo>pdeBuildVersion - the part in brackets - {eclipseBase}\plugins\org.eclipse.pde.build_(3.8.100.v20130514-1028)</echo>
+		<echo>equinoxLauncherVersion - the part in brackets {eclipseBase}\plugins\org.eclipse.equinox.launcher_(1.3.0.v20130327-1440).jar</echo>
+		<echo>dominoProgDir - the location of your Domino Program Directory</echo>
+
+	</target>
+
+	<target name="clean">
+		<delete dir="${buildDir}">
+		</delete>
+		<delete dir="eclipse" />
+	</target>
+
+	<target name="init" depends="clean">
+		<mkdir dir="${buildDir}">
+		</mkdir>
+		<mkdir dir="${pluginsDir}">
+		</mkdir>
+		<mkdir dir="${featuresDir}">
+		</mkdir>
+	</target>
+
+	<target name="copyPlugins" depends="init">
+
+		<bxp:copyplugintobuilddir plugin="com.gregorbyte.designer.headless" />
+
+		<copy todir="${featuresDir}/com.gregorbyte.designer.headless.feature">
+			<fileset dir="com.gregorbyte.designer.headless.feature" />
+		</copy>
+
+	</target>
+
+	<target name="buildPlugins">
+
+		<pathconvert targetos="unix" property="dominoProgDir.unix">
+			<path location="${dominoProgDir}" />
+		</pathconvert>
+
+		<property name="pluginPath" value="${dominoProgDir.unix}/osgi/rcp/eclipse;${dominoProgDir.unix}/osgi/shared/eclipse;">
+		</property>
+
+		<echoproperties>
+		</echoproperties>
+
+		<bxp:buildPlugins pluginpath="${pluginPath}" />
+
+	</target>
+
+	<target name="unzipBuiltPlugins">
+		<unzip src="${builtPluginsZip}" dest="." />
+	</target>
+
+	<target name="clearUpdateSite">
+
+		<fail unless="updateSiteDir">updateSiteDir must be set</fail>
+
+		<echo>${updateSiteDir}</echo>
+
+		<delete>
+			<fileset dir="${updateSitePluginsDir}" includes="com.gregorbyte.designer.headless_*.jar" />
+		</delete>
+		<delete>
+			<fileset dir="${updateSiteFeaturesDir}" includes="com.gregorbyte.designer.headless.feature_*.jar" />
+		</delete>
+
+	</target>
+
+	<target name="copyPluginsToUpdateSite">
+
+		<mkdir dir="${updateSiteDir}/plugins" />
+		<mkdir dir="${updateSiteDir}/features" />
+
+		<bxp:clearUpdateSite eclipseDir="${updateSiteDir}" />
+
+		<bxp:copyPluginsToUpdateSite eclipseDir="${updateSiteDir}">
+		</bxp:copyPluginsToUpdateSite>
+
+	</target>
+
+	<target name="build" depends="copyPlugins,buildPlugins,unzipBuiltPlugins,copyPluginsToUpdateSite">
+	</target>
+
+
+	<target name="installasciidoctorant">
+
+		<property name="asciidoctor-version" value="1.5.4">
+		</property>
+		<get src="http://repo1.maven.org/maven2/org/asciidoctor/asciidoctor-ant/${asciidoctor-version}/asciidoctor-ant-${asciidoctor-version}.jar" dest="lib/asciidoctor-ant.jar" usetimestamp="true" />
+
+	</target>
+
+	<target name="docs">
+
+		<taskdef uri="antlib:org.asciidoctor.ant" resource="org/asciidoctor/ant/antlib.xml" classpath="lib/asciidoctor-ant.jar" />
+		<asciidoctor:convert sourceDirectory="doc" outputDirectory="docs" backend="html5" relativebasedir="true" safemode="unsafe">
+
+			<attribute key="stylesdir" value="stylesheets">
+			</attribute>
+			<attribute key="stylesheet" value="readthedocs.css">
+			</attribute>
+
+
+		</asciidoctor:convert>
+
+		<delete dir="docs/images" />
+
+		<copy todir="docs/images">
+			<fileset dir="doc/images">
+			</fileset>
+		</copy>
+
+
+	</target>
+
+
+</project>

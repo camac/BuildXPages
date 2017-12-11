@@ -1,0 +1,2189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<title>Demonstration Tutorials</title>
+<style>
+/*! normalize.css v2.1.2 | MIT License | git.io/normalize */
+/* ========================================================================== HTML5 display definitions ========================================================================== */
+/** Correct `block` display not defined in IE 8/9. */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block; }
+
+/** Correct `inline-block` display not defined in IE 8/9. */
+audio, canvas, video { display: inline-block; }
+
+/** Prevent modern browsers from displaying `audio` without controls. Remove excess height in iOS 5 devices. */
+audio:not([controls]) { display: none; height: 0; }
+
+/** Address `[hidden]` styling not present in IE 8/9. Hide the `template` element in IE, Safari, and Firefox < 22. */
+[hidden], template { display: none; }
+
+script { display: none !important; }
+
+/* ========================================================================== Base ========================================================================== */
+/** 1. Set default font family to sans-serif. 2. Prevent iOS text size adjust after orientation change, without disabling user zoom. */
+html { font-family: sans-serif; /* 1 */ -ms-text-size-adjust: 100%; /* 2 */ -webkit-text-size-adjust: 100%; /* 2 */ }
+
+/** Remove default margin. */
+body { margin: 0; }
+
+/* ========================================================================== Links ========================================================================== */
+/** Remove the gray background color from active links in IE 10. */
+a { background: transparent; }
+
+/** Address `outline` inconsistency between Chrome and other browsers. */
+a:focus { outline: thin dotted; }
+
+/** Improve readability when focused and also mouse hovered in all browsers. */
+a:active, a:hover { outline: 0; }
+
+/* ========================================================================== Typography ========================================================================== */
+/** Address variable `h1` font-size and margin within `section` and `article` contexts in Firefox 4+, Safari 5, and Chrome. */
+h1 { font-size: 2em; margin: 0.67em 0; }
+
+/** Address styling not present in IE 8/9, Safari 5, and Chrome. */
+abbr[title] { border-bottom: 1px dotted; }
+
+/** Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome. */
+b, strong { font-weight: bold; }
+
+/** Address styling not present in Safari 5 and Chrome. */
+dfn { font-style: italic; }
+
+/** Address differences between Firefox and other browsers. */
+hr { -moz-box-sizing: content-box; box-sizing: content-box; height: 0; }
+
+/** Address styling not present in IE 8/9. */
+mark { background: #ff0; color: #000; }
+
+/** Correct font family set oddly in Safari 5 and Chrome. */
+code, kbd, pre, samp { font-family: monospace, serif; font-size: 1em; }
+
+/** Improve readability of pre-formatted text in all browsers. */
+pre { white-space: pre-wrap; }
+
+/** Set consistent quote types. */
+q { quotes: "\201C" "\201D" "\2018" "\2019"; }
+
+/** Address inconsistent and variable font size in all browsers. */
+small { font-size: 80%; }
+
+/** Prevent `sub` and `sup` affecting `line-height` in all browsers. */
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+
+sup { top: -0.5em; }
+
+sub { bottom: -0.25em; }
+
+/* ========================================================================== Embedded content ========================================================================== */
+/** Remove border when inside `a` element in IE 8/9. */
+img { border: 0; }
+
+/** Correct overflow displayed oddly in IE 9. */
+svg:not(:root) { overflow: hidden; }
+
+/* ========================================================================== Figures ========================================================================== */
+/** Address margin not present in IE 8/9 and Safari 5. */
+figure { margin: 0; }
+
+/* ========================================================================== Forms ========================================================================== */
+/** Define consistent border, margin, and padding. */
+fieldset { border: 1px solid #c0c0c0; margin: 0 2px; padding: 0.35em 0.625em 0.75em; }
+
+/** 1. Correct `color` not being inherited in IE 8/9. 2. Remove padding so people aren't caught out if they zero out fieldsets. */
+legend { border: 0; /* 1 */ padding: 0; /* 2 */ }
+
+/** 1. Correct font family not being inherited in all browsers. 2. Correct font size not being inherited in all browsers. 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome. */
+button, input, select, textarea { font-family: inherit; /* 1 */ font-size: 100%; /* 2 */ margin: 0; /* 3 */ }
+
+/** Address Firefox 4+ setting `line-height` on `input` using `!important` in the UA stylesheet. */
+button, input { line-height: normal; }
+
+/** Address inconsistent `text-transform` inheritance for `button` and `select`. All other form control elements do not inherit `text-transform` values. Correct `button` style inheritance in Chrome, Safari 5+, and IE 8+. Correct `select` style inheritance in Firefox 4+ and Opera. */
+button, select { text-transform: none; }
+
+/** 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio` and `video` controls. 2. Correct inability to style clickable `input` types in iOS. 3. Improve usability and consistency of cursor style between image-type `input` and others. */
+button, html input[type="button"], input[type="reset"], input[type="submit"] { -webkit-appearance: button; /* 2 */ cursor: pointer; /* 3 */ }
+
+/** Re-set default cursor for disabled elements. */
+button[disabled], html input[disabled] { cursor: default; }
+
+/** 1. Address box sizing set to `content-box` in IE 8/9. 2. Remove excess padding in IE 8/9. */
+input[type="checkbox"], input[type="radio"] { box-sizing: border-box; /* 1 */ padding: 0; /* 2 */ }
+
+/** 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome. 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome (include `-moz` to future-proof). */
+input[type="search"] { -webkit-appearance: textfield; /* 1 */ -moz-box-sizing: content-box; -webkit-box-sizing: content-box; /* 2 */ box-sizing: content-box; }
+
+/** Remove inner padding and search cancel button in Safari 5 and Chrome on OS X. */
+input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; }
+
+/** Remove inner padding and border in Firefox 4+. */
+button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
+
+/** 1. Remove default vertical scrollbar in IE 8/9. 2. Improve readability and alignment in all browsers. */
+textarea { overflow: auto; /* 1 */ vertical-align: top; /* 2 */ }
+
+/* ========================================================================== Tables ========================================================================== */
+/** Remove most spacing between table cells. */
+table { border-collapse: collapse; border-spacing: 0; }
+
+meta.foundation-mq-small { font-family: "only screen and (min-width: 768px)"; width: 768px; }
+
+meta.foundation-mq-medium { font-family: "only screen and (min-width:1280px)"; width: 1280px; }
+
+meta.foundation-mq-large { font-family: "only screen and (min-width:1440px)"; width: 1440px; }
+
+*, *:before, *:after { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+html, body { font-size: 100%; }
+
+body { background: white; color: #222222; padding: 0; margin: 0; font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; font-weight: normal; font-style: normal; line-height: 1; position: relative; cursor: auto; }
+
+a:hover { cursor: pointer; }
+
+img, object, embed { max-width: 100%; height: auto; }
+
+object, embed { height: 100%; }
+
+img { -ms-interpolation-mode: bicubic; }
+
+#map_canvas img, #map_canvas embed, #map_canvas object, .map_canvas img, .map_canvas embed, .map_canvas object { max-width: none !important; }
+
+.left { float: left !important; }
+
+.right { float: right !important; }
+
+.text-left { text-align: left !important; }
+
+.text-right { text-align: right !important; }
+
+.text-center { text-align: center !important; }
+
+.text-justify { text-align: justify !important; }
+
+.hide { display: none; }
+
+.antialiased, body { -webkit-font-smoothing: antialiased; }
+
+img { display: inline-block; vertical-align: middle; }
+
+textarea { height: auto; min-height: 50px; }
+
+select { width: 100%; }
+
+object, svg { display: inline-block; vertical-align: middle; }
+
+.center { margin-left: auto; margin-right: auto; }
+
+.spread { width: 100%; }
+
+p.lead, .paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type p { font-size: 1.21875em; line-height: 1.6; }
+
+.subheader, .admonitionblock td.content > .title, .audioblock > .title, .exampleblock > .title, .imageblock > .title, .listingblock > .title, .literalblock > .title, .stemblock > .title, .openblock > .title, .paragraph > .title, .quoteblock > .title, table.tableblock > .title, .verseblock > .title, .videoblock > .title, .dlist > .title, .olist > .title, .ulist > .title, .qlist > .title, .hdlist > .title { line-height: 1.4; color: #6c818f; font-weight: 300; margin-top: 0.2em; margin-bottom: 0.5em; }
+
+/* Typography resets */
+div, dl, dt, dd, ul, ol, li, h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6, pre, form, p, blockquote, th, td { margin: 0; padding: 0; direction: ltr; }
+
+/* Default Link Styles */
+a { color: #444444; text-decoration: underline; line-height: inherit; }
+a:hover, a:focus { color: #111111; }
+a img { border: none; }
+
+/* Default paragraph styles */
+p { font-family: inherit; font-weight: normal; font-size: 1em; line-height: 1.5; margin-bottom: 1.25em; text-rendering: optimizeLegibility; }
+p aside { font-size: 0.875em; line-height: 1.35; font-style: italic; }
+
+/* Default header styles */
+h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 { font-family: ff-meta-web-pro-1, ff-meta-web-pro-2, Arial, "Helvetica Neue", sans-serif; font-weight: bold; font-style: normal; color: #465158; text-rendering: optimizeLegibility; margin-top: 1em; margin-bottom: 0.5em; line-height: 1.2125em; }
+h1 small, h2 small, h3 small, #toctitle small, .sidebarblock > .content > .title small, h4 small, h5 small, h6 small { font-size: 60%; color: #909ea7; line-height: 0; }
+
+h1 { font-size: 2.125em; }
+
+h2 { font-size: 1.6875em; }
+
+h3, #toctitle, .sidebarblock > .content > .title { font-size: 1.375em; }
+
+h4 { font-size: 1.125em; }
+
+h5 { font-size: 1.125em; }
+
+h6 { font-size: 1em; }
+
+hr { border: solid #dddddd; border-width: 1px 0 0; clear: both; margin: 1.25em 0 1.1875em; height: 0; }
+
+/* Helpful Typography Defaults */
+em, i { font-style: italic; line-height: inherit; }
+
+strong, b { font-weight: bold; line-height: inherit; }
+
+small { font-size: 60%; line-height: inherit; }
+
+code { font-family: "Consolas", "Deja Vu Sans Mono", "Bitstream Vera Sans Mono", monospace; font-weight: normal; color: #444444; }
+
+/* Lists */
+ul, ol, dl { font-size: 1em; line-height: 1.5; margin-bottom: 1.25em; list-style-position: outside; font-family: inherit; }
+
+ul, ol { margin-left: 0; }
+ul.no-bullet, ol.no-bullet { margin-left: 0; }
+
+/* Unordered Lists */
+ul li ul, ul li ol { margin-left: 1.25em; margin-bottom: 0; font-size: 1em; /* Override nested font-size change */ }
+ul.square li ul, ul.circle li ul, ul.disc li ul { list-style: inherit; }
+ul.square { list-style-type: square; }
+ul.circle { list-style-type: circle; }
+ul.disc { list-style-type: disc; }
+ul.no-bullet { list-style: none; }
+
+/* Ordered Lists */
+ol li ul, ol li ol { margin-left: 1.25em; margin-bottom: 0; }
+
+/* Definition Lists */
+dl dt { margin-bottom: 0.3em; font-weight: bold; }
+dl dd { margin-bottom: 0.75em; }
+
+/* Abbreviations */
+abbr, acronym { text-transform: uppercase; font-size: 90%; color: black; border-bottom: 1px dotted #dddddd; cursor: help; }
+
+abbr { text-transform: none; }
+
+/* Blockquotes */
+blockquote { margin: 0 0 1.25em; padding: 0.5625em 1.25em 0 1.1875em; border-left: 1px solid #dddddd; }
+blockquote cite { display: block; font-size: 0.8125em; color: #748590; }
+blockquote cite:before { content: "\2014 \0020"; }
+blockquote cite a, blockquote cite a:visited { color: #748590; }
+
+blockquote, blockquote p { line-height: 1.5; color: #909ea7; }
+
+/* Microformats */
+.vcard { display: inline-block; margin: 0 0 1.25em 0; border: 1px solid #dddddd; padding: 0.625em 0.75em; }
+.vcard li { margin: 0; display: block; }
+.vcard .fn { font-weight: bold; font-size: 0.9375em; }
+
+.vevent .summary { font-weight: bold; }
+.vevent abbr { cursor: auto; text-decoration: none; font-weight: bold; border: none; padding: 0 0.0625em; }
+
+@media only screen and (min-width: 768px) { h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 { line-height: 1.4; }
+  h1 { font-size: 2.75em; }
+  h2 { font-size: 2.3125em; }
+  h3, #toctitle, .sidebarblock > .content > .title { font-size: 1.6875em; }
+  h4 { font-size: 1.4375em; } }
+/* Tables */
+table { background: white; margin-bottom: 1.25em; border: solid 0 #dddddd; }
+table thead, table tfoot { background: none; font-weight: bold; }
+table thead tr th, table thead tr td, table tfoot tr th, table tfoot tr td { padding: 1px 8px 1px 5px; font-size: 1em; color: #222222; text-align: left; }
+table tr th, table tr td { padding: 1px 8px 1px 5px; font-size: 1em; color: #222222; }
+table tr.even, table tr.alt, table tr:nth-of-type(even) { background: none; }
+table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoot tr td { display: table-cell; line-height: 1.5; }
+
+body { tab-size: 4; }
+
+h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 { line-height: 1.4; }
+
+.clearfix:before, .clearfix:after, .float-group:before, .float-group:after { content: " "; display: table; }
+.clearfix:after, .float-group:after { clear: both; }
+
+*:not(pre) > code { font-size: 0.95em; font-style: normal !important; letter-spacing: 0; padding: 0; background-color: #f2f2f2; -webkit-border-radius: 6px; border-radius: 6px; line-height: inherit; }
+
+pre, pre > code { line-height: 1.2; color: inherit; font-family: "Consolas", "Deja Vu Sans Mono", "Bitstream Vera Sans Mono", monospace; font-weight: normal; }
+
+em em { font-style: normal; }
+
+strong strong { font-weight: normal; }
+
+.keyseq { color: #333333; }
+
+kbd { font-family: "Consolas", "Deja Vu Sans Mono", "Bitstream Vera Sans Mono", monospace; display: inline-block; color: black; font-size: 0.65em; line-height: 1.45; background-color: #f7f7f7; border: 1px solid #ccc; -webkit-border-radius: 3px; border-radius: 3px; -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 0.1em white inset; box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 0.1em white inset; margin: 0 0.15em; padding: 0.2em 0.5em; vertical-align: middle; position: relative; top: -0.1em; white-space: nowrap; }
+
+.keyseq kbd:first-child { margin-left: 0; }
+
+.keyseq kbd:last-child { margin-right: 0; }
+
+.menuseq, .menu { color: black; }
+
+b.button:before, b.button:after { position: relative; top: -1px; font-weight: normal; }
+
+b.button:before { content: "["; padding: 0 3px 0 2px; }
+
+b.button:after { content: "]"; padding: 0 2px 0 3px; }
+
+p a > code:hover { color: #373737; }
+
+#header, #content, #footnotes, #footer { width: 100%; margin-left: auto; margin-right: auto; margin-top: 0; margin-bottom: 0; max-width: 62.5em; *zoom: 1; position: relative; padding-left: 0.9375em; padding-right: 0.9375em; }
+#header:before, #header:after, #content:before, #content:after, #footnotes:before, #footnotes:after, #footer:before, #footer:after { content: " "; display: table; }
+#header:after, #content:after, #footnotes:after, #footer:after { clear: both; }
+
+#content { margin-top: 1.25em; }
+
+#content:before { content: none; }
+
+#header > h1:first-child { color: #111111; margin-top: 2.25rem; margin-bottom: 0; }
+#header > h1:first-child + #toc { margin-top: 8px; border-top: 1px solid #dddddd; }
+#header > h1:only-child, body.toc2 #header > h1:nth-last-child(2) { border-bottom: 1px solid #dddddd; padding-bottom: 8px; }
+#header .details { border-bottom: 1px solid #dddddd; line-height: 1.45; padding-top: 0.25em; padding-bottom: 0.25em; padding-left: 0.25em; color: #748590; display: -ms-flexbox; display: -webkit-flex; display: flex; -ms-flex-flow: row wrap; -webkit-flex-flow: row wrap; flex-flow: row wrap; }
+#header .details span:first-child { margin-left: -0.125em; }
+#header .details span.email a { color: #909ea7; }
+#header .details br { display: none; }
+#header .details br + span:before { content: "\00a0\2013\00a0"; }
+#header .details br + span.author:before { content: "\00a0\22c5\00a0"; color: #909ea7; }
+#header .details br + span#revremark:before { content: "\00a0|\00a0"; }
+#header #revnumber { text-transform: capitalize; }
+#header #revnumber:after { content: "\00a0"; }
+
+#content > h1:first-child:not([class]) { color: #111111; border-bottom: 1px solid #dddddd; padding-bottom: 8px; margin-top: 0; padding-top: 1rem; margin-bottom: 1.25rem; }
+
+#toc { border-bottom: 1px solid #dddddd; padding-bottom: 0.5em; }
+#toc > ul { margin-left: 0.125em; }
+#toc ul.sectlevel0 > li > a { font-style: italic; }
+#toc ul.sectlevel0 ul.sectlevel1 { margin: 0.5em 0; }
+#toc ul { font-family: ff-meta-web-pro-1, ff-meta-web-pro-2, Arial, "Helvetica Neue", sans-serif; list-style-type: none; }
+#toc li { line-height: 1.3334; margin-top: 0.3334em; }
+#toc a { text-decoration: none; }
+#toc a:active { text-decoration: underline; }
+
+#toctitle { color: #6c818f; font-size: 1.2em; }
+
+@media only screen and (min-width: 768px) { #toctitle { font-size: 1.375em; }
+  body.toc2 { padding-left: 15em; padding-right: 0; }
+  #toc.toc2 { margin-top: 0 !important; background-color: #f2f2f2; position: fixed; width: 15em; left: 0; top: 0; border-right: 1px solid #dddddd; border-top-width: 0 !important; border-bottom-width: 0 !important; z-index: 1000; padding: 1.25em 1em; height: 100%; overflow: auto; }
+  #toc.toc2 #toctitle { margin-top: 0; margin-bottom: 0.8rem; font-size: 1.2em; }
+  #toc.toc2 > ul { font-size: 0.9em; margin-bottom: 0; }
+  #toc.toc2 ul ul { margin-left: 0; padding-left: 1em; }
+  #toc.toc2 ul.sectlevel0 ul.sectlevel1 { padding-left: 0; margin-top: 0.5em; margin-bottom: 0.5em; }
+  body.toc2.toc-right { padding-left: 0; padding-right: 15em; }
+  body.toc2.toc-right #toc.toc2 { border-right-width: 0; border-left: 1px solid #dddddd; left: auto; right: 0; } }
+@media only screen and (min-width: 1280px) { body.toc2 { padding-left: 20em; padding-right: 0; }
+  #toc.toc2 { width: 20em; }
+  #toc.toc2 #toctitle { font-size: 1.375em; }
+  #toc.toc2 > ul { font-size: 0.95em; }
+  #toc.toc2 ul ul { padding-left: 1.25em; }
+  body.toc2.toc-right { padding-left: 0; padding-right: 20em; } }
+#content #toc { border-style: solid; border-width: 1px; border-color: #d9d9d9; margin-bottom: 1.25em; padding: 1.25em; background: #f2f2f2; -webkit-border-radius: 6px; border-radius: 6px; }
+#content #toc > :first-child { margin-top: 0; }
+#content #toc > :last-child { margin-bottom: 0; }
+
+#footer { max-width: 100%; background-color: black; padding: 1.25em; }
+
+#footer-text { color: white; line-height: 1.35; }
+
+.sect1 { padding-bottom: 0.625em; }
+
+@media only screen and (min-width: 768px) { .sect1 { padding-bottom: 1.25em; } }
+.sect1 + .sect1 { border-top: 1px solid #dddddd; }
+
+#content h1 > a.anchor, h2 > a.anchor, h3 > a.anchor, #toctitle > a.anchor, .sidebarblock > .content > .title > a.anchor, h4 > a.anchor, h5 > a.anchor, h6 > a.anchor { position: absolute; z-index: 1001; width: 1.5ex; margin-left: -1.5ex; display: block; text-decoration: none !important; visibility: hidden; text-align: center; font-weight: normal; }
+#content h1 > a.anchor:before, h2 > a.anchor:before, h3 > a.anchor:before, #toctitle > a.anchor:before, .sidebarblock > .content > .title > a.anchor:before, h4 > a.anchor:before, h5 > a.anchor:before, h6 > a.anchor:before { content: "\00A7"; font-size: 0.85em; display: block; padding-top: 0.1em; }
+#content h1:hover > a.anchor, #content h1 > a.anchor:hover, h2:hover > a.anchor, h2 > a.anchor:hover, h3:hover > a.anchor, #toctitle:hover > a.anchor, .sidebarblock > .content > .title:hover > a.anchor, h3 > a.anchor:hover, #toctitle > a.anchor:hover, .sidebarblock > .content > .title > a.anchor:hover, h4:hover > a.anchor, h4 > a.anchor:hover, h5:hover > a.anchor, h5 > a.anchor:hover, h6:hover > a.anchor, h6 > a.anchor:hover { visibility: visible; }
+#content h1 > a.link, h2 > a.link, h3 > a.link, #toctitle > a.link, .sidebarblock > .content > .title > a.link, h4 > a.link, h5 > a.link, h6 > a.link { color: #465158; text-decoration: none; }
+#content h1 > a.link:hover, h2 > a.link:hover, h3 > a.link:hover, #toctitle > a.link:hover, .sidebarblock > .content > .title > a.link:hover, h4 > a.link:hover, h5 > a.link:hover, h6 > a.link:hover { color: #3b444a; }
+
+.audioblock, .imageblock, .literalblock, .listingblock, .stemblock, .videoblock { margin-bottom: 1.25em; }
+
+.admonitionblock td.content > .title, .audioblock > .title, .exampleblock > .title, .imageblock > .title, .listingblock > .title, .literalblock > .title, .stemblock > .title, .openblock > .title, .paragraph > .title, .quoteblock > .title, table.tableblock > .title, .verseblock > .title, .videoblock > .title, .dlist > .title, .olist > .title, .ulist > .title, .qlist > .title, .hdlist > .title { text-rendering: optimizeLegibility; text-align: left; }
+
+table.tableblock > caption.title { white-space: nowrap; overflow: visible; max-width: 0; }
+
+.paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type p { color: #111111; }
+
+table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p { font-size: inherit; }
+
+.admonitionblock > table { border-collapse: separate; border: 0; background: none; width: 100%; }
+.admonitionblock > table td.icon { text-align: center; width: 80px; }
+.admonitionblock > table td.icon img { max-width: none; }
+.admonitionblock > table td.icon .title { font-weight: bold; font-family: ff-meta-web-pro-1, ff-meta-web-pro-2, Arial, "Helvetica Neue", sans-serif; text-transform: uppercase; }
+.admonitionblock > table td.content { padding-left: 1.125em; padding-right: 1.25em; border-left: 1px solid #dddddd; color: #748590; }
+.admonitionblock > table td.content > :last-child > :last-child { margin-bottom: 0; }
+
+.exampleblock > .content { border-style: solid; border-width: 1px; border-color: #e6e6e6; margin-bottom: 1.25em; padding: 1.25em; background: white; -webkit-border-radius: 6px; border-radius: 6px; }
+.exampleblock > .content > :first-child { margin-top: 0; }
+.exampleblock > .content > :last-child { margin-bottom: 0; }
+
+.sidebarblock { border-style: solid; border-width: 1px; border-color: #d9d9d9; margin-bottom: 1.25em; padding: 1.25em; background: #f2f2f2; -webkit-border-radius: 6px; border-radius: 6px; }
+.sidebarblock > :first-child { margin-top: 0; }
+.sidebarblock > :last-child { margin-bottom: 0; }
+.sidebarblock > .content > .title { color: #6c818f; margin-top: 0; }
+
+.exampleblock > .content > :last-child > :last-child, .exampleblock > .content .olist > ol > li:last-child > :last-child, .exampleblock > .content .ulist > ul > li:last-child > :last-child, .exampleblock > .content .qlist > ol > li:last-child > :last-child, .sidebarblock > .content > :last-child > :last-child, .sidebarblock > .content .olist > ol > li:last-child > :last-child, .sidebarblock > .content .ulist > ul > li:last-child > :last-child, .sidebarblock > .content .qlist > ol > li:last-child > :last-child { margin-bottom: 0; }
+
+.literalblock pre, .listingblock pre:not(.highlight), .listingblock pre[class="highlight"], .listingblock pre[class^="highlight "], .listingblock pre.CodeRay, .listingblock pre.prettyprint { background: #eeeeee; }
+.sidebarblock .literalblock pre, .sidebarblock .listingblock pre:not(.highlight), .sidebarblock .listingblock pre[class="highlight"], .sidebarblock .listingblock pre[class^="highlight "], .sidebarblock .listingblock pre.CodeRay, .sidebarblock .listingblock pre.prettyprint { background: #f2f1f1; }
+
+.literalblock pre, .literalblock pre[class], .listingblock pre, .listingblock pre[class] { border: 1px solid #cccccc; -webkit-border-radius: 6px; border-radius: 6px; word-wrap: break-word; padding: 0.5em; font-size: 0.8125em; }
+.literalblock pre.nowrap, .literalblock pre[class].nowrap, .listingblock pre.nowrap, .listingblock pre[class].nowrap { overflow-x: auto; white-space: pre; word-wrap: normal; }
+@media only screen and (min-width: 768px) { .literalblock pre, .literalblock pre[class], .listingblock pre, .listingblock pre[class] { font-size: 0.90625em; } }
+@media only screen and (min-width: 1280px) { .literalblock pre, .literalblock pre[class], .listingblock pre, .listingblock pre[class] { font-size: 1em; } }
+
+.literalblock.output pre { color: #eeeeee; background-color: inherit; }
+
+.listingblock pre.highlightjs { padding: 0; }
+.listingblock pre.highlightjs > code { padding: 0.5em; -webkit-border-radius: 6px; border-radius: 6px; }
+
+.listingblock > .content { position: relative; }
+
+.listingblock code[data-lang]:before { display: none; content: attr(data-lang); position: absolute; font-size: 0.75em; top: 0.425rem; right: 0.5rem; line-height: 1; text-transform: uppercase; color: #999; }
+
+.listingblock:hover code[data-lang]:before { display: block; }
+
+.listingblock.terminal pre .command:before { content: attr(data-prompt); padding-right: 0.5em; color: #999; }
+
+.listingblock.terminal pre .command:not([data-prompt]):before { content: "$"; }
+
+table.pyhltable { border-collapse: separate; border: 0; margin-bottom: 0; background: none; }
+
+table.pyhltable td { vertical-align: top; padding-top: 0; padding-bottom: 0; line-height: 1.2; }
+
+table.pyhltable td.code { padding-left: .75em; padding-right: 0; }
+
+pre.pygments .lineno, table.pyhltable td:not(.code) { color: #999; padding-left: 0; padding-right: .5em; border-right: 1px solid #dddddd; }
+
+pre.pygments .lineno { display: inline-block; margin-right: .25em; }
+
+table.pyhltable .linenodiv { background: none !important; padding-right: 0 !important; }
+
+.quoteblock { margin: 0 1em 1.25em 1.5em; display: table; }
+.quoteblock > .title { margin-left: -1.5em; margin-bottom: 0.75em; }
+.quoteblock blockquote, .quoteblock blockquote p { color: #909ea7; font-size: 1.15rem; line-height: 1.75; word-spacing: 0.1em; letter-spacing: 0; font-style: italic; text-align: justify; }
+.quoteblock blockquote { margin: 0; padding: 0; border: 0; }
+.quoteblock blockquote:before { content: "\201c"; float: left; font-size: 2.75em; font-weight: bold; line-height: 0.6em; margin-left: -0.6em; color: #6c818f; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
+.quoteblock blockquote > .paragraph:last-child p { margin-bottom: 0; }
+.quoteblock .attribution { margin-top: 0.5em; margin-right: 0.5ex; text-align: right; }
+.quoteblock .quoteblock { margin-left: 0; margin-right: 0; padding: 0.5em 0; border-left: 3px solid #748590; }
+.quoteblock .quoteblock blockquote { padding: 0 0 0 0.75em; }
+.quoteblock .quoteblock blockquote:before { display: none; }
+
+.verseblock { margin: 0 1em 1.25em 1em; }
+.verseblock pre { font-family: "Open Sans", "DejaVu Sans", sans; font-size: 1.15rem; color: #909ea7; font-weight: 300; text-rendering: optimizeLegibility; }
+.verseblock pre strong { font-weight: 400; }
+.verseblock .attribution { margin-top: 1.25rem; margin-left: 0.5ex; }
+
+.quoteblock .attribution, .verseblock .attribution { font-size: 0.8125em; line-height: 1.45; font-style: italic; }
+.quoteblock .attribution br, .verseblock .attribution br { display: none; }
+.quoteblock .attribution cite, .verseblock .attribution cite { display: block; letter-spacing: -0.025em; color: #748590; }
+
+.quoteblock.abstract { margin: 0 0 1.25em 0; display: block; }
+.quoteblock.abstract blockquote, .quoteblock.abstract blockquote p { text-align: left; word-spacing: 0; }
+.quoteblock.abstract blockquote:before, .quoteblock.abstract blockquote p:first-of-type:before { display: none; }
+
+table.tableblock { max-width: 100%; border-collapse: separate; }
+table.tableblock td > .paragraph:last-child p > p:last-child, table.tableblock th > p:last-child, table.tableblock td > p:last-child { margin-bottom: 0; }
+
+table.tableblock, th.tableblock, td.tableblock { border: 0 solid #dddddd; }
+
+table.grid-all th.tableblock, table.grid-all td.tableblock { border-width: 0 0 0 0; }
+
+table.grid-all tfoot > tr > th.tableblock, table.grid-all tfoot > tr > td.tableblock { border-width: 0 0 0 0; }
+
+table.grid-cols th.tableblock, table.grid-cols td.tableblock { border-width: 0 0 0 0; }
+
+table.grid-all * > tr > .tableblock:last-child, table.grid-cols * > tr > .tableblock:last-child { border-right-width: 0; }
+
+table.grid-rows th.tableblock, table.grid-rows td.tableblock { border-width: 0 0 0 0; }
+
+table.grid-all tbody > tr:last-child > th.tableblock, table.grid-all tbody > tr:last-child > td.tableblock, table.grid-all thead:last-child > tr > th.tableblock, table.grid-rows tbody > tr:last-child > th.tableblock, table.grid-rows tbody > tr:last-child > td.tableblock, table.grid-rows thead:last-child > tr > th.tableblock { border-bottom-width: 0; }
+
+table.grid-rows tfoot > tr > th.tableblock, table.grid-rows tfoot > tr > td.tableblock { border-width: 0 0 0 0; }
+
+table.frame-all { border-width: 0; }
+
+table.frame-sides { border-width: 0 0; }
+
+table.frame-topbot { border-width: 0 0; }
+
+th.halign-left, td.halign-left { text-align: left; }
+
+th.halign-right, td.halign-right { text-align: right; }
+
+th.halign-center, td.halign-center { text-align: center; }
+
+th.valign-top, td.valign-top { vertical-align: top; }
+
+th.valign-bottom, td.valign-bottom { vertical-align: bottom; }
+
+th.valign-middle, td.valign-middle { vertical-align: middle; }
+
+table thead th, table tfoot th { font-weight: bold; }
+
+tbody tr th { display: table-cell; line-height: 1.5; background: none; }
+
+tbody tr th, tbody tr th p, tfoot tr th, tfoot tr th p { color: #222222; font-weight: bold; }
+
+p.tableblock > code:only-child { background: none; padding: 0; }
+
+p.tableblock { font-size: 1em; }
+
+td > div.verse { white-space: pre; }
+
+ol { margin-left: 0.25em; }
+
+ul li ol { margin-left: 0; }
+
+dl dd { margin-left: 1.125em; }
+
+dl dd:last-child, dl dd:last-child > :last-child { margin-bottom: 0; }
+
+ol > li p, ul > li p, ul dd, ol dd, .olist .olist, .ulist .ulist, .ulist .olist, .olist .ulist { margin-bottom: 0.625em; }
+
+ul.unstyled, ol.unnumbered, ul.checklist, ul.none { list-style-type: none; }
+
+ul.unstyled, ol.unnumbered, ul.checklist { margin-left: 0.625em; }
+
+ul.checklist li > p:first-child > .fa-square-o:first-child, ul.checklist li > p:first-child > .fa-check-square-o:first-child { width: 1em; font-size: 0.85em; }
+
+ul.checklist li > p:first-child > input[type="checkbox"]:first-child { width: 1em; position: relative; top: 1px; }
+
+ul.inline { margin: 0 auto 0.625em auto; margin-left: -1.375em; margin-right: 0; padding: 0; list-style: none; overflow: hidden; }
+ul.inline > li { list-style: none; float: left; margin-left: 1.375em; display: block; }
+ul.inline > li > * { display: block; }
+
+.unstyled dl dt { font-weight: normal; font-style: normal; }
+
+ol.arabic { list-style-type: decimal; }
+
+ol.decimal { list-style-type: decimal-leading-zero; }
+
+ol.loweralpha { list-style-type: lower-alpha; }
+
+ol.upperalpha { list-style-type: upper-alpha; }
+
+ol.lowerroman { list-style-type: lower-roman; }
+
+ol.upperroman { list-style-type: upper-roman; }
+
+ol.lowergreek { list-style-type: lower-greek; }
+
+.hdlist > table, .colist > table { border: 0; background: none; }
+.hdlist > table > tbody > tr, .colist > table > tbody > tr { background: none; }
+
+td.hdlist1, td.hdlist2 { vertical-align: top; padding: 0 0.625em; }
+
+td.hdlist1 { font-weight: bold; padding-bottom: 1.25em; }
+
+.literalblock + .colist, .listingblock + .colist { margin-top: -0.5em; }
+
+.colist > table tr > td:first-of-type { padding: 0 0.75em; line-height: 1; }
+.colist > table tr > td:last-of-type { padding: 0.25em 0; }
+
+.thumb, .th { line-height: 0; display: inline-block; border: solid 4px white; -webkit-box-shadow: 0 0 0 1px #dddddd; box-shadow: 0 0 0 1px #dddddd; }
+
+.imageblock.left, .imageblock[style*="float: left"] { margin: 0.25em 0.625em 1.25em 0; }
+.imageblock.right, .imageblock[style*="float: right"] { margin: 0.25em 0 1.25em 0.625em; }
+.imageblock > .title { margin-bottom: 0; }
+.imageblock.thumb, .imageblock.th { border-width: 6px; }
+.imageblock.thumb > .title, .imageblock.th > .title { padding: 0 0.125em; }
+
+.image.left, .image.right { margin-top: 0.25em; margin-bottom: 0.25em; display: inline-block; line-height: 0; }
+.image.left { margin-right: 0.625em; }
+.image.right { margin-left: 0.625em; }
+
+a.image { text-decoration: none; display: inline-block; }
+a.image object { pointer-events: none; }
+
+sup.footnote, sup.footnoteref { font-size: 0.875em; position: static; vertical-align: super; }
+sup.footnote a, sup.footnoteref a { text-decoration: none; }
+sup.footnote a:active, sup.footnoteref a:active { text-decoration: underline; }
+
+#footnotes { padding-top: 0.75em; padding-bottom: 0.75em; margin-bottom: 0.625em; }
+#footnotes hr { width: 20%; min-width: 6.25em; margin: -0.25em 0 0.75em 0; border-width: 1px 0 0 0; }
+#footnotes .footnote { padding: 0 0.375em 0 0.225em; line-height: 1.3334; font-size: 0.875em; margin-left: 1.2em; text-indent: -1.05em; margin-bottom: 0.2em; }
+#footnotes .footnote a:first-of-type { font-weight: bold; text-decoration: none; }
+#footnotes .footnote:last-of-type { margin-bottom: 0; }
+#content #footnotes { margin-top: -0.625em; margin-bottom: 0; padding: 0.75em 0; }
+
+.gist .file-data > table { border: 0; background: #fff; width: 100%; margin-bottom: 0; }
+.gist .file-data > table td.line-data { width: 99%; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+.big { font-size: larger; }
+
+.small { font-size: smaller; }
+
+.underline { text-decoration: underline; }
+
+.overline { text-decoration: overline; }
+
+.line-through { text-decoration: line-through; }
+
+.aqua { color: #00bfbf; }
+
+.aqua-background { background-color: #00fafa; }
+
+.black { color: black; }
+
+.black-background { background-color: black; }
+
+.blue { color: #0000bf; }
+
+.blue-background { background-color: #0000fa; }
+
+.fuchsia { color: #bf00bf; }
+
+.fuchsia-background { background-color: #fa00fa; }
+
+.gray { color: #606060; }
+
+.gray-background { background-color: #7d7d7d; }
+
+.green { color: #006000; }
+
+.green-background { background-color: #007d00; }
+
+.lime { color: #00bf00; }
+
+.lime-background { background-color: #00fa00; }
+
+.maroon { color: #600000; }
+
+.maroon-background { background-color: #7d0000; }
+
+.navy { color: #000060; }
+
+.navy-background { background-color: #00007d; }
+
+.olive { color: #606000; }
+
+.olive-background { background-color: #7d7d00; }
+
+.purple { color: #600060; }
+
+.purple-background { background-color: #7d007d; }
+
+.red { color: #bf0000; }
+
+.red-background { background-color: #fa0000; }
+
+.silver { color: #909090; }
+
+.silver-background { background-color: #bcbcbc; }
+
+.teal { color: #006060; }
+
+.teal-background { background-color: #007d7d; }
+
+.white { color: #bfbfbf; }
+
+.white-background { background-color: #fafafa; }
+
+.yellow { color: #bfbf00; }
+
+.yellow-background { background-color: #fafa00; }
+
+span.icon > .fa { cursor: default; }
+
+.admonitionblock td.icon [class^="fa icon-"] { font-size: 2.5em; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); cursor: default; }
+.admonitionblock td.icon .icon-note:before { content: "\f05a"; color: #333333; }
+.admonitionblock td.icon .icon-tip:before { content: "\f0eb"; text-shadow: 1px 1px 2px rgba(155, 155, 0, 0.8); color: #111; }
+.admonitionblock td.icon .icon-warning:before { content: "\f071"; color: #bf6900; }
+.admonitionblock td.icon .icon-caution:before { content: "\f06d"; color: #bf3400; }
+.admonitionblock td.icon .icon-important:before { content: "\f06a"; color: #bf0000; }
+
+.conum[data-value] { display: inline-block; color: #fff !important; background-color: black; -webkit-border-radius: 100px; border-radius: 100px; text-align: center; font-size: 0.75em; width: 1.67em; height: 1.67em; line-height: 1.67em; font-family: "Open Sans", "DejaVu Sans", sans-serif; font-style: normal; font-weight: bold; }
+.conum[data-value] * { color: #fff !important; }
+.conum[data-value] + b { display: none; }
+.conum[data-value]:after { content: attr(data-value); }
+pre .conum[data-value] { position: relative; top: -0.125em; }
+
+b.conum * { color: inherit !important; }
+
+.conum:not([data-value]):empty { display: none; }
+
+h4 { color: #6c818f; }
+
+.literalblock > .content > pre, .listingblock > .content > pre { -webkit-border-radius: 6px; border-radius: 6px; margin-left: 2em; margin-right: 2em; }
+
+.admonitionblock { margin-left: 2em; margin-right: 2em; }
+.admonitionblock > table { border: 1px solid #609060; border-top-width: 1.5em; background-color: #e9ffe9; border-collapse: separate; -webkit-border-radius: 0; border-radius: 0; }
+.admonitionblock > table td.icon { padding-top: .5em; padding-bottom: .5em; }
+.admonitionblock > table td.content { padding: .5em 1em; color: black; font-size: .9em; border-left: none; }
+
+.sidebarblock { background-color: #e8ecef; border-color: #ccc; }
+.sidebarblock > .content > .title { color: #444444; }
+
+table.tableblock.grid-all { border-collapse: collapse; -webkit-border-radius: 0; border-radius: 0; }
+table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock { border-bottom: 1px solid #aaa; }
+
+#footer { background-color: #465158; padding: 2em; }
+
+#footer-text { color: #eee; font-size: 0.8em; text-align: center; }
+
+/* Added by Cameron */
+div.ulist { padding-left: 1.25em; }
+
+div.olist { padding-left: 1.25em; }
+
+</style>
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_demonstration_tutorials">Demonstration Tutorials</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>These Tutorials are designed to demonstrate the different tasks that are available.
+It is intended that these tutorials can be used to verify that everything is working correctly, and you can then take the build files for these demonstrations and customise them for your own projects.</p>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="sect2">
+<h3 id="_introduction_to_apache_ant">Introduction to Apache Ant</h3>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Before doing this tutorial make sure you have performed necessary setup detailed in the <strong>gettingstarted</strong> page</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This tutorial is a very basic introduction to the concepts of Ant. If you already have used ant before then you can skip this tutorial.</p>
+</div>
+<div class="paragraph">
+<p>We are going to cover the following concepts</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The Build File (build.xml)</p>
+</li>
+<li>
+<p>Targets</p>
+</li>
+<li>
+<p>Tasks</p>
+</li>
+<li>
+<p>Properties</p>
+</li>
+<li>
+<p>Task Dependencies</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_diving_straight_in">Diving Straight In</h4>
+<div class="paragraph">
+<p>Ant is a command line program, which you run by using the command <code>ant</code> and then supplying some command line arguments.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s run our first ant build, our sample build will just print a hello message to the console.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open your command line</p>
+</li>
+<li>
+<p>Change directory to the the <strong>demo/antintro</strong> folder</p>
+</li>
+<li>
+<p>issue the command <code>ant</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You should see the following output</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\antintro\build.xml
+hello:
+     [echo] Hello Alice!
+BUILD SUCCESSFUL
+Total time: 289 milliseconds</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So we told Ant to run, but how did Ant know what we wanted to do?</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_build_file_build_xml">The Build File (build.xml)</h4>
+<div class="paragraph">
+<p>The build file is an xml file that contains all the instructions of what you want to automate.</p>
+</div>
+<div class="paragraph">
+<p>By default Ant will look for a build file named <strong>build.xml</strong>.
+You are able to call it something else if you want, but you will need to specify it as a command line argument.</p>
+</div>
+<div class="paragraph">
+<p>Lets have a look at our build file for this project</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">&lt;project name="Introduction to Ant" default="hello"&gt;
+
+	&lt;description&gt;This is a simple sample to demonstrate some concepts of ant&lt;/description&gt;
+
+	&lt;!-- tag::properties[] --&gt;
+	&lt;property name="firstname" value="Alice"&gt;&lt;/property&gt;
+	&lt;!-- end::properties[] --&gt;
+
+	&lt;!-- tag::targets[] --&gt;
+	&lt;target name="hello" description="Says Hello"&gt;
+		&lt;echo message="Hello ${firstname}!"&gt;&lt;/echo&gt;
+	&lt;/target&gt;
+
+	&lt;target name="goodbye" depends="hello" description="Says Goodbye"&gt;
+		&lt;echo message="Goodbye ${firstname}!"&gt;&lt;/echo&gt;
+	&lt;/target&gt;
+	&lt;!-- end::targets[] --&gt;
+
+&lt;/project&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can see the root element of the build file is 'project'. We have a name for this project and a default target 'hello'.</p>
+</div>
+<div class="paragraph">
+<p>There is a longer description of the build project, then some property definitions, and finally some targets each with one task within it.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_targets">Targets</h4>
+<div class="paragraph">
+<p>Targets are used to create a sequence of tasks that you want to perform, and refer to that sequence by a name.</p>
+</div>
+<div class="paragraph">
+<p>In this build file we have 2 targets <strong>hello</strong> and <strong>goodbye</strong>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="hello" description="Says Hello"&gt;
+		&lt;echo message="Hello ${firstname}!"&gt;&lt;/echo&gt;
+	&lt;/target&gt;
+
+	&lt;target name="goodbye" depends="hello" description="Says Goodbye"&gt;
+		&lt;echo message="Goodbye ${firstname}!"&gt;&lt;/echo&gt;
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can see in the root project element, <strong>hello</strong> is specified as the default target, and therefore this is the target that was executed when we told ant to run</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tasks">Tasks</h4>
+<div class="paragraph">
+<p>Tasks are the building blocks of what you can automate. In this sample we are keeping it very simple and only using the 'echo' task to print messages to the console. But there are a whole bunch of default tasks available.</p>
+</div>
+<div class="paragraph">
+<p>The Apache Ant project site is very well documented and I recommend having a look through the
+<a href="https://ant.apache.org/manual-1.9.x/tasksoverview.html">Overview of Apache Ant Tasks</a></p>
+</div>
+<div class="sect4">
+<h5 id="_custom_tasks">Custom Tasks</h5>
+<div class="paragraph">
+<p>If there is no task that suits your need, you can make custom tasks yourselves! This is precisely what I have done for BuildXPages. See the other tutorials for demonstration of the custom tasks made available by the BuildXPages project</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_properties">Properties</h4>
+<div class="paragraph">
+<p>Properties are useful to allow you to use the same build file, but customise it for different projects and environments.</p>
+</div>
+<div class="paragraph">
+<p>Properties can be provided using a properties file, and they can also be provided directly in the build file.</p>
+</div>
+<div class="paragraph">
+<p>In this build file, our <strong>echo</strong> tasks use a property called <strong>firstname</strong></p>
+</div>
+<div class="paragraph">
+<p>This <strong>firstname</strong> property is specified at the top of the build file.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;property name="firstname" value="Alice"&gt;&lt;/property&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once a property is set, it cannot be changed, so the property value will remain whatever it was first set as.</p>
+</div>
+<div class="sect4">
+<h5 id="_loading_from_a_properties_file">Loading from a Properties file</h5>
+<div class="paragraph">
+<p>It is often easier to keep custom property values in a properties file, and supply this as an argument when running Ant.</p>
+</div>
+<div class="paragraph">
+<p>In our tutorial directory we have a demo properties file called <strong>build.properties</strong> which specifies the firstname to be bob</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt"># Set firstname to bob
+firstname=Bob</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can tell ant to use this property file using the <code>-propertyfile</code> option.</p>
+</div>
+<div class="paragraph">
+<p>Issue the following command in your command line:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>ant -propertyfile build.properties</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see output similar to:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Buildfile: V:\Projects\BuildXPages\demo\antintro\build.xml
+
+hello:
+     [echo] Hello Bob!
+
+BUILD SUCCESSFUL
+Total time: 0 seconds</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We now see a message to Bob because the firstname property is being set from the <strong>build.properties</strong> file <em>before</em> it is attempted to be set as <strong>Alice</strong> within the <strong>build.xml</strong> file.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_specifying_a_property_as_command_line_argument">Specifying a Property as Command line Argument</h5>
+<div class="paragraph">
+<p>You can also provide a property directly on the command line when running ant.
+The argument takes the form <code>-D&lt;propertyname&gt;=&lt;value&gt;</code></p>
+</div>
+<div class="paragraph">
+<p>Try it now by putting your own name in. Because this property is set before the <strong>build.properties</strong> file is loaded</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>ant -Dfirstname=Cam</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Buildfile: V:\Projects\BuildXPages\demo\antintro\build.xml
+
+hello:
+     [echo] Hello Cam!
+
+BUILD SUCCESSFUL
+Total time: 0 seconds</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_task_dependencies">Task Dependencies</h4>
+<div class="paragraph">
+<p>A task can be set to depend on another task, in our example, the <strong>goodbye</strong> target is set to depend on the <strong>hello</strong> target (using the <em>depends</em> attribute). This means before we say <strong>goodbye</strong> we must say <strong>hello</strong>!.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="hello" description="Says Hello"&gt;
+		&lt;echo message="Hello ${firstname}!"&gt;&lt;/echo&gt;
+	&lt;/target&gt;
+
+	&lt;target name="goodbye" depends="hello" description="Says Goodbye"&gt;
+		&lt;echo message="Goodbye ${firstname}!"&gt;&lt;/echo&gt;
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s try it out. This time because we are not running the default target we must specify it.
+Issue the following command</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>ant goodbye</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Buildfile: V:\Projects\BuildXPages\demo\antintro\build.xml
+
+hello:
+     [echo] Hello Alice!
+
+goodbye:
+     [echo] Goodbye Alice!
+
+BUILD SUCCESSFUL
+Total time: 0 seconds</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_conclusion">Conclusion</h4>
+<div class="paragraph">
+<p>So this was a very short, very simple introduction to the concepts of Ant. We learned about the concepts of The Build File, Targets, Tasks, Properties and Task Dependencies.</p>
+</div>
+<div class="paragraph">
+<p>These concepts will hopefully give you a good start to comprehend the rest of the tutorials in BuildXPages, in which we will use much more complicated targets and tasks to achieve some tasks for building and deploying XPages applications.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_building_an_nsf">Building an NSF</h3>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Before doing this tutorial make sure you have performed necessary setup detailed in the <strong>gettingstarted</strong> page</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In this tutorial we will build a Simple XPages Application from an on On-Disk Project, using Domino Designer Headless Plugin + BuildXPages Ant Tasks.</p>
+</div>
+<div class="paragraph">
+<p>After the successful build, the nsf will be available in your local workspace.</p>
+</div>
+<div class="paragraph">
+<p>The files for this Demonstration are in the <strong>demo/buildnsf</strong> folder of the Build4XPages distribution files. The sample On-Disk Project is located within the tutorial folder as <strong>sampleodp</strong>.
+The Application has a Custom Control and an XPage which uses that custom control.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you are not familiar with Ant be sure to have a look at the 'Introduction to Apache Ant' tutorial for understanding of things like build.xml, targets, tasks etc.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Within the build.xml file for this demo are 2 <em>targets</em> that are used to setup the demonstration <strong>clean</strong> and <strong>init</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>clean</strong> is used to clean up any previous attempt at this tutorial, and <strong>init</strong> is used to initialise the tutorial by making sure we have 2 on disk projects that we can try to build, one that should build successfully and the other which should fail.</p>
+</div>
+<div class="paragraph">
+<p>You can see that <strong>init</strong> has been set to depend on <strong>clean</strong> so that before the <strong>init</strong> target is executed, the <strong>clean</strong> target will be executed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="clean"&gt;
+		&lt;delete dir="odp"/&gt;
+		&lt;delete dir="odperror"/&gt;
+	&lt;/target&gt;
+
+	&lt;target name="init" depends="clean"&gt;
+
+		&lt;copy todir="odp"&gt;
+			&lt;fileset dir="sampleodp"&gt;&lt;/fileset&gt;
+		&lt;/copy&gt;
+
+		&lt;copy todir="odperror"&gt;
+			&lt;fileset dir="sampleodp"&gt;&lt;/fileset&gt;
+		&lt;/copy&gt;
+
+		&lt;!-- Delete the Custom Control from the odp that we are using for the error demo --&gt;
+		&lt;delete&gt;
+			&lt;fileset dir="odperror/CustomControls"&gt;&lt;/fileset&gt;
+		&lt;/delete&gt;
+
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_run_a_successful_build">Run a Successful Build</h4>
+<div class="paragraph">
+<p>There is also a target called <strong>build</strong>. This will build the NSF.
+This target is also listed as the default target in the root element of the build.xml file.</p>
+</div>
+<div class="paragraph">
+<p>This target makes use of the <strong>bxp:buildnsf</strong> task which will connect to the Headless Designer Plugin, and instruct it to build the nsf as specified by the task attributes.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="build" depends="init"&gt;
+
+		&lt;bxp:checkDesignerRunning/&gt;
+
+		&lt;!-- We assign the .project file path to a property using the 'location' attribute,
+		this way the property will be expanded to the absolute path of the .project file--&gt;
+		&lt;property name="odp.projectfile" location="odp/.project" /&gt;
+
+		&lt;bxp:buildnsf project="${odp.projectfile}" projectname="${odp.projectname}" nsf="${nsf.filepath}" /&gt;
+
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can see that the <strong>build</strong> target depends on <strong>init</strong>. <strong>init</strong> depends on clean, so when we execute this <strong>build</strong> target what will really happen is the following order of execution:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>clean -&gt; init -&gt; build</pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_to_run_the_build">To run the Build</h5>
+<div class="paragraph">
+<p>Before running the build, we make sure Domino Designer will be able to listen for the instructions to build something.</p>
+</div>
+<div class="paragraph">
+<p>If Domino Designer is running, make sure the Headless designer PLugin server is started.
+If Domino Designer is not running, make sure the Headless designer plugin is configured to auto-start when Domino Designer starts.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open your command line</p>
+</li>
+<li>
+<p>Change directory to the the <strong>demo/buildnsf</strong> folder</p>
+</li>
+<li>
+<p>issue the command <code>ant</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Ant knows to look for <strong>build.xml</strong> and the default target (which is our <strong>build</strong> target).
+The build process will then begin, and your nsf will (hopefully) be built into your local workspace.</p>
+</div>
+<div class="paragraph">
+<p>You should see some output on the console like so:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\buildnsf\build.xml
+
+clean:
+   [delete] Deleting directory V:\Projects\BuildXPages\demo\buildnsf\odp
+   [delete] Deleting directory V:\Projects\BuildXPages\demo\buildnsf\odperror
+
+init:
+     [copy] Copying 20 files to V:\Projects\BuildXPages\demo\buildnsf\odp
+     [copy] Copying 20 files to V:\Projects\BuildXPages\demo\buildnsf\odperror
+
+build:
+[bxp:buildnsf] Attempt to Create Socket
+[bxp:buildnsf] Socket Created
+[bxp:buildnsf] CONNECTED TO DESIGNER! What can we do for you?
+[bxp:buildnsf] Issuing Refresh Import Build Command for V:\Projects\BuildXPages\demo\buildnsf\odp\.project
+[bxp:buildnsf] BUILD JOB ABOUT TO RUN
+[bxp:buildnsf] BUILD JOB RUNNING
+[bxp:buildnsf] BUILD JOB STATUS: SUCCESS
+[bxp:buildnsf] PROBLEMS STATUS: SUCCESS
+[bxp:buildnsf] No ProblemMarkers found after Building
+
+BUILD SUCCESSFUL
+Total time: 2 seconds</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Also, in your domino Designer workspace you should see a new NSF with filepath <strong>temp\BuildXPagesDemo.nsf</strong></p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_example_of_an_nsf_build_with_errors">Example of an NSF Build with Errors</h5>
+<div class="paragraph">
+<p>Let&#8217;s see an example of running an NSF Build that results in some errors. To do this we will use the same sample On-Disk Project, but before we run the build we will sneakily delete the custom controls.
+This should cause an error when Designer tries to build the XPages that use those missing custom controls.</p>
+</div>
+<div class="paragraph">
+<p>The <em>target</em> that I have written to do this is called <strong>buildfail</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Note it is pretty much the same as <strong>build</strong> but is pointing to a different location for the on-disk project, and specifies different NSF and projectname.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="buildfail" depends="init"&gt;
+
+		&lt;bxp:checkDesignerRunning/&gt;
+
+		&lt;!-- We assign the .project file path to a property using the 'location' attribute,
+		this way the property will be expanded to the absolute path of the .project file--&gt;
+		&lt;property name="odp.project" location="odperror/.project" /&gt;
+
+		&lt;bxp:buildnsf project="${odp.project}" projectname="BuildXPagesDemoNSFError" nsf="temp\BuildXPagesDemoError.nsf" /&gt;
+
+
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Since <strong>buildfail</strong> is not the default target, we will tell ant that that is the target we want to build by including the target name in the command line arguments.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>issue the command <code><code>ant buildfail</code></code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You should then see an output like so:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\buildnsf\build.xml
+
+clean:
+   [delete] Deleting directory V:\Projects\BuildXPages\demo\buildnsf\odp
+   [delete] Deleting directory V:\Projects\BuildXPages\demo\buildnsf\odperror
+
+init:
+     [copy] Copying 20 files to V:\Projects\BuildXPages\demo\buildnsf\odp
+     [copy] Copying 20 files to V:\Projects\BuildXPages\demo\buildnsf\odperror
+
+buildfail:
+[bxp:buildnsf] Attempt to Create Socket
+[bxp:buildnsf] Socket Created
+[bxp:buildnsf] CONNECTED TO DESIGNER! What can we do for you?
+[bxp:buildnsf] Issuing Refresh Import Build Command for V:\Projects\BuildXPages\demo\buildnsf\odperror\.project
+[bxp:buildnsf] BUILD JOB ABOUT TO RUN
+[bxp:buildnsf] BUILD JOB RUNNING
+[bxp:buildnsf] BUILD JOB STATUS: SUCCESS
+[bxp:buildnsf] PROBLEMS STATUS: FAIL
+[bxp:buildnsf] The following ProblemMarkers were present after building
+[bxp:buildnsf] Error: Home.xsp: The unknown tag xc:ccCustomControl cannot be used as a control.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice that the 'PROBLEMS STATUS' is fail and the last line is telling us the exact problem.
+If you were to look in Designer you would see the problem there too.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/NSFDemoError.JPG" alt="NSFDemoError">
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_conclusion_2">Conclusion</h4>
+<div class="paragraph">
+<p>In this demonstration tutorial we have shown how the <strong>buildnsf</strong> task from the BuildXPages Ant Library works together with the headless designer plugin.
+We have demonstrated how to successfully build an NSF and also what it looks like when an NSF does not successfully build.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deploying_an_nsf">Deploying an NSF</h3>
+<div class="paragraph">
+<p>Once you have built an NSF, you may want to deploy the latest changes to it&#8217;s target environment.</p>
+</div>
+<div class="paragraph">
+<p>There is more than one way to deploy an NSF, not everyone is going to do it the same way. This tutorial will hopefully demonstrate some of the tasks you could use to acheive your desired deployment.</p>
+</div>
+<div class="sect3">
+<h4 id="_preparation">Preparation</h4>
+<div class="paragraph">
+<p>This tutorial assumes that you have successfully completed the 'Building An NSF' tutorial. After completing the 'Building an NSF' tutorial you should have an NSF in your local workspace. We will use this NSF as the basis for some of the deployment examples.</p>
+</div>
+<div class="paragraph">
+<p>Then open your command prompt and navigate to the <strong>demo/deploynsf</strong> directory. Now you should be ready to start the demo!</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_build_properties_file">build.properties file</h4>
+<div class="paragraph">
+<p>This demonstration has some properties supplied via a build.properties file. You will see some of these properties referenced later on in the demonstration.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt"># it is recommended to set your notesProgDir using
+# the NOTES_PROGDIR environment variable but you can specify it here instead if you like
+#notesProgDir=C:\\Path\\To\\Notes
+
+# You can change this and it will change the location of the nsf that is built
+nsf.filepath=temp\\BuildXPagesDemo.nsf
+nsf.templatename=BuildXPagesTemplate
+
+# Uncomment the server if you would like to deploy to a server instead of just to your own workspace
+#nsf.production.server=
+nsf.production.filepath=temp\\BuildXPages.nsf
+
+#nsf.template.server=
+nsf.template.filepath=temp\\BuildXPages.ntf</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_basic_file_level_copying">Basic File-Level Copying</h4>
+<div class="paragraph">
+<p>At the most basic Level, you may have built your NSF directly to a local Notes workspace, and just want to copy the <strong>.nsf</strong> file to another location. In this case you would just use a simple Apache Ant copy task. I will leave that up to you to research as it is very simple.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_copying_an_nsf_using_notes_domino">Copying an NSF using Notes/Domino</h4>
+<div class="paragraph">
+<p>Instead of doing basic file-based copying, we can actually use IBM Notes to copy an NSF from our local workspace to a server, or from one server to another server etc.</p>
+</div>
+<div class="paragraph">
+<p>To do this we use BuildXPages' <strong>copynsf</strong> task.</p>
+</div>
+<div class="paragraph">
+<p>We are going to create 2 copies of the NSF that we built in the 'Building an NSF' demonstration, so that we can use these 2 copies in our next few deployment demonstrations.</p>
+</div>
+<div class="paragraph">
+<p>We are going to create one copy to act as a template, and then another copy that will act as our 'production' nsf.</p>
+</div>
+<div class="paragraph">
+<p>Here is the <strong>copydatabase</strong>  target that we are going to run, you can see we are specifying the source and destination filepaths using the properties from the <strong>build.properties</strong> file. The copynsf task also has available attributes for source and destination server, but since we have not included them, it will just use the local notes workspace as the source and destination server.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="copydatabase"&gt;
+
+		&lt;fail message="Please Specify Source NSF Filepath" unless="nsf.filepath"/&gt;
+		&lt;fail message="Please Specify Destination NSF Filepath" unless="nsf.production.filepath"/&gt;
+
+		&lt;bxp:copynsf srcfilepath="${nsf.filepath}" dstfilepath="${nsf.production.filepath}" /&gt;
+		&lt;bxp:copynsf srcfilepath="${nsf.filepath}" dstfilepath="${nsf.template.filepath}" /&gt;
+
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To execute this target issue the console command <code><code>ant copynsf</code></code></p>
+</div>
+<div class="paragraph">
+<p>You should see some output like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\deploynsf\build.xml
+copydatabase:
+[bxp:copynsf] temp\BuildXPagesDemo.nsf
+[bxp:copynsf] temp\BuildXPages.nsf
+[bxp:copynsf] temp\BuildXPagesDemo.nsf
+[bxp:copynsf] temp\BuildXPages.ntf
+BUILD SUCCESSFUL
+Total time: 1 second</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should now have 2 new databases in your workspace:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>temp\BuildXPages.nsf - which will act as the Production NSF</p>
+</li>
+<li>
+<p>temp\BuildXPages.ntf - which will act as the Master Template</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setting_up_template_names">Setting up template names</h4>
+<div class="paragraph">
+<p>Now that we have our Production and Master templates, we will configure one to inherit Design from the other.
+BuildXPages has a <strong>settemplatenames</strong> task which is useful for configuring template inheritance dynamically.</p>
+</div>
+<div class="paragraph">
+<p>We will execute the following target which first sets the ntf&#8217;s master template name, and then it sets the production nsf to inherit from that template</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="linktemplates"&gt;
+
+		&lt;fail message="Please Specify NSF Filepath" unless="nsf.filepath"/&gt;
+		&lt;fail message="Please Specify Production NSF Filepath" unless="nsf.production.filepath"/&gt;
+		&lt;fail message="Please Specify the Master Template Name" unless="nsf.templatename"/&gt;
+
+		&lt;bxp:settemplatenames database="${nsf.template.filepath}" mastername="${nsf.templatename}" /&gt;
+		&lt;bxp:settemplatenames database="${nsf.production.filepath}" inheritfrom="${nsf.templatename}" /&gt;
+
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To execute this target, issue the command <code><code>ant linktemplates</code></code></p>
+</div>
+<div class="paragraph">
+<p>You should see some output like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\deploynsf\build.xml
+linktemplates:
+[bxp:settemplatenames] Setting Template Names for: local!!temp\BuildXPages.ntf
+[bxp:settemplatenames] ... Inherit From:       &lt;no change&gt;
+[bxp:settemplatenames] ... Is Master Template: 'BuildXPagesTemplate'
+[bxp:settemplatenames] Setting Template Names for: local!!temp\BuildXPages.nsf
+[bxp:settemplatenames] ... Inherit From:       'BuildXPagesTemplate'
+[bxp:settemplatenames] ... Is Master Template: &lt;no change&gt;
+BUILD SUCCESSFUL
+Total time: 912 milliseconds</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should also be able to inspect the database application properties in IBM Notes and verify that the templates have been set properly.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_refreshing_a_template">Refreshing a Template</h4>
+<div class="paragraph">
+<p>When you are ready to refresh the design of a database, you can simple use the <strong>refreshdbdesign</strong> task. The task allows us to choose the database we want to refresh, which can be local or on another server, and then also choose which server to refresh from which can also be local or another server.</p>
+</div>
+<div class="paragraph">
+<p>What is handy about this is that you can refresh the design of a target nsf using an NSF from your local workspace. So, if you have built an NSF in your local workspace you can refresh an NSF on a server using the design on your local workspace.</p>
+</div>
+<div class="paragraph">
+<p>In this demonstration we will just refresh a the local production database from the local template. This inheritance should already be set up in the previous set templates example, so we just need to specify the database that we want to refresh</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="refreshtemplate"&gt;
+
+		&lt;bxp:refreshdbdesign database="${nsf.production.filepath}"/&gt;
+
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To execute the target, issue the command <code><code>ant refreshtemplate</code></code></p>
+</div>
+<div class="paragraph">
+<p>You should see some output like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\deploynsf\build.xml
+refreshtemplate:
+[bxp:refreshdbdesign] Refreshing Design of Db : local!!temp\BuildXPages.nsf
+[bxp:refreshdbdesign] Refreshing From Server  : local
+[bxp:refreshdbdesign] Building list of design templates...
+[bxp:refreshdbdesign] Refreshing design of Build NSF Demo...
+[bxp:refreshdbdesign] Updating Build NSF Demo from the Build NSF Demo design template...
+[bxp:refreshdbdesign] Design refresh of Build NSF Demo completed
+BUILD SUCCESSFUL
+Total time: 1 second</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Since both the template and the production database were copied from the same nsf, there is nothing to refresh so you don&#8217;t see any design elements listed in the output, but if you were to make a change in the template and then run it again you will see the updated design element in the output</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_deleting_nsfs">Deleting NSFs</h4>
+<div class="paragraph">
+<p>In this last step of our demonstration we will clean up after ourselves and delete the 'Production' NSF and the 'template' that we just created. To do this we can use the <strong>deletensf</strong> task.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="clean"&gt;
+
+		&lt;bxp:deletensf filename="${nsf.production.filepath}"/&gt;
+		&lt;bxp:deletensf filename="${nsf.template.filepath}"/&gt;
+
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To execute this task issue the command <code><code>ant clean</code></code></p>
+</div>
+<div class="paragraph">
+<p>The output of the deletensf task is not very useful, you should see some ouput like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\deploynsf\build.xml
+clean:
+BUILD SUCCESSFUL
+Total time: 839 milliseconds</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the database did not exist (so could not be deleted) you will get a build failed warning</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_conclusion_3">Conclusion</h4>
+<div class="paragraph">
+<p>In this demonstration we have shown how to copy databases around servers and local workspaces, setup design inheritance, refresh database designs and to delete databases. Hopefully these tools will come in handy when designing your own deployment process.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_building_features_and_plugins">Building Features and Plugins</h3>
+<div class="paragraph">
+<p>In this Demonstration we build a plugin by doing a Headless Eclipse feature build.</p>
+</div>
+<div class="paragraph">
+<p>The general way this works is, you create a feature that lists the plugins that you want to build. You then tell eclipse (via a command line instruction) to build this feature, and it will build each plugin and package it up for you.</p>
+</div>
+<div class="paragraph">
+<p>BuildXPages has a task <strong>buildfeature</strong> which basically just helps issue the command line instruction.</p>
+</div>
+<div class="paragraph">
+<p>This is a very short demonstration, as I am not very sure there is a very big audience for this.
+Hopefully this demonstration will give you an idea of how it works but if you need to know more please feel free to ask me questions about it.</p>
+</div>
+<div class="paragraph">
+<p>If you want to learn more about the headless eclipse works, then check out the following link <a href="https://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.pde.doc.user%2Ftasks%2Fpde_feature_build.htm">Automated building of Features</a></p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Make sure you have performed the necessary setup as in the getting started section</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_building_the_plugin_feature">Building the Plugin/Feature</h4>
+<div class="paragraph">
+<p>The <strong>demo/buildfeature</strong> directory contains the source code of a plugin, and also a feature.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>com.gregorbyte.buildxpages.demo</p>
+</li>
+<li>
+<p>com.gregorbyte.buildxpages.demo.feature</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We are going to execute the <strong>build</strong> target, lets have a look at it</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="build" depends="init"&gt;
+
+		&lt;bxp:copytobuilddir plugin="com.gregorbyte.buildxpages.demo" /&gt;
+		&lt;bxp:copytobuilddir feature="com.gregorbyte.buildxpages.demo.feature" /&gt;
+
+		&lt;bxp:buildfeature feature="com.gregorbyte.buildxpages.demo.feature"/&gt;
+
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The eclipse headless build performs all it&#8217;s operations in a 'build directory' which is basically like a working area, so before running a build, we have to prepare this build directory and make sure it has plugins and features we need to build.</p>
+</div>
+<div class="paragraph">
+<p>We do this using buildxpages <strong>copytobuilddir</strong> task which copies a plugin or a feature to the build directory. The <strong>copytobuilddir</strong> expects there to be a <strong>buildDir</strong> set which specifieds the build directory location.</p>
+</div>
+<div class="paragraph">
+<p>We then use buildxpages <strong>buildfeature</strong> task to trigger the build, and we specify the feature that we are building.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open your console and navigate to the demo/buildfeature folder</p>
+</li>
+<li>
+<p>Type <code>ant</code></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You should then see some output like so:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\buildfeature\build.xml
+
+clean:
+   [delete] Deleting directory V:\Projects\BuildXPages\demo\buildfeature\buildDirectory
+
+init:
+    [mkdir] Created dir: V:\Projects\BuildXPages\demo\buildfeature\buildDirectory
+    [mkdir] Created dir: V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\plugins
+    [mkdir] Created dir: V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features
+
+build:
+     [copy] Copying 7 files to V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\plugins\com.gregorbyte.buildxpages.demo
+     [copy] Copying 3 files to V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features\com.gregorbyte.buildxpages.demo.feature
+     [echo] Init Default Properties
+     [java] org.eclipse.m2e.logback.configuration: The org.eclipse.m2e.logback.configuration bundle was activated before the state location was initialized.  Will retry after the state location is initialized.
+     [java] Starting Groovy-Eclipse compiler resolver.  Specified compiler level: unspecified
+     [java] 850 2.3.7.xx-201411061335-e44-RELEASE = STARTING
+     [java] org.eclipse.m2e.logback.configuration: Logback config file: V:\Cameron\workspace\.metadata\.plugins\org.eclipse.m2e.logback.configuration\logback.1.5.1.20150109-1820.xml
+     [java] org.eclipse.m2e.logback.configuration: Initializing logback
+     [java] Unknown argument: -DpluginPath=
+     [java] Buildfile: C:/eclipse-luna/eclipse/plugins/org.eclipse.pde.build_3.9.0.v20140415-2029/scripts/build.xml
+     [java]
+     [java] main:
+     [java]
+     [java] preBuild:
+     [java]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And then a lot more of that kind of stuff and finally, hopefully you see the BUILD SUCCESSFULL message</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">     [java] gather.logs:
+     [java]     [mkdir] Created dir: V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features\com.gregorbyte.buildxpages.demo.feature\feature.temp.folder\plugins\com.gregorbyte.buildxpages.demo_1.0.0.201709212144
+     [java]      [copy] Copying 1 file to V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features\com.gregorbyte.buildxpages.demo.feature\feature.temp.folder\plugins\com.gregorbyte.buildxpages.demo_1.0.0.201709212144
+     [java]
+     [java] update.feature:
+     [java]
+     [java] all.children:
+     [java]       [zip] Building zip: V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features\com.gregorbyte.buildxpages.demo.feature\com.gregorbyte.buildxpages.demo.feature_1.0.0.201709212144.log.zip
+     [java]    [delete] Deleting directory V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features\com.gregorbyte.buildxpages.demo.feature\feature.temp.folder
+     [java]     [unzip] Expanding: V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\features\com.gregorbyte.buildxpages.demo.feature\com.gregorbyte.buildxpages.demo.feature_1.0.0.201709212144.log.zip into V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\BuildXPagesDemo\compilelogs
+     [java] BUILD SUCCESSFUL
+     [java]
+     [java] BUILD SUCCESSFUL
+     [java] Total time: 3 seconds
+
+BUILD SUCCESSFUL
+Total time: 5 seconds</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After the build is finished you should see (among other things) a zip file in the <strong>demo/buildfeature/buildDirectory/BuildXPagesDemo</strong> directory. This zip file contains the plugins and features that were built!</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_conclusion_4">Conclusion</h4>
+<div class="paragraph">
+<p>So this was a short demo of building a plugin using headless eclipse. The next demonstration tutorial shows how we can take these plugins and deploy them somewhere</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deploying_plugins">Deploying Plugins</h3>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This tutorial is designed to be completed after the successful completion of the buildfeature tutorial.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>After building your plugins, now you might want to deploy to either:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A Domino Server</p>
+</li>
+<li>
+<p>IBM Notes / Designer Client</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_preparing_an_update_site">Preparing an Update Site</h4>
+<div class="paragraph">
+<p>At the end of the headless feature build process, you will have a .zip file of your plugins and features. The contents of your zip file will be something like:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>eclipse</p>
+<div class="ulist">
+<ul>
+<li>
+<p>plugins</p>
+<div class="ulist">
+<ul>
+<li>
+<p>com.your.plugin.jar</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>features</p>
+<div class="ulist">
+<ul>
+<li>
+<p>com.your.feature.jar</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Unfortunately although this format looks a bit like an Update Site, it isn&#8217;t quite there yet.
+We are missing is the <strong>site.xml</strong> file, which is a list of the features that can be found in the update site.
+So what we are going to do is to extract the contents of the zip and then generate our site.xml
+We will then have an update site! We will also create a <strong>.zip</strong> version of this update site.</p>
+</div>
+<div class="paragraph">
+<p>The steps necessary for this are contained within the <strong>prepareupdatesite</strong> target in our
+tutorial&#8217;s build.xml file.</p>
+</div>
+<div class="paragraph">
+<p>There are 3 tasks in this target</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">unzip</dt>
+<dd>
+<p>Unzips the contents of the built plugins zip to a local directory. Note we are also removing the leading 'eclipse' directory as we are not interested in keeping that</p>
+</dd>
+<dt class="hdlist1">bxp:generatesitexml</dt>
+<dd>
+<p>This is our custom task from the BuildXPages library which will generate the site.xml file that we need to make this an update site</p>
+</dd>
+<dt class="hdlist1">zip</dt>
+<dd>
+<p>This will create a zip of our update site so that we have this as another option for easy distribution as a single file</p>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="prepareupdatesite" depends="clean"&gt;
+
+		&lt;!-- Unzip the contents of the .zip                                   --&gt;
+		&lt;unzip src="${builtPluginsZip}" dest="${updateSiteName}"&gt;
+
+			&lt;!-- We are not interested in keeping the 'eclipse' directory so we   --&gt;
+			&lt;!-- use a mapper called the 'cutdirsmapper' which will strip off the --&gt;
+			&lt;!-- specified number of directories. in this case 1                  --&gt;
+			&lt;cutdirsmapper dirs="1" /&gt;
+
+			&lt;!-- If you built 'source' versions of your plugins, for some reasion --&gt;
+			&lt;!-- it will also have included this org.eclipse.pde.build.uber.feature --&gt;
+			&lt;!-- which we don't care about so we exclude it from our unzip task --&gt;
+			&lt;patternset&gt;
+				&lt;exclude name="**/org.eclipse.pde.build.uber.feature.source*" /&gt;
+			&lt;/patternset&gt;
+
+		&lt;/unzip&gt;
+
+		&lt;!-- Generate the site.xml --&gt;
+		&lt;bxp:generatesitexml eclipsedir="${updateSiteName}" /&gt;
+
+		&lt;!-- (Optional) make a zip of this update site --&gt;
+		&lt;zip destfile="${updateSiteName}.zip" basedir="${updateSiteName}" /&gt;
+
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Lets have a look at the properties that this task depends on. We see we have defined whereabouts to find the built plugins zip, and we define the name of our update site that we are creating.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;!-- The location of our built plugins that we are turning into an update site --&gt;
+	&lt;property name="builtPluginsZip" location="../buildfeature/buildDirectory/BuildXPagesDemo/com.gregorbyte.buildxpages.demo.feature-1.zip"&gt;
+	&lt;/property&gt;
+	&lt;!-- The name of the updatesite we are creating --&gt;
+	&lt;property name="updateSiteName" value="com.gregorbyte.buildxpages.demo.updatesite"&gt;
+	&lt;/property&gt;
+	&lt;!-- The location of the site.xml file --&gt;
+	&lt;property name="updateSite.siteXml" location="${updateSiteName}/site.xml"&gt;&lt;/property&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Also note our target depends on the <strong>clean</strong> target, so lets have a look at that target.
+This target simply deletes the output of any previous run of this task.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="clean"&gt;
+		&lt;delete dir="${updateSiteName}"&gt;
+		&lt;/delete&gt;
+		&lt;delete file="${updateSiteName}.zip"&gt;
+		&lt;/delete&gt;
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Lets give this a go by issuing the command</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>ant prepareupdatesite</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see some output similar to this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\deployplugins\build.xml
+
+clean:
+
+prepareupdatesite:
+    [unzip] Expanding: V:\Projects\BuildXPages\demo\buildfeature\buildDirectory\BuildXPagesDemo\com.gregorbyte.buildxpages.demo.feature-1.zip into V:\Projects\BuildXPages\demo\deployplugins\com.gregorbyte.buildxpages.demo.updatesite
+[bxp:generatesitexml] File saved!
+      [zip] Building zip: V:\Projects\BuildXPages\demo\deployplugins\com.gregorbyte.buildxpages.demo.updatesite.zip
+
+BUILD SUCCESSFUL
+Total time: 0 seconds</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And if you look in the tutorial folder, you should see 2 new entries:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a new directory com.gregorbyte.buildxpages.demo.updatesite</p>
+</li>
+<li>
+<p>a new zip file com.gregorbyte.buildxpages.demo.updatesite.zip</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We now have an Update Site! Even better, we have 2 to choose from, we can use it in archive format (.zip) or as the directory format.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_deploying_to_domino_server">Deploying to Domino Server</h4>
+<div class="paragraph">
+<p>The main 2 options you have for Deploying plugins to a server are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Copy the Features and Plugins to the &lt;dominoData&gt;/workspace/applications update site</p>
+</li>
+<li>
+<p>Deploy to an NSF Update Site</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>My preferred method of deploying plugins to a server is to use an Update Site NSF. The advantage is that this NSF Update site can replicate to other servers, and that means you only have to deploy to your primary server. Another advantage is that you can delete older versions of plugins whilst the server is still running.</p>
+</div>
+<div class="paragraph">
+<p>Otherwise if you are deploying to the filesystem of every server you may have a tricky time accessing each server remotely, also you cannot delete plugins that are in use when the server is running. It can be an option though if you are deploying to a local testing server.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you are deploying via the filesystem, and your plugin contains a 3rd party jar library within it, you may need to 'unpack' your plugin. Buildxpages provides an 'unpackplugin' task to help you with this. I have not included it in the tutorial but if you have trouble let me know</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_deploying_to_an_nsf_update_site">Deploying to an NSF Update Site</h5>
+<div class="paragraph">
+<p>IBM provides a standard template for the NSF Update Site, however the standard template requires a user to manually import an update site using the IBM Notes Client.</p>
+</div>
+<div class="paragraph">
+<p>If you want to be able to automatically import plugins you will need to use the Open Eclipse Update Site which is the same template with a minor modification made to allow the plugins to be imported headlessly. The modification provides an agent which can be run to import an update site to the NSF update site.</p>
+</div>
+<div class="paragraph">
+<p>BuildXPages provides an Ant task which will run this agent for us. The task is called <strong>importplugins</strong></p>
+</div>
+<div class="paragraph">
+<p>Our tutorial has a target which will do this for us, but we just need to tell it the server and database of the update site to import to.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>To perform this part of the tutorial you will need to have set up an Open Eclipse Update Site
+Make sure you change these properties to the server and database that you have set up.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;property name="nsfupdatesite.server" value="domino02"&gt;
+	&lt;/property&gt;
+	&lt;property name="nsfupdatesite.database" value="temp/TestUpdateSite.nsf"&gt;
+	&lt;/property&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is the target that we will run that executes the importplugins task using the properties set above (and the previously mentioned <strong>updateSiteName</strong> property from earlier in the tutorial).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="importdominoplugins"&gt;
+
+		&lt;bxp:importplugins
+			database="${nsfupdatesite.database}"
+			sitexml="${updateSite.siteXml}"
+			deletefirst="false"/&gt;
+
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We have set the <strong>deletefirst</strong> attribute as 'false', but you can set this to 'true' if you would like the entire contents of the NSF Update Site deleted before you import. This would mean that after the import, only the features and plugin that import here are contained in the NSF Update Site.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Lets run the target and see what happens</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>ant importdominoplugins</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see some output like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-txt" data-lang="txt">Buildfile: V:\Projects\BuildXPages\demo\deployplugins\build.xml
+
+importdominoplugins:
+[bxp:importplugins] Server  : (Local)
+[bxp:importplugins] Database: temp/TestUpdateSite.nsf
+[bxp:importplugins] SiteXml : V:\Projects\BuildXPages\demo\deployplugins\com.gregorbyte.buildxpages.demo.updatesite\site.xml
+[bxp:importplugins] Running Agent: (API) as CN=Cameron Gregor/O=Gregorbyte
+[bxp:importplugins] Can't find resource for bundle feature, key en_AU in V:\Projects\BuildXPages\demo\deployplugins\com.gregorbyte.buildxpages.demo.updatesite\features\com.gregorbyte.buildxpages.demo.feature_1.0.0.201708202137.jar
+[bxp:importplugins] Trying en
+[bxp:importplugins] Can't find resource for bundle feature, key en in V:\Projects\BuildXPages\demo\deployplugins\com.gregorbyte.buildxpages.demo.updatesite\features\com.gregorbyte.buildxpages.demo.feature_1.0.0.201708202137.jar
+[25F8:0002-0FCC] 21/08/2017 10:04:26 PM  Agent 'API' error: Object variable not set
+[25F8:0002-0FCC] 21/08/2017 10:04:26 PM  Agent 'API' error: Object variable not set
+[25F8:0002-0FCC] 21/08/2017 10:04:26 PM  Agent 'API' error: Object variable not set
+[25F8:0002-0FCC] 21/08/2017 10:04:26 PM  Agent 'API' error: Object variable not set
+
+BUILD SUCCESSFUL
+Total time: 2 seconds</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ignore the errors, they always show up but do not prevent the import from happening. I have never been bothered enough to fix that, the end result though is you should see these plugins and features in your NSF Update Site</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/NSFUpdateSiteImported.JPG" alt="NSFUpdateSiteImported">
+</div>
+</div>
+<div class="paragraph">
+<p>Assuming that your server is configured to load plugins from this update site, you now just need to restart the http server and the new plugins should load.</p>
+</div>
+<div class="paragraph">
+<p>We can do this using BuildXPages <strong>controlhttp</strong> task</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="restarthttp"&gt;
+		&lt;bxp:controlhttp server="${nsfupdatesite.server}" action="restart" /&gt;
+	&lt;/target&gt;</code></pre>
+</div>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In practice, restarting http in a production system should be done in a deliberate manner at previously communicated times. Use this task appropriately! Personally I only use this task for User Acceptance Testing servers, and rely on a scheduled domino program entry that restarts http in the dead of the night, scheduled after the design task will have refreshed any templates.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_deploying_to_domino_designer">Deploying to Domino Designer</h4>
+<div class="paragraph">
+<p>If you are building NSFs headlessly then you may need to be able to automatically install the plugins to Domino Designer. Another reason may be that you want to automate this process for your developer machine, because it can get quite annoying to have to frequently update your own Designer Client with latest versions of the plugins that you are working on.</p>
+</div>
+<div class="paragraph">
+<p>In any case here are some techinques to deploy plugnis to Designer.</p>
+</div>
+<div class="sect4">
+<h5 id="_deploying_manually">Deploying Manually</h5>
+<div class="sect5">
+<h6 id="_selecting_from_the_filesystem">Selecting from the Filesystem</h6>
+<div class="paragraph">
+<p>Follow your usual steps to import an update site and just choose either the directory or archive version of the update site that we just built!</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_continual_refresh_from_nsf_update_site">Continual Refresh from NSF Update Site</h6>
+<div class="paragraph">
+<p>If you are already importing these plugins to an NSF update site, you can set your Notes/Designer client up so it can check the NSF for latest Updates.</p>
+</div>
+<div class="paragraph">
+<p>Just go to File &#8594; Application &#8594; Install and then choose search for new features to install
+Make sure your previously used NSF Update Site Location is selected and then click finish. It should discover the new versions of your feature</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_deploying_to_dropins_style_designer_plugins_directory">Deploying to 'dropins' style Designer Plugins Directory</h5>
+<div class="paragraph">
+<p>There is a method which was previously communicated by Niklas Heidloff when he was working as a developer evangelist for XPages.</p>
+</div>
+<div class="paragraph">
+<p>The method basically involves making some edits to a 'platform.xml' file, and also setting up a 'link' file which points to an update site. There is one caveat that the update site must contain the root directory 'eclipse'</p>
+</div>
+<div class="paragraph">
+<p>BuildXPages provides 2 tasks that help to do all this for you. They are both utilised in the <strong>configuredesigner</strong> target</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">configureDynamicPlugins</dt>
+<dd>
+<p>will edit the <strong>platform.xml</strong> to allow this dynamic loading of plugins. It will also create a backup copy of platform.xml</p>
+</dd>
+<dt class="hdlist1">initDesignerSite</dt>
+<dd>
+<p>will set up the link file to point to the update site that we want to load during startup of designer</p>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Use this deployment style at your own risk. Everything should be fine but just be aware you may need to do it again if you upgrade notes and a new platform.xml is created, or sometimes if you install other plugins using the IBM Notes User interface, it can reset the platform.xml file.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml" data-lang="xml">	&lt;target name="configuredesigner"&gt;
+
+		&lt;bxp:configureDynamicPlugins/&gt;
+
+		&lt;bxp:initDesignerSite updateSiteLabel="${updateSiteLabel}" updateSiteDir="${updateSiteName}"/&gt;
+
+	&lt;/target&gt;
+
+
+&lt;/project&gt;</code></pre>
+</div>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Don&#8217;t actually run this target, I have only included it as an example of what you would do if you wanted to try out the dropins style deployment. It is really only a technique you would use if you are developing XPages Controls and want to frequently update your designer plugins after you make changes to your controls</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now when we start Designer it should load our plugins! And we didn&#8217;t have to go through all that provisioning operations.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you have a plugin that contains a 3rd party jar within it, you may need to 'unpack' the plugin. See BuildXPages 'unpackplugin' task for more info</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_deploying_using_the_headless_designer_plugin">Deploying using the Headless Designer Plugin</h5>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This functionality is not yet complete but is next on my list! The intention is to use Eclipse&#8217;s Library Update Manager. IBM&#8217;s default Headless system provided a similar functionality but I am not sure if it is still supported or documented. I hope to provide the same idea</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_conclusion_5">Conclusion</h4>
+<div class="paragraph">
+<p>Hopefully this tutorial has demonstrated some of the tasks that you can use to get your plugins where you need them to be! Let me know if you have any questions or suggested improvements to this tutorial.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 1.0.0<br>
+Last updated 2017-09-14 22:37:55 AEST
+</div>
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+<script>hljs.initHighlighting()</script>
+</body>
+</html>

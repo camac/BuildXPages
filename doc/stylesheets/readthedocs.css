@@ -698,3 +698,8 @@ table.tableblock.grid-all th.tableblock, table.tableblock.grid-all td.tableblock
 #footer { background-color: #465158; padding: 2em; }
 
 #footer-text { color: #eee; font-size: 0.8em; text-align: center; }
+
+/* Added by Cameron */
+div.ulist { padding-left: 1.25em; }
+
+div.olist { padding-left: 1.25em; }

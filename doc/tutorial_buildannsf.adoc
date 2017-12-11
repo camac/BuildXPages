@@ -1,4 +1,4 @@
-== Tutorial - Build an NSF
+== Building an NSF
 :imagesdir: ./images
 
 [IMPORTANT]
@@ -13,16 +13,14 @@ After the successful build, the nsf will be available in your local workspace.
 The files for this Demonstration are in the *demo/buildnsf* folder of the Build4XPages distribution files. The sample On-Disk Project is located within the tutorial folder as *sampleodp*. 
 The Application has a Custom Control and an XPage which uses that custom control.
 
-=== build.xml
+[TIP]
+====
+If you are not familiar with Ant be sure to have a look at the 'Introduction to Apache Ant' tutorial for understanding of things like build.xml, targets, tasks etc.
+====
 
-Our 'recipe' for the build is contained in the *build.xml* file located in the *demo/buildnsf* directory. *build.xml* is the default name for an Ant build file, you can call it another filename but if so you would need to specify extra command line argument `-b myfile.xml`
+Within the build.xml file for this demo are 2 _targets_ that are used to setup the demonstration *clean* and *init*
 
-Within the build.xml file are things called _targets_. A target is a bit like a code block.
-Targets can be configured to depend on another target, so that means executing a _target_ will cause the other targets that it depends on to be executed first.
-
-Within this build.xml file are 2 _targets_ that are used to setup the demo *clean* and *init*
-
-*clean* is used to clean up any previous attempt at this tutorial, and *init* is used to initialise a new attempt.
+*clean* is used to clean up any previous attempt at this tutorial, and *init* is used to initialise the tutorial by making sure we have 2 on disk projects that we can try to build, one that should build successfully and the other which should fail.
 
 You can see that *init* has been set to depend on *clean* so that before the *init* target is executed, the *clean* target will be executed.
 
@@ -33,8 +31,8 @@ include::../demo/buildnsf/build.xml[tag=clean]
 
 === Run a Successful Build
 
-Within this *build.xml* file is a target called *build*. This will build the NSF that should not have any problems.
-This target is listed as the default target in the root element of the build.xml file (not shown here).
+There is also a target called *build*. This will build the NSF.
+This target is also listed as the default target in the root element of the build.xml file.
 
 This target makes use of the *bxp:buildnsf* task which will connect to the Headless Designer Plugin, and instruct it to build the nsf as specified by the task attributes.
 
@@ -43,11 +41,16 @@ This target makes use of the *bxp:buildnsf* task which will connect to the Headl
 include::../demo/buildnsf/build.xml[tag=build]
 ----
 
-You can see that this target depends on *init*. *init* depends on clean, so when we execute this *build* target what will really happen is the following order of execution:
+You can see that the *build* target depends on *init*. *init* depends on clean, so when we execute this *build* target what will really happen is the following order of execution:
 
     clean -> init -> build
 
 ==== To run the Build
+
+Before running the build, we make sure Domino Designer will be able to listen for the instructions to build something.
+
+If Domino Designer is running, make sure the Headless designer PLugin server is started.
+If Domino Designer is not running, make sure the Headless designer plugin is configured to auto-start when Domino Designer starts.
 
 1. Open your command line
 2. Change directory to the the *demo/buildnsf* folder
@@ -84,9 +87,9 @@ BUILD SUCCESSFUL
 Total time: 2 seconds
 ----
 
-Also, in your domino Designer workspace you should see a new NSF with filepath temp\BuildXPagesDemo.nsf
+Also, in your domino Designer workspace you should see a new NSF with filepath *temp\BuildXPagesDemo.nsf*
 
-==== Run a Build with Errors
+==== Example of an NSF Build with Errors
 
 Let's see an example of running an NSF Build that results in some errors. To do this we will use the same sample On-Disk Project, but before we run the build we will sneakily delete the custom controls.
 This should cause an error when Designer tries to build the XPages that use those missing custom controls.
@@ -100,9 +103,9 @@ Note it is pretty much the same as *build* but is pointing to a different locati
 include::../demo/buildnsf/build.xml[tag=buildfail]
 ----
 
-Since it is not the default target, we will tell ant that that is the target we want to build by including the target name in the command line arguments.
+Since *buildfail* is not the default target, we will tell ant that that is the target we want to build by including the target name in the command line arguments.
 
-1. issue the command `ant buildfail'
+1. issue the command ```ant buildfail```
 
 You should then see an output like so:
 
@@ -136,6 +139,7 @@ If you were to look in Designer you would see the problem there too.
 
 image::NSFDemoError.JPG[]
 
+=== Conclusion
 
-
-
+In this demonstration tutorial we have shown how the *buildnsf* task from the BuildXPages Ant Library works together with the headless designer plugin. 
+We have demonstrated how to successfully build an NSF and also what it looks like when an NSF does not successfully build.

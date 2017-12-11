@@ -37,7 +37,7 @@ public enum Notes {
 		init();
 		
 		if (!isThreadInitialised()) {
-			System.out.println("Initialising thread");
+			//System.out.println("Initialising thread");
 			NotesNativeLibrary.SYNC_INSTANCE.NotesInitThread();
 			getThreadInit().set(true);
 		}

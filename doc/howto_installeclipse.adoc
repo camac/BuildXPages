@@ -1,0 +1,9 @@
+= Install Eclipse (Plugin Building only)
+
+[TIP]
+====
+You only need to install Eclipse if you are **Building plugins**. It is not required for Building/Deploying NSFs or Deploying Plugins
+====
+
+Go to eclipse.org and download 'Eclipse for RCP and RAP Developers'
+Follow the instructions! If you are building plugins then I assume you know this already!

@@ -44,23 +44,35 @@ public class SetTemplateNamesTask extends Task {
 	public void execute() throws BuildException {
 
 		if (clearinheritfrom && inheritfrom != null)
-			throw new BuildException(
-					"You cannot have clearinherit=true and inheritfrom set as well");
+			throw new BuildException("You cannot have clearinherit=true and inheritfrom set as well");
 
 		if (clearmastername && mastername != null)
-			throw new BuildException(
-					"You cannot have clearmaster=true and mastername set as well");
+			throw new BuildException("You cannot have clearmaster=true and mastername set as well");
 
-		log(this.server);
-		log(this.database);
-		log("-------");
-		log("Inherit From");
-		log("Clear: " + this.clearinheritfrom);
-		log(this.inheritfrom);
-		log("-------");
-		log("Is Master");
-		log("Clear: " + this.clearmastername);
-		log(this.mastername);
+		String dbpath = null;
+
+		if (this.server == null) {
+			dbpath = "local!!" + this.database;
+		} else {
+			dbpath = this.server + "!!" + this.database;
+		}
+
+		log("Setting Template Names for: " + dbpath);
+		if (this.clearinheritfrom) {
+			log("... Inherit From:       <clear>");
+		} else if (this.inheritfrom != null) {
+			log("... Inherit From:       '" + this.inheritfrom + "'");
+		} else {
+			log("... Inherit From:       <no change>");
+		}
+
+		if (this.clearmastername) {
+			log("... Is Master Template: <clear>'");
+		} else if (this.mastername != null) {
+			log("... Is Master Template: '" + this.mastername + "'");
+		} else {
+			log("... Is Master Template: <no change>");
+		}
 
 		SetTemplateNames task = new SetTemplateNames(this.server, this.database);
 
