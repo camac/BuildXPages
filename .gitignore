@@ -15,3 +15,6 @@ XPagesCI/
 buildDirectory/
 demo/buildnsf/odp/
 demo/buildnsf/odperror/
+mybuild.properties
+com.gregorbyte.buildxpages.ant/Delete4Install.bat
+com.gregorbyte.designer.headless.updatesite/site.xml
