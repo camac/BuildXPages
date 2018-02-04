@@ -15,3 +15,11 @@ eclipsedir:: The root folder that contains the plugins and features directory. I
 ==== Example
 
 include::../com.gregorbyte.buildxpages.ant/buildTest.xml[tag=generatesitexml]
+
+==== Maven Alternative
+
+[NOTE]
+====
+Jesse Gallagher has a similar site xml task available as a maven plugin so if you are using maven you can take a look at that as well
+https://github.com/darwino/dwo-p2sitexml-maven-plugin
+====
